@@ -394,7 +394,7 @@
         let Adapters = []
 
         function InitReportData() {
-            Headers = reports.map(e => {return {"ToolInfo": e.ToolInfo, "SystemInfo": e.SystemInfo}})
+            Headers = reports.map(e => { return {"Header": e.Header, "SystemInfo": e.SystemInfo}})
             let retailAdapters = reports[0].Adapters;
             let previewAdapters = reports[0].Adapters;
             for(let i = 0; i < retailAdapters.length; ++i)
