@@ -1,16 +1,20 @@
 // Sample report for UI development
 const reports = [{
-    "ToolInfo": {
+    "Header": {
         "Program": "D3d12info",
         "Version": "2.2.0",
-        "Build Date": "Dec 24 2023, 23:09:32",
+        "Build Date": "Dec 27 2023, 00:41:26",
         "Configuration": "Debug",
+        "Configuration bits": "64-bit",
+        "Generated on": "2023-12-28",
         "Using preview Agility SDK": false,
         "D3D12_SDK_VERSION": 611,
         "Intel GPU Detect compiled version": "2023-07-18"
     },
     "SystemInfo": {
-        "Windows version": "10.0.22631",
+        "OS Info": {
+            "Windows version": "10.0.22631"
+        },
         "System memory": {
             "GetPhysicallyInstalledSystemMemory": 67108864,
             "MEMORYSTATUSEX::ullTotalPhys": 68640800768,
@@ -455,17 +459,21 @@ const reports = [{
         }
     ]
 },{
-    "ToolInfo": {
+    "Header": {
         "Program": "D3d12info",
         "Version": "2.2.0",
-        "Build Date": "Dec 24 2023, 23:09:32",
+        "Build Date": "Dec 27 2023, 00:58:26",
         "Configuration": "Debug",
+        "Configuration bits": "64-bit",
+        "Generated on": "2023-12-28",
         "Using preview Agility SDK": true,
         "D3D12_SDK_VERSION": 711,
         "Intel GPU Detect compiled version": "2023-07-18"
     },
     "SystemInfo": {
-        "Windows version": "10.0.22631",
+        "OS Info": {
+            "Windows version": "10.0.22631"
+        },
         "System memory": {
             "GetPhysicallyInstalledSystemMemory": 67108864,
             "MEMORYSTATUSEX::ullTotalPhys": 68640800768,

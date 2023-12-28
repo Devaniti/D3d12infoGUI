@@ -63,9 +63,8 @@
     </style>
     <script type="text/javascript" src="Reports.js"></script>
     <script type="text/javascript">
-        // TODO
-        const apiAddress = "https://d3dcapsdb.boolka.dev:50853"
-        const siteAddress = "https://d3dcapsdb.boolka.dev"
+        const apiAddress = "http://localhost:50853"
+        const siteAddress = "http://localhost"
 
         const EnumMappings =
         {
@@ -295,7 +294,7 @@
 
         let SubmitButton
         let SubmitButtonText
-        const SubmissionIDs = []
+        const SubmissionIDs = {true:[], false:[]}
 
         function MakeHumanReadable(property, value) {
             if (value == null) return value
@@ -396,7 +395,7 @@
         function InitReportData() {
             Headers = reports.map(e => { return {"Header": e.Header, "SystemInfo": e.SystemInfo}})
             let retailAdapters = reports[0].Adapters;
-            let previewAdapters = reports[0].Adapters;
+            let previewAdapters = reports[1].Adapters;
             for(let i = 0; i < retailAdapters.length; ++i)
             {
                 Adapters.push([retailAdapters[i], previewAdapters[i]]);
@@ -453,6 +452,44 @@
             headerContainer.appendChild(table)
         }
 
+        function PrepareReport()
+        {
+            header = ShowRetail ? Headers[0] : Headers[1]
+            adapters = Adapters[reportIndex]
+            adapter = ShowRetail ? adapters[0] : adapters[1]
+            console.dir(reports)
+            let submission = {}
+            function Flatten(obj, prefix)
+            {
+                if (typeof(obj) == "object" && !Array.isArray(obj))
+                {
+                    for (const property in obj) {
+                        let newPrefix = prefix
+                        if (newPrefix != "") newPrefix += "."
+                        newPrefix += property
+                        Flatten(obj[property], newPrefix)
+                    }
+                }
+                else if (Array.isArray(obj))
+                {
+                    submission[prefix] = obj.join(", ")
+                }
+                else
+                {
+                    submission[prefix] = obj
+                }
+            }
+            Flatten(header, "")
+            Flatten(adapter, "")
+            for (const property in submission) {
+                if (typeof submission[property] == "boolean")
+                {
+                    submission[property] = +submission[property];
+                }
+            }
+            return submission
+        }
+
         function UpdateReport() {
             const report = Adapters[reportIndex]
 
@@ -484,19 +521,52 @@
                     SubmitButton = document.createElement("button")
                     SubmitButton.disabled = true
                     SubmitButton.onclick = () => {
-                        // TODO
+                        SubmitButton.disabled = true
+
+                        if (SubmissionIDs[ShowRetail][reportIndex])
+                        {
+                            location.href=`${siteAddress}/ID?ID=${SubmissionIDs[ShowRetail][reportIndex]}`
+                            return
+                        }
+
+                        let xhr = new XMLHttpRequest()
+                        xhr.open("POST", apiAddress + "/post_submission")
+                        xhr.setRequestHeader("Content-Type", "application/json")
+                        xhr.onreadystatechange = () => {
+                            if(xhr.readyState == 4 && xhr.status == 200) {
+                                location.href=`${siteAddress}/ID?ID=${xhr.responseText}`
+                            }
+                        }
+                        xhr.send(JSON.stringify(PrepareReport()))
                     }
                     SubmitButtonText = document.createTextNode("Please wait.")
                     SubmitButton.appendChild(SubmitButtonText)
                     cell.appendChild(SubmitButton)
                     const onGetSubmissionID = () => {
                         SubmitButton.disabled = false
-                        if (SubmissionIDs[reportIndex])
+                        if (SubmissionIDs[ShowRetail][reportIndex])
                             SubmitButtonText.textContent = "Open Online"
                         else
                             SubmitButtonText.textContent = "Submit Report"
                     }
-                    // TODO
+                    if (SubmissionIDs[ShowRetail][reportIndex] != null)
+                    {
+                        onGetSubmissionID()
+                    }
+                    else
+                    {
+                        let xhr = new XMLHttpRequest()
+                        xhr.open("POST", apiAddress + "/is_submitted")
+                        xhr.setRequestHeader("Content-Type", "application/json")
+                        xhr.onreadystatechange = () => {
+                            if(xhr.readyState == 4 && xhr.status == 200) 
+                            {
+                                SubmissionIDs[ShowRetail][reportIndex] = Number(xhr.responseText)
+                                onGetSubmissionID()
+                            }
+                        }
+                        xhr.send(JSON.stringify(report))
+                    }
                 }
                 {
                     let button = document.createElement("button")
