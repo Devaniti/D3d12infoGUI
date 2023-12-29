@@ -514,20 +514,27 @@
                     SubmitButton = document.createElement("button")
                     SubmitButton.disabled = true
                     SubmitButton.onclick = () => {
-                        SubmitButton.disabled = true
-
                         if (SubmissionIDs[ShowRetail][reportIndex])
                         {
                             location.href=`${siteAddress}/ID?ID=${SubmissionIDs[ShowRetail][reportIndex]}`
                             return
                         }
 
+                        SubmitButton.disabled = true
+
                         let xhr = new XMLHttpRequest()
                         xhr.open("POST", apiAddress + "/post_submission")
                         xhr.setRequestHeader("Content-Type", "application/json")
                         xhr.onreadystatechange = () => {
-                            if(xhr.readyState == 4 && xhr.status == 200) {
+                            if (xhr.readyState != 4)
+                                return;
+
+                            if (xhr.status == 200) {
+                                SubmitButton.disabled = false
                                 location.href=`${siteAddress}/ID?ID=${xhr.responseText}`
+                            }
+                            else {
+                                window.alert(xhr.responseText);
                             }
                         }
                         xhr.send(PrepareReport())
