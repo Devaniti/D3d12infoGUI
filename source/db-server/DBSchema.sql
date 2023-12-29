@@ -158,8 +158,6 @@ CREATE TABLE IF NOT EXISTS Submissions(
 CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
     "Header.Program",
     "Header.Version",
-    "Header.Build Date",
-    "Header.Configuration",
     "Header.Configuration bits",
     "Header.Using preview Agility SDK",
     "Header.D3D12_SDK_VERSION",
