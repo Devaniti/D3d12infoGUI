@@ -63,8 +63,8 @@
     </style>
     <script type="text/javascript" src="Reports.js"></script>
     <script type="text/javascript">
-        const apiAddress = "http://localhost:50854"
-        const siteAddress = "http://localhost"
+        const apiAddress = "https://d3d12infodb.boolka.dev:50854"
+        const siteAddress = "https://d3d12infodb.boolka.dev"
 
         const EnumMappings =
         {
@@ -480,7 +480,7 @@
                     submission[property] = +submission[property];
                 }
             }
-            return submission
+            return JSON.stringify(submission)
         }
 
         function UpdateReport() {
@@ -530,7 +530,7 @@
                                 location.href=`${siteAddress}/ID?ID=${xhr.responseText}`
                             }
                         }
-                        xhr.send(JSON.stringify(PrepareReport()))
+                        xhr.send(PrepareReport())
                     }
                     SubmitButtonText = document.createTextNode("Please wait.")
                     SubmitButton.appendChild(SubmitButtonText)
@@ -558,7 +558,7 @@
                                 onGetSubmissionID()
                             }
                         }
-                        xhr.send(JSON.stringify(report))
+                        xhr.send(PrepareReport())
                     }
                 }
                 {
