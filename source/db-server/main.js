@@ -17,7 +17,20 @@ const allProperties = require("./StructureDesc/all_properites.json")
 
 function isObjectAllowedInDB(inObj)
 {
-    return requiredProperites.every(p => inObj[p] != null)
+    let isAllowed = true;
+    requiredProperites.forEach(p => {
+        if (inObj[p] == null)
+        {
+            console.log(`Missing property ${p}`)
+            isAllowed = false
+        }
+    })
+    if (!isAllowed)
+    {
+        console.log("isObjectAllowedInDB - object disallowed")
+        console.log()
+    }
+    return isAllowed
 }
 
 function convertToSqlInsertQuery(tableName, propertyArray)
@@ -112,10 +125,15 @@ api.post('/is_submitted', (req, res) => {
     try{
         let rows = isSubmittedStatement.all(parameterList)
         if (rows.length == 0)
-            rows = 0
+        {
+            res.status(204)
+            res.send()
+        }
         else
+        {
             rows = rows[0].ID
-        res.send(JSON.stringify(rows))
+            res.send(JSON.stringify(rows))
+        }
     }
     catch(e)
     {

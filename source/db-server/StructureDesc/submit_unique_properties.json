@@ -13,5 +13,5 @@
     "DXGI_ADAPTER_DESC3.SubSysId",
     "DXGI_ADAPTER_DESC3.Revision",
     "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
-    "UMDVersion"
+    "CheckInterfaceSupport.UMDVersion"
 ]

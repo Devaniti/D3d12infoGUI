@@ -7,9 +7,9 @@ using namespace D3d12infoGUI;
 
 int main(int argc, char* argv[]) {
   std::ostringstream reportsArray;
-  reportsArray << "[" << Subprocess::GetCommandOutput("D3d12info.exe -j")
+  reportsArray << "[" << Subprocess::GetCommandOutput("D3d12info.exe -j --AllAdapters")
                << ","
-               << Subprocess::GetCommandOutput("D3d12info_preview.exe -j")
+               << Subprocess::GetCommandOutput("D3d12info_preview.exe -j --AllAdapters")
                << "]";
   ReportGenerator::GenerateHTML(reportsArray.str());
   return 0;

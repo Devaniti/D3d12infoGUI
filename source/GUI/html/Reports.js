@@ -3,10 +3,10 @@ const reports = [{
     "Header": {
         "Program": "D3d12info",
         "Version": "2.2.0",
-        "Build Date": "Dec 27 2023, 00:41:26",
+        "Build Date": "Dec 30 2023, 16:33:17",
         "Configuration": "Debug",
         "Configuration bits": "64-bit",
-        "Generated on": "2023-12-28",
+        "Generated on": "2023-12-30",
         "Using preview Agility SDK": false,
         "D3D12_SDK_VERSION": 611,
         "Intel GPU Detect compiled version": "2023-07-18"
@@ -21,6 +21,9 @@ const reports = [{
             "MEMORYSTATUSEX::ullTotalPageFile": 78841348096,
             "MEMORYSTATUSEX::ullTotalVirtual": 140737488224256
         },
+        "DXGI_FEATURE": {
+            "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
+        },
         "D3D12EnableExperimentalFeatures": [
             "D3D12ExperimentalShaderModels",
             "D3D12TiledResourceTier4"
@@ -30,66 +33,88 @@ const reports = [{
         {
             "AdapterIndex": 0,
             "DXGI_ADAPTER_DESC3": {
-                "Description": "NVIDIA GeForce RTX 3080 Ti",
-                "VendorId": 4318,
-                "DeviceId": 8712,
-                "SubSysId": 570955113,
-                "Revision": 161,
-                "DedicatedVideoMemory": 12687769600,
+                "Description": "Intel(R) Arc(TM) A770 Graphics",
+                "VendorId": 32902,
+                "DeviceId": 22176,
+                "SubSysId": 270565510,
+                "Revision": 8,
+                "DedicatedVideoMemory": 17045651456,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 34320400384,
-                "AdapterLuid": "00000000-176E11BD",
+                "AdapterLuid": "00000000-0001138A",
                 "Flags": 44,
-                "GraphicsPreemptionGranularity": 3,
-                "ComputePreemptionGranularity": 1
+                "GraphicsPreemptionGranularity": 2,
+                "ComputePreemptionGranularity": 2
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 11882463232,
-                "AvailableForReservation": 6075449344
+                "Budget": 16239296512,
+                "AvailableForReservation": 8253865984
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
                 "Budget": 33515094016,
                 "AvailableForReservation": 16891764736
             },
-            "UMDVersion": "31.0.15.4633",
+            "CheckInterfaceSupport": {
+                "UMDVersion": 8725724284654556
+            },
             "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.260",
-                "driverVersion": 2290630656,
-                "vendorID": 4318,
-                "deviceID": 8712,
+                "apiVersion": "1.3.267",
+                "driverVersion": 1659868,
+                "vendorID": 32902,
+                "deviceID": 22176,
                 "deviceType": 2,
-                "deviceName": "NVIDIA GeForce RTX 3080 Ti"
+                "deviceName": "Intel(R) Arc(TM) A770 Graphics"
             },
             "VkPhysicalDeviceIDProperties": {
-                "deviceUUID": "FC4F457CBA3A2DDEF06E6B6E0B6608D4",
-                "driverUUID": "C2A04F03A27E5FB3A136DD945528780D",
-                "deviceLUID": "BD116E1700000000"
+                "deviceUUID": "8680A056080000002F00000000000000",
+                "driverUUID": "33312E302E3130312E35303834000000",
+                "deviceLUID": "8A13010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
-                "driverID": 4,
-                "driverName": "NVIDIA",
-                "driverInfo": "546.33"
+                "driverID": 5,
+                "driverName": "Intel Corporation",
+                "driverInfo": "Intel driver"
+            },
+            "Intel GPUDetect::GPUData": {
+                "VendorId": 32902,
+                "deviceID": 22176,
+                "isUMAArchitecture": false,
+                "videoMemory": 17045651456,
+                "description": "Intel(R) Arc(TM) A770 Graphics",
+                "extensionVersion": 458752,
+                "intelExtensionAvailability": true,
+                "dxDriverVersion": "31.0.101.5084",
+                "driverInfo.driverReleaseRevision": 101,
+                "driverInfo.driverBuildNumber": 5084,
+                "DefaultFidelityPreset": 4,
+                "GPUArchitecture": "Alchemist",
+                "GraphicsGeneration": "Xe High Performance Graphics",
+                "euCount": 512,
+                "packageTDP": 0,
+                "maxFillRate": 128,
+                "maxFrequency": 2400,
+                "minFrequency": 300
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
-                "DoublePrecisionFloatShaderOps": true,
+                "DoublePrecisionFloatShaderOps": false,
                 "OutputMergerLogicOp": true,
                 "MinPrecisionSupport": 2,
-                "TiledResourcesTier": 4,
+                "TiledResourcesTier": 3,
                 "ResourceBindingTier": 3,
-                "PSSpecifiedStencilRefSupported": false,
+                "PSSpecifiedStencilRefSupported": true,
                 "TypedUAVLoadAdditionalFormats": true,
                 "ROVsSupported": true,
                 "ConservativeRasterizationTier": 3,
-                "MaxGPUVirtualAddressBitsPerResource": 40,
+                "MaxGPUVirtualAddressBitsPerResource": 44,
                 "StandardSwizzle64KBSupported": false,
                 "CrossNodeSharingTier": 0,
-                "CrossAdapterRowMajorTextureSupported": false,
+                "CrossAdapterRowMajorTextureSupported": true,
                 "VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": true,
-                "ResourceHeapTier": 2
+                "ResourceHeapTier": 1
             },
             "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT": {
-                "MaxGPUVirtualAddressBitsPerResource": 40,
-                "MaxGPUVirtualAddressBitsPerProcess": 40
+                "MaxGPUVirtualAddressBitsPerResource": 44,
+                "MaxGPUVirtualAddressBitsPerProcess": 48
             },
             "D3D12_FEATURE_DATA_SHADER_MODEL": {
                 "HighestShaderModel": 104
@@ -108,7 +133,7 @@ const reports = [{
                 "MaxSupportedFeatureLevel": 49664
             },
             "D3D12_FEATURE_DATA_SHADER_CACHE": {
-                "SupportFlags": 115
+                "SupportFlags": 111
             },
             "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY": {
                 "TYPE_DIRECT.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
@@ -136,22 +161,22 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS1": {
                 "WaveOps": true,
-                "WaveLaneCountMin": 32,
+                "WaveLaneCountMin": 8,
                 "WaveLaneCountMax": 32,
-                "TotalLaneCount": 10240,
+                "TotalLaneCount": 16384,
                 "ExpandedComputeResourceStates": true,
                 "Int64ShaderOps": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS2": {
                 "DepthBoundsTestSupported": true,
-                "ProgrammableSamplePositionsTier": 2
+                "ProgrammableSamplePositionsTier": 1
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS3": {
                 "CopyQueueTimestampQueriesSupported": true,
                 "CastingFullyTypedFormatSupported": true,
-                "WriteBufferImmediateSupportFlags": 127,
-                "ViewInstancingTier": 3,
-                "BarycentricsSupported": true
+                "WriteBufferImmediateSupportFlags": 15,
+                "ViewInstancingTier": 2,
+                "BarycentricsSupported": false
             },
             "D3D12_FEATURE_DATA_EXISTING_HEAPS": {
                 "Supported": true
@@ -163,14 +188,14 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS5": {
                 "SRVOnlyTiledResourceTier3": true,
-                "RenderPassesTier": 0,
+                "RenderPassesTier": 2,
                 "RaytracingTier": 11
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS6": {
                 "AdditionalShadingRatesSupported": true,
                 "PerPrimitiveShadingRateSupportedWithViewportIndexing": true,
                 "VariableShadingRateTier": 2,
-                "ShadingRateImageTileSize": 16,
+                "ShadingRateImageTileSize": 8,
                 "BackgroundProcessingSupported": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS7": {
@@ -183,10 +208,10 @@ const reports = [{
             "D3D12_FEATURE_DATA_D3D12_OPTIONS9": {
                 "MeshShaderPipelineStatsSupported": true,
                 "MeshShaderSupportsFullRangeRenderTargetArrayIndex": true,
-                "AtomicInt64OnTypedResourceSupported": true,
-                "AtomicInt64OnGroupSharedSupported": true,
+                "AtomicInt64OnTypedResourceSupported": false,
+                "AtomicInt64OnGroupSharedSupported": false,
                 "DerivativesInMeshAndAmplificationShadersSupported": false,
-                "WaveMMATier": 10
+                "WaveMMATier": 0
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS10": {
                 "VariableRateShadingSumCombinerSupported": true,
@@ -209,8 +234,8 @@ const reports = [{
                 "AlphaBlendFactorSupported": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS14": {
-                "AdvancedTextureOpsSupported": true,
-                "WriteableMSAATexturesSupported": true,
+                "AdvancedTextureOpsSupported": false,
+                "WriteableMSAATexturesSupported": false,
                 "IndependentFrontAndBackStencilRefMaskSupported": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS15": {
@@ -230,12 +255,12 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS19": {
                 "MismatchingOutputDimensionsSupported": true,
-                "SupportedSampleCountsWithNoOutputs": 31,
+                "SupportedSampleCountsWithNoOutputs": 29,
                 "PointSamplingAddressesNeverRoundUp": true,
                 "RasterizerDesc2Supported": true,
                 "NarrowQuadrilateralLinesSupported": true,
                 "AnisoFilterWithPointMipSupported": true,
-                "MaxSamplerDescriptorHeapSize": 4080,
+                "MaxSamplerDescriptorHeapSize": 4000,
                 "MaxSamplerDescriptorHeapSizeWithStaticSamplers": 2048,
                 "MaxViewDescriptorHeapSize": 1000000,
                 "ComputeOnlyCustomHeapSupported": false
@@ -245,10 +270,10 @@ const reports = [{
                 "RecreateAtTier": 0
             },
             "GetDescriptorHandleIncrementSize": {
-                "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 32,
+                "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 64,
+                "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 16,
                 "D3D12_DESCRIPTOR_HEAP_TYPE_RTV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 8
+                "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 144
             }
         },
         {
@@ -262,7 +287,7 @@ const reports = [{
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 34320400384,
-                "AdapterLuid": "00000000-0000FB78",
+                "AdapterLuid": "00000000-0001292C",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
@@ -275,7 +300,9 @@ const reports = [{
                 "Budget": 0,
                 "AvailableForReservation": 0
             },
-            "UMDVersion": "10.0.22621.2506",
+            "CheckInterfaceSupport": {
+                "UMDVersion": 2814751249598922
+            },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
                 "OutputMergerLogicOp": true,
@@ -462,10 +489,10 @@ const reports = [{
     "Header": {
         "Program": "D3d12info",
         "Version": "2.2.0",
-        "Build Date": "Dec 27 2023, 00:58:26",
+        "Build Date": "Dec 30 2023, 16:40:36",
         "Configuration": "Debug",
         "Configuration bits": "64-bit",
-        "Generated on": "2023-12-28",
+        "Generated on": "2023-12-30",
         "Using preview Agility SDK": true,
         "D3D12_SDK_VERSION": 711,
         "Intel GPU Detect compiled version": "2023-07-18"
@@ -480,6 +507,9 @@ const reports = [{
             "MEMORYSTATUSEX::ullTotalPageFile": 78841348096,
             "MEMORYSTATUSEX::ullTotalVirtual": 140737488224256
         },
+        "DXGI_FEATURE": {
+            "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
+        },
         "D3D12EnableExperimentalFeatures": [
             "D3D12ExperimentalShaderModels",
             "D3D12TiledResourceTier4",
@@ -490,66 +520,88 @@ const reports = [{
         {
             "AdapterIndex": 0,
             "DXGI_ADAPTER_DESC3": {
-                "Description": "NVIDIA GeForce RTX 3080 Ti",
-                "VendorId": 4318,
-                "DeviceId": 8712,
-                "SubSysId": 570955113,
-                "Revision": 161,
-                "DedicatedVideoMemory": 12687769600,
+                "Description": "Intel(R) Arc(TM) A770 Graphics",
+                "VendorId": 32902,
+                "DeviceId": 22176,
+                "SubSysId": 270565510,
+                "Revision": 8,
+                "DedicatedVideoMemory": 17045651456,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 34320400384,
-                "AdapterLuid": "00000000-176E11BD",
+                "AdapterLuid": "00000000-0001138A",
                 "Flags": 44,
-                "GraphicsPreemptionGranularity": 3,
-                "ComputePreemptionGranularity": 1
+                "GraphicsPreemptionGranularity": 2,
+                "ComputePreemptionGranularity": 2
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 11882463232,
-                "AvailableForReservation": 6075449344
+                "Budget": 16239296512,
+                "AvailableForReservation": 8253865984
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
                 "Budget": 33515094016,
                 "AvailableForReservation": 16891764736
             },
-            "UMDVersion": "31.0.15.4633",
+            "CheckInterfaceSupport": {
+                "UMDVersion": 8725724284654556
+            },
             "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.260",
-                "driverVersion": 2290630656,
-                "vendorID": 4318,
-                "deviceID": 8712,
+                "apiVersion": "1.3.267",
+                "driverVersion": 1659868,
+                "vendorID": 32902,
+                "deviceID": 22176,
                 "deviceType": 2,
-                "deviceName": "NVIDIA GeForce RTX 3080 Ti"
+                "deviceName": "Intel(R) Arc(TM) A770 Graphics"
             },
             "VkPhysicalDeviceIDProperties": {
-                "deviceUUID": "FC4F457CBA3A2DDEF06E6B6E0B6608D4",
-                "driverUUID": "C2A04F03A27E5FB3A136DD945528780D",
-                "deviceLUID": "BD116E1700000000"
+                "deviceUUID": "8680A056080000002F00000000000000",
+                "driverUUID": "33312E302E3130312E35303834000000",
+                "deviceLUID": "8A13010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
-                "driverID": 4,
-                "driverName": "NVIDIA",
-                "driverInfo": "546.33"
+                "driverID": 5,
+                "driverName": "Intel Corporation",
+                "driverInfo": "Intel driver"
+            },
+            "Intel GPUDetect::GPUData": {
+                "VendorId": 32902,
+                "deviceID": 22176,
+                "isUMAArchitecture": false,
+                "videoMemory": 17045651456,
+                "description": "Intel(R) Arc(TM) A770 Graphics",
+                "extensionVersion": 458752,
+                "intelExtensionAvailability": true,
+                "dxDriverVersion": "31.0.101.5084",
+                "driverInfo.driverReleaseRevision": 101,
+                "driverInfo.driverBuildNumber": 5084,
+                "DefaultFidelityPreset": 4,
+                "GPUArchitecture": "Alchemist",
+                "GraphicsGeneration": "Xe High Performance Graphics",
+                "euCount": 512,
+                "packageTDP": 0,
+                "maxFillRate": 128,
+                "maxFrequency": 2400,
+                "minFrequency": 300
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
-                "DoublePrecisionFloatShaderOps": true,
+                "DoublePrecisionFloatShaderOps": false,
                 "OutputMergerLogicOp": true,
                 "MinPrecisionSupport": 2,
-                "TiledResourcesTier": 4,
+                "TiledResourcesTier": 3,
                 "ResourceBindingTier": 3,
-                "PSSpecifiedStencilRefSupported": false,
+                "PSSpecifiedStencilRefSupported": true,
                 "TypedUAVLoadAdditionalFormats": true,
                 "ROVsSupported": true,
                 "ConservativeRasterizationTier": 3,
-                "MaxGPUVirtualAddressBitsPerResource": 40,
+                "MaxGPUVirtualAddressBitsPerResource": 44,
                 "StandardSwizzle64KBSupported": false,
                 "CrossNodeSharingTier": 0,
-                "CrossAdapterRowMajorTextureSupported": false,
+                "CrossAdapterRowMajorTextureSupported": true,
                 "VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": true,
-                "ResourceHeapTier": 2
+                "ResourceHeapTier": 1
             },
             "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT": {
-                "MaxGPUVirtualAddressBitsPerResource": 40,
-                "MaxGPUVirtualAddressBitsPerProcess": 40
+                "MaxGPUVirtualAddressBitsPerResource": 44,
+                "MaxGPUVirtualAddressBitsPerProcess": 48
             },
             "D3D12_FEATURE_DATA_SHADER_MODEL": {
                 "HighestShaderModel": 104
@@ -568,7 +620,7 @@ const reports = [{
                 "MaxSupportedFeatureLevel": 49664
             },
             "D3D12_FEATURE_DATA_SHADER_CACHE": {
-                "SupportFlags": 115
+                "SupportFlags": 111
             },
             "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY": {
                 "TYPE_DIRECT.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
@@ -589,26 +641,26 @@ const reports = [{
                 "AtomicShaderInstructions": false
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL": {
-                "WorkGraphsTier": 1
+                "WorkGraphsTier": 0
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS1": {
                 "WaveOps": true,
-                "WaveLaneCountMin": 32,
+                "WaveLaneCountMin": 8,
                 "WaveLaneCountMax": 32,
-                "TotalLaneCount": 10240,
+                "TotalLaneCount": 16384,
                 "ExpandedComputeResourceStates": true,
                 "Int64ShaderOps": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS2": {
                 "DepthBoundsTestSupported": true,
-                "ProgrammableSamplePositionsTier": 2
+                "ProgrammableSamplePositionsTier": 1
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS3": {
                 "CopyQueueTimestampQueriesSupported": true,
                 "CastingFullyTypedFormatSupported": true,
-                "WriteBufferImmediateSupportFlags": 127,
-                "ViewInstancingTier": 3,
-                "BarycentricsSupported": true
+                "WriteBufferImmediateSupportFlags": 15,
+                "ViewInstancingTier": 2,
+                "BarycentricsSupported": false
             },
             "D3D12_FEATURE_DATA_EXISTING_HEAPS": {
                 "Supported": true
@@ -620,14 +672,14 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS5": {
                 "SRVOnlyTiledResourceTier3": true,
-                "RenderPassesTier": 0,
+                "RenderPassesTier": 2,
                 "RaytracingTier": 11
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS6": {
                 "AdditionalShadingRatesSupported": true,
                 "PerPrimitiveShadingRateSupportedWithViewportIndexing": true,
                 "VariableShadingRateTier": 2,
-                "ShadingRateImageTileSize": 16,
+                "ShadingRateImageTileSize": 8,
                 "BackgroundProcessingSupported": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS7": {
@@ -640,10 +692,10 @@ const reports = [{
             "D3D12_FEATURE_DATA_D3D12_OPTIONS9": {
                 "MeshShaderPipelineStatsSupported": true,
                 "MeshShaderSupportsFullRangeRenderTargetArrayIndex": true,
-                "AtomicInt64OnTypedResourceSupported": true,
-                "AtomicInt64OnGroupSharedSupported": true,
+                "AtomicInt64OnTypedResourceSupported": false,
+                "AtomicInt64OnGroupSharedSupported": false,
                 "DerivativesInMeshAndAmplificationShadersSupported": false,
-                "WaveMMATier": 10
+                "WaveMMATier": 0
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS10": {
                 "VariableRateShadingSumCombinerSupported": true,
@@ -666,8 +718,8 @@ const reports = [{
                 "AlphaBlendFactorSupported": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS14": {
-                "AdvancedTextureOpsSupported": true,
-                "WriteableMSAATexturesSupported": true,
+                "AdvancedTextureOpsSupported": false,
+                "WriteableMSAATexturesSupported": false,
                 "IndependentFrontAndBackStencilRefMaskSupported": true
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS15": {
@@ -687,12 +739,12 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS19": {
                 "MismatchingOutputDimensionsSupported": true,
-                "SupportedSampleCountsWithNoOutputs": 31,
+                "SupportedSampleCountsWithNoOutputs": 29,
                 "PointSamplingAddressesNeverRoundUp": true,
                 "RasterizerDesc2Supported": true,
                 "NarrowQuadrilateralLinesSupported": true,
                 "AnisoFilterWithPointMipSupported": true,
-                "MaxSamplerDescriptorHeapSize": 4080,
+                "MaxSamplerDescriptorHeapSize": 4000,
                 "MaxSamplerDescriptorHeapSizeWithStaticSamplers": 2048,
                 "MaxViewDescriptorHeapSize": 1000000,
                 "ComputeOnlyCustomHeapSupported": false
@@ -700,93 +752,11 @@ const reports = [{
             "D3D12_FEATURE_DATA_D3D12_OPTIONS20": {
                 "ComputeOnlyWriteWatchSupported": true
             },
-            "D3D12_FEATURE_DATA_WAVE_MMA": [
-                {
-                    "InputDataType": 1,
-                    "M": 1,
-                    "N": 1,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 1,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                },
-                {
-                    "InputDataType": 1,
-                    "M": 1,
-                    "N": 2,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 1,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                },
-                {
-                    "InputDataType": 1,
-                    "M": 2,
-                    "N": 1,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 1,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                },
-                {
-                    "InputDataType": 1,
-                    "M": 2,
-                    "N": 2,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 1,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                },
-                {
-                    "InputDataType": 2,
-                    "M": 1,
-                    "N": 1,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 6,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                },
-                {
-                    "InputDataType": 2,
-                    "M": 1,
-                    "N": 2,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 6,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                },
-                {
-                    "InputDataType": 2,
-                    "M": 2,
-                    "N": 1,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 6,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                },
-                {
-                    "InputDataType": 2,
-                    "M": 2,
-                    "N": 2,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 6,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 32
-                }
-            ],
             "GetDescriptorHandleIncrementSize": {
-                "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 32,
+                "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 64,
+                "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 16,
                 "D3D12_DESCRIPTOR_HEAP_TYPE_RTV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 8
+                "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 144
             }
         },
         {
@@ -800,7 +770,7 @@ const reports = [{
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 34320400384,
-                "AdapterLuid": "00000000-0000FB78",
+                "AdapterLuid": "00000000-0001292C",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
@@ -813,7 +783,9 @@ const reports = [{
                 "Budget": 0,
                 "AvailableForReservation": 0
             },
-            "UMDVersion": "10.0.22621.2506",
+            "CheckInterfaceSupport": {
+                "UMDVersion": 2814751249598922
+            },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
                 "OutputMergerLogicOp": true,
