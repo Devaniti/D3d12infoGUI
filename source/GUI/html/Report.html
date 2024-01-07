@@ -490,16 +490,24 @@
 
         let reportIndex = 0
 
+        let PreviewAvailable = false
         let ShowRetail = true
         let Headers = []
         let Adapters = []
 
+        let VersionsArray = [true]
+
         function InitReportData() {
             Headers = reports.map(e => { return { "Header": e.Header, "SystemInfo": e.SystemInfo } })
+            if (reports[1] != null)
+            {
+                PreviewAvailable = true
+                VersionsArray = [true, false]
+            }
             let retailAdapters = reports[0].Adapters;
-            let previewAdapters = reports[1].Adapters;
+            let previewAdapters = reports[1]?.Adapters;
             for (let i = 0; i < retailAdapters.length; ++i) {
-                Adapters.push([retailAdapters[i], previewAdapters[i]]);
+                Adapters.push([retailAdapters[i], PreviewAvailable ? previewAdapters[i] : null]);
             }
         }
 
@@ -585,7 +593,7 @@
 
         function SubmitAllReports()
         {
-            [true, false].forEach((isRetail) => {
+            VersionsArray.forEach((isRetail) => {
                 for (let i = 0; i < Adapters.length; ++i)
                 {
                     header = isRetail ? Headers[0] : Headers[1]
@@ -672,6 +680,7 @@
                     submitButton.appendChild(submitButtonText)
                     cell.appendChild(submitButton)
                 }
+                if (PreviewAvailable)
                 {
                     let button = document.createElement("button")
                     button.onclick = () => {
@@ -704,7 +713,7 @@
         }
 
         function QueryReportIDs() {
-            [true, false].forEach((isRetail) =>{
+            VersionsArray.forEach((isRetail) => {
                 for (let i = 0; i < Adapters.length; ++i)
                 {
                     SubmissionIDs[isRetail][i] = null;
