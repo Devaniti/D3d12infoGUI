@@ -554,6 +554,8 @@ const PropertyHumanReadableNames =
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage": "NVAPI is RTX New Feature Branch Driver",
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch": "NVAPI Driver base branch",
     "SystemInfo.D3D12EnableExperimentalFeatures": "Available Experimental features",
+    "AdapterIndex": "Adapter Index",
+    "CheckInterfaceSupport.UMDVersion": "User Mode Driver Version"
 }
 
 function MakeHumanReadableProperty(property) {
@@ -690,91 +692,7 @@ function MakeHumanReadable(property, value) {
     return value
 }
 
-class Adapter {
-    static #renameList = new Map([
-    ])
-
-    #fields = []
-
-    #import(data) {
-        let dest = this.#fields
-        function flatten(obj, prefix) {
-            if (typeof (obj) == "object" && !Array.isArray(obj)) {
-                for (const property in obj) {
-                    let newPrefix = prefix
-                    if (newPrefix != "") newPrefix += "."
-                    newPrefix += property
-                    flatten(obj[property], newPrefix)
-                }
-            }
-            else if (Array.isArray(obj)) {
-                dest.push({name:prefix, value:obj.join(", ")})
-            }
-            else if (typeof obj == "boolean") {
-                dest.push({name:prefix, value:+obj})
-            }
-            else {
-                dest.push({name:prefix, value:obj})
-            }
-        }
-        flatten(data, "")
-    }
-
-    #patchData() {
-        for (const e of this.#fields) {
-            if (Adapter.#renameList.has(e.name))
-            {
-                e.name = Adapter.#renameList.get(e.name)
-            }
-        }
-
-        for (const e of this.#fields) {
-            switch (e.name)
-            {
-                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
-                    {
-                        for (const e2 of this.#fields) {
-                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id")
-                            {
-                                e.value += e2.value
-                                break
-                            }
-                        }
-                    }
-                    break
-            }
-        }
-    }
-
-    constructor(data) {
-        this.#import(data)
-        this.#patchData()
-    }
-    
-    *[Symbol.iterator]() {
-        for (const field of this.#fields) {
-            yield field;
-        }
-    }
-
-    HumanReadable() {
-        class HumanReadableObj {
-            constructor(fields) {
-                this.fields = fields;
-            }
-
-            *[Symbol.iterator]() {
-                for (const field of this.fields) {
-                    yield {name: MakeHumanReadableProperty(field.name), value:MakeHumanReadable(field.name, field.value)}
-                }
-            }
-        }
-
-        return new HumanReadableObj(this.#fields);
-    }
-}
-
-class Header {
+class ReportContainer {
     static #renameList = new Map([
         ["Header.D3D12_PREVIEW_SDK_VERSION", "Header.D3D12_SDK_VERSION"]
     ])
@@ -807,9 +725,26 @@ class Header {
 
     #patchData() {
         for (const e of this.#fields) {
-            if (Header.#renameList.has(e.name))
+            if (ReportContainer.#renameList.has(e.name))
             {
-                e.name = Header.#renameList.get(e.name)
+                e.name = ReportContainer.#renameList.get(e.name)
+            }
+        }
+
+        for (const e of this.#fields) {
+            switch (e.name)
+            {
+                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
+                    {
+                        for (const e2 of this.#fields) {
+                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id")
+                            {
+                                e.value += e2.value
+                                break
+                            }
+                        }
+                    }
+                    break
             }
         }
     }
@@ -869,9 +804,9 @@ function IterateAdapters(callback) {
 
 function InitReportData() {
     Headers = reports.map(e => { 
-        return new Header({ "Header": e.Header, "SystemInfo": e.SystemInfo })
+        return new ReportContainer({ "Header": e.Header, "SystemInfo": e.SystemInfo })
     })
-    Adapters = reports.map(e => e.Adapters.map(e => new Adapter(e)))
+    Adapters = reports.map(e => e.Adapters.map(e => new ReportContainer(e)))
 }
 
 function WriteObjectToTable(obj, table) {

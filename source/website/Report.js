@@ -1,158 +1,6 @@
 const apiAddress = "https://d3d12infodb.boolka.dev:50854"
 const siteAddress = "https://d3d12infodb.boolka.dev"
 
-class Adapter {
-    static #renameList = new Map([
-    ])
-
-    #fields = []
-
-    #import(data) {
-        let dest = this.#fields
-        function flatten(obj, prefix) {
-            if (typeof (obj) == "object" && !Array.isArray(obj)) {
-                for (const property in obj) {
-                    let newPrefix = prefix
-                    if (newPrefix != "") newPrefix += "."
-                    newPrefix += property
-                    flatten(obj[property], newPrefix)
-                }
-            }
-            else if (Array.isArray(obj)) {
-                dest.push({name:prefix, value:obj.join(", ")})
-            }
-            else if (typeof obj == "boolean") {
-                dest.push({name:prefix, value:+obj})
-            }
-            else {
-                dest.push({name:prefix, value:obj})
-            }
-        }
-        flatten(data, "")
-    }
-
-    #patchData() {
-        for (const e of this.#fields) {
-            if (Adapter.#renameList.has(e.name))
-            {
-                e.name = Adapter.#renameList.get(e.name)
-            }
-        }
-
-        for (const e of this.#fields) {
-            switch (e.name)
-            {
-                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
-                    {
-                        for (const e2 of this.#fields) {
-                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id")
-                            {
-                                e.value += e2.value
-                                break
-                            }
-                        }
-                    }
-                    break
-            }
-        }
-    }
-
-    constructor(data) {
-        this.#import(data)
-        this.#patchData()
-    }
-    
-    *[Symbol.iterator]() {
-        for (const field of this.#fields) {
-            yield field;
-        }
-    }
-
-    HumanReadable() {
-        class HumanReadableObj {
-            constructor(fields) {
-                this.fields = fields;
-            }
-
-            *[Symbol.iterator]() {
-                for (const field of this.fields) {
-                    yield {name: field.name, value:MakeHumanReadable(field.name, field.value)}
-                }
-            }
-        }
-
-        return new HumanReadableObj(this.#fields);
-    }
-}
-
-class Header {
-    static #renameList = new Map([
-        ["Header.D3D12_PREVIEW_SDK_VERSION", "Header.D3D12_SDK_VERSION"]
-    ])
-
-    #fields = []
-
-    #import(data) {
-        let dest = this.#fields
-        function flatten(obj, prefix) {
-            if (typeof (obj) == "object" && !Array.isArray(obj)) {
-                for (const property in obj) {
-                    let newPrefix = prefix
-                    if (newPrefix != "") newPrefix += "."
-                    newPrefix += property
-                    flatten(obj[property], newPrefix)
-                }
-            }
-            else if (Array.isArray(obj)) {
-                dest.push({name:prefix, value:obj.join(", ")})
-            }
-            else if (typeof obj == "boolean") {
-                dest.push({name:prefix, value:+obj})
-            }
-            else {
-                dest.push({name:prefix, value:obj})
-            }
-        }
-        flatten(data, "")
-    }
-
-    #patchData() {
-        for (const e of this.#fields) {
-            if (Header.#renameList.has(e.name))
-            {
-                e.name = Header.#renameList.get(e.name)
-            }
-        }
-    }
-
-    constructor(data) {
-        this.#import(data)
-        this.#patchData()
-    }
-    
-    *[Symbol.iterator]() {
-        for (const field of this.#fields) {
-            yield field;
-        }
-    }
-
-    HumanReadable() {
-        class HumanReadableObj {
-            constructor(fields) {
-                this.fields = fields;
-            }
-
-            *[Symbol.iterator]() {
-                for (const field of this.fields) {
-                    yield {name: field.name, value:MakeHumanReadable(field.name, field.value)}
-                }
-            }
-        }
-
-        return new HumanReadableObj(this.#fields);
-    }
-}
-
 const TrueFalseMapping =
 {
     "0": "false",
@@ -508,12 +356,12 @@ const EnumMappings =
         "5": "Undefined"
     },
     "Header.Using preview Agility SDK": TrueFalseMapping,
-    "DXGI_FEATURE_PRESENT_ALLOW_TEARING": TrueFalseMapping,
-    "bIsDCHDriver": TrueFalseMapping,
-    "bIsNVIDIAStudioPackage": TrueFalseMapping,
-    "bIsNVIDIAGameReadyPackage": TrueFalseMapping,
-    "bIsNVIDIARTXProductionBranchPackage": TrueFalseMapping,
-    "bIsNVIDIARTXNewFeatureBranchPackage": TrueFalseMapping,
+    "SystemInfo.DXGI_FEATURE.DXGI_FEATURE_PRESENT_ALLOW_TEARING": TrueFalseMapping,
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsDCHDriver": TrueFalseMapping,
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAStudioPackage": TrueFalseMapping,
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAGameReadyPackage": TrueFalseMapping,
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage": TrueFalseMapping,
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage": TrueFalseMapping,
     "NvPhysicalGpuHandle.NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady": TrueFalseMapping,
     "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_LOGO_BRIGHTNESS)": TrueFalseMapping,
     "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_SLI_BRIGHTNESS)": TrueFalseMapping,
@@ -612,6 +460,7 @@ const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": TrueFalseMapping
 }
+
 const BitFlagsMappings =
 {
     "DXGI_ADAPTER_DESC1.Flags":
@@ -659,13 +508,62 @@ const BitFlagsMappings =
         "64": "D3D12_COMMAND_LIST_SUPPORT_FLAG_VIDEO_ENCODE"
     },
 }
+
 const VendorIDs =
 {
     "4098": "AMD/ATI",
     "4130": "AMD",
     "4318": "NVIDIA",
     "5140": "Microsoft",
-    "32902": "Intel"
+    "5692": "Intel",
+    "32902": "Intel",
+    "32903": "Intel",
+    "877417040": "Parallels",
+    "1297040209": "Qualcomm"
+}
+
+const PropertyHumanReadableNames =
+{
+    "Header.Program": "Program",
+    "Header.Version": "Program Version",
+    "Header.Build Date": "Program Build Date",
+    "Header.Configuration": "Program Configuration",
+    "Header.Configuration bits": "Program Architecture",
+    "Header.Generated on": "Report generated on",
+    "Header.Using preview Agility SDK": "Using preview Agility SDK",
+    "Header.D3D12_SDK_VERSION": "Agility SDK Version",
+    "Header.NvAPI compiled version": "NVAPI library version",
+    "Header.NvAPI_GetInterfaceVersionString": "NVAPI interface version",
+    "Header.AMD_AGS_VERSION": "AMD AGS library version",
+    "Header.agsGetVersionNumber": "AMD AGS interface version",
+    "Header.Intel GPU Detect compiled version": "Intel GPU Detect library version",
+    "SystemInfo.OS Info.Windows version": "Windows version",
+    "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory": "Phisically installed RAM",
+    "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys": "Actually available RAM",
+    "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPageFile": "Current page file size",
+    "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalVirtual": "Total virtual adress space size",
+    "SystemInfo.DXGI_FEATURE.DXGI_FEATURE_PRESENT_ALLOW_TEARING": "DXGI_FEATURE_PRESENT_ALLOW_TEARING",
+    "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion": "NVAPI Driver version",
+    "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.szBuildBranchString": "NVAPI Driver branch name",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion": "NVAPI Display driver version",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBranch": "NVAPI Display driver branch name",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsDCHDriver": "NVAPI is DCH Driver",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAStudioPackage": "NVAPI is Studio Driver",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAGameReadyPackage": "NVAPI is Game Ready Driver",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage": "NVAPI is RTX Production Branch Driver",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage": "NVAPI is RTX New Feature Branch Driver",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch": "NVAPI Driver base branch",
+    "SystemInfo.D3D12EnableExperimentalFeatures": "Available Experimental features",
+    "AdapterIndex": "Adapter Index",
+    "CheckInterfaceSupport.UMDVersion": "User Mode Driver Version"
+}
+
+function MakeHumanReadableProperty(property) {
+    if (property in PropertyHumanReadableNames) {
+        return PropertyHumanReadableNames[property]
+    }
+
+    return property
 }
 
 function MakeHumanReadable(property, value) {
@@ -692,8 +590,8 @@ function MakeHumanReadable(property, value) {
     }
 
     switch (property) {
-        case "pDriverVersion":
-        case "driverVersion":
+        case "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion":
+        case "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion":
             {
                 return value / 100
             }
@@ -737,6 +635,12 @@ function MakeHumanReadable(property, value) {
                 let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
                 return "0x" + ZeroPad(Number(value).toString(16), 8)
             }
+        // 32 bit AMD AGS encoded version
+        case "Header.agsGetVersionNumber":
+            {
+                let a = BigInt(value)
+                return `${(a >> 22n) & 1023n}.${(a >> 12n) & 1023n}.${a & 4095n}`
+            }
         // 64 bit encoded version
         case "CheckInterfaceSupport.UMDVersion":
             {
@@ -744,15 +648,15 @@ function MakeHumanReadable(property, value) {
                 return `${(a >> 48n) & 65535n}.${(a >> 32n) & 65535n}.${(a >> 16n) & 65535n}.${a & 65535n}`
             }
         // KiB to human readable
-        case "GetPhysicallyInstalledSystemMemory":
+        case "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetPhysicalFrameBufferSize":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetVirtualFrameBufferSize":
             value *= 1024 // Convert to bytes
         // Then fallthrough to
         // Bytes to human readable
-        case "MEMORYSTATUSEX::ullTotalPhys":
-        case "MEMORYSTATUSEX::ullTotalPageFile":
-        case "MEMORYSTATUSEX::ullTotalVirtual":
+        case "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys":
+        case "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPageFile":
+        case "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalVirtual":
         case "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].Budget":
         case "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].AvailableForReservation":
         case "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL].Budget":
@@ -788,37 +692,141 @@ function MakeHumanReadable(property, value) {
     return value
 }
 
-const SubmissionIDs = { true: [], false: [] }
+class ReportContainer {
+    static #renameList = new Map([
+        ["Header.D3D12_PREVIEW_SDK_VERSION", "Header.D3D12_SDK_VERSION"]
+    ])
 
-let HaveUnsubmittedReports = false
+    #fields = []
 
-let reportIndex = 0
-
-let PreviewAvailable = false
-let ShowRetail = true
-let Headers = []
-let Adapters = []
-
-let VersionsArray = [true]
-
-function InitReportData() {
-    Headers = reports.map(e => { 
-        return new Header({ "Header": e.Header, "SystemInfo": e.SystemInfo })
-    })
-    if (reports[1] != null)
-    {
-        PreviewAvailable = true
-        VersionsArray = [true, false]
+    #import(data) {
+        let dest = this.#fields
+        function flatten(obj, prefix) {
+            if (typeof (obj) == "object" && !Array.isArray(obj)) {
+                for (const property in obj) {
+                    let newPrefix = prefix
+                    if (newPrefix != "") newPrefix += "."
+                    newPrefix += property
+                    flatten(obj[property], newPrefix)
+                }
+            }
+            else if (Array.isArray(obj)) {
+                dest.push({name:prefix, value:obj.join(", ")})
+            }
+            else if (typeof obj == "boolean") {
+                dest.push({name:prefix, value:+obj})
+            }
+            else {
+                dest.push({name:prefix, value:obj})
+            }
+        }
+        flatten(data, "")
     }
-    let retailAdapters = reports[0].Adapters;
-    let previewAdapters = reports[1]?.Adapters;
-    for (let i = 0; i < retailAdapters.length; ++i) {
-        Adapters.push([new Adapter(retailAdapters[i]), PreviewAvailable ? new Adapter(previewAdapters[i]) : null]);
+
+    #patchData() {
+        for (const e of this.#fields) {
+            if (ReportContainer.#renameList.has(e.name))
+            {
+                e.name = ReportContainer.#renameList.get(e.name)
+            }
+        }
+
+        for (const e of this.#fields) {
+            switch (e.name)
+            {
+                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
+                    {
+                        for (const e2 of this.#fields) {
+                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id")
+                            {
+                                e.value += e2.value
+                                break
+                            }
+                        }
+                    }
+                    break
+            }
+        }
+    }
+
+    constructor(data) {
+        this.#import(data)
+        this.#patchData()
+    }
+    
+    *[Symbol.iterator]() {
+        for (const field of this.#fields) {
+            yield field;
+        }
+    }
+
+    HumanReadable() {
+        class HumanReadableObj {
+            constructor(fields) {
+                this.fields = fields;
+            }
+
+            *[Symbol.iterator]() {
+                for (const field of this.fields) {
+                    yield {name: MakeHumanReadableProperty(field.name), value:MakeHumanReadable(field.name, field.value)}
+                }
+            }
+        }
+
+        return new HumanReadableObj(this.#fields);
     }
 }
 
-function WriteObjectToTable(obj, table) {
-    for (const e of obj.HumanReadable()) {
+let SingleReport = false
+let Reports = []
+let ReportIndex = 0
+
+function UpdateOutput() {
+    const report = Reports[ReportIndex]
+
+    const tableContainer = document.getElementById("TableContainer")
+
+    while (tableContainer.lastElementChild) {
+        tableContainer.removeChild(tableContainer.lastElementChild)
+    }
+
+    const table = document.createElement("table")
+    const tableBody = document.createElement("tbody")
+
+    {
+        const firstRow = document.createElement("tr")
+        if (!SingleReport)
+        {
+            const cell = document.createElement("td")
+            cell.colSpan = 2
+            {
+                let button = document.createElement("button")
+                button.onclick = () => {
+                    --ReportIndex
+                    UpdateOutput()
+                }
+                button.disabled = ReportIndex == 0
+                const buttonText = document.createTextNode("Previous report")
+                button.appendChild(buttonText)
+                cell.appendChild(button)
+            }
+            {
+                let button = document.createElement("button")
+                button.onclick = () => {
+                    ++ReportIndex
+                    UpdateOutput()
+                }
+                button.disabled = ReportIndex >= Reports.length - 1
+                const buttonText = document.createTextNode("Next report")
+                button.appendChild(buttonText)
+                cell.appendChild(button)
+            }
+            firstRow.appendChild(cell)
+        }
+        tableBody.appendChild(firstRow)
+    }
+
+    for (const e of report.HumanReadable()) {
         const row = document.createElement("tr")
 
         const cell0 = document.createElement("td")
@@ -831,208 +839,53 @@ function WriteObjectToTable(obj, table) {
         cell1.appendChild(cell1Text)
         row.appendChild(cell1)
 
-        table.appendChild(row)
+        tableBody.appendChild(row)
     }
+
+    table.appendChild(tableBody)
+    tableContainer.appendChild(table)
 }
 
-function PrepareReport(header, adapter) {
-    let submission = {}
-    for (const e of header) {
-        submission[e.name] = e.value
-    }
-    for (const e of adapter) {
-        submission[e.name] = e.value
-    }
-    for (const property in submission) {
-        let propertyLower = property.toLowerCase()
-        if (propertyLower.includes("uuid") || propertyLower.includes("luid")) {
-            delete submission[property]
-        }
-    }
-    return JSON.stringify(submission)
-}
+function OnLoad() {
+    const tableContainer = document.getElementById("TableContainer")
+    const textContainer = document.createElement("div")
+    const loadingText = document.createTextNode("Loading. Please wait.")
+    textContainer.appendChild(loadingText)
+    tableContainer.appendChild(textContainer)
 
-function SubmitReport(header, adapter, onSuccess) {
     let xhr = new XMLHttpRequest()
-    xhr.open("POST", apiAddress + "/post_submission")
-    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.open("GET", apiAddress + "/get_all_submissions")
     xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4)
-            return;
-
-        if (xhr.status == 200) {
-            if (onSuccess != null)
-                onSuccess(xhr.responseText)
-        }
-        else {
-            console.log(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
+            UpdateOutput()
         }
     }
-    xhr.send(PrepareReport(header, adapter))
+    xhr.send()
 }
 
-function SubmitAllReports()
-{
-    VersionsArray.forEach((isRetail) => {
-        for (let i = 0; i < Adapters.length; ++i)
-        {
-            header = isRetail ? Headers[0] : Headers[1]
-            adapters = Adapters[i]
-            adapter = isRetail ? adapters[0] : adapters[1]
-            SubmitReport(header, adapter, (ID) => {
-                SubmissionIDs[isRetail][i] = ID;
-                if (isRetail == ShowRetail && i == reportIndex)
-                {
-                    UpdateReport();
-                }
-                UpdateHeader();
-            })
-        }
-    })
-}
+function OnLoadID() {
+    SingleReport = true
 
-function UpdateHeader() {
-    const headerContainer = document.getElementById("HeaderContainer")
+    const tableContainer = document.getElementById("TableContainer")
+    const textContainer = document.createElement("div")
+    const loadingText = document.createTextNode("Loading. Please wait.")
+    textContainer.appendChild(loadingText)
+    tableContainer.appendChild(textContainer)
 
-    while (headerContainer.lastElementChild) {
-        headerContainer.removeChild(headerContainer.lastElementChild)
+    const queryParams = (new URL(document.location)).searchParams
+    if (!queryParams.has('ID')) {
+        loadingText.textContent = "Missing ID parameter."
+        return
     }
 
-    const table = document.createElement("table")
-    const tableBody = document.createElement("tbody")
-
-    // Empty first row to make automatic table size calculation consistent between tables
-    const firstRow = document.createElement("tr")
-    const cell = document.createElement("td")
-    cell.colSpan = 2
-    let submitButton = document.createElement("button")
-    submitButton.disabled = !HaveUnsubmittedReports;
-    submitButton.onclick = () => {
-        HaveUnsubmittedReports = false;
-        submitButton.disabled = HaveUnsubmittedReports;
-        SubmitAllReports()
+    let xhr = new XMLHttpRequest()
+    xhr.open("GET", apiAddress + "/get_submission?ID=" + queryParams.get('ID'))
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
+            UpdateOutput()
+        }
     }
-    const buttonText = document.createTextNode("Submit all reports")
-    submitButton.appendChild(buttonText)
-    cell.appendChild(submitButton)
-    firstRow.appendChild(cell)
-    tableBody.appendChild(firstRow)
-
-    WriteObjectToTable(ShowRetail ? Headers[0] : Headers[1], tableBody, "", false)
-
-    table.appendChild(tableBody)
-    headerContainer.appendChild(table)
-}
-
-function UpdateReport() {
-    const report = Adapters[reportIndex]
-
-    const reportContainer = document.getElementById("ReportContainer")
-
-    while (reportContainer.lastElementChild) {
-        reportContainer.removeChild(reportContainer.lastElementChild)
-    }
-
-    const table = document.createElement("table")
-    const tableBody = document.createElement("tbody")
-
-    {
-        const firstRow = document.createElement("tr")
-        const cell = document.createElement("td")
-        cell.colSpan = 2
-        {
-            let button = document.createElement("button")
-            button.onclick = () => {
-                --reportIndex
-                UpdateReport()
-            }
-            button.disabled = reportIndex == 0
-            const buttonText = document.createTextNode("Previous report")
-            button.appendChild(buttonText)
-            cell.appendChild(button)
-        }
-        {
-            let submitButton = document.createElement("button")
-            submitButton.disabled = (SubmissionIDs[ShowRetail][reportIndex] == null)
-            submitButton.onclick = () => {
-                location.href = `${siteAddress}/ID.html?ID=${SubmissionIDs[ShowRetail][reportIndex]}`
-            }
-            let submitButtonText = document.createTextNode("Open Online")
-            submitButton.appendChild(submitButtonText)
-            cell.appendChild(submitButton)
-        }
-        if (PreviewAvailable)
-        {
-            let button = document.createElement("button")
-            button.onclick = () => {
-                ShowRetail = !ShowRetail
-                UpdateOutput()
-            }
-            const buttonText = document.createTextNode(ShowRetail ? "Switch to Preview" : "Switch to Retail")
-            button.appendChild(buttonText)
-            cell.appendChild(button)
-        }
-        {
-            let button = document.createElement("button")
-            button.onclick = () => {
-                ++reportIndex
-                UpdateReport()
-            }
-            button.disabled = reportIndex == Adapters.length - 1
-            const buttonText = document.createTextNode("Next report")
-            button.appendChild(buttonText)
-            cell.appendChild(button)
-        }
-        firstRow.appendChild(cell)
-        tableBody.appendChild(firstRow)
-    }
-
-    WriteObjectToTable(ShowRetail ? report[0] : report[1], tableBody)
-
-    table.appendChild(tableBody)
-    reportContainer.appendChild(table)
-}
-
-function QueryReportIDs() {
-    VersionsArray.forEach((isRetail) => {
-        for (let i = 0; i < Adapters.length; ++i)
-        {
-            SubmissionIDs[isRetail][i] = null;
-            let xhr = new XMLHttpRequest()
-            xhr.open("POST", apiAddress + "/is_submitted")
-            xhr.setRequestHeader("Content-Type", "application/json")
-            xhr.onloadend = () => {
-                if (xhr.status == 200) {
-                    SubmissionIDs[isRetail][i] = Number(xhr.responseText)
-                    if (isRetail == ShowRetail && i == reportIndex)
-                    {
-                        UpdateOutput();
-                    }
-                }
-                else
-                {
-                    if (!HaveUnsubmittedReports)
-                    {
-                        HaveUnsubmittedReports = true;
-                        UpdateHeader();
-                    }
-                }
-            }
-            header = isRetail ? Headers[0] : Headers[1]
-            adapters = Adapters[i]
-            adapter = isRetail ? adapters[0] : adapters[1]
-            xhr.send(PrepareReport(header, adapter))
-        }
-    })
-}
-
-function UpdateOutput() {
-    UpdateHeader()
-    UpdateReport()
-}
-
-function OnLoadClient() {
-    InitReportData()
-    QueryReportIDs()
-    UpdateOutput()
+    xhr.send()
 }
