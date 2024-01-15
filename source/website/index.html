@@ -519,7 +519,7 @@
                         ++reportIndex
                         UpdateOutput()
                     }
-                    button.disabled = reportIndex == reports.length - 1
+                    button.disabled = reportIndex >= reports.length - 1
                     const buttonText = document.createTextNode("Next report")
                     button.appendChild(buttonText)
                     cell.appendChild(button)

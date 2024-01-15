@@ -1,0 +1,59 @@
+table {
+    width: 100%;
+    border: 2px solid;
+    border-collapse: collapse;
+    border-color: #a7a7a7;
+    margin: 0.9em 0;
+    font-size: 0.9em;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+tr {
+    width: 100%;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #e6e5e5;
+}
+
+tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #e6e5e5;
+    padding: 0;
+}
+
+td {
+    border: 1px solid;
+    border-color: #a7a7a7;
+}
+
+td:nth-of-type(even) {
+    background-color: #00000010;
+    width: 10%;
+}
+
+td:nth-of-type(odd) {
+    width: 60%;
+}
+
+button {
+    margin: auto;
+    width: 10em;
+    background-color: #029c07;
+    border: none;
+    color: white;
+    padding: 0.5em 1em;
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.3em;
+}
+
+button:disabled {
+    background-color: #7c7c7c;
+}

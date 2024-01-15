@@ -35,8 +35,7 @@ void Subprocess::InitializePipe(HANDLE &stdoutRead, HANDLE &stdoutWrite) {
     throw std::runtime_error(
         "Subprocess::InitializePipe::SetHandleInformation");
 }
-void Subprocess::LaunchProcess(HANDLE stdoutWrite,
-                               HANDLE &processHandle,
+void Subprocess::LaunchProcess(HANDLE stdoutWrite, HANDLE &processHandle,
                                std::string_view commandLine) {
   PROCESS_INFORMATION procInfo{};
   STARTUPINFO startupInfo{};
@@ -48,8 +47,8 @@ void Subprocess::LaunchProcess(HANDLE stdoutWrite,
 
   std::string commandLineCopy(commandLine);
 
-  BOOL bSuccess = ::CreateProcess(NULL, commandLineCopy.data(), NULL, NULL, TRUE,
-                                0, NULL, NULL, &startupInfo, &procInfo);
+  BOOL bSuccess = ::CreateProcess(NULL, commandLineCopy.data(), NULL, NULL,
+                                  TRUE, 0, NULL, NULL, &startupInfo, &procInfo);
   if (!bSuccess)
     std::runtime_error("Subprocess::LaunchProcess::CreateProcessW");
 
@@ -62,13 +61,12 @@ std::string Subprocess::ReadOutput(const HANDLE &stdoutRead) {
   std::string output;
   for (;;) {
     BOOL bSuccess = ::ReadFile(stdoutRead, tempBuffer, ARRAYSIZE(tempBuffer),
-                             &bytesRead, NULL);
+                               &bytesRead, NULL);
     if (!bSuccess || bytesRead == 0) break;
 
     std::string chunk(tempBuffer, tempBuffer + bytesRead / sizeof(CHAR));
     output += chunk;
   }
-
 
   return output;
 }
