@@ -5,14 +5,15 @@
 namespace D3d12infoGUI {
 class Subprocess {
  public:
-  static std::pair<int, std::string> GetCommandOutput(
+  // first - exit code, second - array of chars of output
+  static std::pair<int, std::vector<char>> GetCommandOutput(
       std::string_view commandLine);
 
  private:
   static void InitializePipe(HANDLE &stdoutRead, HANDLE &stdoutWrite);
-  static void LaunchProcess(HANDLE stdoutWrite, HANDLE &processHandle,
+  static void LaunchProcess(HANDLE stdinRead, HANDLE stdoutWrite, HANDLE &processHandle,
                             std::string_view commandLine);
-  static std::string ReadOutput(const HANDLE &stdoutRead);
+  static std::vector<char> ReadOutput(HANDLE stdoutRead);
   static int GetExitCode(HANDLE process);
 };
 }  // namespace D3d12infoGUI

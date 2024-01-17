@@ -3,17 +3,19 @@
 #include "subprocess.h"
 
 namespace D3d12infoGUI {
-std::pair<int, std::string> Subprocess::GetCommandOutput(
+std::pair<int, std::vector<char>> Subprocess::GetCommandOutput(
     std::string_view commandLine) {
+  HANDLE stdinRead = NULL;
+  HANDLE stdinWrite = NULL;
   HANDLE stdoutRead = NULL;
   HANDLE stdoutWrite = NULL;
   HANDLE process = NULL;
 
   InitializePipe(stdoutRead, stdoutWrite);
-  LaunchProcess(stdoutWrite, process, commandLine);
+  LaunchProcess(stdinRead, stdoutWrite, process, commandLine);
   ::CloseHandle(stdoutWrite);
 
-  std::pair<int, std::string> result;
+  std::pair<int, std::vector<char>> result;
   result.second = ReadOutput(stdoutRead);
   ::CloseHandle(stdoutRead);
 
@@ -35,12 +37,14 @@ void Subprocess::InitializePipe(HANDLE &stdoutRead, HANDLE &stdoutWrite) {
     throw std::runtime_error(
         "Subprocess::InitializePipe::SetHandleInformation");
 }
-void Subprocess::LaunchProcess(HANDLE stdoutWrite, HANDLE &processHandle,
+void Subprocess::LaunchProcess(HANDLE stdinRead, HANDLE stdoutWrite,
+                               HANDLE &processHandle,
                                std::string_view commandLine) {
   PROCESS_INFORMATION procInfo{};
   STARTUPINFO startupInfo{};
 
   startupInfo.cb = sizeof(STARTUPINFO);
+  startupInfo.hStdInput = stdinRead;
   startupInfo.hStdError = stdoutWrite;
   startupInfo.hStdOutput = stdoutWrite;
   startupInfo.dwFlags |= STARTF_USESTDHANDLES;
@@ -52,20 +56,26 @@ void Subprocess::LaunchProcess(HANDLE stdoutWrite, HANDLE &processHandle,
   if (!bSuccess)
     std::runtime_error("Subprocess::LaunchProcess::CreateProcessW");
 
+  bSuccess = ::AttachConsole(procInfo.dwProcessId);
+  if (!bSuccess)
+    std::runtime_error("Subprocess::LaunchProcess::AttachConsole");
+
   processHandle = procInfo.hProcess;
   ::CloseHandle(procInfo.hThread);
 }
-std::string Subprocess::ReadOutput(const HANDLE &stdoutRead) {
+std::vector<char> Subprocess::ReadOutput(HANDLE stdoutRead) {
   DWORD bytesRead;
   CHAR tempBuffer[4096];
-  std::string output;
+  std::vector<char> output;
   for (;;) {
     BOOL bSuccess = ::ReadFile(stdoutRead, tempBuffer, ARRAYSIZE(tempBuffer),
                                &bytesRead, NULL);
     if (!bSuccess || bytesRead == 0) break;
 
-    std::string chunk(tempBuffer, tempBuffer + bytesRead / sizeof(CHAR));
-    output += chunk;
+    size_t prevSize = output.size();
+    output.resize(prevSize + bytesRead);
+    char *dest = output.data() + prevSize;
+    memcpy(dest, tempBuffer, bytesRead);
   }
 
   return output;

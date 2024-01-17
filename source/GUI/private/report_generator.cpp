@@ -25,7 +25,8 @@ void ReportGenerator::WriteFile(const std::filesystem::path& path,
   }
 }
 
-void ReportGenerator::GenerateHTML(std::string_view reportData) {
+void ReportGenerator::GenerateHTML(
+    const std::vector<std::vector<char>>& validReports) {
   std::filesystem::path folderPath =
       std::filesystem::temp_directory_path() / L"D3d12infoGUI";
   if (!std::filesystem::is_directory(folderPath)) {
@@ -40,15 +41,27 @@ void ReportGenerator::GenerateHTML(std::string_view reportData) {
   WriteFile(folderPath / L"Report.css", g_ReportCSS, sizeof(g_ReportCSS));
 
   std::filesystem::path jsFilePath = folderPath / L"Reports.json";
-  std::ofstream jsFile;
-  jsFile.open(jsFilePath, std::ios_base::out | std::ios_base::binary);
-  if (jsFile.fail()) {
+  std::ofstream jsonFile;
+  jsonFile.open(jsFilePath, std::ios_base::out | std::ios_base::binary);
+  if (jsonFile.fail()) {
     throw std::runtime_error("Failed to open output file");
   }
 
-  jsFile << "const reports = " << reportData;
-  jsFile.close();
-  if (jsFile.fail()) {
+  jsonFile << "const reports = [";
+  bool isFirst = true;
+  for (const auto& report : validReports) {
+    if (isFirst) {
+      isFirst = false;
+    } else {
+      jsonFile << ",";
+    }
+
+    jsonFile.write(report.data(), report.size());
+  }
+  jsonFile << "]";
+
+  jsonFile.close();
+  if (jsonFile.fail()) {
     throw std::runtime_error("Failed to write output file");
   }
 

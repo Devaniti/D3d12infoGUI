@@ -6,28 +6,17 @@
 using namespace D3d12infoGUI;
 
 int main(int argc, char* argv[]) {
-  std::ostringstream reportsArray;
-  const std::pair<int, std::string> reports[] = {
+  const std::pair<int, std::vector<char>> reports[] = {
       Subprocess::GetCommandOutput("D3d12info.exe -j --AllAdapters"),
       Subprocess::GetCommandOutput("D3d12info_preview.exe -j --AllAdapters")};
 
-  bool isFirst = true;
-
-  reportsArray << "[";
+  std::vector<std::vector<char>> validReports;
   for (const auto& report : reports) {
-    if (report.first != 0) {
-      continue;
+    if (report.first == 0) {
+      validReports.push_back(report.second);
     }
-
-    if (isFirst) {
-      isFirst = false;
-    } else {
-      reportsArray << ",";
-    }
-
-    reportsArray << report.second;
   }
-  reportsArray << "]";
-  ReportGenerator::GenerateHTML(reportsArray.str());
+
+  ReportGenerator::GenerateHTML(validReports);
   return 0;
 }
