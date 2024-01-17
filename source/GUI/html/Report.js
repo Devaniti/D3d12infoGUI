@@ -841,7 +841,6 @@ function PrepareReport(header, adapter) {
             delete submission[property]
         }
     }
-    console.log(JSON.stringify(submission))
     return JSON.stringify(submission)
 }
 
@@ -953,6 +952,10 @@ function UpdateReport() {
             let button = document.createElement("button")
             button.onclick = () => {
                 RetailIndex = 1 - RetailIndex
+                if (ReportIndex >= Adapters[RetailIndex].length)
+                {
+                    ReportIndex = 0;
+                }
                 UpdateOutput()
             }
             const buttonText = document.createTextNode(RetailIndex == 0 ? "Switch to Preview" : "Switch to Retail")
@@ -965,7 +968,7 @@ function UpdateReport() {
                 ++ReportIndex
                 UpdateReport()
             }
-            button.disabled = ReportIndex == Adapters.length - 1
+            button.disabled = ReportIndex >= Adapters[RetailIndex].length - 1
             const buttonText = document.createTextNode("Next report")
             button.appendChild(buttonText)
             cell.appendChild(button)
