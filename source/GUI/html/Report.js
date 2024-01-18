@@ -1059,6 +1059,13 @@ function QueryReportIDs() {
 }
 
 function UpdateOutput() {
+    if (Headers.length == 0)
+    {
+        const errorText = document.createTextNode("No reports generated")
+        document.body.appendChild(errorText)
+        return
+    }
+
     UpdateHeader()
     UpdateReport()
 }
