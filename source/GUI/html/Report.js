@@ -719,6 +719,7 @@ function MakeHumanReadable(property, value) {
         case "AGSDeviceInfo.localMemoryInBytes":
         case "AGSDeviceInfo.sharedMemoryInBytes":
         case "Intel GPUDetect::GPUData.videoMemory":
+        case "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - rdmaHeapSize":
             {
                 const prefixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
                 let a = Number(value)

@@ -333,6 +333,7 @@ const EnumMappings =
         "368": "GA100",
         "370": "GA102",
         "372": "GA104",
+        "374": "GA106",
 
         "402": "AD102",
         "403": "AD103",
@@ -345,6 +346,19 @@ const EnumMappings =
         "0": "NOT_SUPPORTED",
         "1": "DEFERRED",
         "2": "IMMEDIATE"
+    },
+    "AGSDeviceInfo.asicFamily":
+    {
+        "0": "UNKNONW",
+        "1": "Pre GCN",
+        "2": "GCN1",
+        "3": "GCN2",
+        "4": "GCN3",
+        "5": "GCN4",
+        "6": "Vega",
+        "7": "RDNA",
+        "8": "RDNA2",
+        "9": "RDNA3"
     },
     "Intel GPUDetect::GPUData.DefaultFidelityPreset":
     {
@@ -386,6 +400,21 @@ const EnumMappings =
     "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported": TrueFalseMapping,
     "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - supported": TrueFalseMapping,
     "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded": TrueFalseMapping,
+    "AGSDeviceInfo.isAPU": TrueFalseMapping,
+    "AGSDeviceInfo.isExternal": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics16": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics17": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.userMarkers": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.appRegistration": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.UAVBindSlot": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics19": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.baseVertex": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.baseInstance": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.getWaveSize": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.floatConversion": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.readLaneAt": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.rayHitToken": TrueFalseMapping,
+    "AGSDX12ReturnedParams::ExtensionsSupported.shaderClock": TrueFalseMapping,
     "Intel GPUDetect::GPUData.intelExtensionAvailability": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp": TrueFalseMapping,
@@ -509,6 +538,13 @@ const BitFlagsMappings =
     },
 }
 
+const SuffixMappings =
+{
+    "AGSDeviceInfo.coreClock": "MHz",
+    "AGSDeviceInfo.memoryClock": "MHz",
+    "AGSDeviceInfo.memoryBandwidth": "MB/s",
+}
+
 const VendorIDs =
 {
     "4098": "AMD/ATI",
@@ -589,6 +625,11 @@ function MakeHumanReadable(property, value) {
         return result
     }
 
+    if (property in SuffixMappings)
+    {
+        return value + SuffixMappings[property]
+    }
+
     switch (property) {
         case "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion":
         case "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion":
@@ -597,6 +638,7 @@ function MakeHumanReadable(property, value) {
             }
         // WORD sized hex number
         case "DXGI_ADAPTER_DESC3.VendorId":
+        case "AGSDeviceInfo.vendorId":
         case "VkPhysicalDeviceProperties.vendorID":
         case "Intel GPUDetect::GPUData.VendorId":
             {
@@ -618,6 +660,8 @@ function MakeHumanReadable(property, value) {
         case "DXGI_ADAPTER_DESC3.Revision":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pRevisionId":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId":
+        case "AGSDeviceInfo.deviceId":
+        case "AGSDeviceInfo.revisionId":
         case "Intel GPUDetect::GPUData.deviceID":
         case "VkPhysicalDeviceProperties.driverVersion":
         case "VkPhysicalDeviceProperties.deviceID":
@@ -672,7 +716,10 @@ function MakeHumanReadable(property, value) {
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize":
         case "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes":
+        case "AGSDeviceInfo.localMemoryInBytes":
+        case "AGSDeviceInfo.sharedMemoryInBytes":
         case "Intel GPUDetect::GPUData.videoMemory":
+        case "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - rdmaHeapSize":
             {
                 const prefixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
                 let a = Number(value)
