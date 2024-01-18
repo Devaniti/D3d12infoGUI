@@ -13,6 +13,8 @@ ALTER TABLE Submissions ADD COLUMN "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - 
 ALTER TABLE Submissions ADD COLUMN "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage" INT;    
 ALTER TABLE Submissions ADD COLUMN "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage" INT;    
 ALTER TABLE Submissions ADD COLUMN "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch" TEXT;
+ALTER TABLE Submissions ADD COLUMN "SystemInfo.AGSGPUInfo.driverVersion" TEXT;
+ALTER TABLE Submissions ADD COLUMN "SystemInfo.AGSGPUInfo.radeonSoftwareVersion" TEXT;
 ALTER TABLE Submissions ADD COLUMN "NvPhysicalGpuHandle.NvAPI_GPU_GetSystemType" INT;
 ALTER TABLE Submissions ADD COLUMN "NvPhysicalGpuHandle.NvAPI_GPU_GetFullName" TEXT;
 ALTER TABLE Submissions ADD COLUMN "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID" INT;

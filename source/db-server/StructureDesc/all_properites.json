@@ -20,6 +20,8 @@
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage",
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage",
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch",
+    "SystemInfo.AGSGPUInfo.driverVersion",
+    "SystemInfo.AGSGPUInfo.radeonSoftwareVersion",
     "SystemInfo.D3D12EnableExperimentalFeatures",
     "DXGI_ADAPTER_DESC3.Description",
     "DXGI_ADAPTER_DESC3.VendorId",

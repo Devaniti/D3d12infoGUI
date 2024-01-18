@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS Submissions(
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage" INT,
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage" INT,
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch" TEXT,
+    "SystemInfo.AGSGPUInfo.driverVersion" TEXT,
+    "SystemInfo.AGSGPUInfo.radeonSoftwareVersion" TEXT,
     "SystemInfo.D3D12EnableExperimentalFeatures" TEXT NOT NULL,
     "DXGI_ADAPTER_DESC3.Description" TEXT NOT NULL,
     "DXGI_ADAPTER_DESC3.VendorId" INT NOT NULL,
