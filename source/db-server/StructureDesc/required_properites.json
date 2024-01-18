@@ -8,7 +8,6 @@
     "Header.D3D12_SDK_VERSION",
     "Header.NvAPI compiled version",
     "Header.AMD_AGS_VERSION",
-    "Header.agsGetVersionNumber",
     "Header.Intel GPU Detect compiled version",
     "SystemInfo.OS Info.Windows version",
     "SystemInfo.D3D12EnableExperimentalFeatures",

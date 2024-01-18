@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Submissions(
     "Header.NvAPI compiled version" TEXT NOT NULL,
     "Header.NvAPI_GetInterfaceVersionString" TEXT,
     "Header.AMD_AGS_VERSION" TEXT NOT NULL,
-    "Header.agsGetVersionNumber" INT NOT NULL,
+    "Header.agsGetVersionNumber" INT,
     "Header.Intel GPU Detect compiled version" TEXT NOT NULL,
     "SystemInfo.OS Info.Windows version" TEXT NOT NULL,
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion" INT,
@@ -276,6 +276,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
     "Header.Configuration bits",
     "Header.Using preview Agility SDK",
     "Header.D3D12_SDK_VERSION",
+    "Header.NvAPI compiled version",
+    "Header.AMD_AGS_VERSION",
     "Header.Intel GPU Detect compiled version",
     "SystemInfo.OS Info.Windows version",
     "SystemInfo.D3D12EnableExperimentalFeatures",
@@ -287,3 +289,5 @@ CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
     "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
     "CheckInterfaceSupport.UMDVersion"
 );
+
+PRAGMA user_version=1;

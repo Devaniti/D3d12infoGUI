@@ -63,9 +63,22 @@ const api = express()
 let db = new Database(databasePath)
 console.log(`Opened database ${databasePath}`)
 
-// Initialize DB if not already initialized
-db.exec(fs.readFileSync(databaseSchemaPath).toString())
-console.log(`Executed sql file ${databaseSchemaPath}`)
+let schemaVersion = db.pragma('user_version', { simple: true })
+console.log(`Database schema version is ${schemaVersion}`)
+
+switch (schemaVersion)
+{
+    case 0:
+        console.log("Setting up new database")
+        db.exec(fs.readFileSync(databaseSchemaPath).toString())
+        console.log("Finished new database setup")
+        break;
+    case 1:
+        console.log("Database schema is up to date")
+        break;
+}
+
+console.log("Database is ready")
 
 api.use(express.json())
 api.use(express.urlencoded({ extended: true }))
