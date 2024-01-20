@@ -1042,6 +1042,7 @@ class ReportContainer {
     ])
 
     #fields = []
+    #fieldsMap = {}
 
     #import(data) {
         let dest = this.#fields
@@ -1102,10 +1103,17 @@ class ReportContainer {
         })
     }
 
+    #initializeMap() {
+        for (const e of this.#fields) {
+            this.#fieldsMap[e.name] = e.value
+        }
+    }
+
     constructor(data) {
         this.#import(data)
         this.#patchData()
         this.#reorderFields()
+        this.#initializeMap()
     }
     
     *[Symbol.iterator]() {
@@ -1128,6 +1136,10 @@ class ReportContainer {
         }
 
         return new HumanReadableObj(this.#fields);
+    }
+
+    GetField(field) {
+        return this.#fieldsMap[field]
     }
 }
 
@@ -1219,7 +1231,25 @@ function SubmitReport(header, adapter, onSuccess) {
 
 function SubmitAllReports()
 {
+    let adaptersMap = new Set();
     IterateAdapters((retailIndex, index, adapter) => {
+        let adapterKey = JSON.stringify([
+            retailIndex,
+            adapter.GetField("DXGI_ADAPTER_DESC3.Description"),
+            adapter.GetField("DXGI_ADAPTER_DESC3.VendorId"),
+            adapter.GetField("DXGI_ADAPTER_DESC3.DeviceId"),
+            adapter.GetField("DXGI_ADAPTER_DESC3.SubSysId"),
+            adapter.GetField("DXGI_ADAPTER_DESC3.Revision"),
+            adapter.GetField("DXGI_ADAPTER_DESC3.DedicatedVideoMemory"),
+            adapter.GetField("CheckInterfaceSupport.UMDVersion")
+        ])
+        if (adaptersMap.has(adapterKey))
+        {
+            console.log(`Skipping ${retailIndex == 0 ? "retail" : "preview"} adapter ${adapter.GetField("DXGI_ADAPTER_DESC3.Description")} with index ${index}, as it is detected as duplicate`)
+            return
+        }
+        adaptersMap.add(adapterKey);
+
         SubmitReport(Headers[retailIndex], adapter, (ID) => {
             SubmissionIDs[retailIndex][index] = ID;
             if (retailIndex == RetailIndex && index == ReportIndex)

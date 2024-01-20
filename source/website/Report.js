@@ -1042,6 +1042,7 @@ class ReportContainer {
     ])
 
     #fields = []
+    #fieldsMap = {}
 
     #import(data) {
         let dest = this.#fields
@@ -1102,10 +1103,17 @@ class ReportContainer {
         })
     }
 
+    #initializeMap() {
+        for (const e of this.#fields) {
+            this.#fieldsMap[e.name] = e.value
+        }
+    }
+
     constructor(data) {
         this.#import(data)
         this.#patchData()
         this.#reorderFields()
+        this.#initializeMap()
     }
     
     *[Symbol.iterator]() {
@@ -1128,6 +1136,10 @@ class ReportContainer {
         }
 
         return new HumanReadableObj(this.#fields);
+    }
+
+    GetField(field) {
+        return this.#fieldsMap[field]
     }
 }
 
