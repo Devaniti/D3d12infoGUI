@@ -56,7 +56,7 @@ To run database you need to host contents of `source/website` as a static websit
 
 Database service is hosted separately from the website, and doesn't neccecarilly need to run on same machine
 
-Note that URLs of database service and websites are hardcoded in source code
+Note that URLs of database service and website are hardcoded in source code
 
 # Running database service
 
