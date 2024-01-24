@@ -5,6 +5,7 @@ const https = require('https')
 const http = require('http')
 const express = require('express')
 const cors = require('cors')
+const compression = require('compression')
 const Database = require('better-sqlite3')
 
 const databaseFolder = 'Database/'
@@ -83,6 +84,7 @@ console.log("Database is ready")
 api.use(express.json())
 api.use(express.urlencoded({ extended: true }))
 api.use(cors())
+api.use(compression())
 
 api.get('/', (req, res) => {
     res.send('Server is up')
