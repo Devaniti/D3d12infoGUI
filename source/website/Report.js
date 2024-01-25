@@ -1182,12 +1182,14 @@ const ListHeader = [
 ]
 
 function FilterReports() {
-    if (SearchString == "")
-        return Reports
+    let reportMap = Reports.map((e, i) => {return {index: i, value: e}})
 
-    return Reports.filter(e => {
+    if (SearchString == "")
+        return reportMap
+
+    return reportMap.filter(e => {
         return ListHeader.some(collumn => {
-            let value = e.GetField(collumn)
+            let value = e.value.GetField(collumn)
             let humanReadableValue = MakeHumanReadable(collumn, value).toString().toLowerCase()
             value = value.toString().toLowerCase()
             return value.includes(SearchString.toLowerCase()) 
@@ -1197,8 +1199,7 @@ function FilterReports() {
 }
 
 function IterateReports(callback) {
-    let reportMap = FilteredReports.map((e, i) => {return {index: i, value: e}})
-    let sortedReports = reportMap.sort((a, b) => {
+    let sortedReports = FilteredReports.sort((a, b) => {
         let aValue = a.value.GetField(SortProperty)
         let bValue = b.value.GetField(SortProperty)
         
