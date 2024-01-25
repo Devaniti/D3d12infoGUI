@@ -591,7 +591,16 @@ const PropertyHumanReadableNames =
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch": "NVAPI Driver base branch",
     "SystemInfo.D3D12EnableExperimentalFeatures": "Available Experimental features",
     "AdapterIndex": "Adapter Index",
-    "CheckInterfaceSupport.UMDVersion": "User Mode Driver Version"
+    "CheckInterfaceSupport.UMDVersion": "Driver Version",
+    "VkPhysicalDeviceVulkan12Properties.driverInfo": "Vulkan Driver Version",
+    "DXGI_ADAPTER_DESC3.Description": "Description",
+    "DXGI_ADAPTER_DESC3.VendorId": "PCI Vendor ID",
+    "DXGI_ADAPTER_DESC3.DeviceId": "PCI Device ID",
+    "DXGI_ADAPTER_DESC3.SubSysId": "PCI Sub system ID",
+    "DXGI_ADAPTER_DESC3.Revision": "PCI Sub Revision",
+    "DXGI_ADAPTER_DESC3.DedicatedVideoMemory": "VRAM amount",
+    "DXGI_ADAPTER_DESC3.DedicatedSystemMemory": "Dedicated RAM amount",
+    "DXGI_ADAPTER_DESC3.SharedSystemMemory": "Shared RAM amount"
 }
 
 const PropertiesOrder =
@@ -942,7 +951,7 @@ function MakeHumanReadable(property, value) {
                 let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
                 let hexValue = "0x" + ZeroPad(Number(value).toString(16), 4)
                 if (VendorIDs[value])
-                    return `${hexValue} (${VendorIDs[value]})`
+                    return `${VendorIDs[value]} (${hexValue})`
                 else
                     return hexValue
             }
@@ -1143,52 +1152,150 @@ class ReportContainer {
     }
 }
 
+function ClearElement(element) {
+    while (element.lastElementChild) {
+        element.removeChild(element.lastElementChild)
+    }
+}
+
 let SingleReport = false
 let Reports = []
 let ReportIndex = 0
 
-function UpdateOutput() {
+let SortProperty = "ID"
+let SortInverse = true
+let Page = 0
+let PageCount = 0
+const ElementsPerPage = 15
+
+const ListHeader = [
+    "ID",
+    "DXGI_ADAPTER_DESC3.Description",
+    "DXGI_ADAPTER_DESC3.VendorId",
+    "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
+    "CheckInterfaceSupport.UMDVersion",
+    "Header.Version",
+    "Header.Using preview Agility SDK"
+]
+
+function IterateReports(callback) {
+    let reportMap = Reports.map((e, i) => {return {index: i, value: e}})
+    let sortedReports = reportMap.sort((a, b) => {
+        let aValue = a.value.GetField(SortProperty)
+        let bValue = b.value.GetField(SortProperty)
+        
+        let compare = 0
+        if (aValue < bValue) compare = -1
+        if (aValue > bValue) compare = 1
+        if (SortInverse) compare *= -1
+        return compare
+    })
+    for (let i = Page * ElementsPerPage; i < Math.min((Page + 1) * ElementsPerPage, sortedReports.length); ++i)
+    {
+        callback(sortedReports[i].index, sortedReports[i].value)
+    }
+}
+
+function SetSortCollumn(collumn) {
+    if (SortProperty == collumn) {
+        SortInverse = !SortInverse
+    }
+    else {
+        SortProperty = collumn
+        SortInverse = false
+    }
+
+    Page = 0
+}
+
+function UpdateList() {
+    const listContainer = document.getElementById("ListContainer")
+
+    ClearElement(listContainer)
+
+    const table = document.createElement("table")
+    const tableBody = document.createElement("tbody")
+
+    const firstRow = document.createElement("tr")
+    tableBody.appendChild(firstRow)
+    
+
+    {
+        const secondRow = document.createElement("tr")
+        const secondRowCell = document.createElement("td")
+        secondRowCell.colSpan = ListHeader.length
+        const prevPageButton = document.createElement("button")
+        prevPageButton.appendChild(document.createTextNode("Previous page"))
+        prevPageButton.addEventListener('click', function(e) {
+            Page = Math.max(Page - 1, 0)
+            UpdateList()
+        })
+        prevPageButton.disabled = Page == 0
+        secondRowCell.appendChild(prevPageButton)
+        const nextPageButton = document.createElement("button")
+        nextPageButton.appendChild(document.createTextNode("Next page"))
+        nextPageButton.addEventListener('click', function(e) {
+            Page = Math.min(Page + 1, PageCount - 1)
+            UpdateList()
+        })
+        nextPageButton.disabled = Page == PageCount - 1
+        secondRowCell.appendChild(nextPageButton)
+        secondRowCell.classList.add("center")
+        secondRow.appendChild(secondRowCell)
+        tableBody.appendChild(secondRow)
+    }
+
+    {
+        const thirdRow = document.createElement("tr")
+        ListHeader.forEach(collumn => {
+            const cell = document.createElement("td")
+            cell.classList.add("clickableCell")
+            const sortMarket = collumn == SortProperty ? (SortInverse ? " ▼" : " ▲") : ""
+            const cellText = document.createTextNode(MakeHumanReadableProperty(collumn) + sortMarket)
+            cell.appendChild(cellText)
+
+            cell.addEventListener('click', function(e) {
+                SetSortCollumn(collumn)
+                UpdateList()
+            })
+            thirdRow.appendChild(cell)
+        })
+        tableBody.appendChild(thirdRow)
+    }
+
+    IterateReports((index, adapter) => {
+        const row = document.createElement("tr")
+        ListHeader.forEach(collumn => {
+            const cell = document.createElement("td")
+            let value = adapter.GetField(collumn)
+            let cellText = document.createTextNode(MakeHumanReadable(collumn, value))
+            cell.appendChild(cellText)
+            row.appendChild(cell)
+        })
+        row.addEventListener('click', function(e) {
+            ReportIndex = index
+            UpdateOutput()
+        })
+        row.classList.add("clickableRow")
+        tableBody.appendChild(row)
+    });
+
+    table.appendChild(tableBody)
+    listContainer.appendChild(table)
+}
+
+function UpdateReport() {
     const report = Reports[ReportIndex]
 
     const tableContainer = document.getElementById("TableContainer")
 
-    while (tableContainer.lastElementChild) {
-        tableContainer.removeChild(tableContainer.lastElementChild)
-    }
+    ClearElement(tableContainer)
 
     const table = document.createElement("table")
     const tableBody = document.createElement("tbody")
 
     {
         const firstRow = document.createElement("tr")
-        if (!SingleReport)
-        {
-            const cell = document.createElement("td")
-            cell.colSpan = 2
-            {
-                let button = document.createElement("button")
-                button.onclick = () => {
-                    --ReportIndex
-                    UpdateOutput()
-                }
-                button.disabled = ReportIndex == 0
-                const buttonText = document.createTextNode("Previous report")
-                button.appendChild(buttonText)
-                cell.appendChild(button)
-            }
-            {
-                let button = document.createElement("button")
-                button.onclick = () => {
-                    ++ReportIndex
-                    UpdateOutput()
-                }
-                button.disabled = ReportIndex >= Reports.length - 1
-                const buttonText = document.createTextNode("Next report")
-                button.appendChild(buttonText)
-                cell.appendChild(button)
-            }
-            firstRow.appendChild(cell)
-        }
         tableBody.appendChild(firstRow)
     }
 
@@ -1212,6 +1319,23 @@ function UpdateOutput() {
     tableContainer.appendChild(table)
 }
 
+function UpdateOutput() {
+    if (Reports.length == 0)
+    {
+        const errorText = document.createTextNode("No reports found")
+        document.body.appendChild(errorText)
+        return
+    }
+
+    if (!SingleReport) UpdateList()
+    UpdateReport()
+}
+
+function PrepareReports() {
+    PageCount = Math.ceil(Reports.length / ElementsPerPage)
+    ReportIndex = Reports.length - 1
+}
+
 function OnLoad() {
     const tableContainer = document.getElementById("TableContainer")
     const textContainer = document.createElement("div")
@@ -1224,6 +1348,7 @@ function OnLoad() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
+            PrepareReports()
             UpdateOutput()
         }
     }
@@ -1250,6 +1375,7 @@ function OnLoadID() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
+            PrepareReports()
             UpdateOutput()
         }
     }

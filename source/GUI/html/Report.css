@@ -4,7 +4,7 @@ table {
     border-collapse: collapse;
     border-color: #a7a7a7;
     margin: 0.9em 0;
-    font-size: 0.9em;
+    font-size: 1.0em;
     font-family: 'Courier New', monospace;
     box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
     table-layout: fixed;
@@ -32,20 +32,15 @@ td {
 
 td:nth-of-type(even) {
     background-color: #00000010;
-    width: 10%;
-}
-
-td:nth-of-type(odd) {
-    width: 60%;
 }
 
 button {
     margin: auto;
-    width: 10em;
+    width: 9.2em;
     background-color: #029c07;
     border: none;
     color: white;
-    padding: 0.5em 1em;
+    padding: 0.3em 0.6em;
     margin-left: 0.1em;
     margin-right: 0.1em;
     text-align: center;
@@ -56,4 +51,12 @@ button {
 
 button:disabled {
     background-color: #7c7c7c;
+}
+
+.clickableRow.clickableRow.clickableRow  {
+    cursor: pointer;
+}
+
+.clickableRow:hover {
+    background-color: #f4de98;
 }

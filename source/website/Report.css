@@ -4,7 +4,7 @@ table {
     border-collapse: collapse;
     border-color: #a7a7a7;
     margin: 0.9em 0;
-    font-size: 0.9em;
+    font-size: 1.0em;
     font-family: 'Courier New', monospace;
     box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
     table-layout: fixed;
@@ -41,11 +41,11 @@ td:nth-of-type(odd) {
 
 button {
     margin: auto;
-    width: 10em;
+    width: 8em;
     background-color: #029c07;
     border: none;
     color: white;
-    padding: 0.5em 1em;
+    padding: 0.2em 0.5em;
     margin-left: 0.1em;
     margin-right: 0.1em;
     text-align: center;
@@ -56,4 +56,24 @@ button {
 
 button:disabled {
     background-color: #7c7c7c;
+}
+
+.clickableRow.clickableRow.clickableRow  {
+    cursor: pointer;
+}
+
+.clickableRow:hover {
+    background-color: #f4de98;
+}
+
+.clickableCell {
+    cursor: pointer;
+}
+
+.clickableCell:hover {
+    background-color: #f4de98;
+}
+
+.center {
+    text-align: center;
 }
