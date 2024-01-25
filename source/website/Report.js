@@ -1166,7 +1166,10 @@ let SortProperty = "ID"
 let SortInverse = true
 let Page = 0
 let PageCount = 0
-const ElementsPerPage = 15
+const ElementsPerPage = 10
+
+let SearchString = ""
+let FilteredReports = []
 
 const ListHeader = [
     "ID",
@@ -1178,8 +1181,23 @@ const ListHeader = [
     "Header.Using preview Agility SDK"
 ]
 
+function FilterReports() {
+    if (SearchString == "")
+        return Reports
+
+    return Reports.filter(e => {
+        return ListHeader.some(collumn => {
+            let value = e.GetField(collumn)
+            let humanReadableValue = MakeHumanReadable(collumn, value).toString().toLowerCase()
+            value = value.toString().toLowerCase()
+            return value.includes(SearchString.toLowerCase()) 
+                || humanReadableValue.includes(SearchString.toLowerCase())
+        })
+    })
+}
+
 function IterateReports(callback) {
-    let reportMap = Reports.map((e, i) => {return {index: i, value: e}})
+    let reportMap = FilteredReports.map((e, i) => {return {index: i, value: e}})
     let sortedReports = reportMap.sort((a, b) => {
         let aValue = a.value.GetField(SortProperty)
         let bValue = b.value.GetField(SortProperty)
@@ -1206,6 +1224,23 @@ function SetSortCollumn(collumn) {
     }
 
     Page = 0
+}
+
+function UpdateSearchBar() {
+    const searchBarContainer = document.getElementById("SearchBarContainer")
+
+    ClearElement(SearchBarContainer)
+
+    const searchBar = document.createElement("input")
+    searchBar.type = "search"
+    searchBar.placeholder = "Search"
+    searchBar.classList.add("searchBar")
+    searchBar.addEventListener('input', function(e) {
+        SearchString = searchBar.value
+        PrepareReports()
+        UpdateList()
+    })
+    searchBarContainer.appendChild(searchBar)
 }
 
 function UpdateList() {
@@ -1238,7 +1273,7 @@ function UpdateList() {
             Page = Math.min(Page + 1, PageCount - 1)
             UpdateList()
         })
-        nextPageButton.disabled = Page == PageCount - 1
+        nextPageButton.disabled = Page >= PageCount - 1
         secondRowCell.appendChild(nextPageButton)
         secondRowCell.classList.add("center")
         secondRow.appendChild(secondRowCell)
@@ -1274,7 +1309,7 @@ function UpdateList() {
         })
         row.addEventListener('click', function(e) {
             ReportIndex = index
-            UpdateOutput()
+            UpdateReport()
         })
         row.classList.add("clickableRow")
         tableBody.appendChild(row)
@@ -1327,13 +1362,17 @@ function UpdateOutput() {
         return
     }
 
-    if (!SingleReport) UpdateList()
+    if (!SingleReport) { 
+        UpdateSearchBar()
+        UpdateList()
+    }
     UpdateReport()
 }
 
 function PrepareReports() {
-    PageCount = Math.ceil(Reports.length / ElementsPerPage)
-    ReportIndex = Reports.length - 1
+    FilteredReports = FilterReports()
+    PageCount = Math.max(1, Math.ceil(FilteredReports.length / ElementsPerPage))
+    Page = Math.min(Page, PageCount - 1)
 }
 
 function OnLoad() {
