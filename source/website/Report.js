@@ -132,6 +132,11 @@ const EnumMappings =
         "3": "D3D12_CROSS_NODE_SHARING_TIER_2",
         "4": "D3D12_CROSS_NODE_SHARING_TIER_3"
     },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier":
+    {
+        "0": "D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED",
+        "1": "D3D12_WORK_GRAPHS_TIER_0_1"
+    },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
     {
         "0": "D3D12_RENDER_PASS_TIER_0",
@@ -1131,20 +1136,31 @@ class ReportContainer {
         }
     }
 
-    HumanReadable() {
+    HumanReadable(filterString) {
         class HumanReadableObj {
-            constructor(fields) {
+            constructor(fields, filterString) {
                 this.fields = fields;
+                this.filterString = filterString.toLowerCase();
             }
 
             *[Symbol.iterator]() {
                 for (const field of this.fields) {
-                    yield {name: MakeHumanReadableProperty(field.name), value:MakeHumanReadable(field.name, field.value)}
+                    let name = field.name
+                    let humanReadableName = MakeHumanReadableProperty(field.name)
+                    let value = field.value
+                    let humanReadableValue = MakeHumanReadable(field.name, field.value)
+                    if (this.filterString == "" 
+                    || name.toString().toLowerCase().includes(this.filterString)
+                    || humanReadableName.toString().toLowerCase().includes(this.filterString)
+                    || value.toString().toLowerCase().includes(this.filterString) 
+                    || humanReadableValue.toString().toLowerCase().includes(this.filterString)) {
+                        yield { name: humanReadableName, value : humanReadableValue }
+                    }
                 }
             }
         }
 
-        return new HumanReadableObj(this.#fields);
+        return new HumanReadableObj(this.#fields, filterString);
     }
 
     GetField(field) {
@@ -1168,8 +1184,10 @@ let Page = 0
 let PageCount = 0
 const ElementsPerPage = 10
 
-let SearchString = ""
+let AdaptersSearchString = ""
 let FilteredReports = []
+
+let PropertiesSearchString = ""
 
 const ListHeader = [
     "ID",
@@ -1184,7 +1202,7 @@ const ListHeader = [
 function FilterReports() {
     let reportMap = Reports.map((e, i) => {return {index: i, value: e}})
 
-    if (SearchString == "")
+    if (AdaptersSearchString == "")
         return reportMap
 
     return reportMap.filter(e => {
@@ -1192,8 +1210,8 @@ function FilterReports() {
             let value = e.value.GetField(collumn)
             let humanReadableValue = MakeHumanReadable(collumn, value).toString().toLowerCase()
             value = value.toString().toLowerCase()
-            return value.includes(SearchString.toLowerCase()) 
-                || humanReadableValue.includes(SearchString.toLowerCase())
+            return value.includes(AdaptersSearchString.toLowerCase()) 
+                || humanReadableValue.includes(AdaptersSearchString.toLowerCase())
         })
     })
 }
@@ -1227,19 +1245,35 @@ function SetSortCollumn(collumn) {
     Page = 0
 }
 
-function UpdateSearchBar() {
-    const searchBarContainer = document.getElementById("SearchBarContainer")
+function UpdateSearchBarAdapters() {
+    const searchBarContainer = document.getElementById("SearchBarAdaptersContainer")
 
-    ClearElement(SearchBarContainer)
+    ClearElement(searchBarContainer)
 
     const searchBar = document.createElement("input")
     searchBar.type = "search"
-    searchBar.placeholder = "Search"
+    searchBar.placeholder = "Search Adapters"
     searchBar.classList.add("searchBar")
     searchBar.addEventListener('input', function(e) {
-        SearchString = searchBar.value
+        AdaptersSearchString = searchBar.value
         PrepareReports()
         UpdateList()
+    })
+    searchBarContainer.appendChild(searchBar)
+}
+
+function UpdateSearchBarProperties() {
+    const searchBarContainer = document.getElementById("SearchBarPropertiesContainer")
+
+    ClearElement(searchBarContainer)
+
+    const searchBar = document.createElement("input")
+    searchBar.type = "search"
+    searchBar.placeholder = "Search Properties"
+    searchBar.classList.add("searchBar")
+    searchBar.addEventListener('input', function(e) {
+        PropertiesSearchString = searchBar.value
+        UpdateReport()
     })
     searchBarContainer.appendChild(searchBar)
 }
@@ -1335,7 +1369,7 @@ function UpdateReport() {
         tableBody.appendChild(firstRow)
     }
 
-    for (const e of report.HumanReadable()) {
+    for (const e of report.HumanReadable(PropertiesSearchString)) {
         const row = document.createElement("tr")
 
         const cell0 = document.createElement("td")
@@ -1364,9 +1398,10 @@ function UpdateOutput() {
     }
 
     if (!SingleReport) { 
-        UpdateSearchBar()
+        UpdateSearchBarAdapters()
         UpdateList()
     }
+    UpdateSearchBarProperties()
     UpdateReport()
 }
 
@@ -1388,6 +1423,7 @@ function OnLoad() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
+            ReportIndex = Reports.length - 1
             PrepareReports()
             UpdateOutput()
         }

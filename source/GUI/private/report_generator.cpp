@@ -5,6 +5,7 @@
 #include "Report.css"
 #include "Report.html"
 #include "Report.js"
+#include "Search.svg"
 
 namespace D3d12infoGUI {
 
@@ -39,6 +40,7 @@ void ReportGenerator::GenerateHTML(
   WriteFile(htmlFilePath, g_ReportHTML, sizeof(g_ReportHTML));
   WriteFile(folderPath / L"Report.js", g_ReportJS, sizeof(g_ReportJS));
   WriteFile(folderPath / L"Report.css", g_ReportCSS, sizeof(g_ReportCSS));
+  WriteFile(folderPath / L"Search.svg", g_SearchSVG, sizeof(g_SearchSVG));
 
   std::filesystem::path jsFilePath = folderPath / L"Reports.json";
   std::ofstream jsonFile;

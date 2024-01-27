@@ -132,6 +132,11 @@ const EnumMappings =
         "3": "D3D12_CROSS_NODE_SHARING_TIER_2",
         "4": "D3D12_CROSS_NODE_SHARING_TIER_3"
     },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier":
+    {
+        "0": "D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED",
+        "1": "D3D12_WORK_GRAPHS_TIER_0_1"
+    },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
     {
         "0": "D3D12_RENDER_PASS_TIER_0",
@@ -1131,20 +1136,31 @@ class ReportContainer {
         }
     }
 
-    HumanReadable() {
+    HumanReadable(filterString) {
         class HumanReadableObj {
-            constructor(fields) {
+            constructor(fields, filterString) {
                 this.fields = fields;
+                this.filterString = filterString.toLowerCase();
             }
 
             *[Symbol.iterator]() {
                 for (const field of this.fields) {
-                    yield {name: MakeHumanReadableProperty(field.name), value:MakeHumanReadable(field.name, field.value)}
+                    let name = field.name
+                    let humanReadableName = MakeHumanReadableProperty(field.name)
+                    let value = field.value
+                    let humanReadableValue = MakeHumanReadable(field.name, field.value)
+                    if (this.filterString == "" 
+                    || name.toString().toLowerCase().includes(this.filterString)
+                    || humanReadableName.toString().toLowerCase().includes(this.filterString)
+                    || value.toString().toLowerCase().includes(this.filterString) 
+                    || humanReadableValue.toString().toLowerCase().includes(this.filterString)) {
+                        yield { name: humanReadableName, value : humanReadableValue }
+                    }
                 }
             }
         }
 
-        return new HumanReadableObj(this.#fields);
+        return new HumanReadableObj(this.#fields, filterString);
     }
 
     GetField(field) {
@@ -1167,6 +1183,8 @@ let ReportIndex = 0
 let PreviewAvailable = false
 let Headers = []
 let Adapters = []
+
+let PropertiesSearchString = ""
 
 function HaveUnsubmittedReports() {
     return SubmissionIDs.some(e => e.some(e => e == -1))
@@ -1194,7 +1212,7 @@ function InitReportData() {
 }
 
 function WriteObjectToTable(obj, table) {
-    for (const e of obj.HumanReadable()) {
+    for (const e of obj.HumanReadable(PropertiesSearchString)) {
         const row = document.createElement("tr")
 
         const cell0 = document.createElement("td")
@@ -1375,7 +1393,8 @@ function UpdateList() {
 
             RetailIndex = retailIndex
             ReportIndex = index
-            UpdateOutput()
+            UpdateHeader()
+            UpdateReport()
         })
         row.classList.add("clickableRow")
         tableBody.appendChild(row)
@@ -1383,6 +1402,23 @@ function UpdateList() {
 
     table.appendChild(tableBody)
     listContainer.appendChild(table)
+}
+
+function UpdateSearchBar() {
+    const searchBarContainer = document.getElementById("SearchBarPropertiesContainer")
+
+    ClearElement(searchBarContainer)
+
+    const searchBar = document.createElement("input")
+    searchBar.type = "search"
+    searchBar.placeholder = "Search Properties"
+    searchBar.classList.add("searchBar")
+    searchBar.addEventListener('input', function(e) {
+        PropertiesSearchString = searchBar.value
+        UpdateHeader()
+        UpdateReport()
+    })
+    searchBarContainer.appendChild(searchBar)
 }
 
 function UpdateHeader() {
@@ -1454,8 +1490,9 @@ function UpdateOutput() {
         return
     }
 
-    UpdateHeader()
     UpdateList()
+    UpdateSearchBar()
+    UpdateHeader()
     UpdateReport()
 }
 

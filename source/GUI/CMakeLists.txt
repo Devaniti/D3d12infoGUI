@@ -1,9 +1,9 @@
 file(GLOB_RECURSE SourceList CONFIGURE_DEPENDS *.cpp)
 file(GLOB_RECURSE HeaderList CONFIGURE_DEPENDS *.h *.hpp)
 file(GLOB_RECURSE HTMLList CONFIGURE_DEPENDS html/*)
-set(GeneratedFiles ${CMAKE_CURRENT_BINARY_DIR}/Report.html ${CMAKE_CURRENT_BINARY_DIR}/Report.js ${CMAKE_CURRENT_BINARY_DIR}/Report.css)
+set(GeneratedFiles ${CMAKE_CURRENT_BINARY_DIR}/Report.html ${CMAKE_CURRENT_BINARY_DIR}/Report.js ${CMAKE_CURRENT_BINARY_DIR}/Report.css ${CMAKE_CURRENT_BINARY_DIR}/Search.svg)
 
-add_executable(GUI ${SourceList} ${HeaderList} ${HTMLList} ${GeneratedFiles})
+add_executable(GUI ${SourceList} ${HeaderList} ${HTMLList})
 
 target_include_directories(GUI
     PUBLIC public
@@ -43,6 +43,12 @@ add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Report.css
     COMMAND powershell -noprofile -executionpolicy bypass -file "${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" "${CMAKE_CURRENT_BINARY_DIR}/Report.css" ReportCSS
     MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1 ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css
+)
+
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Report.css
+    COMMAND powershell -noprofile -executionpolicy bypass -file "${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1" "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" "${CMAKE_CURRENT_BINARY_DIR}/Search.svg" SearchSVG
+    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1 ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg
 )
 
 add_dependencies(GUI D3d12info D3d12info_preview)

@@ -81,12 +81,11 @@ button:disabled {
 .searchBar {
     width: 100%;
     padding: 0.5em;
-    margin-top: 0.5em;
     border: 2px solid;
     border-color: #a7a7a7;
     border-radius: 4px;
     font-size: 1.2em;
-    background-image: url('search.svg');
+    background-image: url('Search.svg');
     background-position: 0.5em 0.5em;
     background-repeat: no-repeat;
     padding-left: 2em;
