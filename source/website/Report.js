@@ -563,6 +563,40 @@ const VendorIDs =
     "1297040209": "Qualcomm"
 }
 
+const SubsystemVendorIDs =
+{
+    "4098": "AMD/ATI",
+    "4130": "AMD",
+    "4133": "Acer",
+    "4136": "Dell",
+    "4156": "HP",
+    "4163": "ASUSTeK",
+    "4173": "Sony",
+    "4203": "Apple",
+    "4219": "Gateway",
+    "4242": "Diamond Multimedia",
+    "4318": "NVIDIA",
+    "4473": "Toshiba",
+    "5208": "Gigabyte",
+    "5218": "MSI",
+    "5260": "PowerColor",
+    "5445": "VisionTek",
+    "5481": "Palit",
+    "5762": "XFX",
+    "5875": "Jetway",
+    "6058": "Lenovo",
+    "6063": "HIS",
+    "6332": "GeCube",
+    "6509": "Club 3D",
+    "5140": "Microsoft",
+    "5692": "Intel",
+    "7586": "Sapphire",
+    "32902": "Intel",
+    "32903": "Intel",
+    "877417040": "Parallels",
+    "1297040209": "Qualcomm"
+}
+
 const PropertyHumanReadableNames =
 {
     "Header.Program": "Program",
@@ -947,7 +981,7 @@ function MakeHumanReadable(property, value) {
             {
                 return value / 100
             }
-        // WORD sized hex number
+        // WORD sized hex number representing Vendor ID
         case "DXGI_ADAPTER_DESC3.VendorId":
         case "AGSDeviceInfo.vendorId":
         case "VkPhysicalDeviceProperties.vendorID":
@@ -957,6 +991,19 @@ function MakeHumanReadable(property, value) {
                 let hexValue = "0x" + ZeroPad(Number(value).toString(16), 4)
                 if (VendorIDs[value])
                     return `${VendorIDs[value]} (${hexValue})`
+                else
+                    return hexValue
+            }
+        // DWORD sized hex number representing Subsystem ID
+        case "DXGI_ADAPTER_DESC3.SubSysId":
+        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pSubSystemId":
+            {
+                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
+                let susbystemVendorID = value & 0xFFFF
+                console.log(susbystemVendorID)
+                let hexValue = "0x" + ZeroPad(Number(value).toString(16), 8)
+                if (SubsystemVendorIDs[susbystemVendorID])
+                    return `${SubsystemVendorIDs[susbystemVendorID]} (${hexValue})`
                 else
                     return hexValue
             }
@@ -981,9 +1028,7 @@ function MakeHumanReadable(property, value) {
                 return "0x" + ZeroPad(Number(value).toString(16), 4)
             }
         // DWORD sized hex number
-        case "DXGI_ADAPTER_DESC3.SubSysId":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pSubSystemId":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosRevision":
         case "Intel GPUDetect::GPUData.extensionVersion":
             {
