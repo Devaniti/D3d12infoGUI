@@ -1000,7 +1000,6 @@ function MakeHumanReadable(property, value) {
             {
                 let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
                 let susbystemVendorID = value & 0xFFFF
-                console.log(susbystemVendorID)
                 let hexValue = "0x" + ZeroPad(Number(value).toString(16), 8)
                 if (SubsystemVendorIDs[susbystemVendorID])
                     return `${SubsystemVendorIDs[susbystemVendorID]} (${hexValue})`
