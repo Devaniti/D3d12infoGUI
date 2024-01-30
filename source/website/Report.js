@@ -613,7 +613,7 @@ const PropertyHumanReadableNames =
     "Header.agsGetVersionNumber": "AMD AGS interface version",
     "Header.Intel GPU Detect compiled version": "Intel GPU Detect library version",
     "SystemInfo.OS Info.Windows version": "Windows version",
-    "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory": "Phisically installed RAM",
+    "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory": "Physically installed RAM",
     "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys": "Actually available RAM",
     "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPageFile": "Current page file size",
     "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalVirtual": "Total virtual adress space size",
