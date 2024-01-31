@@ -628,7 +628,7 @@ const PropertyHumanReadableNames =
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage": "NVAPI Display Driver bIsNVIDIARTXProductionBranchPackage",
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage": "NVAPI Display Driver bIsNVIDIARTXNewFeatureBranchPackage",
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch": "NVAPI Display Driver szBuildBaseBranch",
-    "SystemInfo.D3D12EnableExperimentalFeatures": "Available Experimental features",
+    "SystemInfo.D3D12EnableExperimentalFeatures": "Available Experimental Features",
     "AdapterIndex": "Adapter Index",
     "CheckInterfaceSupport.UMDVersion": "Driver Version",
 }
