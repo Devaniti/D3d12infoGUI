@@ -9,6 +9,7 @@ table {
     box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
     table-layout: fixed;
     word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 tr {

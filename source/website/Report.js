@@ -947,17 +947,21 @@ function MakeHumanReadable(property, value) {
 
     if (property in BitFlagsMappings) {
         let result = ''
-        for (let i = 1; i < value; i = i << 1) {
+        let bitCount = 0
+        for (let i = 1; i <= value; i = i << 1) {
             if (value & i) {
-                result += (BitFlagsMappings[property][i] ?? `Unknown(${i})`) + " | "
+                bitCount++
+                result += (BitFlagsMappings[property][i] ?? `Unknown(${i})`) + " |\n"
             }
         }
         if (result == '') {
-            result = BitFlagsMappings[property][0] ?? `Unknown(0)`
+            result = BitFlagsMappings[property][0] ?? "Unknown"
         }
         else {
             result = result.substring(0, result.length - 3)
         }
+        result += bitCount > 1 ? "\n" : " "
+        result += `(0x${Number(value).toString(16)})`
         return result
     }
 
