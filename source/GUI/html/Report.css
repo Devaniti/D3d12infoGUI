@@ -1,15 +1,41 @@
-table {
-    width: 100%;
+body {
+    min-width: 70em;
+    max-width: 130em;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+table, fieldset {
     border: 2px solid;
     border-collapse: collapse;
     border-color: #a7a7a7;
     margin: 0.9em 0;
     font-size: 1.0em;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", Courier, monospace;
     box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
     table-layout: fixed;
     word-wrap: break-word;
     white-space: pre-wrap;
+}
+
+table {
+    width: 100%;
+}
+
+fieldset {
+    float: left;
+    margin: 0.5em 0.5em 0.5em 0.0em;
+    flex: 0 1;
+    white-space: nowrap;
+}
+
+#AdaptersFilterContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
 }
 
 tr {
@@ -33,6 +59,11 @@ td {
 
 td:nth-of-type(even) {
     background-color: #00000010;
+    width: 10%;
+}
+
+td:nth-of-type(odd) {
+    width: 60%;
 }
 
 button {
@@ -60,6 +91,18 @@ button:disabled {
 
 .clickableRow:hover {
     background-color: #f4de98;
+}
+
+.clickableCell {
+    cursor: pointer;
+}
+
+.clickableCell:hover {
+    background-color: #f4de98;
+}
+
+.center {
+    text-align: center;
 }
 
 .searchBar {

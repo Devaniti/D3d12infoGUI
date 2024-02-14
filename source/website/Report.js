@@ -7,7 +7,7 @@ const TrueFalseMapping =
     "1": "true"
 }
 
-const NVAPI_Status = 
+const NVAPI_Status =
 {
     "0": "OK",
     "-3": "NO_IMPLEMENTATION",
@@ -634,295 +634,299 @@ const PropertyHumanReadableNames =
 }
 
 const PropertiesOrder =
-[
-    "ID",
-    "Header.Program",
-    "Header.Version",
-    "Header.Generated on",
-    "Header.Using preview Agility SDK",
-    "Header.D3D12_SDK_VERSION",
-    "SystemInfo.OS Info.Windows version",
-    "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion",
-    "SystemInfo.AGSGPUInfo.driverVersion",
-    "Header.Build Date",
-    "Header.Configuration",
-    "Header.Configuration bits",
-    "Header.NvAPI compiled version",
-    "Header.NvAPI_GetInterfaceVersionString",
-    "Header.AMD_AGS_VERSION",
-    "Header.agsGetVersionNumber",
-    "Header.Intel GPU Detect compiled version",
-    "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory",
-    "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys",
-    "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPageFile",
-    "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalVirtual",
-    "SystemInfo.DXGI_FEATURE.DXGI_FEATURE_PRESENT_ALLOW_TEARING",
-    "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.szBuildBranchString",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBranch",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsDCHDriver",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAStudioPackage",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAGameReadyPackage",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage",
-    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch",
-    "SystemInfo.AGSGPUInfo.radeonSoftwareVersion",
-    "SystemInfo.D3D12EnableExperimentalFeatures",
-    "AdapterIndex",
-    "CheckInterfaceSupport.UMDVersion",
-    "VkPhysicalDeviceVulkan12Properties.driverInfo",
-    "DXGI_ADAPTER_DESC3.Description",
-    "DXGI_ADAPTER_DESC3.VendorId",
-    "DXGI_ADAPTER_DESC3.DeviceId",
-    "DXGI_ADAPTER_DESC3.SubSysId",
-    "DXGI_ADAPTER_DESC3.Revision",
-    "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
-    "DXGI_ADAPTER_DESC3.DedicatedSystemMemory",
-    "DXGI_ADAPTER_DESC3.SharedSystemMemory",
-    "DXGI_ADAPTER_DESC3.AdapterLuid",
-    "DXGI_ADAPTER_DESC3.GraphicsPreemptionGranularity",
-    "DXGI_ADAPTER_DESC3.ComputePreemptionGranularity",
-    "DXGI_ADAPTER_DESC3.Flags",
-    "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].Budget",
-    "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].AvailableForReservation",
-    "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL].Budget",
-    "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL].AvailableForReservation",
-    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV",
-    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER",
-    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_RTV",
-    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_DSV",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetSystemType",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetFullName",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pSubSystemId",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pRevisionId",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUType",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetBusType",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosRevision",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosOEMRevision",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosVersionString",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetPhysicalFrameBufferSize",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetVirtualFrameBufferSize",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::revision_id",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady",
-    "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_LOGO_BRIGHTNESS)",
-    "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_SLI_BRIGHTNESS)",
-    "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_NVIDIA_RTX_VR_READY)",
-    "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_PROVIZ)",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetShaderSubPipeCount",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetGpuCoreCount",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::configurationOptions",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isEnabled",
-    "NvPhysicalGpuHandle.NvAPI_GPU_GetRamBusWidth",
-    "AGSDeviceInfo.adapterString",
-    "AGSDeviceInfo.asicFamily",
-    "AGSDeviceInfo.isAPU",
-    "AGSDeviceInfo.isExternal",
-    "AGSDeviceInfo.vendorId",
-    "AGSDeviceInfo.deviceId",
-    "AGSDeviceInfo.revisionId",
-    "AGSDeviceInfo.numCUs",
-    "AGSDeviceInfo.numWGPs",
-    "AGSDeviceInfo.numROPs",
-    "AGSDeviceInfo.coreClock",
-    "AGSDeviceInfo.memoryClock",
-    "AGSDeviceInfo.memoryBandwidth",
-    "AGSDeviceInfo.teraFlops",
-    "AGSDeviceInfo.localMemoryInBytes",
-    "AGSDeviceInfo.sharedMemoryInBytes",
-    "VkPhysicalDeviceProperties.apiVersion",
-    "VkPhysicalDeviceProperties.driverVersion",
-    "VkPhysicalDeviceProperties.vendorID",
-    "VkPhysicalDeviceProperties.deviceID",
-    "VkPhysicalDeviceProperties.deviceType",
-    "VkPhysicalDeviceProperties.deviceName",
-    "VkPhysicalDeviceIDProperties.deviceUUID",
-    "VkPhysicalDeviceIDProperties.driverUUID",
-    "VkPhysicalDeviceIDProperties.deviceLUID",
-    "VkPhysicalDeviceVulkan12Properties.driverID",
-    "VkPhysicalDeviceVulkan12Properties.driverName",
-    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics16",
-    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics17",
-    "AGSDX12ReturnedParams::ExtensionsSupported.userMarkers",
-    "AGSDX12ReturnedParams::ExtensionsSupported.appRegistration",
-    "AGSDX12ReturnedParams::ExtensionsSupported.UAVBindSlot",
-    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics19",
-    "AGSDX12ReturnedParams::ExtensionsSupported.baseVertex",
-    "AGSDX12ReturnedParams::ExtensionsSupported.baseInstance",
-    "AGSDX12ReturnedParams::ExtensionsSupported.getWaveSize",
-    "AGSDX12ReturnedParams::ExtensionsSupported.floatConversion",
-    "AGSDX12ReturnedParams::ExtensionsSupported.readLaneAt",
-    "AGSDX12ReturnedParams::ExtensionsSupported.rayHitToken",
-    "AGSDX12ReturnedParams::ExtensionsSupported.shaderClock",
-    "Intel GPUDetect::GPUData.VendorId",
-    "Intel GPUDetect::GPUData.deviceID",
-    "Intel GPUDetect::GPUData.isUMAArchitecture",
-    "Intel GPUDetect::GPUData.videoMemory",
-    "Intel GPUDetect::GPUData.description",
-    "Intel GPUDetect::GPUData.extensionVersion",
-    "Intel GPUDetect::GPUData.intelExtensionAvailability",
-    "Intel GPUDetect::GPUData.dxDriverVersion",
-    "Intel GPUDetect::GPUData.driverInfo.driverReleaseRevision",
-    "Intel GPUDetect::GPUData.driverInfo.driverBuildNumber",
-    "Intel GPUDetect::GPUData.DefaultFidelityPreset",
-    "Intel GPUDetect::GPUData.GPUArchitecture",
-    "Intel GPUDetect::GPUData.GraphicsGeneration",
-    "Intel GPUDetect::GPUData.euCount",
-    "Intel GPUDetect::GPUData.packageTDP",
-    "Intel GPUDetect::GPUData.maxFillRate",
-    "Intel GPUDetect::GPUData.maxFrequency",
-    "Intel GPUDetect::GPUData.minFrequency",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.MinPrecisionSupport",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceBindingTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.PSSpecifiedStencilRefSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.TypedUAVLoadAdditionalFormats",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ROVsSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ConservativeRasterizationTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.MaxGPUVirtualAddressBitsPerResource",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.StandardSwizzle64KBSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossNodeSharingTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossAdapterRowMajorTextureSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier",
-    "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT.MaxGPUVirtualAddressBitsPerResource", 
-    "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT.MaxGPUVirtualAddressBitsPerProcess",
-    "D3D12_FEATURE_DATA_SHADER_MODEL.HighestShaderModel",
-    "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion",
-    "D3D12_FEATURE_DATA_ARCHITECTURE1.NodeIndex",
-    "D3D12_FEATURE_DATA_ARCHITECTURE1.TileBasedRenderer",
-    "D3D12_FEATURE_DATA_ARCHITECTURE1.UMA",
-    "D3D12_FEATURE_DATA_ARCHITECTURE1.CacheCoherentUMA",
-    "D3D12_FEATURE_DATA_ARCHITECTURE1.IsolatedMMU",
-    "D3D12_FEATURE_DATA_FEATURE_LEVELS.MaxSupportedFeatureLevel",
-    "D3D12_FEATURE_DATA_SHADER_CACHE.SupportFlags",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_NORMAL.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_HIGH.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_NORMAL.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_HIGH.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_NORMAL.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_HIGH.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported",
-    "D3D12_FEATURE_DATA_SERIALIZATION.HeapSerializationTier",
-    "D3D12_FEATURE_DATA_CROSS_NODE.SharingTier",
-    "D3D12_FEATURE_DATA_CROSS_NODE.AtomicShaderInstructions",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier",
-    "D3D12_FEATURE_DATA_PREDICATION.Supported",
-    "D3D12_FEATURE_DATA_HARDWARE_COPY.Supported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMin",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMax",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.TotalLaneCount",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.Int64ShaderOps",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS2.DepthBoundsTestSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS2.ProgrammableSamplePositionsTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CopyQueueTimestampQueriesSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CastingFullyTypedFormatSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.WriteBufferImmediateSupportFlags",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.ViewInstancingTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.BarycentricsSupported",
-    "D3D12_FEATURE_DATA_EXISTING_HEAPS.Supported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.MSAA64KBAlignedTextureSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.Native16BitShaderOpsSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.AdditionalShadingRatesSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.BackgroundProcessingSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderPipelineStatsSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderSupportsFullRangeRenderTargetArrayIndex",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnTypedResourceSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnGroupSharedSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.DerivativesInMeshAndAmplificationShadersSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS11.AtomicInt64OnDescriptorHeapResourceSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS12.EnhancedBarriersSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS12.RelaxedFormatCastingSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedBufferTextureCopyPitchSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedVertexElementAlignmentSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportHeightFlipsYSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportDepthFlipsZSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.TextureCopyBetweenDimensionsSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.AlphaBlendFactorSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS14.AdvancedTextureOpsSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS14.WriteableMSAATexturesSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS14.IndependentFrontAndBackStencilRefMaskSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS15.TriangleFanSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS15.DynamicIndexBufferStripCutSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS16.DynamicDepthBiasSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS17.NonNormalizedCoordinateSamplersSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS17.ManualWriteTrackingResourceSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MismatchingOutputDimensionsSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.IndependentFrontAndBackStencilRefMaskSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.SupportedSampleCountsWithNoOutputs",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.PointSamplingAddressesNeverRoundUp",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.NarrowQuadrilateralLinesSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.AnisoFilterWithPointMipSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSize",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSizeWithStaticSamplers",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxViewDescriptorHeapSize",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier",
-    "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_UP",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_DOWN",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_XOR",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_ALL",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_ANY",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_BALLOT",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_GET_LANE_ID",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_FP16_ATOMIC",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_FP32_ATOMIC",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_UINT64_ATOMIC",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_GET_SHADING_RATE",
-    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VPRS_EVAL_ATTRIB_AT_SAMPLE",
-    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING",
-    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_OPACITY_MICROMAP",
-    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP",
-    "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported",
-    "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - supported",
-    "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - rdmaHeapSize",
-    "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded"
-]
+    [
+        "ID",
+        "DXGI_ADAPTER_DESC3.Description",
+        "Header.Program",
+        "Header.Version",
+        "Header.Generated on",
+        "Header.Using preview Agility SDK",
+        "Header.D3D12_SDK_VERSION",
+        "SystemInfo.OS Info.Windows version",
+        "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion",
+        "SystemInfo.AGSGPUInfo.driverVersion",
+        "Header.Build Date",
+        "Header.Configuration",
+        "Header.Configuration bits",
+        "Header.NvAPI compiled version",
+        "Header.NvAPI_GetInterfaceVersionString",
+        "Header.AMD_AGS_VERSION",
+        "Header.agsGetVersionNumber",
+        "Header.Intel GPU Detect compiled version",
+        "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory",
+        "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys",
+        "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPageFile",
+        "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalVirtual",
+        "SystemInfo.DXGI_FEATURE.DXGI_FEATURE_PRESENT_ALLOW_TEARING",
+        "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.szBuildBranchString",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBranch",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsDCHDriver",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAStudioPackage",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAGameReadyPackage",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage",
+        "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch",
+        "SystemInfo.AGSGPUInfo.radeonSoftwareVersion",
+        "SystemInfo.D3D12EnableExperimentalFeatures",
+        "AdapterIndex",
+        "CheckInterfaceSupport.UMDVersion",
+        "VkPhysicalDeviceVulkan12Properties.driverInfo",
+        "DXGI_ADAPTER_DESC3.VendorId",
+        "DXGI_ADAPTER_DESC3.DeviceId",
+        "DXGI_ADAPTER_DESC3.SubSysId",
+        "DXGI_ADAPTER_DESC3.Revision",
+        "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
+        "DXGI_ADAPTER_DESC3.DedicatedSystemMemory",
+        "DXGI_ADAPTER_DESC3.SharedSystemMemory",
+        "DXGI_ADAPTER_DESC3.AdapterLuid",
+        "DXGI_ADAPTER_DESC3.GraphicsPreemptionGranularity",
+        "DXGI_ADAPTER_DESC3.ComputePreemptionGranularity",
+        "DXGI_ADAPTER_DESC3.Flags",
+        "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].Budget",
+        "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].AvailableForReservation",
+        "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL].Budget",
+        "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL].AvailableForReservation",
+        "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV",
+        "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER",
+        "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_RTV",
+        "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_DSV",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetSystemType",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetFullName",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pSubSystemId",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pRevisionId",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUType",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetBusType",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosRevision",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosOEMRevision",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosVersionString",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetPhysicalFrameBufferSize",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetVirtualFrameBufferSize",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::revision_id",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady",
+        "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_LOGO_BRIGHTNESS)",
+        "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_SLI_BRIGHTNESS)",
+        "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_NVIDIA_RTX_VR_READY)",
+        "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_PROVIZ)",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetShaderSubPipeCount",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetGpuCoreCount",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::configurationOptions",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isEnabled",
+        "NvPhysicalGpuHandle.NvAPI_GPU_GetRamBusWidth",
+        "AGSDeviceInfo.adapterString",
+        "AGSDeviceInfo.asicFamily",
+        "AGSDeviceInfo.isAPU",
+        "AGSDeviceInfo.isExternal",
+        "AGSDeviceInfo.vendorId",
+        "AGSDeviceInfo.deviceId",
+        "AGSDeviceInfo.revisionId",
+        "AGSDeviceInfo.numCUs",
+        "AGSDeviceInfo.numWGPs",
+        "AGSDeviceInfo.numROPs",
+        "AGSDeviceInfo.coreClock",
+        "AGSDeviceInfo.memoryClock",
+        "AGSDeviceInfo.memoryBandwidth",
+        "AGSDeviceInfo.teraFlops",
+        "AGSDeviceInfo.localMemoryInBytes",
+        "AGSDeviceInfo.sharedMemoryInBytes",
+        "VkPhysicalDeviceProperties.apiVersion",
+        "VkPhysicalDeviceProperties.driverVersion",
+        "VkPhysicalDeviceProperties.vendorID",
+        "VkPhysicalDeviceProperties.deviceID",
+        "VkPhysicalDeviceProperties.deviceType",
+        "VkPhysicalDeviceProperties.deviceName",
+        "VkPhysicalDeviceIDProperties.deviceUUID",
+        "VkPhysicalDeviceIDProperties.driverUUID",
+        "VkPhysicalDeviceIDProperties.deviceLUID",
+        "VkPhysicalDeviceVulkan12Properties.driverID",
+        "VkPhysicalDeviceVulkan12Properties.driverName",
+        "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics16",
+        "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics17",
+        "AGSDX12ReturnedParams::ExtensionsSupported.userMarkers",
+        "AGSDX12ReturnedParams::ExtensionsSupported.appRegistration",
+        "AGSDX12ReturnedParams::ExtensionsSupported.UAVBindSlot",
+        "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics19",
+        "AGSDX12ReturnedParams::ExtensionsSupported.baseVertex",
+        "AGSDX12ReturnedParams::ExtensionsSupported.baseInstance",
+        "AGSDX12ReturnedParams::ExtensionsSupported.getWaveSize",
+        "AGSDX12ReturnedParams::ExtensionsSupported.floatConversion",
+        "AGSDX12ReturnedParams::ExtensionsSupported.readLaneAt",
+        "AGSDX12ReturnedParams::ExtensionsSupported.rayHitToken",
+        "AGSDX12ReturnedParams::ExtensionsSupported.shaderClock",
+        "Intel GPUDetect::GPUData.VendorId",
+        "Intel GPUDetect::GPUData.deviceID",
+        "Intel GPUDetect::GPUData.isUMAArchitecture",
+        "Intel GPUDetect::GPUData.videoMemory",
+        "Intel GPUDetect::GPUData.description",
+        "Intel GPUDetect::GPUData.extensionVersion",
+        "Intel GPUDetect::GPUData.intelExtensionAvailability",
+        "Intel GPUDetect::GPUData.dxDriverVersion",
+        "Intel GPUDetect::GPUData.driverInfo.driverReleaseRevision",
+        "Intel GPUDetect::GPUData.driverInfo.driverBuildNumber",
+        "Intel GPUDetect::GPUData.DefaultFidelityPreset",
+        "Intel GPUDetect::GPUData.GPUArchitecture",
+        "Intel GPUDetect::GPUData.GraphicsGeneration",
+        "Intel GPUDetect::GPUData.euCount",
+        "Intel GPUDetect::GPUData.packageTDP",
+        "Intel GPUDetect::GPUData.maxFillRate",
+        "Intel GPUDetect::GPUData.maxFrequency",
+        "Intel GPUDetect::GPUData.minFrequency",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.MinPrecisionSupport",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceBindingTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.PSSpecifiedStencilRefSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.TypedUAVLoadAdditionalFormats",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ROVsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ConservativeRasterizationTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.MaxGPUVirtualAddressBitsPerResource",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.StandardSwizzle64KBSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossNodeSharingTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossAdapterRowMajorTextureSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier",
+        "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT.MaxGPUVirtualAddressBitsPerResource",
+        "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT.MaxGPUVirtualAddressBitsPerProcess",
+        "D3D12_FEATURE_DATA_SHADER_MODEL.HighestShaderModel",
+        "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion",
+        "D3D12_FEATURE_DATA_ARCHITECTURE1.NodeIndex",
+        "D3D12_FEATURE_DATA_ARCHITECTURE1.TileBasedRenderer",
+        "D3D12_FEATURE_DATA_ARCHITECTURE1.UMA",
+        "D3D12_FEATURE_DATA_ARCHITECTURE1.CacheCoherentUMA",
+        "D3D12_FEATURE_DATA_ARCHITECTURE1.IsolatedMMU",
+        "D3D12_FEATURE_DATA_FEATURE_LEVELS.MaxSupportedFeatureLevel",
+        "D3D12_FEATURE_DATA_SHADER_CACHE.SupportFlags",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_NORMAL.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_HIGH.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_NORMAL.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_HIGH.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_NORMAL.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_HIGH.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported",
+        "D3D12_FEATURE_DATA_SERIALIZATION.HeapSerializationTier",
+        "D3D12_FEATURE_DATA_CROSS_NODE.SharingTier",
+        "D3D12_FEATURE_DATA_CROSS_NODE.AtomicShaderInstructions",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier",
+        "D3D12_FEATURE_DATA_PREDICATION.Supported",
+        "D3D12_FEATURE_DATA_HARDWARE_COPY.Supported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMin",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMax",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.TotalLaneCount",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.Int64ShaderOps",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS2.DepthBoundsTestSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS2.ProgrammableSamplePositionsTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CopyQueueTimestampQueriesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CastingFullyTypedFormatSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.WriteBufferImmediateSupportFlags",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.ViewInstancingTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.BarycentricsSupported",
+        "D3D12_FEATURE_DATA_EXISTING_HEAPS.Supported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS4.MSAA64KBAlignedTextureSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS4.Native16BitShaderOpsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.AdditionalShadingRatesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.BackgroundProcessingSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderPipelineStatsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderSupportsFullRangeRenderTargetArrayIndex",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnTypedResourceSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnGroupSharedSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.DerivativesInMeshAndAmplificationShadersSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS11.AtomicInt64OnDescriptorHeapResourceSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS12.EnhancedBarriersSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS12.RelaxedFormatCastingSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedBufferTextureCopyPitchSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedVertexElementAlignmentSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportHeightFlipsYSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportDepthFlipsZSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.TextureCopyBetweenDimensionsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.AlphaBlendFactorSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS14.AdvancedTextureOpsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS14.WriteableMSAATexturesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS14.IndependentFrontAndBackStencilRefMaskSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS15.TriangleFanSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS15.DynamicIndexBufferStripCutSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS16.DynamicDepthBiasSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS17.NonNormalizedCoordinateSamplersSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS17.ManualWriteTrackingResourceSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MismatchingOutputDimensionsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.IndependentFrontAndBackStencilRefMaskSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.SupportedSampleCountsWithNoOutputs",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.PointSamplingAddressesNeverRoundUp",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.NarrowQuadrilateralLinesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.AnisoFilterWithPointMipSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSize",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSizeWithStaticSamplers",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxViewDescriptorHeapSize",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier",
+        "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_UP",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_DOWN",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_XOR",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_ALL",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_ANY",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_BALLOT",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_GET_LANE_ID",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_FP16_ATOMIC",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_FP32_ATOMIC",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_UINT64_ATOMIC",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_GET_SHADING_RATE",
+        "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VPRS_EVAL_ATTRIB_AT_SAMPLE",
+        "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING",
+        "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_OPACITY_MICROMAP",
+        "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP",
+        "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported",
+        "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - supported",
+        "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - rdmaHeapSize",
+        "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded"
+    ]
 
-function MakeMap(order)
-{
+const PropertiesFilterWhitelist = new Set([
+    "ID",
+    "DXGI_ADAPTER_DESC3.Description",
+    "AdapterIndex"
+])
+
+function MakeMap(order) {
     let result = new Map()
-    for (let i = 0; i < order.length; ++i)
-    {
+    for (let i = 0; i < order.length; ++i) {
         result.set(order[i], i);
     }
     return result;
@@ -965,8 +969,7 @@ function MakeHumanReadable(property, value) {
         return result
     }
 
-    if (property in SuffixMappings)
-    {
+    if (property in SuffixMappings) {
         return value + SuffixMappings[property]
     }
 
@@ -1109,13 +1112,13 @@ class ReportContainer {
                 }
             }
             else if (Array.isArray(obj)) {
-                dest.push({name:prefix, value:obj.join(", ")})
+                dest.push({ name: prefix, value: obj.join(", ") })
             }
             else if (typeof obj == "boolean") {
-                dest.push({name:prefix, value:+obj})
+                dest.push({ name: prefix, value: +obj })
             }
             else {
-                dest.push({name:prefix, value:obj})
+                dest.push({ name: prefix, value: obj })
             }
         }
         flatten(data, "")
@@ -1123,20 +1126,17 @@ class ReportContainer {
 
     #patchData() {
         for (const e of this.#fields) {
-            if (ReportContainer.#renameList.has(e.name))
-            {
+            if (ReportContainer.#renameList.has(e.name)) {
                 e.name = ReportContainer.#renameList.get(e.name)
             }
         }
 
         for (const e of this.#fields) {
-            switch (e.name)
-            {
+            switch (e.name) {
                 case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
                     {
                         for (const e2 of this.#fields) {
-                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id")
-                            {
+                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
                                 e.value += e2.value
                                 break
                             }
@@ -1168,38 +1168,30 @@ class ReportContainer {
         this.#reorderFields()
         this.#initializeMap()
     }
-    
+
     *[Symbol.iterator]() {
         for (const field of this.#fields) {
             yield field;
         }
     }
 
-    HumanReadable(filterString) {
+    HumanReadable(filterCallback) {
         class HumanReadableObj {
-            constructor(fields, filterString) {
+            constructor(fields, filterCallback) {
                 this.fields = fields;
-                this.filterString = filterString.toLowerCase();
+                this.filterCallback = filterCallback;
             }
 
             *[Symbol.iterator]() {
                 for (const field of this.fields) {
-                    let name = field.name
-                    let humanReadableName = MakeHumanReadableProperty(field.name)
-                    let value = field.value
-                    let humanReadableValue = MakeHumanReadable(field.name, field.value)
-                    if (this.filterString == "" 
-                    || name.toString().toLowerCase().includes(this.filterString)
-                    || humanReadableName.toString().toLowerCase().includes(this.filterString)
-                    || value.toString().toLowerCase().includes(this.filterString) 
-                    || humanReadableValue.toString().toLowerCase().includes(this.filterString)) {
-                        yield { name: humanReadableName, value : humanReadableValue }
+                    if (this.filterCallback(field.name, field.value)) {
+                        yield { name: humanReadableName, value: humanReadableValue }
                     }
                 }
             }
         }
 
-        return new HumanReadableObj(this.#fields, filterString);
+        return new HumanReadableObj(this.#fields, filterCallback);
     }
 
     GetField(field) {
@@ -1213,6 +1205,18 @@ function ClearElement(element) {
     }
 }
 
+function FilterField(name, value) {
+    humanReadableName = MakeHumanReadableProperty(name)
+    humanReadableValue = MakeHumanReadable(name, value)
+    let filterString = PropertiesSearchString.toLocaleLowerCase()
+    return filterString == ""
+        || PropertiesFilterWhitelist.has(name)
+        || name.toString().toLowerCase().includes(filterString)
+        || humanReadableName.toString().toLowerCase().includes(filterString)
+        || value.toString().toLowerCase().includes(filterString)
+        || humanReadableValue.toString().toLowerCase().includes(filterString)
+}
+
 let SingleReport = false
 let Reports = []
 let ReportIndex = 0
@@ -1224,6 +1228,7 @@ let PageCount = 0
 const ElementsPerPage = 10
 
 let AdaptersSearchString = ""
+let AdaptersFilters = []
 let FilteredReports = []
 
 let PropertiesSearchString = ""
@@ -1238,36 +1243,50 @@ const ListHeader = [
     "Header.Using preview Agility SDK"
 ]
 
-function FilterReports() {
-    let reportMap = Reports.map((e, i) => {return {index: i, value: e}})
+const FilterMultichoiceFields = [
+    "DXGI_ADAPTER_DESC3.VendorId",
+    "Header.Version",
+    "Header.Using preview Agility SDK"
+]
 
-    if (AdaptersSearchString == "")
-        return reportMap
-
-    return reportMap.filter(e => {
-        return ListHeader.some(collumn => {
-            let value = e.value.GetField(collumn)
+function FilterSingleReport(wrappedReport) {
+    let report = wrappedReport.value
+    let adaptersSearchString = AdaptersSearchString.toLowerCase()
+    let searchTest = adaptersSearchString == ""
+        || ListHeader.some(collumn => {
+            let value = report.value.GetField(collumn)
             let humanReadableValue = MakeHumanReadable(collumn, value).toString().toLowerCase()
             value = value.toString().toLowerCase()
-            return value.includes(AdaptersSearchString.toLowerCase()) 
-                || humanReadableValue.includes(AdaptersSearchString.toLowerCase())
+            return value.includes(adaptersSearchString)
+                || humanReadableValue.includes(adaptersSearchString)
         })
+    let filterTest = FilterMultichoiceFields.every(filter => {
+        let value = report.GetField(filter)
+        return AdaptersFilters[filter][value]
     })
+    let adapterType = report.GetField("DXGI_ADAPTER_DESC3.Flags") & 2 ? "Software" : "Hardware"
+    let adapterTypeTest = AdaptersFilters["Adapter Type"][adapterType]
+    return searchTest && filterTest && adapterTypeTest
+}
+
+function FilterReports() {
+    let reportMap = Reports.map((e, i) => { return { index: i, value: e } })
+
+    return reportMap.filter(FilterSingleReport)
 }
 
 function IterateReports(callback) {
     let sortedReports = FilteredReports.sort((a, b) => {
         let aValue = a.value.GetField(SortProperty)
         let bValue = b.value.GetField(SortProperty)
-        
+
         let compare = 0
         if (aValue < bValue) compare = -1
         if (aValue > bValue) compare = 1
         if (SortInverse) compare *= -1
         return compare
     })
-    for (let i = Page * ElementsPerPage; i < Math.min((Page + 1) * ElementsPerPage, sortedReports.length); ++i)
-    {
+    for (let i = Page * ElementsPerPage; i < Math.min((Page + 1) * ElementsPerPage, sortedReports.length); ++i) {
         callback(sortedReports[i].index, sortedReports[i].value)
     }
 }
@@ -1293,12 +1312,95 @@ function UpdateSearchBarAdapters() {
     searchBar.type = "search"
     searchBar.placeholder = "Search Adapters"
     searchBar.classList.add("searchBar")
-    searchBar.addEventListener('input', function(e) {
+    searchBar.addEventListener('input', function (e) {
         AdaptersSearchString = searchBar.value
         PrepareReports()
         UpdateList()
     })
     searchBarContainer.appendChild(searchBar)
+}
+
+const DefaultFilterValues = {
+    "DXGI_ADAPTER_DESC3.VendorId": {
+        "default": true
+    },
+    "Header.Version": {
+        "default": true
+    },
+    "Header.Using preview Agility SDK": {
+        "default": true,
+        "1": false, // By default hide preview reports
+    },
+    "Adapter Type": {
+        "default": false,
+        "Hardware": true
+    }
+}
+
+function AddFilterMultichoice(container, property) {
+    const filterFieldSet = document.createElement("fieldset")
+    const filterLegend = document.createElement("legend")
+    filterLegend.appendChild(document.createTextNode(MakeHumanReadableProperty(property)))
+    AdaptersFilters[property] = []
+
+    let valuesList = [...new Set(Reports.map(e => e.GetField(property)))].sort().reverse()
+    valuesList.forEach(e => {
+        const checkboxLabel = document.createElement("label")
+        const filterCheckbox = document.createElement("input")
+        filterCheckbox.type = "checkbox"
+        filterCheckbox.checked = DefaultFilterValues[property][e] ?? DefaultFilterValues[property]["default"]
+        AdaptersFilters[property][e] = filterCheckbox.checked
+        filterCheckbox.addEventListener('change', () => {
+            AdaptersFilters[property][e] = filterCheckbox.checked
+            PrepareReports()
+            UpdateList()
+        })
+        checkboxLabel.appendChild(filterCheckbox)
+        checkboxLabel.appendChild(document.createTextNode(MakeHumanReadable(property, e)))
+        filterFieldSet.appendChild(checkboxLabel)
+        filterFieldSet.appendChild(document.createElement("br"))
+    })
+
+    filterFieldSet.appendChild(filterLegend)
+    container.appendChild(filterFieldSet)
+}
+
+function AddFilterAdapterType(container) {
+    const filterFieldSet = document.createElement("fieldset")
+    const filterLegend = document.createElement("legend")
+    const property = "Adapter Type"
+    filterLegend.appendChild(document.createTextNode(MakeHumanReadableProperty(property)))
+    AdaptersFilters[property] = []
+
+    let valuesList = ["Hardware", "Software"]
+    valuesList.forEach(e => {
+        const checkboxLabel = document.createElement("label")
+        const filterCheckbox = document.createElement("input")
+        filterCheckbox.type = "checkbox"
+        filterCheckbox.checked = DefaultFilterValues[property][e] ?? DefaultFilterValues[property]["default"]
+        AdaptersFilters[property][e] = filterCheckbox.checked
+        filterCheckbox.addEventListener('change', () => {
+            AdaptersFilters[property][e] = filterCheckbox.checked
+            PrepareReports()
+            UpdateList()
+        })
+        checkboxLabel.appendChild(filterCheckbox)
+        checkboxLabel.appendChild(document.createTextNode(MakeHumanReadable(property, e)))
+        filterFieldSet.appendChild(checkboxLabel)
+        filterFieldSet.appendChild(document.createElement("br"))
+    })
+
+    filterFieldSet.appendChild(filterLegend)
+    container.appendChild(filterFieldSet)
+}
+
+function UpdateAdaptersFilter() {
+    const adapterFilterContainer = document.getElementById("AdaptersFilterContainer")
+
+    ClearElement(adapterFilterContainer)
+
+    FilterMultichoiceFields.forEach(e => AddFilterMultichoice(adapterFilterContainer, e))
+    AddFilterAdapterType(adapterFilterContainer)
 }
 
 function UpdateSearchBarProperties() {
@@ -1310,7 +1412,7 @@ function UpdateSearchBarProperties() {
     searchBar.type = "search"
     searchBar.placeholder = "Search Properties"
     searchBar.classList.add("searchBar")
-    searchBar.addEventListener('input', function(e) {
+    searchBar.addEventListener('input', function (e) {
         PropertiesSearchString = searchBar.value
         UpdateReport()
     })
@@ -1327,7 +1429,7 @@ function UpdateList() {
 
     const firstRow = document.createElement("tr")
     tableBody.appendChild(firstRow)
-    
+
 
     {
         const secondRow = document.createElement("tr")
@@ -1335,7 +1437,7 @@ function UpdateList() {
         secondRowCell.colSpan = ListHeader.length
         const prevPageButton = document.createElement("button")
         prevPageButton.appendChild(document.createTextNode("Previous page"))
-        prevPageButton.addEventListener('click', function(e) {
+        prevPageButton.addEventListener('click', function (e) {
             Page = Math.max(Page - 1, 0)
             UpdateList()
         })
@@ -1343,7 +1445,7 @@ function UpdateList() {
         secondRowCell.appendChild(prevPageButton)
         const nextPageButton = document.createElement("button")
         nextPageButton.appendChild(document.createTextNode("Next page"))
-        nextPageButton.addEventListener('click', function(e) {
+        nextPageButton.addEventListener('click', function (e) {
             Page = Math.min(Page + 1, PageCount - 1)
             UpdateList()
         })
@@ -1363,7 +1465,7 @@ function UpdateList() {
             const cellText = document.createTextNode(MakeHumanReadableProperty(collumn) + sortMarket)
             cell.appendChild(cellText)
 
-            cell.addEventListener('click', function(e) {
+            cell.addEventListener('click', function (e) {
                 SetSortCollumn(collumn)
                 UpdateList()
             })
@@ -1381,9 +1483,10 @@ function UpdateList() {
             cell.appendChild(cellText)
             row.appendChild(cell)
         })
-        row.addEventListener('click', function(e) {
+        row.addEventListener('click', () => {
             ReportIndex = index
             UpdateReport()
+            window.history.replaceState(null, null, "?ID=" + Reports[ReportIndex].GetField("ID"))
         })
         row.classList.add("clickableRow")
         tableBody.appendChild(row)
@@ -1408,7 +1511,7 @@ function UpdateReport() {
         tableBody.appendChild(firstRow)
     }
 
-    for (const e of report.HumanReadable(PropertiesSearchString)) {
+    for (const e of report.HumanReadable(FilterField)) {
         const row = document.createElement("tr")
 
         const cell0 = document.createElement("td")
@@ -1429,15 +1532,16 @@ function UpdateReport() {
 }
 
 function UpdateOutput() {
-    if (Reports.length == 0)
-    {
+    if (Reports.length == 0) {
         const errorText = document.createTextNode("No reports found")
         document.body.appendChild(errorText)
         return
     }
 
-    if (!SingleReport) { 
+    if (!SingleReport) {
         UpdateSearchBarAdapters()
+        UpdateAdaptersFilter()
+        PrepareReports()
         UpdateList()
     }
     UpdateSearchBarProperties()
@@ -1457,13 +1561,30 @@ function OnLoad() {
     textContainer.appendChild(loadingText)
     tableContainer.appendChild(textContainer)
 
+    const queryParams = (new URL(document.location)).searchParams
+    let specifiedID = null
+    if (queryParams.has('ID')) {
+        specifiedID = queryParams.get('ID')
+    }
+
     let xhr = new XMLHttpRequest()
     xhr.open("GET", apiAddress + "/get_all_submissions")
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
-            ReportIndex = Reports.length - 1
-            PrepareReports()
+                
+            let queryParams = (new URL(document.location)).searchParams
+            if (queryParams.has('ID')) {
+                let specifiedID = queryParams.get('ID')
+                ReportIndex = Reports.findIndex(e => e.GetField("ID") == specifiedID)
+                if (ReportIndex == -1) {
+                    ReportIndex = Reports.length - 1
+                }
+            }
+            else {
+                ReportIndex = Reports.length - 1
+            }
+            
             UpdateOutput()
         }
     }
@@ -1490,7 +1611,6 @@ function OnLoadID() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
-            PrepareReports()
             UpdateOutput()
         }
     }
