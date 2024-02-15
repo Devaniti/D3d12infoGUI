@@ -1254,7 +1254,7 @@ function FilterSingleReport(wrappedReport) {
     let adaptersSearchString = AdaptersSearchString.toLowerCase()
     let searchTest = adaptersSearchString == ""
         || ListHeader.some(collumn => {
-            let value = report.value.GetField(collumn)
+            let value = report.GetField(collumn)
             let humanReadableValue = MakeHumanReadable(collumn, value).toString().toLowerCase()
             value = value.toString().toLowerCase()
             return value.includes(adaptersSearchString)
