@@ -1,3 +1,5 @@
+const isLocalReport = false
+
 const apiAddress = "https://d3d12infodb.boolka.dev:50854"
 const siteAddress = "https://d3d12infodb.boolka.dev"
 
@@ -552,49 +554,57 @@ const SuffixMappings =
 
 const VendorIDs =
 {
-    "4098": "AMD/ATI",
-    "4130": "AMD",
-    "4318": "NVIDIA",
-    "5140": "Microsoft",
-    "5692": "Intel",
-    "32902": "Intel",
-    "32903": "Intel",
-    "877417040": "Parallels",
-    "1297040209": "Qualcomm"
+    // PCI IDs
+    "0x1002": "AMD/ATI",
+    "0x1022": "AMD",
+    "0x10de": "NVIDIA",
+    "0x1414": "Microsoft",
+    "0x1ab8": "Parallels",
+    "0x5143": "Qualcomm",
+    "0x8086": "Intel",
+    // ACPI IDs
+    "PRL4": "Parallels", // 0x344C5250
+    "NVDA": "NVIDIA", // 0x4144564E
+    "INTC": "Intel", // 0x43544E49
+    "INTL": "Intel", // 0x4C544E49
+    "AMDI": "AMD", // 0x49444D41
+    "ACPI": "Intel", // 0x49504341
+    "QCOM": "Qualcomm", // 0x4D4F4351
+    "MSFT": "Microsoft", // 0x5446534D
+    "MSHW": "Microsoft", // 0x5748534D
+    "MSAY": "Microsoft", // 0x5941534D
 }
 
 const SubsystemVendorIDs =
 {
-    "4098": "AMD/ATI",
-    "4130": "AMD",
-    "4133": "Acer",
-    "4136": "Dell",
-    "4156": "HP",
-    "4163": "ASUSTeK",
-    "4173": "Sony",
-    "4203": "Apple",
-    "4219": "Gateway",
-    "4242": "Diamond Multimedia",
-    "4318": "NVIDIA",
-    "4473": "Toshiba",
-    "5208": "Gigabyte",
-    "5218": "MSI",
-    "5260": "PowerColor",
-    "5445": "VisionTek",
-    "5481": "Palit",
-    "5762": "XFX",
-    "5875": "Jetway",
-    "6058": "Lenovo",
-    "6063": "HIS",
-    "6332": "GeCube",
-    "6509": "Club 3D",
-    "5140": "Microsoft",
-    "5692": "Intel",
-    "7586": "Sapphire",
-    "32902": "Intel",
-    "32903": "Intel",
-    "877417040": "Parallels",
-    "1297040209": "Qualcomm"
+    "0x1002": "AMD/ATI",
+    "0x1022": "AMD",
+    "0x1025": "Acer",
+    "0x1028": "Dell",
+    "0x103c": "HP",
+    "0x1043": "ASUSTeK",
+    "0x104d": "Sony",
+    "0x106b": "Apple",
+    "0x107b": "Gateway",
+    "0x106b": "Diamond Multimedia",
+    "0x10de": "NVIDIA",
+    "0x1179": "Toshiba",
+    "0x1414": "Microsoft",
+    "0x1458": "Gigabyte",
+    "0x1462": "MSI",
+    "0x148c": "PowerColor",
+    "0x1545": "VisionTek",
+    "0x1569": "Palit",
+    "0x1682": "XFX",
+    "0x16f3": "Jetway",
+    "0x17aa": "Lenovo",
+    "0x17af": "HIS",
+    "0x18bc": "GeCube",
+    "0x196d": "Club 3D",
+    "0x1ab8": "Parallels",
+    "0x1da2": "Sapphire",
+    "0x5143": "Qualcomm",
+    "0x8086": "Intel",
 }
 
 const PropertyHumanReadableNames =
@@ -985,19 +995,27 @@ function MakeHumanReadable(property, value) {
         case "VkPhysicalDeviceProperties.vendorID":
         case "Intel GPUDetect::GPUData.VendorId":
             {
-                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
-                let hexValue = "0x" + ZeroPad(Number(value).toString(16), 4)
-                if (VendorIDs[value])
-                    return `${VendorIDs[value]} (${hexValue})`
+                let decodedValue;
+                if (value <= 0xFFFF) {
+                    // PCI ID codepath
+                    let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
+                    decodedValue = "0x" + ZeroPad(Number(value).toString(16), 4)
+                } else {
+                    // ACPI ID codepath
+                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24)  & 0xFF);
+                    decodedValue = ToTextID(value)
+                }
+                if (VendorIDs[decodedValue])
+                    return `${VendorIDs[decodedValue]} (${decodedValue})`
                 else
-                    return hexValue
+                    return `Unknown (${decodedValue})`
             }
         // DWORD sized hex number representing Subsystem ID
         case "DXGI_ADAPTER_DESC3.SubSysId":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pSubSystemId":
             {
                 let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
-                let susbystemVendorID = value & 0xFFFF
+                let susbystemVendorID = "0x" + ZeroPad(Number(value & 0xFFFF).toString(16), 4)
                 let hexValue = "0x" + ZeroPad(Number(value).toString(16), 8)
                 if (SubsystemVendorIDs[susbystemVendorID])
                     return `${SubsystemVendorIDs[susbystemVendorID]} (${hexValue})`
@@ -1131,18 +1149,21 @@ class ReportContainer {
             }
         }
 
-        for (const e of this.#fields) {
-            switch (e.name) {
-                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
-                    {
-                        for (const e2 of this.#fields) {
-                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
-                                e.value += e2.value
-                                break
+        if (isLocalReport)
+        {
+            for (const e of this.#fields) {
+                switch (e.name) {
+                    case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
+                        {
+                            for (const e2 of this.#fields) {
+                                if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
+                                    e.value += e2.value
+                                    break
+                                }
                             }
                         }
-                    }
-                    break
+                        break
+                }
             }
         }
     }
