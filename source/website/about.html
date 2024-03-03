@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>About D3d12infoDB</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Report.css">
+</head>
+
+<script>
+    function OnLoad() {
+        var n = [..."elxusn/ctm`unwAcnnmj`/edw"].map(n => String.fromCharCode(1 ^ n.charCodeAt(0))).join("");
+        document.getElementById("email-address").innerHTML = '<a href="mailto:' + n + '">' + n + "</a>" 
+    }
+</script>
+
+<body onload="OnLoad()">
+    <noscript>This website requires javascript to run</noscript>
+    <div class="header">
+        <div style="width: 0.25em"></div>
+        <a class="headerLink" href="index.html">
+            <div class="headerText">D3d12infoDB</div>
+        </a>
+        <div style="width: 1.5em"></div>
+        <a class="headerLink" href="https://github.com/Devaniti/D3d12infoGUI/releases/latest">
+            <img class="icon" src="Download.svg">
+            <div class="headerText">Download GUI App</div>
+        </a>
+        <a class="headerLink" href="https://github.com/Devaniti/D3d12infoGUI">
+            <img class="icon" src="github-mark.svg">
+            <div class="headerText">Source</div>
+        </a>
+        <div style="width: 1.5em"></div>
+        <a class="headerLink" href="https://github.com/sawickiap/D3d12info/releases/latest">
+            <img class="icon" src="Download.svg">
+            <div class="headerText">Download Console App</div>
+        </a>
+        <a class="headerLink" href="https://github.com/sawickiap/D3d12info">
+            <img class="icon" src="github-mark.svg">
+            <div class="headerText">Source</div>
+        </a>
+        <a class="headerLink flexRight" href="about.html">
+            <div class="headerText">About</div>
+        </a>
+    </div>
+    <div>
+        <h1 id="AboutD3d12infoDB">About D3d12infoDB</h1>
+        <p>D3d12infoDB is a GPU hardware database, main purpose of which is to collect information about d3d12
+            capabilities from wide variety of GPUs.</p>
+        <p>Reports to the database can be submitted by anyone using D3d12infoGUI.</p>
+        <p>In total D3dinfoDB consist of 2 parts:</p>
+        <ul>
+            <li>D3d12info - console tool for collecting GPU information<ul>
+                    <li><a href="https://github.com/sawickiap/D3d12info">Github link</a></li>
+                    <li>Maintained by <a href="https://asawicki.info/">Adam Sawicki</a></li>
+                </ul>
+            </li>
+            <li>D3d12infoGUI - GUI for D3d12info and the website/database itself<ul>
+                    <li><a href="https://github.com/Devaniti/D3d12infoGUI">Github link</a></li>
+                    <li>Maintained by <a href="https://boolka.dev/">Dmytro Bulatov</a></li>
+                </ul>
+            </li>
+        </ul>
+        <p>For any questions regarding removal of submissions or other questions contact Dmytro Bulatov at <span id="email-address">enable Javascript to see email</span></p>
+    </div>
+</html>

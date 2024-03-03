@@ -117,3 +117,51 @@ button:disabled {
     background-repeat: no-repeat;
     padding-left: 2em;
 }
+
+a {
+    transition: color .3s ease-in;
+    text-decoration: none;
+    color: #004a94;
+    text-align: center;
+}
+
+a:hover {
+    color: #3d9efe;
+}
+
+.icon {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.headerText, .icon {
+    display:inline-block;
+    vertical-align: top;
+}
+
+.headerText{
+    padding-top: 0.15em;
+}
+
+.header {
+    height:1.8em;
+    padding-top:0.3em;
+    margin-bottom: 0.3em;
+    vertical-align: middle;
+    font-size: 1.2em;
+    display:flex;
+    border-width: 2px;
+    border-style: hidden;
+    border-collapse: collapse;
+    border-radius: 4px;
+    background-color: #e6e5e5;
+}
+
+.headerLink {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.flexRight {
+    margin-left: auto;
+}
