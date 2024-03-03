@@ -81,6 +81,9 @@ CREATE TABLE IF NOT EXISTS Submissions(
     "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::configurationOptions" INT,
     "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isEnabled" INT,
     "NvPhysicalGpuHandle.NvAPI_GPU_GetRamBusWidth" INT,
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::bIsExternalGpu" INT,
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::rayTracingCores" INT,
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores" INT,
     "AGSDeviceInfo.adapterString" TEXT,
     "AGSDeviceInfo.asicFamily" INT,
     "AGSDeviceInfo.isAPU" INT,
@@ -263,6 +266,7 @@ CREATE TABLE IF NOT EXISTS Submissions(
     "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_UINT64_ATOMIC" INT,
     "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_GET_SHADING_RATE" INT,
     "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VPRS_EVAL_ATTRIB_AT_SAMPLE" INT,
+    "NvAPI_D3D12_GetOptimalThreadCountForMesh.pThreadCount" INT,
     "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING" INT,
     "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_OPACITY_MICROMAP" INT,
     "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP" INT,
@@ -292,4 +296,4 @@ CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
     "CheckInterfaceSupport.UMDVersion"
 );
 
-PRAGMA user_version=1;
+PRAGMA user_version=2;

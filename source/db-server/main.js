@@ -16,6 +16,11 @@ const requiredProperites = require("./StructureDesc/required_properites.json")
 const submitUniqueProperites = require("./StructureDesc/submit_unique_properties.json")
 const allProperties = require("./StructureDesc/all_properites.json")
 
+// Uses source schema version as an index
+const upgradeScripts = {
+    1: "UpgradeScripts/To_1_1_0.sql"
+}
+
 function isObjectAllowedInDB(inObj)
 {
     let isAllowed = true;
@@ -75,6 +80,11 @@ switch (schemaVersion)
         console.log("Finished new database setup")
         break;
     case 1:
+        console.log("Upgrading database from schema version 1 to 2")
+        db.exec(fs.readFileSync(upgradeScripts[1]).toString())
+        console.log("Finished upgrading to version 2")
+        // Fallthrough
+    case 2:
         console.log("Database schema is up to date")
         break;
 }
