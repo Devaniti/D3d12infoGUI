@@ -628,7 +628,7 @@ const SubsystemVendorIDs =
 const PropertyHumanReadableNames =
 {
     "Header.Program": "Program",
-    "Header.Version": "Program Version",
+    "Header.Version": "D3d12info Version",
     "Header.Build Date": "Program Build Date",
     "Header.Configuration": "Program Configuration",
     "Header.Configuration bits": "Program Architecture",
@@ -1292,7 +1292,6 @@ const ListHeader = [
 
 const FilterMultichoiceFields = [
     "DXGI_ADAPTER_DESC3.VendorId",
-    "Header.Version",
     "Header.Using preview Agility SDK"
 ]
 

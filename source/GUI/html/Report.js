@@ -628,7 +628,7 @@ const SubsystemVendorIDs =
 const PropertyHumanReadableNames =
 {
     "Header.Program": "Program",
-    "Header.Version": "Program Version",
+    "Header.Version": "D3d12info Version",
     "Header.Build Date": "Program Build Date",
     "Header.Configuration": "Program Configuration",
     "Header.Configuration bits": "Program Architecture",
