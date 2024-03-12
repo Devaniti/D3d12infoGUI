@@ -94,7 +94,8 @@ const EnumMappings =
         "101": "D3D_SHADER_MODEL_6_5",
         "102": "D3D_SHADER_MODEL_6_6",
         "103": "D3D_SHADER_MODEL_6_7",
-        "104": "D3D_SHADER_MODEL_6_8"
+        "104": "D3D_SHADER_MODEL_6_8",
+        "105": "D3D_SHADER_MODEL_6_9"
     },
     "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion":
     {
@@ -137,7 +138,8 @@ const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier":
     {
         "0": "D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED",
-        "1": "D3D12_WORK_GRAPHS_TIER_0_1"
+        "1": "D3D12_WORK_GRAPHS_TIER_0_1",
+        "10": "D3D12_WORK_GRAPHS_TIER_1_0"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
     {
@@ -189,6 +191,16 @@ const EnumMappings =
     {
         "0": "D3D12_RECREATE_AT_TIER_NOT_SUPPORTED",
         "1": "D3D12_RECREATE_AT_TIER_1"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier":
+    {
+        "0": "D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED",
+        "10": "D3D12_WORK_GRAPHS_TIER_1_0"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier":
+    {
+        "10": "D3D12_EXECUTE_INDIRECT_TIER_1_0",
+        "11": "D3D12_EXECUTE_INDIRECT_TIER_1_1"
     },
     "VkPhysicalDeviceProperties.deviceType":
     {
@@ -495,7 +507,9 @@ const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.NarrowQuadrilateralLinesSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.AnisoFilterWithPointMipSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": TrueFalseMapping,
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": TrueFalseMapping
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported": TrueFalseMapping
 }
 
 const BitFlagsMappings =
@@ -912,6 +926,10 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported",
         "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes",
         "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL",
         "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_UP",

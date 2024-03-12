@@ -252,6 +252,10 @@ CREATE TABLE IF NOT EXISTS Submissions(
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported" INT,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported" INT,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier" INT,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier" INT,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier" INT,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported" INT,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported" INT,
     "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes" INT,
     "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL" INT,
     "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_UP" INT,
@@ -296,4 +300,4 @@ CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
     "CheckInterfaceSupport.UMDVersion"
 );
 
-PRAGMA user_version=2;
+PRAGMA user_version=3;

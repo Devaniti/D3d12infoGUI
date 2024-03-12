@@ -17,9 +17,12 @@ const submitUniqueProperites = require("./StructureDesc/submit_unique_properties
 const allProperties = require("./StructureDesc/all_properites.json")
 
 // Uses source schema version as an index
-const upgradeScripts = {
-    1: "UpgradeScripts/To_1_1_0.sql"
+const UPGRADE_SCRIPTS = {
+    1: "UpgradeScripts/To_1_1_0.sql",
+    2: "UpgradeScripts/To_1_2_0.sql"
 }
+
+const CURRENT_SCHEMA_VERSION = 3
 
 function isObjectAllowedInDB(inObj)
 {
@@ -72,21 +75,33 @@ console.log(`Opened database ${databasePath}`)
 let schemaVersion = db.pragma('user_version', { simple: true })
 console.log(`Database schema version is ${schemaVersion}`)
 
-switch (schemaVersion)
+if (schemaVersion == 0)
 {
-    case 0:
-        console.log("Setting up new database")
-        db.exec(fs.readFileSync(databaseSchemaPath).toString())
-        console.log("Finished new database setup")
-        break;
-    case 1:
-        console.log("Upgrading database from schema version 1 to 2")
-        db.exec(fs.readFileSync(upgradeScripts[1]).toString())
-        console.log("Finished upgrading to version 2")
-        // Fallthrough
-    case 2:
-        console.log("Database schema is up to date")
-        break;
+    console.log("Setting up new database")
+    db.exec(fs.readFileSync(databaseSchemaPath).toString())
+    console.log("Finished new database setup")
+}
+
+if (schemaVersion < CURRENT_SCHEMA_VERSION)
+{
+    console.log("Upgrading database")
+    for (let i = schemaVersion; i < CURRENT_SCHEMA_VERSION; i++)
+    {
+        console.log(`Upgrading to version ${i + 1}`)
+        db.exec(fs.readFileSync(UPGRADE_SCRIPTS[i]).toString())
+    }
+    console.log("Finished upgrading")
+}
+
+if (schemaVersion == CURRENT_SCHEMA_VERSION)
+{
+    console.log("Database schema is up to date")
+}
+
+if (schemaVersion > CURRENT_SCHEMA_VERSION)
+{
+    console.log(`FATAL ERROR: Unexpected schema version ${schemaVersion}`)
+    process.exit(1)
 }
 
 console.log("Database is ready")
