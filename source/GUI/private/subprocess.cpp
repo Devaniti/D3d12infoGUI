@@ -3,7 +3,7 @@
 #include "subprocess.h"
 
 namespace D3d12infoGUI {
-std::pair<int, std::vector<char>> Subprocess::GetCommandOutput(
+Subprocess::ProcessOutput Subprocess::GetCommandOutput(
     std::string_view commandLine) {
   HANDLE stdinRead = NULL;
   HANDLE stdinWrite = NULL;
@@ -41,7 +41,7 @@ void Subprocess::LaunchProcess(HANDLE stdinRead, HANDLE stdoutWrite,
                                HANDLE &processHandle,
                                std::string_view commandLine) {
   PROCESS_INFORMATION procInfo{};
-  STARTUPINFO startupInfo{};
+  STARTUPINFOA startupInfo{};
 
   startupInfo.cb = sizeof(STARTUPINFO);
   startupInfo.hStdInput = stdinRead;
@@ -51,14 +51,14 @@ void Subprocess::LaunchProcess(HANDLE stdinRead, HANDLE stdoutWrite,
 
   std::string commandLineCopy(commandLine);
 
-  BOOL bSuccess = ::CreateProcess(NULL, commandLineCopy.data(), NULL, NULL,
-                                  TRUE, 0, NULL, NULL, &startupInfo, &procInfo);
+  BOOL bSuccess =
+      ::CreateProcessA(NULL, commandLineCopy.data(), NULL, NULL, TRUE,
+                      CREATE_NO_WINDOW, NULL, NULL, &startupInfo, &procInfo);
   if (!bSuccess)
     std::runtime_error("Subprocess::LaunchProcess::CreateProcessW");
 
   bSuccess = ::AttachConsole(procInfo.dwProcessId);
-  if (!bSuccess)
-    std::runtime_error("Subprocess::LaunchProcess::AttachConsole");
+  if (!bSuccess) std::runtime_error("Subprocess::LaunchProcess::AttachConsole");
 
   processHandle = procInfo.hProcess;
   ::CloseHandle(procInfo.hThread);

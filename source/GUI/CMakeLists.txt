@@ -1,9 +1,16 @@
 file(GLOB_RECURSE SourceList CONFIGURE_DEPENDS *.cpp)
 file(GLOB_RECURSE HeaderList CONFIGURE_DEPENDS *.h *.hpp)
 file(GLOB_RECURSE HTMLList CONFIGURE_DEPENDS html/*)
-set(GeneratedFiles ${CMAKE_CURRENT_BINARY_DIR}/Report.html ${CMAKE_CURRENT_BINARY_DIR}/Report.js ${CMAKE_CURRENT_BINARY_DIR}/Report.css ${CMAKE_CURRENT_BINARY_DIR}/Search.svg)
+set(GeneratedFiles ${CMAKE_CURRENT_BINARY_DIR}/embed.h)
 
-add_executable(GUI ${SourceList} ${HeaderList} ${HTMLList})
+option(EMBED_D3D12INFO "Whether to embed D3d12info binaries self extract later" ON)
+set(D3D12INFO_PATH "" CACHE STRING "If EMBED_D3D12INFO is ON, overrides default path for D3d12info binaries to embed")
+
+add_executable(GUI WIN32 ${SourceList} ${HeaderList} ${GeneratedFiles} ${HTMLList})
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    target_compile_definitions(GUI PRIVATE UNICODE _UNICODE)
+endif()
 
 target_include_directories(GUI
     PUBLIC public
@@ -16,6 +23,7 @@ target_precompile_headers(GUI
 )
 
 set_source_files_properties(${HeaderList} ${HTMLList} ${GeneratedFiles} PROPERTIES HEADER_FILE_ONLY TRUE)
+set_source_files_properties(${GeneratedFiles} PROPERTIES GENERATED TRUE)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SourceList} ${HeaderList} ${HTMLList})
 
 target_link_libraries(GUI)
@@ -27,28 +35,29 @@ set_target_properties(GUI
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Report.html
-    COMMAND powershell -noprofile -executionpolicy bypass -file "${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" "${CMAKE_CURRENT_BINARY_DIR}/Report.html" ReportHTML
-    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1 ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html
+if (EMBED_D3D12INFO)
+if (D3D12INFO_PATH)
+# Embed D3d12info from custom folder
+add_custom_target(embed_files
+    COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${D3D12INFO_PATH}/D3d12info.exe" D3d12info.exe "${D3D12INFO_PATH}/D3d12info_preview.exe" D3d12info_preview.exe "${D3D12INFO_PATH}/amd_ags_x64.dll" amd_ags_x64.dll "${D3D12INFO_PATH}/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${D3D12INFO_PATH}/D3d12info.exe ${D3D12INFO_PATH}/D3d12info_preview.exe ${D3D12INFO_PATH}/amd_ags_x64.dll ${D3D12INFO_PATH}/D3D12/D3D12Core.dll ${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll
 )
-
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Report.js
-    COMMAND powershell -noprofile -executionpolicy bypass -file "${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" "${CMAKE_CURRENT_BINARY_DIR}/Report.js" ReportJS
-    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1 ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js
+else()
+# Build D3d12info and embed it
+add_custom_target(embed_files
+    COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe" D3d12info.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe" D3d12info_preview.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll" amd_ags_x64.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll
 )
-
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Report.css
-    COMMAND powershell -noprofile -executionpolicy bypass -file "${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" "${CMAKE_CURRENT_BINARY_DIR}/Report.css" ReportCSS
-    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1 ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css
-)
-
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Report.css
-    COMMAND powershell -noprofile -executionpolicy bypass -file "${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1" "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" "${CMAKE_CURRENT_BINARY_DIR}/Search.svg" SearchSVG
-    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/html/Escape.ps1 ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg
-)
-
+add_dependencies(embed_files D3d12info D3d12info_preview)
+endif()
+else()
+# Don't embed D3d12info and run it from the working directory
+target_compile_definitions(GUI PRIVATE USE_D3D12INFO_FROM_WORKING_DIRECTORY=1)
 add_dependencies(GUI D3d12info D3d12info_preview)
+add_custom_target(embed_files
+    COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg
+)
+endif()
+
+add_dependencies(GUI embed_files)

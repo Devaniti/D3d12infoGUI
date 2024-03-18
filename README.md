@@ -26,6 +26,7 @@ After submitting report (or in case database already has matching report), you h
 ## Prerequisites
 
 * Cmake 3.22 or later
+* Python 3
 * Visual Studio 2022 with C++ development components installed
   * Other Generators or older versions of Visual Studio may work, but are not tested
 * Vulkan SDK (optional)
@@ -48,7 +49,20 @@ cmake --build build -j
 ```
 After build, artifacts will be in the `build/bin/{Configuration}` folder
 
-Note that depending on presense of Vulkan SDK during build compiled tool will or will not be able to query Vulkan info
+By default D3d12info will be built from sources and embedded in GUI
+You can configure this behaviour via following Cmake parameters:
+
+* EMBED_D3D12INFO = <ON/OFF>
+  * Whether to embed D3d12info or run D3d12info located in the working directory
+  * D3d12info will still be built and placed in the same directory as GUI binary even if you decide not to embed it
+  * On by default
+* D3D12INFO_PATH
+  * Specifies custom path to D3d12info binaries to embed
+  * Only has effect when EMBED_D3D12INFO=ON
+  * If it's non empty string, D3d12info build may be skipped
+  * Empty string by default
+
+If you are building D3d12info as part of D3d12infoGUI build, make sure to check [D3d12info build instructions](https://github.com/sawickiap/D3d12info?tab=readme-ov-file#building)
 
 # Running website
 
