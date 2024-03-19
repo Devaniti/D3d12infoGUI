@@ -19,6 +19,8 @@ class Window {
   static LRESULT CALLBACK WindowProcStatic(HWND hwnd, UINT uMsg, WPARAM wParam,
                                            LPARAM lParam);
   LRESULT WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+  
+  void PaintWindow(HWND hwnd);
 
   std::jthread windowThread;
   std::atomic<bool> exitRequested = false;

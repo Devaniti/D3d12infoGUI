@@ -52,7 +52,7 @@ void Window::ThreadEntryPoint() {
   assert(windowClassAtom);
 
   hwnd = CreateWindowW(windowClass, windowTitle, WS_OVERLAPPEDWINDOW,
-                       CW_USEDEFAULT, CW_USEDEFAULT, 400, 200, nullptr, nullptr,
+                       CW_USEDEFAULT, CW_USEDEFAULT, 470, 130, nullptr, nullptr,
                        instance, this);
   assert(hwnd);
   ::ShowWindow(hwnd, SW_SHOWNORMAL);
@@ -103,18 +103,7 @@ LRESULT CALLBACK Window::WindowProcStatic(HWND hwnd, UINT uMsg, WPARAM wParam,
 LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
   switch (uMsg) {
     case WM_PAINT: {
-      PAINTSTRUCT ps;
-      HDC hdc = BeginPaint(hwnd, &ps);
-      FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-
-      {
-        std::scoped_lock lock(syncMutex);
-        TextOutW(hdc, 10, 10, progressMessage.c_str(),
-                 progressMessage.length());
-      }
-
-      EndPaint(hwnd, &ps);
-      ReleaseDC(hwnd, hdc);
+      PaintWindow(hwnd);
       return 0;
     }
     case WM_NCDESTROY:
@@ -124,6 +113,28 @@ LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
       return DefWindowProc(hwnd, uMsg, wParam, lParam);
   }
   return 0;
+}
+
+void Window::PaintWindow(HWND hwnd) {
+  PAINTSTRUCT ps;
+  HDC hdc = BeginPaint(hwnd, &ps);
+
+  HFONT font =
+      ::CreateFontW(40, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE,
+                    DEFAULT_CHARSET,
+                 OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY,
+                 VARIABLE_PITCH, TEXT("Segoe UI"));
+  ::SelectObject(hdc, font);
+  ::FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+  ::SetTextAlign(hdc, TA_CENTER);
+
+  {
+    std::scoped_lock lock(syncMutex);
+    ::TextOutW(hdc, 227, 23, progressMessage.c_str(), progressMessage.length());
+  }
+
+  ::EndPaint(hwnd, &ps);
+  ::ReleaseDC(hwnd, hdc);
 }
 
 }  // namespace D3d12infoGUI

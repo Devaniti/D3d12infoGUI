@@ -58,7 +58,6 @@ int mainImpl(HINSTANCE hInstance) {
   std::filesystem::path reportPath = rootPath / L"Report.html";
 
   ::ShellExecuteW(NULL, L"open", reportPath.c_str(), NULL, NULL, SW_SHOW);
-  window.Close();
   return 0;
 }
 
