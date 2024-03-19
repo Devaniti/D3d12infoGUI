@@ -6,14 +6,12 @@ namespace D3d12infoGUI {
 
 Window::Window(HINSTANCE hInstance, const std::wstring_view message)
     : instance(hInstance) {
+  progressMessage = message;
   {
     windowThread = std::jthread(&ThreadEntryPointStatic, this);
     std::unique_lock lock(syncMutex);
     initializedCondition.wait(lock, [this] { return isInitialized; });
   }
-  ReportProgress(message);
-  ::ShowWindow(hwnd, SW_SHOWDEFAULT);
-  ::UpdateWindow(hwnd);
 }
 
 Window::~Window() { Close(); }
@@ -57,6 +55,7 @@ void Window::ThreadEntryPoint() {
                        CW_USEDEFAULT, CW_USEDEFAULT, 400, 200, nullptr, nullptr,
                        instance, this);
   assert(hwnd);
+  ::ShowWindow(hwnd, SW_SHOWNORMAL);
 
   {
     std::unique_lock lock(syncMutex);
