@@ -36,28 +36,29 @@ set_target_properties(GUI
 )
 
 if (EMBED_D3D12INFO)
-if (D3D12INFO_PATH)
-# Embed D3d12info from custom folder
-add_custom_target(embed_files
-    COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${D3D12INFO_PATH}/D3d12info.exe" D3d12info.exe "${D3D12INFO_PATH}/D3d12info_preview.exe" D3d12info_preview.exe "${D3D12INFO_PATH}/amd_ags_x64.dll" amd_ags_x64.dll "${D3D12INFO_PATH}/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${D3D12INFO_PATH}/D3d12info.exe ${D3D12INFO_PATH}/D3d12info_preview.exe ${D3D12INFO_PATH}/amd_ags_x64.dll ${D3D12INFO_PATH}/D3D12/D3D12Core.dll ${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll
-)
+    if (D3D12INFO_PATH)
+        # Embed D3d12info from custom folder
+        add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/embed.h
+            COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${D3D12INFO_PATH}/D3d12info.exe" D3d12info.exe "${D3D12INFO_PATH}/D3d12info_preview.exe" D3d12info_preview.exe "${D3D12INFO_PATH}/amd_ags_x64.dll" amd_ags_x64.dll "${D3D12INFO_PATH}/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll
+            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${D3D12INFO_PATH}/D3d12info.exe ${D3D12INFO_PATH}/D3d12info_preview.exe ${D3D12INFO_PATH}/amd_ags_x64.dll ${D3D12INFO_PATH}/D3D12/D3D12Core.dll ${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll
+        )
+    else()
+        # Build D3d12info and embed it
+        add_dependencies(GUI D3d12info D3d12info_preview)
+        add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/embed.h
+            COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe" D3d12info.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe" D3d12info_preview.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll" amd_ags_x64.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll
+            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll
+        )
+    endif()
 else()
-# Build D3d12info and embed it
-add_custom_target(embed_files
-    COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe" D3d12info.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe" D3d12info_preview.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll" amd_ags_x64.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll
-)
-add_dependencies(embed_files D3d12info D3d12info_preview)
+    # Don't embed D3d12info, build it and run from the working directory
+    target_compile_definitions(GUI PRIVATE USE_D3D12INFO_FROM_WORKING_DIRECTORY=1)
+    add_dependencies(GUI D3d12info D3d12info_preview)
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/embed.h
+        COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg
+    )
 endif()
-else()
-# Don't embed D3d12info and run it from the working directory
-target_compile_definitions(GUI PRIVATE USE_D3D12INFO_FROM_WORKING_DIRECTORY=1)
-add_dependencies(GUI D3d12info D3d12info_preview)
-add_custom_target(embed_files
-    COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg
-)
-endif()
-
-add_dependencies(GUI embed_files)
