@@ -1,6 +1,6 @@
 const isLocalReport = true
 
-const apiAddress = "https://d3d12infodb.boolka.dev:50854"
+const apiAddress = "https://d3d12infodbapi.boolka.dev"
 const siteAddress = "https://d3d12infodb.boolka.dev"
 
 const TrueFalseMapping =
