@@ -19,10 +19,11 @@ const allProperties = require("./StructureDesc/all_properites.json")
 // Uses source schema version as an index
 const UPGRADE_SCRIPTS = {
     1: "UpgradeScripts/To_1_1_0.sql",
-    2: "UpgradeScripts/To_1_2_0.sql"
+    2: "UpgradeScripts/To_1_2_0.sql",
+    3: "UpgradeScripts/To_1_3_0.sql"
 }
 
-const CURRENT_SCHEMA_VERSION = 3
+const CURRENT_SCHEMA_VERSION = 4
 
 function isObjectAllowedInDB(inObj)
 {

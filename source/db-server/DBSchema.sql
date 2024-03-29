@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Submissions(
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch" TEXT,
     "SystemInfo.AGSGPUInfo.driverVersion" TEXT,
     "SystemInfo.AGSGPUInfo.radeonSoftwareVersion" TEXT,
-    "SystemInfo.D3D12EnableExperimentalFeatures" TEXT NOT NULL,
+    "SystemInfo.D3D12EnableExperimentalFeatures" TEXT,
     "DXGI_ADAPTER_DESC3.Description" TEXT NOT NULL,
     "DXGI_ADAPTER_DESC3.VendorId" INT NOT NULL,
     "DXGI_ADAPTER_DESC3.DeviceId" INT NOT NULL,
@@ -300,4 +300,4 @@ CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
     "CheckInterfaceSupport.UMDVersion"
 );
 
-PRAGMA user_version=3;
+PRAGMA user_version=4;
