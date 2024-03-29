@@ -21,6 +21,13 @@ After opening report, you will be able to submit your generated report to the [d
 
 After submitting report (or in case database already has matching report), you have an option to open said report online. You can then share link to that report to be viewed on another computer.
 
+# Command line options
+
+```
+-l --licenses - Shows open source licenses
+-h --help     - Shows this usage info
+```
+
 # Building GUI
 
 ## Prerequisites
