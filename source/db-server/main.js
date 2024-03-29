@@ -158,13 +158,11 @@ api.get('/get_all_submissions', (req, res) => {
     }
 })
 
-console.log(convertToSqlSelectIDQuery("Submissions", submitUniqueProperites, "LIMIT 1"))
 const isSubmittedStatement = db.prepare(convertToSqlSelectIDQuery("Submissions", submitUniqueProperites, "LIMIT 1"))
 api.post('/is_submitted', (req, res) => {
     const newSubmission = req.body
 
     let parameterList = convertObjectToArrayOfValues(submitUniqueProperites, newSubmission)
-    console.dir(parameterList)
 
     try{
         let rows = isSubmittedStatement.all(parameterList)
