@@ -81,6 +81,7 @@ if (schemaVersion == 0)
     console.log("Setting up new database")
     db.exec(fs.readFileSync(databaseSchemaPath).toString())
     console.log("Finished new database setup")
+    schemaVersion = CURRENT_SCHEMA_VERSION
 }
 
 if (schemaVersion < CURRENT_SCHEMA_VERSION)
