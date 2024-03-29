@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 CREATE TABLE IF NOT EXISTS Submissions(
     "ID" INTEGER PRIMARY KEY, -- This automatically becomes an alias for rowid in sqlite
     "Header.Program" TEXT NOT NULL,
@@ -301,3 +303,5 @@ CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
 );
 
 PRAGMA user_version=4;
+
+COMMIT;

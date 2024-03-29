@@ -1,6 +1,8 @@
 -- Only called manually
 -- Pre 0.1.1 schemas didn't had user_version pragma set to detect version
 
+BEGIN TRANSACTION;
+
 ALTER TABLE Submissions ADD COLUMN "Header.NvAPI compiled version" TEXT NOT NULL DEFAULT "R535-developer";
 ALTER TABLE Submissions ADD COLUMN "Header.NvAPI_GetInterfaceVersionString" TEXT;
 ALTER TABLE Submissions ADD COLUMN "Header.AMD_AGS_VERSION" TEXT NOT NULL DEFAULT "6.2.0";
@@ -125,3 +127,5 @@ CREATE UNIQUE INDEX IF NOT EXISTS UniqueSubmission on Submissions (
 );
 
 PRAGMA user_version=1;
+
+COMMIT;
