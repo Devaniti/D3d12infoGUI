@@ -8,6 +8,7 @@
     "Header.AMD_AGS_VERSION",
     "Header.Intel GPU Detect compiled version",
     "SystemInfo.OS Info.Windows version",
+    "SystemInfo.D3D12EnableExperimentalFeatures",
     "DXGI_ADAPTER_DESC3.Description",
     "DXGI_ADAPTER_DESC3.VendorId",
     "DXGI_ADAPTER_DESC3.DeviceId",

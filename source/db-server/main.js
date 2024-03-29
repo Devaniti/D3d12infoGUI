@@ -53,7 +53,7 @@ function convertToSqlInsertQuery(tableName, propertyArray)
 
 function convertToSqlSelectIDQuery(tableName, propertyArray, suffix)
 {
-    let filterString = propertyArray.map(e => `"${e}" = ?`).join(" AND ")
+    let filterString = propertyArray.map(e => `"${e}" IS ?`).join(" AND ")
     let sqlQuery = `Select ID from ${tableName} WHERE ${filterString} ${suffix};`
     return sqlQuery
 }
@@ -158,11 +158,13 @@ api.get('/get_all_submissions', (req, res) => {
     }
 })
 
+console.log(convertToSqlSelectIDQuery("Submissions", submitUniqueProperites, "LIMIT 1"))
 const isSubmittedStatement = db.prepare(convertToSqlSelectIDQuery("Submissions", submitUniqueProperites, "LIMIT 1"))
 api.post('/is_submitted', (req, res) => {
     const newSubmission = req.body
 
     let parameterList = convertObjectToArrayOfValues(submitUniqueProperites, newSubmission)
+    console.dir(parameterList)
 
     try{
         let rows = isSubmittedStatement.all(parameterList)
