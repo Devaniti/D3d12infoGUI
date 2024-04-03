@@ -2,13 +2,13 @@
 const reports = [{
     "Header": {
         "Program": "D3d12info",
-        "Version": "3.0.0",
-        "Build Date": "Jan 20 2024, 15:25:03",
+        "Version": "3.4.0",
+        "Build Date": "Mar 26 2024, 21:26:16",
         "Configuration": "Release",
         "Configuration bits": "64-bit",
-        "Generated on": "2024-01-20",
+        "Generated on": "2024-04-04",
         "Using preview Agility SDK": false,
-        "D3D12_SDK_VERSION": 611,
+        "D3D12_SDK_VERSION": 613,
         "NvAPI compiled version": "R535-developer",
         "NvAPI_GetInterfaceVersionString": "NVidia Complete Version 1.10",
         "AMD_AGS_VERSION": "6.2.0",
@@ -21,125 +21,120 @@ const reports = [{
         },
         "System memory": {
             "GetPhysicallyInstalledSystemMemory": 67108864,
-            "MEMORYSTATUSEX::ullTotalPhys": 67927564288,
-            "MEMORYSTATUSEX::ullTotalPageFile": 78128111616,
+            "MEMORYSTATUSEX::ullTotalPhys": 68640800768,
+            "MEMORYSTATUSEX::ullTotalPageFile": 78841348096,
             "MEMORYSTATUSEX::ullTotalVirtual": 140737488224256
         },
         "DXGI_FEATURE": {
             "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
         },
         "NvAPI_SYS_GetDriverAndBranchVersion": {
-            "pDriverVersion": 54633,
-            "szBuildBranchString": "r545_00"
+            "pDriverVersion": 55186,
+            "szBuildBranchString": "r550_00"
         },
         "NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO": {
-            "driverVersion": 54633,
-            "szBuildBranch": "r545_00",
+            "driverVersion": 55186,
+            "szBuildBranch": "r550_00",
             "bIsDCHDriver": true,
             "bIsNVIDIAStudioPackage": false,
             "bIsNVIDIAGameReadyPackage": true,
             "bIsNVIDIARTXProductionBranchPackage": false,
             "bIsNVIDIARTXNewFeatureBranchPackage": false,
-            "szBuildBaseBranch": "R545"
-        },
-        "AGSGPUInfo": {
-            "driverVersion": "23.30.13.01-231128a-398226C-AMD-Software-Adrenalin-Edition",
-            "radeonSoftwareVersion": "23.12.1"
-        },
-        "D3D12EnableExperimentalFeatures": [
-            "D3D12ExperimentalShaderModels",
-            "D3D12TiledResourceTier4"
-        ]
+            "szBuildBaseBranch": "R550"
+        }
     },
     "Adapters": [
         {
             "AdapterIndex": 0,
             "DXGI_ADAPTER_DESC3": {
-                "Description": "NVIDIA GeForce RTX 3060 Laptop GPU",
+                "Description": "NVIDIA GeForce RTX 3080 Ti",
                 "VendorId": 4318,
-                "DeviceId": 9504,
-                "SubSysId": 461115459,
+                "DeviceId": 8712,
+                "SubSysId": 570955113,
                 "Revision": 161,
-                "DedicatedVideoMemory": 6301941760,
+                "DedicatedVideoMemory": 12673089536,
                 "DedicatedSystemMemory": 0,
-                "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00011945",
+                "SharedSystemMemory": 34320400384,
+                "AdapterLuid": "00000000-0001220B",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 3,
                 "ComputePreemptionGranularity": 1
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 5496635392,
-                "AvailableForReservation": 2882535424
+                "Budget": 11867783168,
+                "AvailableForReservation": 6068109312
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
-                "Budget": 33158475776,
-                "AvailableForReservation": 16713455616
+                "Budget": 33515094016,
+                "AvailableForReservation": 16891764736
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 8725724279018009
+                "UMDVersion": 8725724279018562
             },
             "NvPhysicalGpuHandle": {
-                "NvAPI_GPU_GetSystemType": 1,
-                "NvAPI_GPU_GetFullName": "NVIDIA GeForce RTX 3060 Laptop GPU",
-                "NvAPI_GPU_GetPCIIdentifiers - pDeviceID": 622858462,
-                "NvAPI_GPU_GetPCIIdentifiers - pSubSystemId": 461115459,
+                "NvAPI_GPU_GetSystemType": 2,
+                "NvAPI_GPU_GetFullName": "NVIDIA GeForce RTX 3080 Ti",
+                "NvAPI_GPU_GetPCIIdentifiers - pDeviceID": 570953950,
+                "NvAPI_GPU_GetPCIIdentifiers - pSubSystemId": 570955113,
                 "NvAPI_GPU_GetPCIIdentifiers - pRevisionId": 161,
-                "NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId": 9504,
+                "NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId": 8712,
                 "NvAPI_GPU_GetGPUType": 2,
                 "NvAPI_GPU_GetBusType": 3,
-                "NvAPI_GPU_GetVbiosRevision": 2483435520,
-                "NvAPI_GPU_GetVbiosOEMRevision": 9,
-                "NvAPI_GPU_GetVbiosVersionString": "94.06.38.00.09",
-                "NvAPI_GPU_GetPhysicalFrameBufferSize": 6290944,
-                "NvAPI_GPU_GetVirtualFrameBufferSize": 6291456,
+                "NvAPI_GPU_GetVbiosRevision": 2483187968,
+                "NvAPI_GPU_GetVbiosOEMRevision": 46,
+                "NvAPI_GPU_GetVbiosVersionString": "94.02.71.00.2e",
+                "NvAPI_GPU_GetPhysicalFrameBufferSize": 12582400,
+                "NvAPI_GPU_GetVirtualFrameBufferSize": 12582912,
                 "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id": 368,
-                "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id": 6,
+                "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id": 2,
                 "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::revision_id": 161,
-                "NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady": false,
+                "NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady": true,
                 "NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_LOGO_BRIGHTNESS)": false,
                 "NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_SLI_BRIGHTNESS)": false,
                 "NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_NVIDIA_RTX_VR_READY)": -104,
                 "NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_PROVIZ)": -104,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory": 6442450944,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 6301941760,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory": 12884901888,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 12673089536,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory": 0,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 33963782144,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 6301941760,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 0,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 0,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 786432,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 6,
-                "NvAPI_GPU_GetShaderSubPipeCount": 15,
-                "NvAPI_GPU_GetGpuCoreCount": 3840,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 34320400384,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 9225674752,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 13107200,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 7,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 45285376,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 59,
+                "NvAPI_GPU_GetShaderSubPipeCount": 40,
+                "NvAPI_GPU_GetGpuCoreCount": 10240,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported": false,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::configurationOptions": 0,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isEnabled": false,
-                "NvAPI_GPU_GetRamBusWidth": 192
+                "NvAPI_GPU_GetRamBusWidth": 384,
+                "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::bIsExternalGpu": false,
+                "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::rayTracingCores": 80,
+                "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores": 320
             },
             "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.260",
-                "driverVersion": 2290630656,
+                "apiVersion": "1.3.277",
+                "driverVersion": 2312470528,
                 "vendorID": 4318,
-                "deviceID": 9504,
+                "deviceID": 8712,
                 "deviceType": 2,
-                "deviceName": "NVIDIA GeForce RTX 3060 Laptop GPU"
+                "deviceName": "NVIDIA GeForce RTX 3080 Ti"
             },
             "VkPhysicalDeviceIDProperties": {
-                "deviceUUID": "8CDAE969A86789D2D44C52E0F21264C5",
-                "driverUUID": "C2A04F03A27E5FB3A136DD945528780D",
-                "deviceLUID": "4519010000000000"
+                "deviceUUID": "FC4F457CBA3A2DDEF06E6B6E0B6608D4",
+                "driverUUID": "C89F5AE844A75429B8C514E107DED371",
+                "deviceLUID": "0B22010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
                 "driverID": 4,
                 "driverName": "NVIDIA",
-                "driverInfo": "546.33"
+                "driverInfo": "551.86"
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
                 "OutputMergerLogicOp": true,
                 "MinPrecisionSupport": 2,
-                "TiledResourcesTier": 4,
+                "TiledResourcesTier": 3,
                 "ResourceBindingTier": 3,
                 "PSSpecifiedStencilRefSupported": false,
                 "TypedUAVLoadAdditionalFormats": true,
@@ -203,7 +198,7 @@ const reports = [{
                 "WaveOps": true,
                 "WaveLaneCountMin": 32,
                 "WaveLaneCountMax": 32,
-                "TotalLaneCount": 3840,
+                "TotalLaneCount": 10240,
                 "ExpandedComputeResourceStates": true,
                 "Int64ShaderOps": true
             },
@@ -251,7 +246,7 @@ const reports = [{
                 "AtomicInt64OnTypedResourceSupported": true,
                 "AtomicInt64OnGroupSharedSupported": true,
                 "DerivativesInMeshAndAmplificationShadersSupported": false,
-                "WaveMMATier": 10
+                "WaveMMATier": 0
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS10": {
                 "VariableRateShadingSumCombinerSupported": true,
@@ -284,7 +279,7 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS16": {
                 "DynamicDepthBiasSupported": true,
-                "GPUUploadHeapSupported": true
+                "GPUUploadHeapSupported": false
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS17": {
                 "NonNormalizedCoordinateSamplersSupported": true,
@@ -309,6 +304,12 @@ const reports = [{
                 "ComputeOnlyWriteWatchSupported": true,
                 "RecreateAtTier": 0
             },
+            "D3D12_FEATURE_DATA_D3D12_OPTIONS21": {
+                "WorkGraphsTier": 10,
+                "ExecuteIndirectTier": 11,
+                "SampleCmpGradientAndBiasSupported": true,
+                "ExtendedCommandInfoSupported": true
+            },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
                 "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 32,
@@ -316,7 +317,7 @@ const reports = [{
                 "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 8
             },
             "NvAPI_D3D12_QueryCpuVisibleVidmem": {
-                "pTotalBytes": 8556380160
+                "pTotalBytes": 17146314752
             },
             "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported": {
                 "NV_EXTN_OP_SHFL": true,
@@ -332,6 +333,9 @@ const reports = [{
                 "NV_EXTN_OP_UINT64_ATOMIC": true,
                 "NV_EXTN_OP_GET_SHADING_RATE": true,
                 "NV_EXTN_OP_VPRS_EVAL_ATTRIB_AT_SAMPLE": true
+            },
+            "NvAPI_D3D12_GetOptimalThreadCountForMesh": {
+                "pThreadCount": 32
             },
             "NvAPI_D3D12_GetRaytracingCaps": {
                 "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING": 0,
@@ -349,268 +353,6 @@ const reports = [{
         {
             "AdapterIndex": 1,
             "DXGI_ADAPTER_DESC3": {
-                "Description": "AMD Radeon(TM) Graphics",
-                "VendorId": 4098,
-                "DeviceId": 5761,
-                "SubSysId": 461115459,
-                "Revision": 200,
-                "DedicatedVideoMemory": 509374464,
-                "DedicatedSystemMemory": 0,
-                "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00010971",
-                "Flags": 44,
-                "GraphicsPreemptionGranularity": 1,
-                "ComputePreemptionGranularity": 0
-            },
-            "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 33667850240,
-                "AvailableForReservation": 16968142848
-            },
-            "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
-                "Budget": 0,
-                "AvailableForReservation": 0
-            },
-            "CheckInterfaceSupport": {
-                "UMDVersion": 8725725786211327
-            },
-            "AGSDeviceInfo": {
-                "adapterString": "AMD Radeon(TM) Graphics",
-                "asicFamily": 0,
-                "isAPU": true,
-                "isExternal": false,
-                "vendorId": 4098,
-                "deviceId": 5761,
-                "revisionId": 200,
-                "numCUs": 6,
-                "numWGPs": 0,
-                "numROPs": 16,
-                "coreClock": 22,
-                "memoryClock": 24,
-                "memoryBandwidth": 76800,
-                "teraFlops": 0.016896000131964684,
-                "localMemoryInBytes": 536870912,
-                "sharedMemoryInBytes": 33963782144
-            },
-            "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.264",
-                "driverVersion": 8388891,
-                "vendorID": 4098,
-                "deviceID": 5761,
-                "deviceType": 1,
-                "deviceName": "AMD Radeon(TM) Graphics"
-            },
-            "VkPhysicalDeviceIDProperties": {
-                "deviceUUID": "00000000060000000000000000000000",
-                "driverUUID": "414D442D57494E2D4452560000000000",
-                "deviceLUID": "7109010000000000"
-            },
-            "VkPhysicalDeviceVulkan12Properties": {
-                "driverID": 1,
-                "driverName": "AMD proprietary driver",
-                "driverInfo": "23.12.1 (AMD proprietary shader compiler)"
-            },
-            "AGSDX12ReturnedParams::ExtensionsSupported": {
-                "intrinsics16": true,
-                "intrinsics17": true,
-                "userMarkers": true,
-                "appRegistration": true,
-                "UAVBindSlot": true,
-                "intrinsics19": true,
-                "baseVertex": true,
-                "baseInstance": true,
-                "getWaveSize": true,
-                "floatConversion": true,
-                "readLaneAt": true,
-                "rayHitToken": true,
-                "shaderClock": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
-                "DoublePrecisionFloatShaderOps": true,
-                "OutputMergerLogicOp": true,
-                "MinPrecisionSupport": 2,
-                "TiledResourcesTier": 4,
-                "ResourceBindingTier": 3,
-                "PSSpecifiedStencilRefSupported": true,
-                "TypedUAVLoadAdditionalFormats": true,
-                "ROVsSupported": true,
-                "ConservativeRasterizationTier": 3,
-                "MaxGPUVirtualAddressBitsPerResource": 44,
-                "StandardSwizzle64KBSupported": false,
-                "CrossNodeSharingTier": 0,
-                "CrossAdapterRowMajorTextureSupported": false,
-                "VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": true,
-                "ResourceHeapTier": 2
-            },
-            "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT": {
-                "MaxGPUVirtualAddressBitsPerResource": 44,
-                "MaxGPUVirtualAddressBitsPerProcess": 44
-            },
-            "D3D12_FEATURE_DATA_SHADER_MODEL": {
-                "HighestShaderModel": 104
-            },
-            "D3D12_FEATURE_DATA_ROOT_SIGNATURE": {
-                "HighestVersion": 3
-            },
-            "D3D12_FEATURE_DATA_ARCHITECTURE1": {
-                "NodeIndex": 0,
-                "TileBasedRenderer": false,
-                "UMA": true,
-                "CacheCoherentUMA": false,
-                "IsolatedMMU": true
-            },
-            "D3D12_FEATURE_DATA_FEATURE_LEVELS": {
-                "MaxSupportedFeatureLevel": 49664
-            },
-            "D3D12_FEATURE_DATA_SHADER_CACHE": {
-                "SupportFlags": 127
-            },
-            "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY": {
-                "TYPE_DIRECT.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
-                "TYPE_DIRECT.PRIORITY_HIGH.PriorityForTypeIsSupported": true,
-                "TYPE_DIRECT.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": false,
-                "TYPE_COMPUTE.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
-                "TYPE_COMPUTE.PRIORITY_HIGH.PriorityForTypeIsSupported": true,
-                "TYPE_COMPUTE.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": true,
-                "TYPE_COPY.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
-                "TYPE_COPY.PRIORITY_HIGH.PriorityForTypeIsSupported": true,
-                "TYPE_COPY.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": true
-            },
-            "D3D12_FEATURE_DATA_SERIALIZATION": {
-                "HeapSerializationTier": 0
-            },
-            "D3D12_FEATURE_DATA_CROSS_NODE": {
-                "SharingTier": 0,
-                "AtomicShaderInstructions": false
-            },
-            "D3D12_FEATURE_DATA_PREDICATION": {
-                "Supported": true
-            },
-            "D3D12_FEATURE_DATA_HARDWARE_COPY": {
-                "Supported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS1": {
-                "WaveOps": true,
-                "WaveLaneCountMin": 32,
-                "WaveLaneCountMax": 64,
-                "TotalLaneCount": 768,
-                "ExpandedComputeResourceStates": true,
-                "Int64ShaderOps": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS2": {
-                "DepthBoundsTestSupported": true,
-                "ProgrammableSamplePositionsTier": 2
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS3": {
-                "CopyQueueTimestampQueriesSupported": true,
-                "CastingFullyTypedFormatSupported": true,
-                "WriteBufferImmediateSupportFlags": 15,
-                "ViewInstancingTier": 1,
-                "BarycentricsSupported": true
-            },
-            "D3D12_FEATURE_DATA_EXISTING_HEAPS": {
-                "Supported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS4": {
-                "MSAA64KBAlignedTextureSupported": true,
-                "SharedResourceCompatibilityTier": 2,
-                "Native16BitShaderOpsSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS5": {
-                "SRVOnlyTiledResourceTier3": true,
-                "RenderPassesTier": 0,
-                "RaytracingTier": 11
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS6": {
-                "AdditionalShadingRatesSupported": false,
-                "PerPrimitiveShadingRateSupportedWithViewportIndexing": true,
-                "VariableShadingRateTier": 2,
-                "ShadingRateImageTileSize": 8,
-                "BackgroundProcessingSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS7": {
-                "MeshShaderTier": 10,
-                "SamplerFeedbackTier": 100
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS8": {
-                "UnalignedBlockTexturesSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS9": {
-                "MeshShaderPipelineStatsSupported": true,
-                "MeshShaderSupportsFullRangeRenderTargetArrayIndex": false,
-                "AtomicInt64OnTypedResourceSupported": true,
-                "AtomicInt64OnGroupSharedSupported": true,
-                "DerivativesInMeshAndAmplificationShadersSupported": false,
-                "WaveMMATier": 0
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS10": {
-                "VariableRateShadingSumCombinerSupported": true,
-                "MeshShaderPerPrimitiveShadingRateSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS11": {
-                "AtomicInt64OnDescriptorHeapResourceSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS12": {
-                "MSPrimitivesPipelineStatisticIncludesCulledPrimitives": 0,
-                "EnhancedBarriersSupported": true,
-                "RelaxedFormatCastingSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS13": {
-                "UnrestrictedBufferTextureCopyPitchSupported": true,
-                "UnrestrictedVertexElementAlignmentSupported": true,
-                "InvertedViewportHeightFlipsYSupported": true,
-                "InvertedViewportDepthFlipsZSupported": true,
-                "TextureCopyBetweenDimensionsSupported": true,
-                "AlphaBlendFactorSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS14": {
-                "AdvancedTextureOpsSupported": true,
-                "WriteableMSAATexturesSupported": true,
-                "IndependentFrontAndBackStencilRefMaskSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS15": {
-                "TriangleFanSupported": true,
-                "DynamicIndexBufferStripCutSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS16": {
-                "DynamicDepthBiasSupported": true,
-                "GPUUploadHeapSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS17": {
-                "NonNormalizedCoordinateSamplersSupported": true,
-                "ManualWriteTrackingResourceSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS18": {
-                "RenderPassesValid": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS19": {
-                "MismatchingOutputDimensionsSupported": true,
-                "SupportedSampleCountsWithNoOutputs": 29,
-                "PointSamplingAddressesNeverRoundUp": true,
-                "RasterizerDesc2Supported": true,
-                "NarrowQuadrilateralLinesSupported": true,
-                "AnisoFilterWithPointMipSupported": true,
-                "MaxSamplerDescriptorHeapSize": 67108864,
-                "MaxSamplerDescriptorHeapSizeWithStaticSamplers": 67108864,
-                "MaxViewDescriptorHeapSize": 33554432,
-                "ComputeOnlyCustomHeapSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS20": {
-                "ComputeOnlyWriteWatchSupported": true,
-                "RecreateAtTier": 0
-            },
-            "GetDescriptorHandleIncrementSize": {
-                "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 16,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_RTV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 240
-            },
-            "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported": {},
-            "NvAPI_D3D12_GetRaytracingCaps": {},
-            "NvAPI_D3D12_QueryWorkstationFeatureProperties": {}
-        },
-        {
-            "AdapterIndex": 2,
-            "DXGI_ADAPTER_DESC3": {
                 "Description": "Microsoft Basic Render Driver",
                 "VendorId": 5140,
                 "DeviceId": 140,
@@ -618,15 +360,15 @@ const reports = [{
                 "Revision": 0,
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
-                "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00011917",
+                "SharedSystemMemory": 34320400384,
+                "AdapterLuid": "00000000-00013323",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 33158475776,
-                "AvailableForReservation": 16713455616
+                "Budget": 33515094016,
+                "AvailableForReservation": 16891764736
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
                 "Budget": 0,
@@ -639,7 +381,7 @@ const reports = [{
                 "DoublePrecisionFloatShaderOps": true,
                 "OutputMergerLogicOp": true,
                 "MinPrecisionSupport": 3,
-                "TiledResourcesTier": 4,
+                "TiledResourcesTier": 3,
                 "ResourceBindingTier": 3,
                 "PSSpecifiedStencilRefSupported": true,
                 "TypedUAVLoadAdditionalFormats": true,
@@ -703,7 +445,7 @@ const reports = [{
                 "WaveOps": true,
                 "WaveLaneCountMin": 4,
                 "WaveLaneCountMax": 4,
-                "TotalLaneCount": 64,
+                "TotalLaneCount": 96,
                 "ExpandedComputeResourceStates": true,
                 "Int64ShaderOps": true
             },
@@ -784,7 +526,7 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS16": {
                 "DynamicDepthBiasSupported": false,
-                "GPUUploadHeapSupported": true
+                "GPUUploadHeapSupported": false
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS17": {
                 "NonNormalizedCoordinateSamplersSupported": false,
@@ -809,6 +551,12 @@ const reports = [{
                 "ComputeOnlyWriteWatchSupported": true,
                 "RecreateAtTier": 0
             },
+            "D3D12_FEATURE_DATA_D3D12_OPTIONS21": {
+                "WorkGraphsTier": 0,
+                "ExecuteIndirectTier": 10,
+                "SampleCmpGradientAndBiasSupported": false,
+                "ExtendedCommandInfoSupported": false
+            },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 64,
                 "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 64,
@@ -823,11 +571,11 @@ const reports = [{
 },{
     "Header": {
         "Program": "D3d12info",
-        "Version": "3.0.0",
-        "Build Date": "Jan 20 2024, 15:25:03",
+        "Version": "3.4.0",
+        "Build Date": "Mar 26 2024, 21:26:16",
         "Configuration": "Release",
         "Configuration bits": "64-bit",
-        "Generated on": "2024-01-20",
+        "Generated on": "2024-04-04",
         "Using preview Agility SDK": true,
         "D3D12_PREVIEW_SDK_VERSION": 711,
         "NvAPI compiled version": "R535-developer",
@@ -842,30 +590,26 @@ const reports = [{
         },
         "System memory": {
             "GetPhysicallyInstalledSystemMemory": 67108864,
-            "MEMORYSTATUSEX::ullTotalPhys": 67927564288,
-            "MEMORYSTATUSEX::ullTotalPageFile": 78128111616,
+            "MEMORYSTATUSEX::ullTotalPhys": 68640800768,
+            "MEMORYSTATUSEX::ullTotalPageFile": 78841348096,
             "MEMORYSTATUSEX::ullTotalVirtual": 140737488224256
         },
         "DXGI_FEATURE": {
             "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
         },
         "NvAPI_SYS_GetDriverAndBranchVersion": {
-            "pDriverVersion": 54633,
-            "szBuildBranchString": "r545_00"
+            "pDriverVersion": 55186,
+            "szBuildBranchString": "r550_00"
         },
         "NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO": {
-            "driverVersion": 54633,
-            "szBuildBranch": "r545_00",
+            "driverVersion": 55186,
+            "szBuildBranch": "r550_00",
             "bIsDCHDriver": true,
             "bIsNVIDIAStudioPackage": false,
             "bIsNVIDIAGameReadyPackage": true,
             "bIsNVIDIARTXProductionBranchPackage": false,
             "bIsNVIDIARTXNewFeatureBranchPackage": false,
-            "szBuildBaseBranch": "R545"
-        },
-        "AGSGPUInfo": {
-            "driverVersion": "23.30.13.01-231128a-398226C-AMD-Software-Adrenalin-Edition",
-            "radeonSoftwareVersion": "23.12.1"
+            "szBuildBaseBranch": "R550"
         },
         "D3D12EnableExperimentalFeatures": [
             "D3D12ExperimentalShaderModels",
@@ -877,85 +621,88 @@ const reports = [{
         {
             "AdapterIndex": 0,
             "DXGI_ADAPTER_DESC3": {
-                "Description": "NVIDIA GeForce RTX 3060 Laptop GPU",
+                "Description": "NVIDIA GeForce RTX 3080 Ti",
                 "VendorId": 4318,
-                "DeviceId": 9504,
-                "SubSysId": 461115459,
+                "DeviceId": 8712,
+                "SubSysId": 570955113,
                 "Revision": 161,
-                "DedicatedVideoMemory": 6301941760,
+                "DedicatedVideoMemory": 12673089536,
                 "DedicatedSystemMemory": 0,
-                "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00011945",
+                "SharedSystemMemory": 34320400384,
+                "AdapterLuid": "00000000-0001220B",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 3,
                 "ComputePreemptionGranularity": 1
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 5496635392,
-                "AvailableForReservation": 2882535424
+                "Budget": 11867783168,
+                "AvailableForReservation": 6068109312
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
-                "Budget": 33158475776,
-                "AvailableForReservation": 16713455616
+                "Budget": 33515094016,
+                "AvailableForReservation": 16891764736
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 8725724279018009
+                "UMDVersion": 8725724279018562
             },
             "NvPhysicalGpuHandle": {
-                "NvAPI_GPU_GetSystemType": 1,
-                "NvAPI_GPU_GetFullName": "NVIDIA GeForce RTX 3060 Laptop GPU",
-                "NvAPI_GPU_GetPCIIdentifiers - pDeviceID": 622858462,
-                "NvAPI_GPU_GetPCIIdentifiers - pSubSystemId": 461115459,
+                "NvAPI_GPU_GetSystemType": 2,
+                "NvAPI_GPU_GetFullName": "NVIDIA GeForce RTX 3080 Ti",
+                "NvAPI_GPU_GetPCIIdentifiers - pDeviceID": 570953950,
+                "NvAPI_GPU_GetPCIIdentifiers - pSubSystemId": 570955113,
                 "NvAPI_GPU_GetPCIIdentifiers - pRevisionId": 161,
-                "NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId": 9504,
+                "NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId": 8712,
                 "NvAPI_GPU_GetGPUType": 2,
                 "NvAPI_GPU_GetBusType": 3,
-                "NvAPI_GPU_GetVbiosRevision": 2483435520,
-                "NvAPI_GPU_GetVbiosOEMRevision": 9,
-                "NvAPI_GPU_GetVbiosVersionString": "94.06.38.00.09",
-                "NvAPI_GPU_GetPhysicalFrameBufferSize": 6290944,
-                "NvAPI_GPU_GetVirtualFrameBufferSize": 6291456,
+                "NvAPI_GPU_GetVbiosRevision": 2483187968,
+                "NvAPI_GPU_GetVbiosOEMRevision": 46,
+                "NvAPI_GPU_GetVbiosVersionString": "94.02.71.00.2e",
+                "NvAPI_GPU_GetPhysicalFrameBufferSize": 12582400,
+                "NvAPI_GPU_GetVirtualFrameBufferSize": 12582912,
                 "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id": 368,
-                "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id": 6,
+                "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id": 2,
                 "NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::revision_id": 161,
-                "NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady": false,
+                "NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady": true,
                 "NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_LOGO_BRIGHTNESS)": false,
                 "NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_SLI_BRIGHTNESS)": false,
                 "NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_NVIDIA_RTX_VR_READY)": -104,
                 "NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_PROVIZ)": -104,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory": 6442450944,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 6301941760,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory": 12884901888,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 12673089536,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory": 0,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 33963782144,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 6301941760,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 0,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 0,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 917504,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 7,
-                "NvAPI_GPU_GetShaderSubPipeCount": 15,
-                "NvAPI_GPU_GetGpuCoreCount": 3840,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 34320400384,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 9233408000,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 13107200,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 7,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 45678592,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 62,
+                "NvAPI_GPU_GetShaderSubPipeCount": 40,
+                "NvAPI_GPU_GetGpuCoreCount": 10240,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported": false,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::configurationOptions": 0,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isEnabled": false,
-                "NvAPI_GPU_GetRamBusWidth": 192
+                "NvAPI_GPU_GetRamBusWidth": 384,
+                "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::bIsExternalGpu": false,
+                "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::rayTracingCores": 80,
+                "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores": 320
             },
             "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.260",
-                "driverVersion": 2290630656,
+                "apiVersion": "1.3.277",
+                "driverVersion": 2312470528,
                 "vendorID": 4318,
-                "deviceID": 9504,
+                "deviceID": 8712,
                 "deviceType": 2,
-                "deviceName": "NVIDIA GeForce RTX 3060 Laptop GPU"
+                "deviceName": "NVIDIA GeForce RTX 3080 Ti"
             },
             "VkPhysicalDeviceIDProperties": {
-                "deviceUUID": "8CDAE969A86789D2D44C52E0F21264C5",
-                "driverUUID": "C2A04F03A27E5FB3A136DD945528780D",
-                "deviceLUID": "4519010000000000"
+                "deviceUUID": "FC4F457CBA3A2DDEF06E6B6E0B6608D4",
+                "driverUUID": "C89F5AE844A75429B8C514E107DED371",
+                "deviceLUID": "0B22010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
                 "driverID": 4,
                 "driverName": "NVIDIA",
-                "driverInfo": "546.33"
+                "driverInfo": "551.86"
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
@@ -1022,7 +769,7 @@ const reports = [{
                 "WaveOps": true,
                 "WaveLaneCountMin": 32,
                 "WaveLaneCountMax": 32,
-                "TotalLaneCount": 3840,
+                "TotalLaneCount": 10240,
                 "ExpandedComputeResourceStates": true,
                 "Int64ShaderOps": true
             },
@@ -1216,7 +963,7 @@ const reports = [{
                 "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 8
             },
             "NvAPI_D3D12_QueryCpuVisibleVidmem": {
-                "pTotalBytes": 8556380160
+                "pTotalBytes": 17146314752
             },
             "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported": {
                 "NV_EXTN_OP_SHFL": true,
@@ -1232,6 +979,9 @@ const reports = [{
                 "NV_EXTN_OP_UINT64_ATOMIC": true,
                 "NV_EXTN_OP_GET_SHADING_RATE": true,
                 "NV_EXTN_OP_VPRS_EVAL_ATTRIB_AT_SAMPLE": true
+            },
+            "NvAPI_D3D12_GetOptimalThreadCountForMesh": {
+                "pThreadCount": 32
             },
             "NvAPI_D3D12_GetRaytracingCaps": {
                 "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING": 0,
@@ -1249,296 +999,6 @@ const reports = [{
         {
             "AdapterIndex": 1,
             "DXGI_ADAPTER_DESC3": {
-                "Description": "AMD Radeon(TM) Graphics",
-                "VendorId": 4098,
-                "DeviceId": 5761,
-                "SubSysId": 461115459,
-                "Revision": 200,
-                "DedicatedVideoMemory": 509374464,
-                "DedicatedSystemMemory": 0,
-                "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00010971",
-                "Flags": 44,
-                "GraphicsPreemptionGranularity": 1,
-                "ComputePreemptionGranularity": 0
-            },
-            "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 33667850240,
-                "AvailableForReservation": 16968142848
-            },
-            "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
-                "Budget": 0,
-                "AvailableForReservation": 0
-            },
-            "CheckInterfaceSupport": {
-                "UMDVersion": 8725725786211327
-            },
-            "AGSDeviceInfo": {
-                "adapterString": "AMD Radeon(TM) Graphics",
-                "asicFamily": 0,
-                "isAPU": true,
-                "isExternal": false,
-                "vendorId": 4098,
-                "deviceId": 5761,
-                "revisionId": 200,
-                "numCUs": 6,
-                "numWGPs": 0,
-                "numROPs": 16,
-                "coreClock": 22,
-                "memoryClock": 24,
-                "memoryBandwidth": 76800,
-                "teraFlops": 0.016896000131964684,
-                "localMemoryInBytes": 536870912,
-                "sharedMemoryInBytes": 33963782144
-            },
-            "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.264",
-                "driverVersion": 8388891,
-                "vendorID": 4098,
-                "deviceID": 5761,
-                "deviceType": 1,
-                "deviceName": "AMD Radeon(TM) Graphics"
-            },
-            "VkPhysicalDeviceIDProperties": {
-                "deviceUUID": "00000000060000000000000000000000",
-                "driverUUID": "414D442D57494E2D4452560000000000",
-                "deviceLUID": "7109010000000000"
-            },
-            "VkPhysicalDeviceVulkan12Properties": {
-                "driverID": 1,
-                "driverName": "AMD proprietary driver",
-                "driverInfo": "23.12.1 (AMD proprietary shader compiler)"
-            },
-            "AGSDX12ReturnedParams::ExtensionsSupported": {
-                "intrinsics16": true,
-                "intrinsics17": true,
-                "userMarkers": true,
-                "appRegistration": true,
-                "UAVBindSlot": true,
-                "intrinsics19": true,
-                "baseVertex": true,
-                "baseInstance": true,
-                "getWaveSize": true,
-                "floatConversion": true,
-                "readLaneAt": true,
-                "rayHitToken": true,
-                "shaderClock": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
-                "DoublePrecisionFloatShaderOps": true,
-                "OutputMergerLogicOp": true,
-                "MinPrecisionSupport": 2,
-                "TiledResourcesTier": 4,
-                "ResourceBindingTier": 3,
-                "PSSpecifiedStencilRefSupported": true,
-                "TypedUAVLoadAdditionalFormats": true,
-                "ROVsSupported": true,
-                "ConservativeRasterizationTier": 3,
-                "MaxGPUVirtualAddressBitsPerResource": 44,
-                "StandardSwizzle64KBSupported": false,
-                "CrossNodeSharingTier": 0,
-                "CrossAdapterRowMajorTextureSupported": false,
-                "VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": true,
-                "ResourceHeapTier": 2
-            },
-            "D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT": {
-                "MaxGPUVirtualAddressBitsPerResource": 44,
-                "MaxGPUVirtualAddressBitsPerProcess": 44
-            },
-            "D3D12_FEATURE_DATA_SHADER_MODEL": {
-                "HighestShaderModel": 104
-            },
-            "D3D12_FEATURE_DATA_ROOT_SIGNATURE": {
-                "HighestVersion": 3
-            },
-            "D3D12_FEATURE_DATA_ARCHITECTURE1": {
-                "NodeIndex": 0,
-                "TileBasedRenderer": false,
-                "UMA": true,
-                "CacheCoherentUMA": false,
-                "IsolatedMMU": true
-            },
-            "D3D12_FEATURE_DATA_FEATURE_LEVELS": {
-                "MaxSupportedFeatureLevel": 49664
-            },
-            "D3D12_FEATURE_DATA_SHADER_CACHE": {
-                "SupportFlags": 127
-            },
-            "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY": {
-                "TYPE_DIRECT.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
-                "TYPE_DIRECT.PRIORITY_HIGH.PriorityForTypeIsSupported": true,
-                "TYPE_DIRECT.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": false,
-                "TYPE_COMPUTE.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
-                "TYPE_COMPUTE.PRIORITY_HIGH.PriorityForTypeIsSupported": true,
-                "TYPE_COMPUTE.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": true,
-                "TYPE_COPY.PRIORITY_NORMAL.PriorityForTypeIsSupported": true,
-                "TYPE_COPY.PRIORITY_HIGH.PriorityForTypeIsSupported": true,
-                "TYPE_COPY.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": true
-            },
-            "D3D12_FEATURE_DATA_SERIALIZATION": {
-                "HeapSerializationTier": 0
-            },
-            "D3D12_FEATURE_DATA_CROSS_NODE": {
-                "SharingTier": 0,
-                "AtomicShaderInstructions": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL": {
-                "WorkGraphsTier": 0
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS1": {
-                "WaveOps": true,
-                "WaveLaneCountMin": 32,
-                "WaveLaneCountMax": 64,
-                "TotalLaneCount": 768,
-                "ExpandedComputeResourceStates": true,
-                "Int64ShaderOps": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS2": {
-                "DepthBoundsTestSupported": true,
-                "ProgrammableSamplePositionsTier": 2
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS3": {
-                "CopyQueueTimestampQueriesSupported": true,
-                "CastingFullyTypedFormatSupported": true,
-                "WriteBufferImmediateSupportFlags": 15,
-                "ViewInstancingTier": 1,
-                "BarycentricsSupported": true
-            },
-            "D3D12_FEATURE_DATA_EXISTING_HEAPS": {
-                "Supported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS4": {
-                "MSAA64KBAlignedTextureSupported": true,
-                "SharedResourceCompatibilityTier": 2,
-                "Native16BitShaderOpsSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS5": {
-                "SRVOnlyTiledResourceTier3": true,
-                "RenderPassesTier": 0,
-                "RaytracingTier": 11
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS6": {
-                "AdditionalShadingRatesSupported": false,
-                "PerPrimitiveShadingRateSupportedWithViewportIndexing": true,
-                "VariableShadingRateTier": 2,
-                "ShadingRateImageTileSize": 8,
-                "BackgroundProcessingSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS7": {
-                "MeshShaderTier": 10,
-                "SamplerFeedbackTier": 100
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS8": {
-                "UnalignedBlockTexturesSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS9": {
-                "MeshShaderPipelineStatsSupported": true,
-                "MeshShaderSupportsFullRangeRenderTargetArrayIndex": false,
-                "AtomicInt64OnTypedResourceSupported": true,
-                "AtomicInt64OnGroupSharedSupported": true,
-                "DerivativesInMeshAndAmplificationShadersSupported": false,
-                "WaveMMATier": 0
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS10": {
-                "VariableRateShadingSumCombinerSupported": true,
-                "MeshShaderPerPrimitiveShadingRateSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS11": {
-                "AtomicInt64OnDescriptorHeapResourceSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS12": {
-                "MSPrimitivesPipelineStatisticIncludesCulledPrimitives": 0,
-                "EnhancedBarriersSupported": true,
-                "RelaxedFormatCastingSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS13": {
-                "UnrestrictedBufferTextureCopyPitchSupported": true,
-                "UnrestrictedVertexElementAlignmentSupported": true,
-                "InvertedViewportHeightFlipsYSupported": true,
-                "InvertedViewportDepthFlipsZSupported": true,
-                "TextureCopyBetweenDimensionsSupported": true,
-                "AlphaBlendFactorSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS14": {
-                "AdvancedTextureOpsSupported": true,
-                "WriteableMSAATexturesSupported": true,
-                "IndependentFrontAndBackStencilRefMaskSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS15": {
-                "TriangleFanSupported": true,
-                "DynamicIndexBufferStripCutSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS16": {
-                "DynamicDepthBiasSupported": true,
-                "GPUUploadHeapSupported": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS17": {
-                "NonNormalizedCoordinateSamplersSupported": true,
-                "ManualWriteTrackingResourceSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS18": {
-                "RenderPassesValid": true
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS19": {
-                "MismatchingOutputDimensionsSupported": true,
-                "SupportedSampleCountsWithNoOutputs": 29,
-                "PointSamplingAddressesNeverRoundUp": true,
-                "RasterizerDesc2Supported": true,
-                "NarrowQuadrilateralLinesSupported": true,
-                "AnisoFilterWithPointMipSupported": true,
-                "MaxSamplerDescriptorHeapSize": 67108864,
-                "MaxSamplerDescriptorHeapSizeWithStaticSamplers": 67108864,
-                "MaxViewDescriptorHeapSize": 33554432,
-                "ComputeOnlyCustomHeapSupported": false
-            },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS20": {
-                "ComputeOnlyWriteWatchSupported": true
-            },
-            "D3D12_FEATURE_DATA_WAVE_MMA": [
-                {
-                    "InputDataType": 1,
-                    "M": 1,
-                    "N": 1,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 1,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 64
-                },
-                {
-                    "InputDataType": 2,
-                    "M": 1,
-                    "N": 1,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 2,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 64
-                },
-                {
-                    "InputDataType": 3,
-                    "M": 1,
-                    "N": 1,
-                    "Supported": true,
-                    "K": 16,
-                    "AccumDataTypes": 4,
-                    "RequiredWaveLaneCountMin": 32,
-                    "RequiredWaveLaneCountMax": 64
-                }
-            ],
-            "GetDescriptorHandleIncrementSize": {
-                "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": 16,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_RTV": 32,
-                "D3D12_DESCRIPTOR_HEAP_TYPE_DSV": 240
-            },
-            "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported": {},
-            "NvAPI_D3D12_GetRaytracingCaps": {},
-            "NvAPI_D3D12_QueryWorkstationFeatureProperties": {}
-        },
-        {
-            "AdapterIndex": 2,
-            "DXGI_ADAPTER_DESC3": {
                 "Description": "Microsoft Basic Render Driver",
                 "VendorId": 5140,
                 "DeviceId": 140,
@@ -1546,15 +1006,15 @@ const reports = [{
                 "Revision": 0,
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
-                "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00011917",
+                "SharedSystemMemory": 34320400384,
+                "AdapterLuid": "00000000-00013323",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL]": {
-                "Budget": 33158475776,
-                "AvailableForReservation": 16713455616
+                "Budget": 33515094016,
+                "AvailableForReservation": 16891764736
             },
             "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL]": {
                 "Budget": 0,
@@ -1628,7 +1088,7 @@ const reports = [{
                 "WaveOps": true,
                 "WaveLaneCountMin": 4,
                 "WaveLaneCountMax": 4,
-                "TotalLaneCount": 64,
+                "TotalLaneCount": 96,
                 "ExpandedComputeResourceStates": true,
                 "Int64ShaderOps": true
             },
