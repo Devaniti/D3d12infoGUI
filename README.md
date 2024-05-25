@@ -101,8 +101,8 @@ export SSLCert=/path/to/keys/fullchain.pem
 ```
 ```
 rem For Windows
-set SSLKEY=C:\path\to\kets\privkey.pem
-set SSLCert=C:\path\to\kets\fullchain.pem
+set SSLKEY=C:\path\to\keys\privkey.pem
+set SSLCert=C:\path\to\keys\fullchain.pem
 ```
 3. Run the service
 ```
