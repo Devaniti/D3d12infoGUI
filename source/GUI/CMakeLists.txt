@@ -8,6 +8,9 @@ set(D3D12INFO_PATH "" CACHE STRING "If EMBED_D3D12INFO is ON, overrides default 
 
 add_executable(GUI WIN32 ${SourceList} ${HeaderList} ${GeneratedFiles} ${HTMLList})
 
+set_property(TARGET GUI PROPERTY
+        MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     target_compile_definitions(GUI PRIVATE UNICODE _UNICODE)
 endif()
