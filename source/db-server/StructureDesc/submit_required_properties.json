@@ -2,12 +2,12 @@
     "Header.Version",
     "Header.Using preview Agility SDK",
     "SystemInfo.OS Info.Windows version",
-    "SystemInfo.D3D12EnableExperimentalFeatures",
     "DXGI_ADAPTER_DESC3.Description",
     "DXGI_ADAPTER_DESC3.VendorId",
     "DXGI_ADAPTER_DESC3.DeviceId",
     "DXGI_ADAPTER_DESC3.SubSysId",
     "DXGI_ADAPTER_DESC3.Revision",
     "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
-    "CheckInterfaceSupport.UMDVersion"
+    "CheckInterfaceSupport.UMDVersion",
+    "Data"
 ]

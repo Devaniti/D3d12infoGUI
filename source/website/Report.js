@@ -1,7 +1,5 @@
-const isLocalReport = false
-
-const apiAddress = "https://d3d12infodbapi.boolka.dev"
-const siteAddress = "https://d3d12infodb.boolka.dev"
+const apiAddress = "https://staging_d3d12infodbapi.boolka.dev"
+const siteAddress = "https://staging_d3d12infodb.boolka.dev"
 
 const TrueFalseMapping =
 {
@@ -1175,21 +1173,18 @@ class ReportContainer {
             }
         }
 
-        if (isLocalReport)
-        {
-            for (const e of this.#fields) {
-                switch (e.name) {
-                    case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
-                        {
-                            for (const e2 of this.#fields) {
-                                if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
-                                    e.value += e2.value
-                                    break
-                                }
+        for (const e of this.#fields) {
+            switch (e.name) {
+                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
+                    {
+                        for (const e2 of this.#fields) {
+                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
+                                e.value += e2.value
+                                break
                             }
                         }
-                        break
-                }
+                    }
+                    break
             }
         }
     }

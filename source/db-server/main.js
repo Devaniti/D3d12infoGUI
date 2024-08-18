@@ -1,5 +1,11 @@
 "use strict"
 
+const path = require('path');
+// Get the directory of the current script
+const scriptDirectory = __dirname;
+// Change the current working directory to the script's directory
+process.chdir(scriptDirectory);
+
 const fs = require('fs')
 const https = require('https')
 const http = require('http')
@@ -7,65 +13,32 @@ const express = require('express')
 const cors = require('cors')
 const compression = require('compression')
 const Database = require('better-sqlite3')
+const upgrade = require('./upgrade.js')
+const database_common = require('./database_common.js')
 
 const databaseFolder = 'Database/'
 const databasePath = databaseFolder + 'main.db'
-const databaseSchemaPath = 'DBSchema.sql'
-const apiPort = 50854
-const requiredProperites = require("./StructureDesc/required_properites.json")
-const submitUniqueProperites = require("./StructureDesc/submit_unique_properties.json")
-const allProperties = require("./StructureDesc/all_properites.json")
 
-// Uses source schema version as an index
-const UPGRADE_SCRIPTS = {
-    1: "UpgradeScripts/To_1_1_0.sql",
-    2: "UpgradeScripts/To_1_2_0.sql",
-    3: "UpgradeScripts/To_1_3_0.sql"
-}
+const apiPort = process.env.D3D12INFODB_CUSTOM_PORT ? process.env.D3D12INFODB_CUSTOM_PORT : 50854;
 
-const CURRENT_SCHEMA_VERSION = 4
-
-function isObjectAllowedInDB(inObj)
-{
+function isObjectAllowedInDB(inObj) {
     let isAllowed = true;
-    requiredProperites.forEach(p => {
-        if (inObj[p] == null)
-        {
+    database_common.SubmitRequiredProperites.forEach(p => {
+        if (inObj[p] == null) {
             console.log(`Missing property ${p}`)
             isAllowed = false
         }
     })
-    if (!isAllowed)
-    {
+    if (!isAllowed) {
         console.log("isObjectAllowedInDB - object disallowed")
         console.log()
     }
     return isAllowed
 }
 
-function convertToSqlInsertQuery(tableName, propertyArray)
-{
-    let columnsString = "(" + propertyArray.map(e=>`"${e}"`).join(",") + ")"
-    let valuesString = "(" + propertyArray.map(e=>"?").join(",") + ")"
-    let sqlQuery = `INSERT INTO ${tableName} ${columnsString} Values ${valuesString};`
-    return sqlQuery
-}
-
-function convertToSqlSelectIDQuery(tableName, propertyArray, suffix)
-{
-    let filterString = propertyArray.map(e => `"${e}" IS ?`).join(" AND ")
-    let sqlQuery = `Select ID from ${tableName} WHERE ${filterString} ${suffix};`
-    return sqlQuery
-}
-
-function convertObjectToArrayOfValues(propertyList, inObj)
-{
-    return propertyList.map(e=>inObj[e])
-}
-
 console.log('Initializing')
 
-if (!fs.existsSync(databaseFolder)){
+if (!fs.existsSync(databaseFolder)) {
     fs.mkdirSync(databaseFolder);
 }
 
@@ -73,38 +46,7 @@ const api = express()
 let db = new Database(databasePath)
 console.log(`Opened database ${databasePath}`)
 
-let schemaVersion = db.pragma('user_version', { simple: true })
-console.log(`Database schema version is ${schemaVersion}`)
-
-if (schemaVersion == 0)
-{
-    console.log("Setting up new database")
-    db.exec(fs.readFileSync(databaseSchemaPath).toString())
-    console.log("Finished new database setup")
-    schemaVersion = CURRENT_SCHEMA_VERSION
-}
-
-if (schemaVersion < CURRENT_SCHEMA_VERSION)
-{
-    console.log("Upgrading database")
-    for (let i = schemaVersion; i < CURRENT_SCHEMA_VERSION; i++)
-    {
-        console.log(`Upgrading to version ${i + 1}`)
-        db.exec(fs.readFileSync(UPGRADE_SCRIPTS[i]).toString())
-    }
-    console.log("Finished upgrading")
-}
-
-if (schemaVersion == CURRENT_SCHEMA_VERSION)
-{
-    console.log("Database schema is up to date")
-}
-
-if (schemaVersion > CURRENT_SCHEMA_VERSION)
-{
-    console.log(`FATAL ERROR: Unexpected schema version ${schemaVersion}`)
-    process.exit(1)
-}
+upgrade.upgradeDatabase(db)
 
 console.log("Database is ready")
 
@@ -119,19 +61,18 @@ api.get('/', (req, res) => {
 
 const getSubmissionStatement = db.prepare("SELECT * FROM Submissions WHERE ID = ?")
 api.get('/get_submission', (req, res) => {
-    if (!req.query.ID)
-    {
+    if (!req.query.ID) {
         res.status(400)
         res.send('ID is missing')
         return
     }
 
-    try{
+    try {
         let rows = getSubmissionStatement.all([req.query.ID])
+        rows = rows.map(database_common.unpackDatabaseObject)
         res.send(JSON.stringify(rows))
     }
-    catch(e)
-    {
+    catch (e) {
         console.log('DB Error')
         console.log(e)
 
@@ -143,12 +84,12 @@ api.get('/get_submission', (req, res) => {
 
 const getAllSubmissionsStatement = db.prepare("SELECT * FROM Submissions")
 api.get('/get_all_submissions', (req, res) => {
-    try{
+    try {
         let rows = getAllSubmissionsStatement.all()
+        rows = rows.map(database_common.unpackDatabaseObject)
         res.send(JSON.stringify(rows))
     }
-    catch(e)
-    {
+    catch (e) {
         console.log('DB Error')
         console.log(e)
 
@@ -158,27 +99,30 @@ api.get('/get_all_submissions', (req, res) => {
     }
 })
 
-const isSubmittedStatement = db.prepare(convertToSqlSelectIDQuery("Submissions", submitUniqueProperites, "LIMIT 1"))
+const isSubmittedStatement = db.prepare(database_common.convertToSqlSelectIDQuery("Submissions", database_common.submitUniqueProperites, "LIMIT 1"))
 api.post('/is_submitted', (req, res) => {
-    const newSubmission = req.body
+    try {
+        let newSubmission = req.body
+        if (typeof newSubmission !== 'object' || newSubmission instanceof Array) {
+            res.status(400)
+            res.send('Bad submission format')
+            return
+        }
 
-    let parameterList = convertObjectToArrayOfValues(submitUniqueProperites, newSubmission)
+        newSubmission = database_common.packUniqueProperties(newSubmission)
+        let parameterList = database_common.convertObjectToArrayOfValues(database_common.submitUniqueProperites, newSubmission)
 
-    try{
         let rows = isSubmittedStatement.all(parameterList)
-        if (rows.length == 0)
-        {
+        if (rows.length == 0) {
             res.status(204)
             res.send()
         }
-        else
-        {
+        else {
             rows = rows[0].ID
             res.send(JSON.stringify(rows))
         }
     }
-    catch(e)
-    {
+    catch (e) {
         console.log('DB Error')
         console.log(e)
 
@@ -188,23 +132,29 @@ api.post('/is_submitted', (req, res) => {
     }
 })
 
-const postSubmissionStatement = db.prepare(convertToSqlInsertQuery("Submissions", allProperties))
+const postSubmissionStatement = db.prepare(database_common.convertToSqlInsertQuery("Submissions", database_common.submitAllProperties))
 api.post('/post_submission', (req, res) => {
-    const newSubmission = req.body
-    if (!isObjectAllowedInDB(req.body))
-    {
-        res.status(400)
-        res.send('Bad submission format')
-        return
-    }
+    try {
+        let newSubmission = req.body
+        if (typeof newSubmission !== 'object' || newSubmission instanceof Array) {
+            res.status(400)
+            res.send('Bad submission format')
+            return
+        }
 
-    let isSubmittedParameterList = convertObjectToArrayOfValues(submitUniqueProperites, newSubmission)
-    let parameterList = convertObjectToArrayOfValues(allProperties, newSubmission)
+        newSubmission = database_common.packDatabaseObject(newSubmission)
 
-    try{
+        if (!isObjectAllowedInDB(newSubmission)) {
+            res.status(400)
+            res.send('Bad submission format')
+            return
+        }
+
+        let isSubmittedParameterList = database_common.convertObjectToArrayOfValues(database_common.submitUniqueProperites, newSubmission)
+        let parameterList = database_common.convertObjectToArrayOfValues(database_common.submitAllProperties, newSubmission)
+
         let submitted = isSubmittedStatement.all(isSubmittedParameterList)
-        if (submitted.length != 0)
-        {
+        if (submitted.length != 0) {
             res.status(400)
             res.send("Already submitted")
             return
@@ -216,8 +166,7 @@ api.post('/post_submission', (req, res) => {
         res.send("" + info.lastInsertRowid)
         return
     }
-    catch(e)
-    {
+    catch (e) {
         console.log('DB Error')
         console.log(e)
 
@@ -227,8 +176,7 @@ api.post('/post_submission', (req, res) => {
     }
 })
 
-if (process.env.SSLKey && process.env.SSLCert)
-{
+if (process.env.SSLKey && process.env.SSLCert) {
     console.log('Starting HTTPS Server')
     const options = {
         key: fs.readFileSync(process.env.SSLKey),
@@ -238,8 +186,7 @@ if (process.env.SSLKey && process.env.SSLCert)
         console.log(`Started HTTPS Server on port ${apiPort}`)
     })
 }
-else
-{
+else {
     console.log('Starting HTTP Server')
     http.createServer(api).listen(apiPort, () => {
         console.log(`Started HTTP Server on port ${apiPort}`)

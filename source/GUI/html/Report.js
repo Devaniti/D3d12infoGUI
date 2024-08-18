@@ -1,7 +1,5 @@
-const isLocalReport = true
-
-const apiAddress = "https://d3d12infodbapi.boolka.dev"
-const siteAddress = "https://d3d12infodb.boolka.dev"
+const apiAddress = "https://staging_d3d12infodbapi.boolka.dev"
+const siteAddress = "https://staging_d3d12infodb.boolka.dev"
 
 const TrueFalseMapping =
 {
@@ -1028,7 +1026,7 @@ function MakeHumanReadable(property, value) {
                     decodedValue = "0x" + ZeroPad(Number(value).toString(16), 4)
                 } else {
                     // ACPI ID codepath
-                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24)  & 0xFF);
+                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24) & 0xFF);
                     decodedValue = ToTextID(value)
                 }
                 if (VendorIDs[decodedValue])
@@ -1141,10 +1139,12 @@ class ReportContainer {
         ["Header.D3D12_PREVIEW_SDK_VERSION", "Header.D3D12_SDK_VERSION"]
     ])
 
+    #originalReport = {}
     #fields = []
     #fieldsMap = {}
 
     #import(data) {
+        this.#originalReport = data
         let dest = this.#fields
         function flatten(obj, prefix) {
             if (typeof (obj) == "object" && !Array.isArray(obj)) {
@@ -1175,21 +1175,18 @@ class ReportContainer {
             }
         }
 
-        if (isLocalReport)
-        {
-            for (const e of this.#fields) {
-                switch (e.name) {
-                    case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
-                        {
-                            for (const e2 of this.#fields) {
-                                if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
-                                    e.value += e2.value
-                                    break
-                                }
+        for (const e of this.#fields) {
+            switch (e.name) {
+                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
+                    {
+                        for (const e2 of this.#fields) {
+                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
+                                e.value += e2.value
+                                break
                             }
                         }
-                        break
-                }
+                    }
+                    break
             }
         }
     }
@@ -1243,6 +1240,10 @@ class ReportContainer {
 
     GetField(field) {
         return this.#fieldsMap[field]
+    }
+
+    GetOriginalReport() {
+        return this.#originalReport
     }
 }
 
@@ -1317,21 +1318,54 @@ function WriteObjectToTable(obj, table) {
     }
 }
 
-function PrepareReport(header, adapter) {
-    let submission = {}
-    for (const e of header) {
-        submission[e.name] = e.value
-    }
-    for (const e of adapter) {
-        submission[e.name] = e.value
-    }
-    for (const property in submission) {
-        let propertyLower = property.toLowerCase()
-        if (propertyLower.includes("uuid") || propertyLower.includes("luid")) {
-            delete submission[property]
+function PrepareReportInternal(prefix, obj, filter) {
+    let result = {}
+    for (const property in obj) {
+        if (typeof obj[property] === 'object' && !Array.isArray(obj[property])) {
+            let subResult = PrepareReportInternal(`${prefix}${property}.`, obj[property], filter)
+            if (Object.keys(subResult).length > 0) {
+                result[property] = subResult;
+            }
+        } else {
+            if (filter(`${prefix}${property}`)) {
+                result[property] = obj[property];
+            }
         }
     }
-    return JSON.stringify(submission)
+    return result
+}
+
+function PrepareReport(header, report, filter) {
+    const mergedObject = { ...header, ...report };
+    const filteredReport = PrepareReportInternal("", mergedObject, filter)
+    return JSON.stringify(filteredReport)
+}
+
+function PrivacyFilter(property) {
+    let propertyLower = property.toLowerCase()
+    if (propertyLower.includes("uuid") || propertyLower.includes("luid")) {
+        return false
+    }
+    return true
+}
+
+function IsSubmittedFilter(property) {
+    switch (property) {
+        case "Header.Version":
+        case "Header.Using preview Agility SDK":
+        case "SystemInfo.OS Info.Windows version":
+        case "SystemInfo.D3D12EnableExperimentalFeatures":
+        case "DXGI_ADAPTER_DESC3.Description":
+        case "DXGI_ADAPTER_DESC3.VendorId":
+        case "DXGI_ADAPTER_DESC3.DeviceId":
+        case "DXGI_ADAPTER_DESC3.SubSysId":
+        case "DXGI_ADAPTER_DESC3.Revision":
+        case "DXGI_ADAPTER_DESC3.DedicatedVideoMemory":
+        case "CheckInterfaceSupport.UMDVersion":
+            return true
+        default:
+            return false
+    }
 }
 
 function SubmitReport(header, adapter, onSuccess) {
@@ -1350,7 +1384,7 @@ function SubmitReport(header, adapter, onSuccess) {
             console.log(xhr.responseText);
         }
     }
-    xhr.send(PrepareReport(header, adapter))
+    xhr.send(PrepareReport(header.GetOriginalReport(), adapter.GetOriginalReport(), PrivacyFilter))
 }
 
 function SubmitAllReports() {
@@ -1563,7 +1597,8 @@ function QueryReportIDs() {
             }
         }
         header = Headers[retailIndex]
-        xhr.send(PrepareReport(header, adapter))
+
+        xhr.send(PrepareReport(header.GetOriginalReport(), adapter.GetOriginalReport(), IsSubmittedFilter))
     })
 }
 
