@@ -16,6 +16,131 @@ const NVAPI_Status =
     "-160": "SETTING_NOT_FOUND",
 }
 
+const DXGI_FORMAT =
+{
+    "0": "DXGI_FORMAT_UNKNOWN",
+    "1": "DXGI_FORMAT_R32G32B32A32_TYPELESS",
+    "2": "DXGI_FORMAT_R32G32B32A32_FLOAT",
+    "3": "DXGI_FORMAT_R32G32B32A32_UINT",
+    "4": "DXGI_FORMAT_R32G32B32A32_SINT",
+    "5": "DXGI_FORMAT_R32G32B32_TYPELESS",
+    "6": "DXGI_FORMAT_R32G32B32_FLOAT",
+    "7": "DXGI_FORMAT_R32G32B32_UINT",
+    "8": "DXGI_FORMAT_R32G32B32_SINT",
+    "9": "DXGI_FORMAT_R16G16B16A16_TYPELESS",
+    "10": "DXGI_FORMAT_R16G16B16A16_FLOAT",
+    "11": "DXGI_FORMAT_R16G16B16A16_UNORM",
+    "12": "DXGI_FORMAT_R16G16B16A16_UINT",
+    "13": "DXGI_FORMAT_R16G16B16A16_SNORM",
+    "14": "DXGI_FORMAT_R16G16B16A16_SINT",
+    "15": "DXGI_FORMAT_R32G32_TYPELESS",
+    "16": "DXGI_FORMAT_R32G32_FLOAT",
+    "17": "DXGI_FORMAT_R32G32_UINT",
+    "18": "DXGI_FORMAT_R32G32_SINT",
+    "19": "DXGI_FORMAT_R32G8X24_TYPELESS",
+    "20": "DXGI_FORMAT_D32_FLOAT_S8X24_UINT",
+    "21": "DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS",
+    "22": "DXGI_FORMAT_X32_TYPELESS_G8X24_UINT",
+    "23": "DXGI_FORMAT_R10G10B10A2_TYPELESS",
+    "24": "DXGI_FORMAT_R10G10B10A2_UNORM",
+    "25": "DXGI_FORMAT_R10G10B10A2_UINT",
+    "26": "DXGI_FORMAT_R11G11B10_FLOAT",
+    "27": "DXGI_FORMAT_R8G8B8A8_TYPELESS",
+    "28": "DXGI_FORMAT_R8G8B8A8_UNORM",
+    "29": "DXGI_FORMAT_R8G8B8A8_UNORM_SRGB",
+    "30": "DXGI_FORMAT_R8G8B8A8_UINT",
+    "31": "DXGI_FORMAT_R8G8B8A8_SNORM",
+    "32": "DXGI_FORMAT_R8G8B8A8_SINT",
+    "33": "DXGI_FORMAT_R16G16_TYPELESS",
+    "34": "DXGI_FORMAT_R16G16_FLOAT",
+    "35": "DXGI_FORMAT_R16G16_UNORM",
+    "36": "DXGI_FORMAT_R16G16_UINT",
+    "37": "DXGI_FORMAT_R16G16_SNORM",
+    "38": "DXGI_FORMAT_R16G16_SINT",
+    "39": "DXGI_FORMAT_R32_TYPELESS",
+    "40": "DXGI_FORMAT_D32_FLOAT",
+    "41": "DXGI_FORMAT_R32_FLOAT",
+    "42": "DXGI_FORMAT_R32_UINT",
+    "43": "DXGI_FORMAT_R32_SINT",
+    "44": "DXGI_FORMAT_R24G8_TYPELESS",
+    "45": "DXGI_FORMAT_D24_UNORM_S8_UINT",
+    "46": "DXGI_FORMAT_R24_UNORM_X8_TYPELESS",
+    "47": "DXGI_FORMAT_X24_TYPELESS_G8_UINT",
+    "48": "DXGI_FORMAT_R8G8_TYPELESS",
+    "49": "DXGI_FORMAT_R8G8_UNORM",
+    "50": "DXGI_FORMAT_R8G8_UINT",
+    "51": "DXGI_FORMAT_R8G8_SNORM",
+    "52": "DXGI_FORMAT_R8G8_SINT",
+    "53": "DXGI_FORMAT_R16_TYPELESS",
+    "54": "DXGI_FORMAT_R16_FLOAT",
+    "55": "DXGI_FORMAT_D16_UNORM",
+    "56": "DXGI_FORMAT_R16_UNORM",
+    "57": "DXGI_FORMAT_R16_UINT",
+    "58": "DXGI_FORMAT_R16_SNORM",
+    "59": "DXGI_FORMAT_R16_SINT",
+    "60": "DXGI_FORMAT_R8_TYPELESS",
+    "61": "DXGI_FORMAT_R8_UNORM",
+    "62": "DXGI_FORMAT_R8_UINT",
+    "63": "DXGI_FORMAT_R8_SNORM",
+    "64": "DXGI_FORMAT_R8_SINT",
+    "65": "DXGI_FORMAT_A8_UNORM",
+    "66": "DXGI_FORMAT_R1_UNORM",
+    "67": "DXGI_FORMAT_R9G9B9E5_SHAREDEXP",
+    "68": "DXGI_FORMAT_R8G8_B8G8_UNORM",
+    "69": "DXGI_FORMAT_G8R8_G8B8_UNORM",
+    "70": "DXGI_FORMAT_BC1_TYPELESS",
+    "71": "DXGI_FORMAT_BC1_UNORM",
+    "72": "DXGI_FORMAT_BC1_UNORM_SRGB",
+    "73": "DXGI_FORMAT_BC2_TYPELESS",
+    "74": "DXGI_FORMAT_BC2_UNORM",
+    "75": "DXGI_FORMAT_BC2_UNORM_SRGB",
+    "76": "DXGI_FORMAT_BC3_TYPELESS",
+    "77": "DXGI_FORMAT_BC3_UNORM",
+    "78": "DXGI_FORMAT_BC3_UNORM_SRGB",
+    "79": "DXGI_FORMAT_BC4_TYPELESS",
+    "80": "DXGI_FORMAT_BC4_UNORM",
+    "81": "DXGI_FORMAT_BC4_SNORM",
+    "82": "DXGI_FORMAT_BC5_TYPELESS",
+    "83": "DXGI_FORMAT_BC5_UNORM",
+    "84": "DXGI_FORMAT_BC5_SNORM",
+    "85": "DXGI_FORMAT_B5G6R5_UNORM",
+    "86": "DXGI_FORMAT_B5G5R5A1_UNORM",
+    "87": "DXGI_FORMAT_B8G8R8A8_UNORM",
+    "88": "DXGI_FORMAT_B8G8R8X8_UNORM",
+    "89": "DXGI_FORMAT_R10G10B10_XR_BIAS_A2_UNORM",
+    "90": "DXGI_FORMAT_B8G8R8A8_TYPELESS",
+    "91": "DXGI_FORMAT_B8G8R8A8_UNORM_SRGB",
+    "92": "DXGI_FORMAT_B8G8R8X8_TYPELESS",
+    "93": "DXGI_FORMAT_B8G8R8X8_UNORM_SRGB",
+    "94": "DXGI_FORMAT_BC6H_TYPELESS",
+    "95": "DXGI_FORMAT_BC6H_UF16",
+    "96": "DXGI_FORMAT_BC6H_SF16",
+    "97": "DXGI_FORMAT_BC7_TYPELESS",
+    "98": "DXGI_FORMAT_BC7_UNORM",
+    "99": "DXGI_FORMAT_BC7_UNORM_SRGB",
+    "100": "DXGI_FORMAT_AYUV",
+    "101": "DXGI_FORMAT_Y410",
+    "102": "DXGI_FORMAT_Y416",
+    "103": "DXGI_FORMAT_NV12",
+    "104": "DXGI_FORMAT_P010",
+    "105": "DXGI_FORMAT_P016",
+    "106": "DXGI_FORMAT_420_OPAQUE",
+    "107": "DXGI_FORMAT_YUY2",
+    "108": "DXGI_FORMAT_Y210",
+    "109": "DXGI_FORMAT_Y216",
+    "110": "DXGI_FORMAT_NV11",
+    "111": "DXGI_FORMAT_AI44",
+    "112": "DXGI_FORMAT_IA44",
+    "113": "DXGI_FORMAT_P8",
+    "114": "DXGI_FORMAT_A8P8",
+    "115": "DXGI_FORMAT_B4G4R4A4_UNORM",
+    "130": "DXGI_FORMAT_P208",
+    "131": "DXGI_FORMAT_V208",
+    "132": "DXGI_FORMAT_V408",
+    "133": "DXGI_FORMAT_SAMPLER_FEEDBACK_MIN_MIP_OPAQUE",
+    "134": "DXGI_FORMAT_SAMPLER_FEEDBACK_MIP_REGION_USED_OPAQUE"
+}
+
 const EnumMappings =
 {
     "DXGI_ADAPTER_DESC3.GraphicsPreemptionGranularity":
@@ -200,6 +325,11 @@ const EnumMappings =
         "10": "D3D12_EXECUTE_INDIRECT_TIER_1_0",
         "11": "D3D12_EXECUTE_INDIRECT_TIER_1_1"
     },
+    "DirectSR.VariantId":
+    {
+        "{BCC8A605-FEF7-4089-948F-2796A9D54497}": "AMD FidelityFX Super Resolution 2.2 (BCC8A605-FEF7-4089-948F-2796A9D54497)"
+    },
+    "DirectSR.OptimalTargetFormat": DXGI_FORMAT,
     "VkPhysicalDeviceProperties.deviceType":
     {
         "0": "VK_PHYSICAL_DEVICE_TYPE_OTHER",
@@ -458,6 +588,7 @@ const EnumMappings =
     "D3D12_FEATURE_DATA_CROSS_NODE.AtomicShaderInstructions": TrueFalseMapping,
     "D3D12_FEATURE_DATA_PREDICATION.Supported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_HARDWARE_COPY.Supported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_APPLICATION_SPECIFIC_DRIVER_STATE.Supported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.Int64ShaderOps": TrueFalseMapping,
@@ -507,7 +638,8 @@ const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported": TrueFalseMapping,
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported": TrueFalseMapping
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TrueFalseMapping
 }
 
 const BitFlagsMappings =
@@ -556,6 +688,16 @@ const BitFlagsMappings =
         "32": "D3D12_COMMAND_LIST_SUPPORT_FLAG_VIDEO_PROCESS",
         "64": "D3D12_COMMAND_LIST_SUPPORT_FLAG_VIDEO_ENCODE"
     },
+    "DirectSR.Flags":
+    {
+        "0": "DSR_SUPERRES_VARIANT_FLAG_NONE",
+        "1": "DSR_SUPERRES_VARIANT_FLAG_SUPPORTS_EXPOSURE_SCALE_TEXTURE",
+        "2": "DSR_SUPERRES_VARIANT_FLAG_SUPPORTS_IGNORE_HISTORY_MASK",
+        "4": "DSR_SUPERRES_VARIANT_FLAG_NATIVE",
+        "8": "DSR_SUPERRES_VARIANT_FLAG_SUPPORTS_REACTIVE_MASK",
+        "16": "DSR_SUPERRES_VARIANT_FLAG_SUPPORTS_SHARPNESS",
+        "32": "DSR_SUPERRES_VARIANT_FLAG_DISALLOWS_REGION_OFFSETS",
+    }
 }
 
 const SuffixMappings =
@@ -855,6 +997,7 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier",
         "D3D12_FEATURE_DATA_PREDICATION.Supported",
         "D3D12_FEATURE_DATA_HARDWARE_COPY.Supported",
+        "D3D12_FEATURE_DATA_APPLICATION_SPECIFIC_DRIVER_STATE.Supported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMin",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMax",
@@ -928,6 +1071,8 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported",
+        "DirectSR",
         "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes",
         "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL",
         "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_UP",
@@ -952,6 +1097,15 @@ const PropertiesOrder =
         "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded"
     ]
 
+const SubPropertiesOrder =
+    [
+        "DirectSR.VariantId",
+        "DirectSR.VariantName",
+        "DirectSR.Flags",
+        "DirectSR.OptimizationRankings",
+        "DirectSR.OptimalTargetFormat"
+    ]
+
 const PropertiesFilterWhitelist = new Set([
     "ID",
     "DXGI_ADAPTER_DESC3.Description",
@@ -967,6 +1121,15 @@ function MakeMap(order) {
 }
 
 const PropertiesOrderMap = MakeMap(PropertiesOrder)
+const SubPropertiesOrderMap = MakeMap(SubPropertiesOrder)
+
+function RemoveArrayIndex(property) {
+    return property.replace(/\[\d+\]/g, "")
+}
+
+function GetNameBeforeArrayIndex(property) {
+    return property.replace(/\[\d+\].*/, "")
+}
 
 function MakeHumanReadableProperty(property) {
     if (property in PropertyHumanReadableNames) {
@@ -977,23 +1140,25 @@ function MakeHumanReadableProperty(property) {
 }
 
 function MakeHumanReadable(property, value) {
+    let effectiveProperty = RemoveArrayIndex(property)
+
     if (value == null) return value
 
-    if (property in EnumMappings) {
-        return EnumMappings[property][value] ?? `Unknown(${value})`
+    if (effectiveProperty in EnumMappings) {
+        return EnumMappings[effectiveProperty][value] ?? `Unknown(${value})`
     }
 
-    if (property in BitFlagsMappings) {
+    if (effectiveProperty in BitFlagsMappings) {
         let result = ''
         let bitCount = 0
         for (let i = 1; i <= value; i = i << 1) {
             if (value & i) {
                 bitCount++
-                result += (BitFlagsMappings[property][i] ?? `Unknown(${i})`) + " |\n"
+                result += (BitFlagsMappings[effectiveProperty][i] ?? `Unknown(${i})`) + " |\n"
             }
         }
         if (result == '') {
-            result = BitFlagsMappings[property][0] ?? "Unknown"
+            result = BitFlagsMappings[effectiveProperty][0] ?? "Unknown"
         }
         else {
             result = result.substring(0, result.length - 3)
@@ -1003,11 +1168,11 @@ function MakeHumanReadable(property, value) {
         return result
     }
 
-    if (property in SuffixMappings) {
-        return value + SuffixMappings[property]
+    if (effectiveProperty in SuffixMappings) {
+        return value + SuffixMappings[effectiveProperty]
     }
 
-    switch (property) {
+    switch (effectiveProperty) {
         case "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion":
         case "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion":
             {
@@ -1026,7 +1191,7 @@ function MakeHumanReadable(property, value) {
                     decodedValue = "0x" + ZeroPad(Number(value).toString(16), 4)
                 } else {
                     // ACPI ID codepath
-                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24)  & 0xFF);
+                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24) & 0xFF);
                     decodedValue = ToTextID(value)
                 }
                 if (VendorIDs[decodedValue])
@@ -1126,6 +1291,21 @@ function MakeHumanReadable(property, value) {
                 a = a.toFixed(2)
                 return a + prefixes[prefixIndex]
             }
+        case "DirectSR.OptimizationRankings":
+            {
+                return value.split(", ").map(e => {
+                    switch (e) {
+                        case "0": return "DSR_OPTIMIZATION_TYPE_BALANCED"
+                        case "1": return "DSR_OPTIMIZATION_TYPE_HIGH_QUALITY"
+                        case "2": return "DSR_OPTIMIZATION_TYPE_MAX_QUALITY"
+                        case "3": return "DSR_OPTIMIZATION_TYPE_HIGH_PERFORMANCE"
+                        case "4": return "DSR_OPTIMIZATION_TYPE_MAX_PERFORMANCE"
+                        case "5": return "DSR_OPTIMIZATION_TYPE_POWER_SAVING"
+                        case "6": return "DSR_OPTIMIZATION_TYPE_MAX_POWER_SAVING"
+                        default: return `Unknown(${e})`
+                    }
+                }).join(", ")
+            }
     }
 
     if (Array.isArray(value))
@@ -1139,10 +1319,12 @@ class ReportContainer {
         ["Header.D3D12_PREVIEW_SDK_VERSION", "Header.D3D12_SDK_VERSION"]
     ])
 
+    #originalReport = {}
     #fields = []
     #fieldsMap = {}
 
     #import(data) {
+        this.#originalReport = data
         let dest = this.#fields
         function flatten(obj, prefix) {
             if (typeof (obj) == "object" && !Array.isArray(obj)) {
@@ -1154,7 +1336,15 @@ class ReportContainer {
                 }
             }
             else if (Array.isArray(obj)) {
-                dest.push({ name: prefix, value: obj.join(", ") })
+                // if all elements of array are strings, then join them
+                if (obj.every(e => typeof e != "object")) {
+                    dest.push({ name: prefix, value: obj.join(", ") })
+                }
+                else {
+                    for (let i = 0; i < obj.length; ++i) {
+                        flatten(obj[i], `${prefix}[${i}]`)
+                    }
+                }
             }
             else if (typeof obj == "boolean") {
                 dest.push({ name: prefix, value: +obj })
@@ -1190,11 +1380,49 @@ class ReportContainer {
     }
 
     #reorderFields() {
-        function getIndex(a) {
-            return PropertiesOrderMap.get(a.name) ?? Infinity
+        function getPropertyIndex(a) {
+            let reorderName = GetNameBeforeArrayIndex(a.name)
+            let result = PropertiesOrderMap.get(reorderName) ?? Infinity
+            if (result == Infinity) console.log(`No order for ${a.name}`)
+            return result
         }
+
+        function getSubPropertyIndex(a) {
+            let reorderName = RemoveArrayIndex(a.name)
+            let result = SubPropertiesOrderMap.get(reorderName) ?? Infinity
+            if (result == Infinity) console.log(`No order for ${a.name}`)
+            return result
+        }
+
         this.#fields = this.#fields.sort((a, b) => {
-            return getIndex(a) - getIndex(b);
+            let aIndex = getPropertyIndex(a)
+            let bIndex = getPropertyIndex(b)
+
+            if (aIndex != bIndex) {
+                return aIndex - bIndex
+            }
+
+            if (aIndex == bIndex) {
+                // Extract the numeric parts (if any)
+                const aNum = parseInt(a.name.match(/\d+/), 10) || 0;
+                const bNum = parseInt(b.name.match(/\d+/), 10) || 0;
+                // Compare the numeric parts
+                if (aNum !== bNum) {
+                    return aNum - bNum;
+                }
+
+                // Compare sub properties
+                aIndex = getSubPropertyIndex(a)
+                bIndex = getSubPropertyIndex(b)
+                if (aIndex != bIndex) {
+                    return aIndex - bIndex
+                }
+
+                // Compare the full strings
+                return a.name.localeCompare(b.name)
+            }
+
+            return aIndex - bIndex
         })
     }
 
@@ -1239,6 +1467,10 @@ class ReportContainer {
     GetField(field) {
         return this.#fieldsMap[field]
     }
+
+    GetOriginalReport() {
+        return this.#originalReport
+    }
 }
 
 function ClearElement(element) {
@@ -1258,6 +1490,8 @@ function FilterField(name, value) {
         || value.toString().toLowerCase().includes(filterString)
         || humanReadableValue.toString().toLowerCase().includes(filterString)
 }
+
+// End of shared between GUI and website code
 
 let SingleReport = false
 let Reports = []
