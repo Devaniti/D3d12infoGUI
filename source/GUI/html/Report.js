@@ -1176,7 +1176,7 @@ function MakeHumanReadable(property, value) {
         case "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion":
         case "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion":
             {
-                return value / 100
+                return (value / 100).toFixed(2)
             }
         // WORD sized hex number representing Vendor ID
         case "DXGI_ADAPTER_DESC3.VendorId":
