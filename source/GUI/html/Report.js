@@ -1,5 +1,5 @@
-const apiAddress = "https://staging_d3d12infodbapi.boolka.dev"
-const siteAddress = "https://staging_d3d12infodb.boolka.dev"
+const apiAddress = "https://d3d12infodbapi.boolka.dev"
+const siteAddress = "https://d3d12infodb.boolka.dev"
 
 const TrueFalseMapping =
 {
