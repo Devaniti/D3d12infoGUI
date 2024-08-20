@@ -262,7 +262,8 @@ const EnumMappings =
     {
         "0": "D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED",
         "1": "D3D12_WORK_GRAPHS_TIER_0_1",
-        "10": "D3D12_WORK_GRAPHS_TIER_1_0"
+        "10": "D3D12_WORK_GRAPHS_TIER_1_0",
+        "11": "D3D12_WORK_GRAPHS_TIER_1_1"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
     {
@@ -318,7 +319,8 @@ const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier":
     {
         "0": "D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED",
-        "10": "D3D12_WORK_GRAPHS_TIER_1_0"
+        "10": "D3D12_WORK_GRAPHS_TIER_1_0",
+        "11": "D3D12_WORK_GRAPHS_TIER_1_1"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier":
     {
