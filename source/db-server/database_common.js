@@ -82,7 +82,7 @@ function DeepMergeInternal(target, source) {
 
 module.exports = {
     submitUniqueProperites: SubmitUniqueProperitesInternal,
-    SubmitRequiredProperites: SubmitRequiredProperitesInternal,
+    submitRequiredProperites: SubmitRequiredProperitesInternal,
     submitAllProperties: ["Data"].concat(SubmitUniqueProperitesInternal),
 
     toSqlite3SupportedType: ToSqlite3SupportedTypeInternal,
