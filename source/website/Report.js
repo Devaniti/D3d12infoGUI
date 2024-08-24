@@ -329,6 +329,7 @@ const EnumMappings =
     },
     "DirectSR.VariantId":
     {
+        "{8A17AE4B-B5F6-11EE-BAAF-00E1110012F6}": "Intel(R) Xe Super Sampling (XeSS) (8A17AE4B-B5F6-11EE-BAAF-00E1110012F6)",
         "{BCC8A605-FEF7-4089-948F-2796A9D54497}": "AMD FidelityFX Super Resolution 2.2 (BCC8A605-FEF7-4089-948F-2796A9D54497)"
     },
     "DirectSR.OptimalTargetFormat": DXGI_FORMAT,
