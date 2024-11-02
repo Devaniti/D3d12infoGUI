@@ -804,6 +804,12 @@ const PropertyHumanReadableNames =
     "CheckInterfaceSupport.UMDVersion": "Driver Version",
 }
 
+const PropertyTooltips = {
+    "D3D12_SDK_VERSION":"Version of agility SDK used to generate the report",
+    "DXGI_FEATURE_PRESENT_ALLOW_TEARING":"Whether OS supports swapchain presentation with tearing. This is not a GPU capability.",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": "ViewPort and RenderTarget array index from any shader feeding rasterizer supported without Geometry Shader emulation",
+}
+
 const PropertiesOrder =
     [
         "ID",
@@ -1531,13 +1537,44 @@ function InitReportData() {
     Adapters = reports.map(e => e.Adapters.map(e => new ReportContainer(e)))
 }
 
+function AddTooltip(field, cell)
+{
+    const tooltipText = PropertyTooltips[field]
+    if (tooltipText == null)
+    {
+        return
+    }
+
+    cell.className = "tooltip";
+    const tooltipTextElement = document.createElement("span")
+    tooltipTextElement.className = "tooltiptext";
+    tooltipTextElement.textContent = tooltipText;
+    cell.appendChild(tooltipTextElement)
+}
+
+function AddTooltipIcon(field, cell)
+{
+    if (PropertyTooltips[field] == null)
+    {
+        return
+    }
+
+    const tooltipIcon = document.createElement("img")
+    tooltipIcon.src = "Info.svg"
+    tooltipIcon.alt = "Info"
+    tooltipIcon.className = "tooltipicon"
+    cell.appendChild(tooltipIcon)
+}
+
 function WriteObjectToTable(obj, table) {
     for (const e of obj.HumanReadable(FilterField)) {
         const row = document.createElement("tr")
 
         const cell0 = document.createElement("td")
+        AddTooltip(e.name, cell0)
         const cell0Text = document.createTextNode(e.name)
         cell0.appendChild(cell0Text)
+        AddTooltipIcon(e.name, cell0)
         row.appendChild(cell0)
 
         const cell1 = document.createElement("td")

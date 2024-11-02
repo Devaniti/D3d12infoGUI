@@ -1,13 +1,14 @@
 body {
     min-width: 70em;
-    max-width: 130em;
+    max-width: 132em;
     margin-left: auto;
     margin-right: auto;
     padding-left: 0.5em;
     padding-right: 0.5em;
 }
 
-table, fieldset {
+table,
+fieldset {
     border: 2px solid;
     border-collapse: collapse;
     border-color: #a7a7a7;
@@ -68,11 +69,11 @@ td:nth-of-type(odd) {
 
 button {
     margin: auto;
-    width: 8em;
+    width: 9.2em;
     background-color: #029c07;
     border: none;
     color: white;
-    padding: 0.2em 0.5em;
+    padding: 0.3em 0.6em;
     margin-left: 0.1em;
     margin-right: 0.1em;
     text-align: center;
@@ -85,7 +86,7 @@ button:disabled {
     background-color: #7c7c7c;
 }
 
-.clickableRow.clickableRow.clickableRow  {
+.clickableRow.clickableRow.clickableRow {
     cursor: pointer;
 }
 
@@ -118,6 +119,37 @@ button:disabled {
     padding-left: 2em;
 }
 
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    border-radius: 0.4em;
+    border-color: #7f7f7f;
+    border-style: solid;
+    border-width: 0.1em;
+    padding: 0.3em;
+    margin: 0 0.2em;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 110%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltipicon {
+    height: 0.9em;
+    margin: 0.05em 0.15em;
+    vertical-align: sub;
+}
+
 a {
     transition: color .3s ease-in;
     text-decoration: none;
@@ -134,22 +166,23 @@ a:hover {
     height: 1.5em;
 }
 
-.headerText, .icon {
-    display:inline-block;
+.headerText,
+.icon {
+    display: inline-block;
     vertical-align: top;
 }
 
-.headerText{
+.headerText {
     padding-top: 0.15em;
 }
 
 .header {
-    height:1.8em;
-    padding-top:0.3em;
+    height: 1.8em;
+    padding-top: 0.3em;
     margin-bottom: 0.3em;
     vertical-align: middle;
     font-size: 1.2em;
-    display:flex;
+    display: flex;
     border-width: 2px;
     border-style: hidden;
     border-collapse: collapse;
