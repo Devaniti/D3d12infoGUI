@@ -90,11 +90,9 @@
             <table id="archtable"></table>
         </div>
     </main>
-    <!--<script src="./d3d12infodb.js"></script>--> <!-- for local testing -->
     <script src="./Report.js"></script>
     <script src="./FeatureTable.js"></script>
     <script>
-        //Reports = d3d12infodb.map(e => new ReportContainer(e)); <!-- for local testing -->
         let xhr = new XMLHttpRequest()
         xhr.open("GET", apiAddress + "/get_all_submissions")
         xhr.onreadystatechange = () => {

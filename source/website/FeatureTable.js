@@ -50,7 +50,7 @@ const TableFeaturesShortNames = {
     //"D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier" : "Work graphs", // should use OPTIONS21 instead, but for some reports this is the right one...
     "D3D12_FEATURE_DATA_PREDICATION.Supported": "Predication",
     "D3D12_FEATURE_DATA_HARDWARE_COPY.Supported": "Hardware copy",
-    "D3D12_FEATURE_DATA_APPLICATION_SPECIFIC_DRIVER_STATE.Supported": "App specific driver state",
+    //"D3D12_FEATURE_DATA_APPLICATION_SPECIFIC_DRIVER_STATE.Supported": "App specific driver state", // Preview agility SDK specific. Not using preview reports for now
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps": "Wave ops",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMin": "Wave lane count min",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMax": "Wave lane count max",
@@ -123,7 +123,7 @@ const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier": "Execute indirect",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported": "SampleCmp gradient and bias",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported": "Extended command info",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": "Tight alignment",
+    // "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": "Tight alignment", // Preview agility SDK specific. Not using preview reports for now
 };
 
 const TableBitFlagsMappings =
@@ -460,10 +460,6 @@ function MakeHumanReadableForTable(property, value) {
         return result
     }
 
-    //if (effectiveProperty in SuffixMappings) {
-    //    return value + SuffixMappings[effectiveProperty]
-    //}
-
     switch (effectiveProperty) {
         case "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion":
         case "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion":
@@ -551,8 +547,6 @@ function ClearTableReportData() {
 function SpliceReportByArchAndVendor(reportContainer)
 {
     let report = reportContainer.GetOriginalReport();
-
-    // TODO: should we add year of (first) release to each arch so people can judge min specs more easily?
 
     let arch;
     if (report.DXGI_ADAPTER_DESC3.Description == "Microsoft Basic Render Driver") {
@@ -652,17 +646,12 @@ function SpliceReportByArchAndVendor(reportContainer)
 
 function PrepareReportsForTable() {
 
-    //PrepareReports();
     ClearTableReportData();
 
     for (let report of Reports) {
         if (!report.GetField("Header.Using preview Agility SDK"))
             SpliceReportByArchAndVendor(report);
     }
-
-    //console.log(ArchsPerVendor);
-    //console.log(ReportsPerArch);
-    //console.log(UndefinedReports); // at this point only old reports that don't have IHV data at all or generic AMD reports with asicFamily 0
 
     function SortSet(set, comparefn) {
         const entries = [];
@@ -814,7 +803,6 @@ function UpdateTable() {
                             else if (r.CheckInterfaceSupport.UMDVersion > newestReport.CheckInterfaceSupport.UMDVersion)
                                 newestReport = r;
                         }
-                        //console.log(`Report ID for ${a}: ${newestReport.ID}`);
 
                         // NOTE: we need to get the matching ReportContainer that has all the fields mapped as strings
                         // TODO: could also redesign all of the code above to use ReportContainers, it's just slightly less nice to use
