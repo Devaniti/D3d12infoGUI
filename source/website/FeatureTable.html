@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3D12 Feature Table</title>
+    <style>
+        :root {
+            color: rgb(212, 212, 212);
+            background-color: rgb(30, 30, 30);
+        }
+
+        .Microsoft {
+            background-color: #1C262B;
+        }
+
+        .AMD {
+            background-color: #220000;
+        }
+
+        .Nvidia {
+            background-color: #002200;
+        }
+
+        .Intel {
+            background-color: #000022;
+        }
+
+        .Qualcomm {
+            background-color: #231e16;
+        }
+
+        td {
+            white-space: pre-wrap;
+        }
+
+        th, td {
+            border: 1px solid #FFFFFF33;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        tbody > tr:nth-of-type(even) {
+            background-color: #262626;
+        }
+            tbody > tr:nth-of-type(even) > th:first-of-type {
+                background-color: #2E2E2E;
+            }
+            tbody > tr:nth-of-type(odd) > th:first-of-type {
+                background-color: #262626;
+            }
+        colgroup {
+            border-inline-end: 2px solid #FFFFFF66;
+        }
+        /* sticky table headers */
+        th {
+            position: sticky;
+        }
+        /* first column sticks to the left of the screen*/
+        tbody > tr > th:first-of-type {
+            left: -1px;
+        }
+        /* first row sticks to the top of the screen */
+        thead > tr:first-of-type > th {
+            top: -1px;
+            z-index: 1; /* draw above first column */
+            border-bottom: none;
+        }
+        /* second row sticks right below first row */
+        thead > tr:nth-of-type(2) > th {
+            top: 20px;
+            z-index: 2;
+            border-top: none;
+            border-bottom: 2px solid #FFFFFF66;
+        }
+
+        #FilterContainer {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="FilterContainer">
+            <label for="TableShowAPIFeatureNames">Show API Feature Names</label>
+            <input type="checkbox" id="TableShowAPIFeatureNames" autocomplete="off" onchange="UpdateTable()"/>
+        </div>
+        <div>
+            <table id="archtable"></table>
+        </div>
+    </main>
+    <!--<script src="./d3d12infodb.js"></script>--> <!-- for local testing -->
+    <script src="./Report.js"></script>
+    <script src="./FeatureTable.js"></script>
+    <script>
+        //Reports = d3d12infodb.map(e => new ReportContainer(e)); <!-- for local testing -->
+        let xhr = new XMLHttpRequest()
+        xhr.open("GET", apiAddress + "/get_all_submissions")
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                Reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
+                PrepareReportsForTable();
+                UpdateTable();
+            }
+        }
+        xhr.send()
+    </script>
+</body>
+</html>
