@@ -16,6 +16,7 @@ const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceBindingTier": "Resource binding",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier": "Resource heap",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier": "Tiled resources",
+    // NOTE: this is supposed to mean that tier 3 is only supported for SRVs, but unfortunately is always true when fully-featured tier 3 is reported, we fix that up later
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3": "SRV-only tiled resource tier 3",
 
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier": "Raytracing",
@@ -964,6 +965,7 @@ function UpdateTable() {
                         let newestReportContainer = Reports.find(r => r.GetField("ID") == newestDriverReport.ID);
 
                         let featureValue = newestReportContainer.GetField(featureName);
+                        let displayRawFeatureValue = false;
 
                         // fix up reports with preview SDK that use the experimental options field instead of OPTIONS12 for work graphs
                         if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier" && featureValue == undefined) {
@@ -978,8 +980,13 @@ function UpdateTable() {
                                 }
                             }
                         }
+                        // If our tiled resource tier is 3, the SRVOnlyTiledResourceTier3 flag does not apply, but is always true, which is misleading
+                        else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier >= 3) {
+                            featureValue = "N/A";
+                            displayRawFeatureValue = true;
+                        }
                         let td = document.createElement("td");
-                        td.append(MakeHumanReadableForTable(featureName, featureValue));
+                        td.append(displayRawFeatureValue ? featureValue : MakeHumanReadableForTable(featureName, featureValue));
                         featureRow.appendChild(td);
                     }
                 }
