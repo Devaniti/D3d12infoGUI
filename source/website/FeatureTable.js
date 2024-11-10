@@ -8,7 +8,8 @@
 // TODO: some things could be consolidated? e.g. D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY, WaveLaneCountMin/Max
 const TableFeaturesShortNames = {
     "TableNumReports": "Number of reports",
-    "TableLatestReportDate": "Latest report date",
+    "TableReportUsed": "Report used for feature data",
+    "TableReportDate": "Report date",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps": "FP64 shader ops",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp": "Output merger logic ops",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.MinPrecisionSupport": "Min-precision support",
@@ -20,7 +21,7 @@ const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ConservativeRasterizationTier": "Conservative rasterization",
     //"D3D12_FEATURE_DATA_D3D12_OPTIONS.MaxGPUVirtualAddressBitsPerResource": "Per-resource virtual addressing", // see D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT below
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.StandardSwizzle64KBSupported": "64KB standard swizzle textures",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossNodeSharingTier": "Cross node sharing",
+    //"D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossNodeSharingTier": "Cross node sharing", // see D3D12_FEATURE_DATA_CROSS_NODE.SharingTier
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossAdapterRowMajorTextureSupported": "Cross-adapter row-major textures",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": "VP & RT array index without GS emulation",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier": "Resource heap",
@@ -532,6 +533,7 @@ let ArchsPerVendor = {
     Qualcomm: new Set(),
 };
 let ReportsPerArch = new Map();
+let NewestDriverReportPerArch = new Map();
 let UndefinedReports = [];
 
 function ClearTableReportData() {
@@ -541,6 +543,7 @@ function ClearTableReportData() {
     ArchsPerVendor.Intel.clear();
     ArchsPerVendor.Qualcomm.clear();
     ReportsPerArch.clear();
+    NewestDriverReportPerArch.clear();
     UndefinedReports = [];
 }
 
@@ -698,6 +701,16 @@ function PrepareReportsForTable() {
             SpliceReportByArchAndVendor(report);
     }
 
+    for (let [arch, reports] of ReportsPerArch)
+    {
+        let newestReport = null;
+        for (let r of reports) {
+            if (!newestReport || r.CheckInterfaceSupport.UMDVersion > newestReport.CheckInterfaceSupport.UMDVersion)
+                newestReport = r;
+        }
+        NewestDriverReportPerArch.set(arch, newestReport);
+    }
+
     function SortSet(set, comparefn) {
         const entries = [];
         for (const member of set) {
@@ -807,50 +820,36 @@ function UpdateTable() {
             // TODO: merge columns that are the same across GPUs for the same vendor? maybe a bit too much
             for (let [vendor, archs] of Object.entries(ArchsPerVendor)) {
                 for (let archName of archs) {
-                    if (featureName == "TableNumReports") { // hardcoded first row
+                    let newestDriverReport = NewestDriverReportPerArch.get(archName);
+                    if (featureName == "TableNumReports") {
                         let td = document.createElement("td");
                         td.append(ReportsPerArch.get(archName).length);
                         featureRow.appendChild(td);
                     }
-                    else if (featureName == "TableLatestReportDate") { // hardcoded second row
-                        let latestDate = Date.UTC(1970, 0);
-                        for (let r of ReportsPerArch.get(archName)) {
-                            let date = Date.parse(r.Header["Generated on"]);
-                            if (date && latestDate < date) {
-                                latestDate = date;
-                            }
-                        }
+                    else if (featureName == "TableReportUsed") {
                         let td = document.createElement("td");
-                        let dateString;
-                        if (latestDate == Date.UTC(1970, 0)) {
-                            dateString = "?";
-                        }
-                        else {
-                            dateString = new Date(latestDate).toISOString();
-                            dateString = dateString.substring(0, dateString.indexOf("T"))
-                        }
-                        td.append(dateString);
+                        let link = document.createElement("a");
+                        link.href = `https://d3d12infodb.boolka.dev/ID.html?ID=${newestDriverReport.ID}`;
+                        link.append(newestDriverReport.ID);
+                        td.appendChild(link);
+                        featureRow.appendChild(td);
+                    }
+                    else if (featureName == "TableReportDate") {
+                        let td = document.createElement("td");
+                        let date = newestDriverReport.Header["Generated on"];
+                        td.append(date ? date : "");
                         featureRow.appendChild(td);
                     }
                     else { // regular feature data
                         // TODO: report feature data more reliably, is this good enough?
-                        // - we're currently searching the newest report again and again for every feature (doesn't seem to be a significant perf problem yet)
                         // - output something like "7/10" for boolean data?
                         // - enums could display highest value in any report
                         // - bisect by driver version?
-                        // - how to handle preview vs non-preview features? sometimes the preview SDK does not have all the features of the non-preview SDK
-                        let newestReport;
-                        for (let r of ReportsPerArch.get(archName)) {
-                            if (!newestReport)
-                                newestReport = r;
-                            else if (r.CheckInterfaceSupport.UMDVersion > newestReport.CheckInterfaceSupport.UMDVersion)
-                                newestReport = r;
-                        }
+                        // - filter out reports with experimental features on, take max of every feature? (too many reports with this, would remove archs from the table)
 
                         // NOTE: we need to get the matching ReportContainer that has all the fields mapped as strings
                         // TODO: could also redesign all of the code above to use ReportContainers, it's just slightly less nice to use
-                        let newestReportContainer = Reports.find(r => r.GetField("ID") == newestReport.ID);
-                        let td = document.createElement("td");
+                        let newestReportContainer = Reports.find(r => r.GetField("ID") == newestDriverReport.ID);
 
                         let featureValue = newestReportContainer.GetField(featureName);
 
@@ -859,6 +858,7 @@ function UpdateTable() {
                             featureValue = newestReportContainer.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier");
                         }
 
+                        let td = document.createElement("td");
                         td.append(MakeHumanReadableForTable(featureName, featureValue));
                         featureRow.appendChild(td);
                     }
