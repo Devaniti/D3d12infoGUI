@@ -547,7 +547,7 @@ function ClearTableReportData() {
 function SpliceReportByArchAndVendor(reportContainer)
 {
     let report = reportContainer.GetOriginalReport();
-
+    let vendorId = MakeHumanReadableForTable("DXGI_ADAPTER_DESC3.VendorId", report.DXGI_ADAPTER_DESC3.VendorId);
     let arch;
     if (report.DXGI_ADAPTER_DESC3.Description == "Microsoft Basic Render Driver") {
         arch = "WARP";
@@ -575,17 +575,55 @@ function SpliceReportByArchAndVendor(reportContainer)
             if (arch == "RDNA2" && report.AGSDeviceInfo.numWGPs == 1 && report.D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier == 0)
                 return;
 
-            ArchsPerVendor.AMD.add(arch);
+            if (arch) ArchsPerVendor.AMD.add(arch);
         }
     }
-    else if (report["Intel GPUDetect::GPUData"]) {
-        // NOTE: Intel has this handy table in case we ever need to match device IDs https://dgpu-docs.intel.com/devices/hardware-table.html
-        // TODO: both GPUArchitecture and GraphicsGeneration are inconsistent, we need to make a manual table mapping everything together...
-        arch = report["Intel GPUDetect::GPUData"].GPUArchitecture;
-        if (arch == undefined && report.DXGI_ADAPTER_DESC3.Description == "Intel(R) UHD Graphics 630")
-            arch = "Coffeelake";
-        if (arch == "Unknown (37)" && report.DXGI_ADAPTER_DESC3.Description == "Intel(R) Iris(R) Xe Graphics") // integrated Xe-LP, Alder/Rocket Lake
-            arch = "Xe-LP";
+    else if (vendorId.startsWith("Intel")) {
+
+        // GPUDetect is not necessarily up to date and all it does in the end is match device IDs, so we can just do the same
+        // https://github.com/GameTechDev/gpudetect/blob/master/GPUDetect.cpp, https://github.com/GameTechDev/gpudetect/blob/master/DeviceId.cpp
+        // https://dgpu-docs.intel.com/devices/hardware-table.html, https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/tree/src/intel_module
+        // https://github.com/intel/compute-runtime/blob/master/shared/source/dll/devices/devices_base.inl
+        // https://github.com/intel/compute-runtime/blob/master/shared/source/helpers/definitions/device_ids_configs_base.h (e.g. device_ids_configs_bmg.h has the device IDs for Battlemage)
+        // NOTE: there are sometimes inconsistencies between those lists
+        // Intel has officially dropped the "Gen" naming with Xe, but it's very handy for sorting
+        const IntelDeviceIdHighBits = {
+            0x0400: "Gen7.5", 0x0A00: "Gen7.5", 0x0D00: "Gen7.5", 0x0C00: "Gen7.5", // Haswell
+            0x1600: "Gen8", 0x0B00: "Gen8", 0x2200: "Gen8", // Broadwell, Cherryview
+            0x1900: "Gen9", 0x0900: "Gen9", // Skylake
+            // Kaby Lake, Gemini Lake, Cannon Lake, Coffee Lake, Comet Lake, Whiskey Lake, Apollo Lake
+            0x5900: "Gen9.5", 0x3100: "Gen9.5", 0x3E00: "Gen9.5", 0x9B00: "Gen9.5", 0x5A00: "Gen9.5",
+            0x8A00: "Gen11", // Ice Lake
+            // Tiger Lake, Elkhart Lake, Jasper Lake, Comet Lake, Rocket Lake, Alder Lake, DG1, Raptor Lake
+            0x9A00: "Gen12 / Xe", 0x4500: "Gen12 / Xe", 0x4E00: "Gen12 / Xe", 0x4C00: "Gen12 / Xe", 0x4600: "Gen12 / Xe", 0x4900: "Gen12 / Xe", 0xA700: "Gen12 / Xe",
+            0x5600: "Gen12.7 / Xe-HPG", // Alchemist
+            0x0B00: "Gen12 / Xe-HPC", // Ponte Vecchio (data center GPU)
+            0x7D00: "Gen12.7 / Xe-LPG", // Meteor Lake, Arrow Lake
+            0x6400: "Gen13 / Xe2-HPG", // Lunar Lake
+            0xE200: "Gen13 / Xe2-HPG", // Battlemage
+        };
+
+        let idhi = report.DXGI_ADAPTER_DESC3.DeviceId & 0xFF00;
+        arch = IntelDeviceIdHighBits[idhi];
+
+        // if the device ID matching didn't work, try GPUDetect
+        if (!arch && report["Intel GPUDetect::GPUData"])
+        {
+            arch = report["Intel GPUDetect::GPUData"].GraphicsGeneration;
+            if (arch == "Unkown" &&
+                report["Intel GPUDetect::GPUData"].GPUArchitecture == "Unknown (37)" &&
+                report.DXGI_ADAPTER_DESC3.Description == "Intel(R) Iris(R) Xe Graphics") // integrated Xe-LP, Alder/Rocket Lake
+                arch = "Gen12 / Xe";
+            else if (arch == "Xe High Performance Graphics")
+                arch = "Gen12.7 / Xe-HPG";
+            else if (arch == "Xe High Performance Compute") // data center GPU, probably doesn't even have D3D drivers?
+                arch = "Gen12 / Xe-HPC";
+            else if (arch == "Xe Low Power Graphics") // Meteor/Arrow Lake, reported name unconfirmed, not even in GPUDetect as of 2024-11-11
+                arch = "Gen12.7 / Xe-LPG";
+            else if (arch == "Xe2 High Performance Graphics") // Lunar Lake, Battlemage, reported name unconfirmed, not even in GPUDetect as of 2024-11-11
+                arch = "Gen13 / Xe2-HPG";
+        }
+
         if (arch) ArchsPerVendor.Intel.add(arch);
     }
     else if (report.NvPhysicalGpuHandle && report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]) {
@@ -619,14 +657,21 @@ function SpliceReportByArchAndVendor(reportContainer)
                 arch = "Fermi"; // unconfirmed
             else if (arch == "Volta1")
                 arch = "Volta"; // unconfirmed
+            else if (arch == "Turing") { // differentiate between Turing 16 (no RT) and Turing 20 (RTX)
+                let codename = report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id"];
+                if (codename == 360 || codename == 359 || report.DXGI_ADAPTER_DESC3.Description.includes("GTX 16")) // TU116/117 or TU106 with RT disabled
+                    arch = "Turing 16";
+                else
+                    arch = "Turing 20";
+            }
         }
 
         ArchsPerVendor.Nvidia.add(arch ? arch : report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"].toString());
     }
-    else if (MakeHumanReadableForTable("DXGI_ADAPTER_DESC3.VendorId", report.DXGI_ADAPTER_DESC3.VendorId).startsWith("Qualcomm")) {
+    else if (vendorId.startsWith("Qualcomm")) {
 
         if (/Snapdragon\(R\) X (Plus)|(Elite) - X1.*/.test(report.DXGI_ADAPTER_DESC3.Description))
-            arch = "X Elite";
+            arch = "X1";
         else if (report.DXGI_ADAPTER_DESC3.Description.includes("8cx"))
             arch = report.DXGI_ADAPTER_DESC3.Description.slice(report.DXGI_ADAPTER_DESC3.Description.search(/8cx.*/));
 
@@ -686,15 +731,13 @@ function PrepareReportsForTable() {
         return na - nb;
     }
     function IntelCompare(a, b) {
-        // NOTE: many of these are untested / not in the database yet
-        // Also a lot are the same architecture or pretty much the same, Intel is horribly inconsistent
-        const IntelArchList = ["Haswell", "Broadwell", "Skylake", "Apollolake", "Geminilake", "Kabylake",
-            "Coffeelake", "Icelake", "Tigerlake LP", "Elkhartlake", "Jasperlake", "Rocketlake", "Alderlake",
-            "Xe-LP", "Meteorlake", "Arrowlake", "Alchemist", "Lunarlake", "Battlemage", "Celestial", "Druid"];
+        let na = Infinity, nb = Infinity;
+        if (a.startsWith("Gen"))
+            na = parseFloat(a.substring(3));
+        if (b.startsWith("Gen"))
+            nb = parseFloat(b.substring(3));
 
-        let na = IntelArchList.indexOf(a);
-        let nb = IntelArchList.indexOf(b);
-        if (na < 0 && nb < 0) {
+        if (na == Infinity && nb == Infinity) {
             return DeviceIdCompare(a, b);
         }
         return na - nb;
