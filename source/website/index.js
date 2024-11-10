@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[57],{419:(e,n,t)=>{var a=t(480),s=t(600);window.addEventListener("DOMContentLoaded",(function(){s.p(!1),a.TK((e=>{let n=new URL(document.location).searchParams;s.y(e,n.get("ID"))}))}),!1)}},e=>{e(e.s=419)}]);

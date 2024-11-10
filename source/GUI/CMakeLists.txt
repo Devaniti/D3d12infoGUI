@@ -38,21 +38,32 @@ set_target_properties(GUI
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
+file(GLOB_RECURSE HTMLList html/*)
+
+set(CommonFileEmbedArguments python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" ${CMAKE_SOURCE_DIR}/../LICENSE D3d12infoGUI_LICENSE.txt ${CMAKE_CURRENT_SOURCE_DIR}/html .)
+set(CommonFileEmbedDependencies ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_SOURCE_DIR}/../LICENSE ${CMAKE_SOURCE_DIR}/../LICENSE ${HTMLList})
+
+set(CustomFolderEmbedArguments "${D3D12INFO_PATH}/D3d12info.exe" D3d12info.exe "${D3D12INFO_PATH}/D3d12info_preview.exe" D3d12info_preview.exe "${D3D12INFO_PATH}/amd_ags_x64.dll" amd_ags_x64.dll "${D3D12INFO_PATH}/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll "${D3D12INFO_PATH}/D3D12_preview/DirectSR.dll" D3D12_preview/DirectSR.dll "${D3D12INFO_PATH}/LICENSE.txt" D3d12info_LICENSE.txt)
+set(CustomFolderEmbedDependencies ${D3D12INFO_PATH}/D3d12info.exe ${D3D12INFO_PATH}/D3d12info_preview.exe ${D3D12INFO_PATH}/amd_ags_x64.dll ${D3D12INFO_PATH}/D3D12/D3D12Core.dll ${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll ${D3D12INFO_PATH}/LICENSE.txt)
+
+set(BuildFolderEmbedArguments "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe" D3d12info.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe" D3d12info_preview.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll" amd_ags_x64.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/DirectSR.dll" D3D12_preview/DirectSR.dll "${CMAKE_SOURCE_DIR}/external/D3d12info/LICENSE.txt" D3d12info_LICENSE.txt)
+set(BuildFolderEmbedDependencies ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll ${CMAKE_SOURCE_DIR}/external/D3d12info/LICENSE.txt)
+
 if (EMBED_D3D12INFO)
     if (D3D12INFO_PATH)
         # Embed D3d12info from custom folder
         add_custom_command(
             OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/embed.h
-            COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_SOURCE_DIR}/../LICENSE" D3d12infoGUI_LICENSE.txt "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${CMAKE_CURRENT_SOURCE_DIR}/html/Info.svg" Info.svg "${D3D12INFO_PATH}/D3d12info.exe" D3d12info.exe "${D3D12INFO_PATH}/D3d12info_preview.exe" D3d12info_preview.exe "${D3D12INFO_PATH}/amd_ags_x64.dll" amd_ags_x64.dll "${D3D12INFO_PATH}/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll "${D3D12INFO_PATH}/D3D12_preview/DirectSR.dll" D3D12_preview/DirectSR.dll "${D3D12INFO_PATH}/LICENSE.txt" D3d12info_LICENSE.txt
-            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_SOURCE_DIR}/../LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${CMAKE_CURRENT_SOURCE_DIR}/html/Info.svg ${D3D12INFO_PATH}/D3d12info.exe ${D3D12INFO_PATH}/D3d12info_preview.exe ${D3D12INFO_PATH}/amd_ags_x64.dll ${D3D12INFO_PATH}/D3D12/D3D12Core.dll ${D3D12INFO_PATH}/D3D12_preview/D3D12Core.dll ${D3D12INFO_PATH}/LICENSE.txt
+            COMMAND ${CommonFileEmbedArguments} ${CustomFolderEmbedArguments}
+            DEPENDS ${CommonFileEmbedDependencies} ${CustomFolderEmbedDependencies}
         )
     else()
         # Build D3d12info and embed it
         add_dependencies(GUI D3d12info D3d12info_preview)
         add_custom_command(
             OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/embed.h
-            COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_SOURCE_DIR}/../LICENSE" D3d12infoGUI_LICENSE.txt "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${CMAKE_CURRENT_SOURCE_DIR}/html/Info.svg" Info.svg "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe" D3d12info.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe" D3d12info_preview.exe "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll" amd_ags_x64.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll" D3D12/D3D12Core.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll" D3D12_preview/D3D12Core.dll "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/DirectSR.dll" D3D12_preview/DirectSR.dll "${CMAKE_SOURCE_DIR}/external/D3d12info/LICENSE.txt" D3d12info_LICENSE.txt
-            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_SOURCE_DIR}/../LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${CMAKE_CURRENT_SOURCE_DIR}/html/Info.svg ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3d12info_preview.exe ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/amd_ags_x64.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12/D3D12Core.dll ${CMAKE_BINARY_DIR}/bin/$<CONFIG>/D3D12_preview/D3D12Core.dll ${CMAKE_SOURCE_DIR}/external/D3d12info/LICENSE.txt
+            COMMAND ${CommonFileEmbedArguments} ${BuildFolderEmbedArguments}
+            DEPENDS ${CommonFileEmbedDependencies} ${BuildFolderEmbedDependencies}
         )
     endif()
 else()
@@ -61,7 +72,7 @@ else()
     add_dependencies(GUI D3d12info D3d12info_preview)
     add_custom_command(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/embed.h
-        COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py" "${CMAKE_CURRENT_BINARY_DIR}/embed.h" "${CMAKE_SOURCE_DIR}/../LICENSE" D3d12infoGUI_LICENSE.txt "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html" Report.html "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js" Report.js "${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css" Report.css "${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg" Search.svg "${CMAKE_CURRENT_SOURCE_DIR}/html/Info.svg" Info.svg
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/private/embed.py ${CMAKE_SOURCE_DIR}/../LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.html ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.js ${CMAKE_CURRENT_SOURCE_DIR}/html/Report.css ${CMAKE_CURRENT_SOURCE_DIR}/html/Search.svg ${CMAKE_CURRENT_SOURCE_DIR}/html/Info.svg
+        COMMAND ${CommonFileEmbedArguments}
+        DEPENDS ${CommonFileEmbedDependencies}
     )
 endif()
