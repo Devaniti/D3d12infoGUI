@@ -1,3 +1,8 @@
+@font-face {
+    font-family: SourceCodePro;
+    src: url(../fonts/SourceCodePro-Regular.ttf);
+}
+
 body {
     min-width: 70em;
     max-width: 132em;
@@ -14,7 +19,7 @@ fieldset {
     border-color: #a7a7a7;
     margin: 0.9em 0;
     font-size: 1.0em;
-    font-family: "Courier New", Courier, monospace;
+    font-family: "SourceCodePro", "Courier New", Courier, monospace;
     box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
     table-layout: fixed;
     word-wrap: break-word;
@@ -184,7 +189,8 @@ a:hover {
     font-size: 1.2em;
     display: flex;
     border-width: 2px;
-    border-style: hidden;
+    border-style: solid;
+    border-color: #e6e5e5;
     border-collapse: collapse;
     border-radius: 4px;
     background-color: #e6e5e5;
@@ -197,4 +203,65 @@ a:hover {
 
 .flexRight {
     margin-left: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #e1e1e1;
+        background-color: #1e1e1e;
+    }
+    table, fieldset {
+        border-color: #8c8c8c;
+        background-color: #2d2d2d;
+    }
+    tr:nth-of-type(odd) {
+        background-color: #262626;
+    }
+    tr:nth-of-type(1) {
+        background-color: #262626;
+    }
+    td {
+        border-color: #FFFFFF33;
+    }
+    td:nth-of-type(even) {
+        background-color: #00000020;
+    }
+    button {
+        background-color: #005b00;
+    }
+    button:disabled {
+        background-color: #464646;
+    }
+    .clickableRow:hover {
+        background-color: #4d4d4d;
+    }
+    .clickableCell:hover {
+        background-color: #4d4d4d;
+    }
+    .searchBar {
+        color: #ffffff;
+        border-color: #7f7f7f;
+        background-color: #232323;
+    }
+    .tooltip .tooltiptext {
+        background-color: #232323;
+        color: #ffffff;
+        border-color: #7f7f7f;
+    }
+    a {
+        color: #64b2ff;
+    }
+    a:hover {
+        color: #b3d9ff;
+    }
+    .header {
+        background-color: #232323;
+        border-style: solid;
+        border-collapse: collapse;
+        border-color: #474747;
+    }
+    .icon {
+        filter: invert(1);
+    }
+
 }
