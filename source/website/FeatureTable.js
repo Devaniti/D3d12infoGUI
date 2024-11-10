@@ -945,7 +945,15 @@ function UpdateTable() {
                         if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier" && featureValue == undefined) {
                             featureValue = newestReportContainer.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier");
                         }
-
+                        // GPU Upload Heap support depends on BIOS settings / Windows version, so if any report is true we take that one
+                        else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported") {
+                            for (let r of ReportsPerArch.get(archName)) {
+                                if (r.D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported) {
+                                    featureValue = 1;
+                                    break;
+                                }
+                            }
+                        }
                         let td = document.createElement("td");
                         td.append(MakeHumanReadableForTable(featureName, featureValue));
                         featureRow.appendChild(td);
