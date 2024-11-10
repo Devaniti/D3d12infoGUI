@@ -7,6 +7,11 @@
         :root {
             color: rgb(212, 212, 212);
             background-color: rgb(30, 30, 30);
+            font-family: sans-serif;
+        }
+
+        a {
+            color: #4e94de;
         }
 
         .Microsoft {
@@ -45,39 +50,71 @@
             background-color: #262626;
         }
             tbody > tr:nth-of-type(even) > th:first-of-type {
-                background-color: #2E2E2E;
+                background-color: #2E2E2E; 
             }
-            tbody > tr:nth-of-type(odd) > th:first-of-type {
-                background-color: #262626;
-            }
+
+        tbody > tr:nth-of-type(odd) > th:first-of-type {
+            background-color: #262626;
+        }
+
         colgroup {
             border-inline-end: 2px solid #FFFFFF66;
         }
+
         /* sticky table headers */
         th {
             position: sticky;
         }
-        /* first column sticks to the left of the screen*/
+
+        /* column of headers with feature names */
         tbody > tr > th:first-of-type {
-            left: -1px;
+            left: -1px; /* first column sticks to the left of the screen*/
         }
-        /* first row sticks to the top of the screen */
+        /* row of headers with vendor names */
         thead > tr:first-of-type > th {
-            top: -1px;
+            top: -1px; /* first row sticks to the top of the screen */
             z-index: 1; /* draw above first column */
             border-bottom: none;
         }
-        /* second row sticks right below first row */
+        /* row of headers with architecture names */
         thead > tr:nth-of-type(2) > th {
-            top: 20px;
+            top: 20px; /* second row sticks right below first row */
             z-index: 2;
             border-top: none;
             border-bottom: 2px solid #FFFFFF66;
+            padding-inline: 5px; /* separate arch names a little */
         }
 
         #FilterContainer {
             display: flex;
         }
+
+        .table_tooltip_positioning {
+            position: relative;
+        }
+
+        .table_tooltiptext {
+            visibility: hidden;
+            background-color: #000000;
+            text-align: center;
+            border-radius: 0.4em;
+            border-color: #7f7f7f;
+            border-style: solid;
+            border-width: 0.1em;
+            padding: 0.3em;
+            margin: 0 0.2em;
+            position: absolute;
+            z-index: 3;
+        }
+
+        .table_tooltip:hover .table_tooltiptext {
+            visibility: visible;
+        }
+
+        .white_space_pre {
+            white-space: pre;
+        }
+
     </style>
 </head>
 <body>

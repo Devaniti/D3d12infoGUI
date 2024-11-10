@@ -533,6 +533,7 @@ let ArchsPerVendor = {
     Qualcomm: new Set(),
 };
 let ReportsPerArch = new Map();
+let AdapterNamesPerArch = new Map();
 let NewestDriverReportPerArch = new Map();
 let UndefinedReports = [];
 
@@ -543,6 +544,7 @@ function ClearTableReportData() {
     ArchsPerVendor.Intel.clear();
     ArchsPerVendor.Qualcomm.clear();
     ReportsPerArch.clear();
+    AdapterNamesPerArch.clear();
     NewestDriverReportPerArch.clear();
     UndefinedReports = [];
 }
@@ -689,6 +691,11 @@ function SpliceReportByArchAndVendor(reportContainer)
             ReportsPerArch.get(arch).push(report);
         else
             ReportsPerArch.set(arch, [report]);
+
+        if (AdapterNamesPerArch.has(arch))
+            AdapterNamesPerArch.get(arch).add(report.DXGI_ADAPTER_DESC3.Description);
+        else
+            AdapterNamesPerArch.set(arch, new Set([report.DXGI_ADAPTER_DESC3.Description]));
     }
 }
 
@@ -761,6 +768,69 @@ function PrepareReportsForTable() {
     SortSet(ArchsPerVendor.Qualcomm, DeviceIdCompare);
 }
 
+const DefaultTooltipOptions = {
+    alignOutsideHorizontal: false,
+    alignOutsideVertical: false,
+    preferTowardsBottom: false,
+    preserveParentPositionCSS: false,
+};
+
+// Use alignOutside* and preferTowardsBottom to position the tooltip next to the element on the respective side
+// to prevent issues with tooltips disappearing below other elements with higher effective z-index than the parent.
+function AddTooltipForTable(parent, text, options_param)
+{
+    // JS is bad at interfaces, so we copy the default options and then individually assign them if the passed in options object has the same property
+    let options = Object.assign({}, DefaultTooltipOptions);
+    for (let [key, value] of Object.entries(options)) {
+        if (options_param.hasOwnProperty(key))
+            options[key] = options_param[key];
+    }
+
+    parent.classList.add("table_tooltip");
+    if (!options.preserveParentPositionCSS)
+        parent.classList.add("table_tooltip_positioning");
+
+    const tooltipTextElement = document.createElement("span");
+    tooltipTextElement.className = "table_tooltiptext white_space_pre";
+    tooltipTextElement.textContent = text;
+    parent.appendChild(tooltipTextElement);
+
+    let positionTooltipFn = (event) => {
+        let rect = tooltipTextElement.getBoundingClientRect();
+        let viewportHeight = window.visualViewport.height;
+        let viewportWidth = window.visualViewport.width;
+        let style = "";
+        let alignHorz = options.alignOutsideHorizontal ? "100%" : "0";
+        let alignVert = options.alignOutsideVertical ? "calc(100% + 4px)" : "0";
+        // should we put this in CSS classes instead of element style?
+        if (rect.right > viewportWidth) {
+            style = `left: auto; right: ${alignHorz};`; // go towards left side
+        } else {
+            style = `left: ${alignHorz}; right: auto;`; // go towards right side
+        }
+        if (options.preferTowardsBottom) {
+            if (rect.bottom > viewportHeight && rect.top - rect.height > 0) {
+                style += `; top: auto; bottom: ${alignVert};`; // go towards top
+            } else {
+                style += `; top: ${alignVert}; bottom: auto;`; // go towards bottom
+            }
+        }
+        else {
+            if (rect.top < 0 && rect.bottom + rect.height < viewportHeight) {
+                style += `; top: ${alignVert}; bottom: auto;`; // go towards bottom
+            } else {
+                style += `; top: auto; bottom: ${alignVert};`; // go towards top
+            }
+        }
+        tooltipTextElement.style = style;
+    };
+
+    parent.addEventListener("mouseenter", positionTooltipFn, { passive: true });
+    parent.addEventListener("mouseleave", positionTooltipFn, { passive: true });
+
+    return tooltipTextElement; // in case you want to do something further with it
+}
+
 function UpdateTable() {
 
     let table = document.getElementById("archtable");
@@ -798,9 +868,21 @@ function UpdateTable() {
                 thArch.className = vendor;
                 thArch.scope = "col";
                 headerRowArch.appendChild(thArch);
+
+                let tooltipText = "";
+                for (let adapterName of AdapterNamesPerArch.get(a)) {
+                    tooltipText += adapterName + "\n";
+                }
+
+                AddTooltipForTable(thArch, tooltipText,
+                    {
+                        alignOutsideVertical: true,
+                        preferTowardsBottom: true,
+                        preserveParentPositionCSS: true /* don't override sticky! */
+                    });
             }
         }
-               
+
         thead.appendChild(headerRowVendor);
         thead.appendChild(headerRowArch);
         table.appendChild(thead);
@@ -810,17 +892,23 @@ function UpdateTable() {
     {
         let tbody = document.createElement("tbody");
 
-        for (let [featureName, featureShortName] of Object.entries(TableFeaturesShortNames)) {
-            // TODO: add tooltips with the full D3D feature field name?
+        for (let [featureName, featureShortName] of Object.entries(TableFeaturesShortNames))
+        {
             let featureRow = document.createElement("tr");
+
             let featureHeader = document.createElement("th");
-            featureHeader.append(TableShowAPIFeatureNames.checked ? featureName : featureShortName);
+            featureHeader.append(TableShowAPIFeatureNames.checked && !featureName.startsWith("Table") ? featureName : featureShortName);
             featureHeader.scope = "row";
+            if (!TableShowAPIFeatureNames.checked && !featureName.startsWith("Table"))
+                AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
             featureRow.appendChild(featureHeader);
+
             // TODO: merge columns that are the same across GPUs for the same vendor? maybe a bit too much
             for (let [vendor, archs] of Object.entries(ArchsPerVendor)) {
                 for (let archName of archs) {
+
                     let newestDriverReport = NewestDriverReportPerArch.get(archName);
+
                     if (featureName == "TableNumReports") {
                         let td = document.createElement("td");
                         td.append(ReportsPerArch.get(archName).length);
