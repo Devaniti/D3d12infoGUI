@@ -966,6 +966,7 @@ function UpdateTable() {
 
                         let featureValue = newestReportContainer.GetField(featureName);
                         let displayRawFeatureValue = false;
+                        let tooltipText = "";
 
                         // fix up reports with preview SDK that use the experimental options field instead of OPTIONS12 for work graphs
                         if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier" && featureValue == undefined) {
@@ -985,9 +986,17 @@ function UpdateTable() {
                             featureValue = "N/A";
                             displayRawFeatureValue = true;
                         }
+                        // Pascal and Turing 16 have (software emulated) raytracing support, but only if the card has 6GB VRAM or more
+                        else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && (archName == "Pascal" || archName == "Turing 16")) {
+                            featureValue = TableTrueFalseMapping["1"] + "/" + TableTrueFalseMapping["0"];
+                            displayRawFeatureValue = true;
+                            tooltipText = "Pascal and Turing 16 have (software emulated) raytracing support, but only if the card has 6GB VRAM or more";
+                        }
                         let td = document.createElement("td");
                         td.append(displayRawFeatureValue ? featureValue : MakeHumanReadableForTable(featureName, featureValue));
                         featureRow.appendChild(td);
+                        if (tooltipText !== "")
+                            AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true });
                     }
                 }
                 tbody.appendChild(featureRow);
