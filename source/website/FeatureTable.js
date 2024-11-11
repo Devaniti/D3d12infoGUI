@@ -942,7 +942,7 @@ function UpdateTable() {
                     else if (featureName == "TableReportUsed") {
                         let td = document.createElement("td");
                         let link = document.createElement("a");
-                        link.href = `https://d3d12infodb.boolka.dev/ID.html?ID=${newestDriverReport.ID}`;
+                        link.href = `ID.html?ID=${newestDriverReport.ID}`;
                         link.append(newestDriverReport.ID);
                         td.appendChild(link);
                         featureRow.appendChild(td);
