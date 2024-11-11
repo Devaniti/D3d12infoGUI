@@ -925,7 +925,7 @@ function UpdateTable() {
             featureHeader.append(TableShowAPIFeatureNames.checked && !featureName.startsWith("Table") ? featureName : featureShortName);
             featureHeader.scope = "row";
             if (!TableShowAPIFeatureNames.checked && !featureName.startsWith("Table"))
-                AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
+                AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true, preserveParentPositionCSS: true /* don't override sticky! */ });
             featureRow.appendChild(featureHeader);
 
             // TODO: merge columns that are the same across GPUs for the same vendor? maybe a bit too much
