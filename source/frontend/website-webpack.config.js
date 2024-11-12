@@ -1,8 +1,10 @@
+const fs = require('fs')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
+    assets: './website-assets-webpack.js',
     shared: './website-shared-webpack.js',
     index: {
       import:'./website-index-webpack.js',
@@ -10,6 +12,10 @@ module.exports = {
     },
     id: {
       import:'./website-id-webpack.js',
+      dependOn: 'shared'
+    },
+    feature_table: {
+      import:'./website-feature-table-webpack.js',
       dependOn: 'shared'
     }
   },
@@ -26,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        use: 'html-loader',
+        use: ['html-loader', 'template-ejs-loader'],
       },
       {
         test: /\.svg$/,
@@ -48,17 +54,22 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './assets/html_website/index.html',
       filename: 'index.html',
-      chunks: ['shared', 'index']
+      chunks: ['assets', 'shared', 'index']
     }),
     new HtmlWebpackPlugin({
       template: './assets/html_website/id.html',
       filename: 'id.html',
-      chunks: ['shared', 'id']
+      chunks: ['assets', 'shared', 'id']
     }),
     new HtmlWebpackPlugin({
       template: './assets/html_website/about.html',
       filename: 'about.html',
-      chunks: ['shared']
+      chunks: ['assets']
+    }),
+    new HtmlWebpackPlugin({
+      template: './assets/html_website/feature_table.html',
+      filename: 'feature_table.html',
+      chunks: ['assets', 'shared', 'feature_table']
     }),
   ]
 }

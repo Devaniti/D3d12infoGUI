@@ -1,7 +1,7 @@
-import * as Server from "./server.mjs"
 import * as HTML from "./html.mjs"
 import * as Constants from "./constants.mjs"
 import * as Properties from "./properties.mjs"
+import * as Globals from './globals.mjs';
 
 let SingleReport = false
 let Reports = []
@@ -181,7 +181,7 @@ function UpdateSearchBarProperties() {
     searchBar.placeholder = "Search Properties"
     searchBar.classList.add("searchBar")
     searchBar.addEventListener('input', function (e) {
-        PropertiesSearchString = searchBar.value
+        Globals.PropertiesSearchString = searchBar.value
         UpdateReport()
     })
     searchBarContainer.appendChild(searchBar)

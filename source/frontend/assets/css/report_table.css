@@ -1,0 +1,205 @@
+.ReportTable {
+    min-width: 70em;
+    max-width: 132em;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-family: "SourceCodePro", "Courier New", Courier, monospace;
+}
+
+table,
+fieldset {
+    border: 2px solid;
+    border-collapse: collapse;
+    border-color: #a7a7a7;
+    margin: 0.9em 0;
+    font-size: 1.0em;
+    box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
+    table-layout: fixed;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+table {
+    width: 100%;
+}
+
+fieldset {
+    float: left;
+    margin: 0.5em 0.5em 0.5em 0.0em;
+    flex: 0 1;
+    white-space: nowrap;
+}
+
+#AdaptersFilterContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+}
+
+tr {
+    width: 100%;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #e6e5e5;
+}
+
+tr:nth-of-type(1) {
+    text-align: center;
+    background-color: #e6e5e5;
+    padding: 0;
+}
+
+td {
+    padding: 2px;
+    border: 1px solid;
+    border-color: #a7a7a7;
+}
+
+td:nth-of-type(even) {
+    background-color: #00000010;
+    width: 10%;
+}
+
+td:nth-of-type(odd) {
+    width: 60%;
+}
+
+button {
+    margin: auto;
+    width: 9.2em;
+    background-color: #029c07;
+    border: none;
+    color: white;
+    padding: 0.3em 0.6em;
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.3em;
+}
+
+button:disabled {
+    background-color: #7c7c7c;
+}
+
+.clickableRow.clickableRow.clickableRow {
+    cursor: pointer;
+}
+
+.clickableRow:hover {
+    background-color: #f4de98;
+}
+
+.clickableCell {
+    cursor: pointer;
+}
+
+.clickableCell:hover {
+    background-color: #f4de98;
+}
+
+.center {
+    text-align: center;
+}
+
+.searchBar {
+    width: 100%;
+    padding: 0.5em;
+    border: 2px solid;
+    border-color: #a7a7a7;
+    border-radius: 4px;
+    font-size: 1.2em;
+    background-image: url('../icons/search.svg');
+    background-position: 0.5em 0.5em;
+    background-repeat: no-repeat;
+    padding-left: 2em;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    border-radius: 0.4em;
+    border-color: #7f7f7f;
+    border-style: solid;
+    border-width: 0.1em;
+    padding: 0.3em;
+    margin: 0 0.2em;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 110%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltipicon {
+    height: 0.9em;
+    margin: 0.05em 0.15em;
+    vertical-align: sub;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    table,
+    fieldset {
+        border-color: #8c8c8c;
+        background-color: #2d2d2d;
+    }
+
+    tr:nth-of-type(odd) {
+        background-color: #262626;
+    }
+
+    tr:nth-of-type(1) {
+        background-color: #262626;
+    }
+
+    td {
+        border-color: #FFFFFF33;
+    }
+
+    td:nth-of-type(even) {
+        background-color: #00000020;
+    }
+
+    button {
+        background-color: #005b00;
+    }
+
+    button:disabled {
+        background-color: #464646;
+    }
+
+    .clickableRow:hover {
+        background-color: #4d4d4d;
+    }
+
+    .clickableCell:hover {
+        background-color: #4d4d4d;
+    }
+
+    .searchBar {
+        color: #ffffff;
+        border-color: #7f7f7f;
+        background-color: #232323;
+    }
+
+    .tooltip .tooltiptext {
+        background-color: #232323;
+        color: #ffffff;
+        border-color: #7f7f7f;
+    }
+}
