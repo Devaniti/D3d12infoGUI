@@ -22,6 +22,13 @@ const databasePath = databaseFolder + 'main.db'
 
 const apiPort = process.env.D3D12INFODB_CUSTOM_PORT ? process.env.D3D12INFODB_CUSTOM_PORT : 50854;
 
+function GetCurrentTimeAsString() {
+    return "" + (new Date()).valueOf()
+}
+
+let startupTime = GetCurrentTimeAsString()
+let databaseModificationTime = startupTime
+
 function isObjectAllowedInDB(inObj) {
     let isAllowed = true;
     database_common.submitRequiredProperites.forEach(p => {
@@ -49,12 +56,20 @@ console.log(`Opened database ${databasePath}`)
 
 upgrade.upgradeDatabase(db)
 
+let latestReportID = 0
+let latestReportQuery = db.prepare("SELECT ID FROM Submissions ORDER BY ID DESC LIMIT 1").get()
+if (latestReportQuery) {
+    latestReportID = latestReportQuery.ID
+    console.log(`Latest report ID is ${latestReportID}`)
+}
+
 console.log("Database is ready")
 
 api.use(express.json())
 api.use(express.urlencoded({ extended: true }))
 api.use(cors())
 api.use(compression())
+api.disable('etag')
 
 api.get('/', (req, res) => {
     res.send('Server is up')
@@ -68,10 +83,25 @@ api.get('/get_submission', (req, res) => {
         return
     }
 
+    if (isNaN(req.query.ID)) {
+        res.status(400)
+        res.send('ID is not a number')
+        return
+    }
+    
+    let etag = req.query.ID > latestReportID ? "0" : startupTime
+    if (req.headers['if-none-match'] == etag) {
+        res.status(304)
+        res.send()
+        return
+    }
+
     try {
         let rows = getSubmissionStatement.all([req.query.ID])
         rows = rows.map(database_common.unpackDatabaseObject)
-        res.header("Cache-Control", "public, max-age=300")
+
+        res.header("Cache-Control", "public, max-age=120")
+        res.header("ETag", etag)
         res.send(JSON.stringify(rows))
     }
     catch (e) {
@@ -86,10 +116,19 @@ api.get('/get_submission', (req, res) => {
 
 const getAllSubmissionsStatement = db.prepare("SELECT * FROM Submissions")
 api.get('/get_all_submissions', (req, res) => {
+    let etag = databaseModificationTime
+    if (req.headers['if-none-match'] == etag) {
+        res.status(304)
+        res.send()
+        return
+    }
+
     try {
+
         let rows = getAllSubmissionsStatement.all()
         rows = rows.map(database_common.unpackDatabaseObject)
-        res.header("Cache-Control", "public, max-age=300")
+        res.header("Cache-Control", "public, max-age=120")
+        res.header("ETag", databaseModificationTime)
         res.send(JSON.stringify(rows))
     }
     catch (e) {
@@ -166,6 +205,8 @@ api.post('/post_submission', (req, res) => {
         let info = postSubmissionStatement.run(parameterList)
 
         res.send("" + info.lastInsertRowid)
+        databaseModificationTime = GetCurrentTimeAsString()
+        latestReportID = info.lastInsertRowid
 
         console.log(`Inserted submission ID ${info.lastInsertRowid} - ${newSubmission["DXGI_ADAPTER_DESC3.Description"]}`)
 
