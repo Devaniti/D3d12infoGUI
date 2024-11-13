@@ -829,8 +829,10 @@ function AddTooltipForTable(parent, text, options_param)
 }
 
 function UpdateTable() {
-
-    let table = document.getElementById("archtable");
+    const tableContainer = document.getElementById("FeatureTable");
+    HTML.ClearElement(tableContainer);
+    let table = document.createElement("table");
+    tableContainer.appendChild(table);
     HTML.ClearElement(table);
 
     // construct table header with vendor name in the first row and arch name in the second row
@@ -979,6 +981,12 @@ function UpdateTable() {
 }
 
 function OnLoad() {
+    const tableContainer = document.getElementById("FeatureTable")
+    const textContainer = document.createElement("div")
+    const loadingText = document.createTextNode("Loading. Please wait.")
+    textContainer.appendChild(loadingText)
+    tableContainer.appendChild(textContainer)
+
     Server.GetAllSubmissions((data) => {
         Reports = data;
         PrepareReportsForTable();
