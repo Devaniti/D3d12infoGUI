@@ -731,6 +731,16 @@ function SpliceReportByArchAndVendor(reportContainer)
     }
 }
 
+function IsReportNewer(lhs, rhs) {
+    if (rhs == null)
+        return true;
+    if (lhs.CheckInterfaceSupport.UMDVersion != rhs.CheckInterfaceSupport.UMDVersion)
+        return lhs.CheckInterfaceSupport.UMDVersion > rhs.CheckInterfaceSupport.UMDVersion;
+    if (lhs.Header.Version != rhs.Header.Version)
+        return lhs.Header.Version > rhs.Header.Version;
+    return lhs.ID > rhs.ID;
+}
+
 function PrepareReportsForTable() {
 
     ClearTableReportData();
@@ -744,7 +754,7 @@ function PrepareReportsForTable() {
     {
         let newestReport = null;
         for (let r of reports) {
-            if (!newestReport || r.CheckInterfaceSupport.UMDVersion > newestReport.CheckInterfaceSupport.UMDVersion)
+            if (IsReportNewer(r, newestReport))
                 newestReport = r;
         }
         NewestDriverReportPerArch.set(arch, newestReport);
@@ -917,7 +927,7 @@ function UpdateTable() {
                     else if (featureName == "TableReportUsed") {
                         let td = document.createElement("td");
                         let link = document.createElement("a");
-                        link.href = `id.html?ID=${newestDriverReport.ID}`;
+                        link.href = `ID.html?ID=${newestDriverReport.ID}`;
                         link.append(newestDriverReport.ID);
                         td.appendChild(link);
                         featureRow.appendChild(td);

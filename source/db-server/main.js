@@ -71,6 +71,7 @@ api.get('/get_submission', (req, res) => {
     try {
         let rows = getSubmissionStatement.all([req.query.ID])
         rows = rows.map(database_common.unpackDatabaseObject)
+        res.header("Cache-Control", "public, max-age=300")
         res.send(JSON.stringify(rows))
     }
     catch (e) {
@@ -88,6 +89,7 @@ api.get('/get_all_submissions', (req, res) => {
     try {
         let rows = getAllSubmissionsStatement.all()
         rows = rows.map(database_common.unpackDatabaseObject)
+        res.header("Cache-Control", "public, max-age=300")
         res.send(JSON.stringify(rows))
     }
     catch (e) {
