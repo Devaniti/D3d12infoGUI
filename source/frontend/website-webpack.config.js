@@ -57,8 +57,8 @@ module.exports = {
       chunks: ['assets', 'shared', 'index']
     }),
     new HtmlWebpackPlugin({
-      template: './assets/html_website/id.html',
-      filename: 'id.html',
+      template: './assets/html_website/ID.html',
+      filename: 'ID.html',
       chunks: ['assets', 'shared', 'id']
     }),
     new HtmlWebpackPlugin({
@@ -67,8 +67,8 @@ module.exports = {
       chunks: ['assets']
     }),
     new HtmlWebpackPlugin({
-      template: './assets/html_website/feature_table.html',
-      filename: 'feature_table.html',
+      template: './assets/html_website/FeatureTable.html',
+      filename: 'FeatureTable.html',
       chunks: ['assets', 'shared', 'feature_table']
     }),
   ]
