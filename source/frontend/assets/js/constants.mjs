@@ -1,13 +1,10 @@
-const apiAddress = "https://d3d12infodbapi.boolka.dev"
-const siteAddress = "https://d3d12infodb.boolka.dev"
-
-const TrueFalseMapping =
+export const TrueFalseMapping =
 {
     "0": "false",
     "1": "true"
 }
 
-const NVAPI_Status =
+export const NVAPI_Status =
 {
     "0": "OK",
     "-3": "NO_IMPLEMENTATION",
@@ -16,7 +13,7 @@ const NVAPI_Status =
     "-160": "SETTING_NOT_FOUND",
 }
 
-const DXGI_FORMAT =
+export const DXGI_FORMAT =
 {
     "0": "DXGI_FORMAT_UNKNOWN",
     "1": "DXGI_FORMAT_R32G32B32A32_TYPELESS",
@@ -141,7 +138,7 @@ const DXGI_FORMAT =
     "134": "DXGI_FORMAT_SAMPLER_FEEDBACK_MIP_REGION_USED_OPAQUE"
 }
 
-const EnumMappings =
+export const EnumMappings =
 {
     "DXGI_ADAPTER_DESC3.GraphicsPreemptionGranularity":
     {
@@ -646,7 +643,26 @@ const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TrueFalseMapping
 }
 
-const BitFlagsMappings =
+export const RenameList = {
+    "Header.D3D12_PREVIEW_SDK_VERSION": "Header.D3D12_SDK_VERSION"
+}
+
+export const ListHeader = [
+    "ID",
+    "DXGI_ADAPTER_DESC3.Description",
+    "DXGI_ADAPTER_DESC3.VendorId",
+    "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
+    "CheckInterfaceSupport.UMDVersion",
+    "Header.Version",
+    "Header.Using preview Agility SDK"
+]
+
+export const FilterMultichoiceFields = [
+    "DXGI_ADAPTER_DESC3.VendorId",
+    "Header.Using preview Agility SDK"
+]
+
+export const BitFlagsMappings =
 {
     "DXGI_ADAPTER_DESC1.Flags":
     {
@@ -704,14 +720,14 @@ const BitFlagsMappings =
     }
 }
 
-const SuffixMappings =
+export const SuffixMappings =
 {
     "AGSDeviceInfo.coreClock": "MHz",
     "AGSDeviceInfo.memoryClock": "MHz",
     "AGSDeviceInfo.memoryBandwidth": "MB/s",
 }
 
-const VendorIDs =
+export const VendorIDs =
 {
     // PCI IDs
     "0x1002": "AMD/ATI",
@@ -734,7 +750,7 @@ const VendorIDs =
     "MSAY": "Microsoft", // 0x5941534D
 }
 
-const SubsystemVendorIDs =
+export const SubsystemVendorIDs =
 {
     "0x1002": "AMD/ATI",
     "0x1022": "AMD",
@@ -769,7 +785,7 @@ const SubsystemVendorIDs =
     "0x8086": "Intel",
 }
 
-const PropertyHumanReadableNames =
+export const PropertyHumanReadableNames =
 {
     "Header.Program": "Program",
     "Header.Version": "D3d12info Version",
@@ -805,9 +821,9 @@ const PropertyHumanReadableNames =
     "CheckInterfaceSupport.UMDVersion": "Driver Version",
 }
 
-const PropertyTooltips = {
-    "D3D12_SDK_VERSION":"Version of agility SDK used to generate the report",
-    "DXGI_FEATURE_PRESENT_ALLOW_TEARING":"Whether OS supports swapchain presentation with tearing. This is not a GPU capability.",
+export const PropertyTooltips = {
+    "D3D12_SDK_VERSION": "Version of agility SDK used to generate the report",
+    "DXGI_FEATURE_PRESENT_ALLOW_TEARING": "Whether OS supports swapchain presentation with tearing. This is not a GPU capability.",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": "ViewPort and RenderTarget array index from any shader feeding rasterizer supported without Geometry Shader emulation",
 }
 
@@ -1116,7 +1132,7 @@ const SubPropertiesOrder =
         "DirectSR.OptimalTargetFormat"
     ]
 
-const PropertiesFilterWhitelist = new Set([
+export const PropertiesFilterWhitelist = new Set([
     "ID",
     "DXGI_ADAPTER_DESC3.Description",
     "AdapterIndex"
@@ -1130,762 +1146,5 @@ function MakeMap(order) {
     return result;
 }
 
-const PropertiesOrderMap = MakeMap(PropertiesOrder)
-const SubPropertiesOrderMap = MakeMap(SubPropertiesOrder)
-
-function RemoveArrayIndex(property) {
-    return property.replace(/\[\d+\]/g, "")
-}
-
-function GetNameBeforeArrayIndex(property) {
-    return property.replace(/\[\d+\].*/, "")
-}
-
-function MakeHumanReadableProperty(property) {
-    if (property in PropertyHumanReadableNames) {
-        return PropertyHumanReadableNames[property]
-    }
-
-    return property
-}
-
-function MakeHumanReadable(property, value) {
-    let effectiveProperty = RemoveArrayIndex(property)
-
-    if (value == null) return value
-
-    if (effectiveProperty in EnumMappings) {
-        return EnumMappings[effectiveProperty][value] ?? `Unknown(${value})`
-    }
-
-    if (effectiveProperty in BitFlagsMappings) {
-        let result = ''
-        let bitCount = 0
-        for (let i = 1; i <= value; i = i << 1) {
-            if (value & i) {
-                bitCount++
-                result += (BitFlagsMappings[effectiveProperty][i] ?? `Unknown(${i})`) + " |\n"
-            }
-        }
-        if (result == '') {
-            result = BitFlagsMappings[effectiveProperty][0] ?? "Unknown"
-        }
-        else {
-            result = result.substring(0, result.length - 3)
-        }
-        result += bitCount > 1 ? "\n" : " "
-        result += `(0x${Number(value).toString(16)})`
-        return result
-    }
-
-    if (effectiveProperty in SuffixMappings) {
-        return value + SuffixMappings[effectiveProperty]
-    }
-
-    switch (effectiveProperty) {
-        case "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion":
-        case "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion":
-            {
-                return (value / 100).toFixed(2)
-            }
-        // WORD sized hex number representing Vendor ID
-        case "DXGI_ADAPTER_DESC3.VendorId":
-        case "AGSDeviceInfo.vendorId":
-        case "VkPhysicalDeviceProperties.vendorID":
-        case "Intel GPUDetect::GPUData.VendorId":
-            {
-                let decodedValue;
-                if (value <= 0xFFFF) {
-                    // PCI ID codepath
-                    let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
-                    decodedValue = "0x" + ZeroPad(Number(value).toString(16), 4)
-                } else {
-                    // ACPI ID codepath
-                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24) & 0xFF);
-                    decodedValue = ToTextID(value)
-                }
-                if (VendorIDs[decodedValue])
-                    return `${VendorIDs[decodedValue]} (${decodedValue})`
-                else
-                    return `Unknown (${decodedValue})`
-            }
-        // DWORD sized hex number representing Subsystem ID
-        case "DXGI_ADAPTER_DESC3.SubSysId":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pSubSystemId":
-            {
-                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
-                let susbystemVendorID = "0x" + ZeroPad(Number(value & 0xFFFF).toString(16), 4)
-                let hexValue = "0x" + ZeroPad(Number(value).toString(16), 8)
-                if (SubsystemVendorIDs[susbystemVendorID])
-                    return `${SubsystemVendorIDs[susbystemVendorID]} (${hexValue})`
-                else
-                    return hexValue
-            }
-        // BYTE sized hex number
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosOEMRevision":
-            {
-                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
-                return "0x" + ZeroPad(Number(value).toString(16), 2)
-            }
-        // WORD sized hex number
-        case "DXGI_ADAPTER_DESC3.DeviceId":
-        case "DXGI_ADAPTER_DESC3.Revision":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pRevisionId":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId":
-        case "AGSDeviceInfo.deviceId":
-        case "AGSDeviceInfo.revisionId":
-        case "Intel GPUDetect::GPUData.deviceID":
-        case "VkPhysicalDeviceProperties.driverVersion":
-        case "VkPhysicalDeviceProperties.deviceID":
-            {
-                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
-                return "0x" + ZeroPad(Number(value).toString(16), 4)
-            }
-        // DWORD sized hex number
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosRevision":
-        case "Intel GPUDetect::GPUData.extensionVersion":
-            {
-                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
-                return "0x" + ZeroPad(Number(value).toString(16), 8)
-            }
-        // 32 bit AMD AGS encoded version
-        case "Header.agsGetVersionNumber":
-            {
-                let a = BigInt(value)
-                return `${(a >> 22n) & 1023n}.${(a >> 12n) & 1023n}.${a & 4095n}`
-            }
-        // 64 bit encoded version
-        case "CheckInterfaceSupport.UMDVersion":
-            {
-                let a = BigInt(value)
-                return `${(a >> 48n) & 65535n}.${(a >> 32n) & 65535n}.${(a >> 16n) & 65535n}.${a & 65535n}`
-            }
-        // KiB to human readable
-        case "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPhysicalFrameBufferSize":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetVirtualFrameBufferSize":
-            value *= 1024 // Convert to bytes
-        // Then fallthrough to
-        // Bytes to human readable
-        case "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys":
-        case "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPageFile":
-        case "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalVirtual":
-        case "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].Budget":
-        case "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_LOCAL].AvailableForReservation":
-        case "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL].Budget":
-        case "DXGI_QUERY_VIDEO_MEMORY_INFO[DXGI_MEMORY_SEGMENT_GROUP_NON_LOCAL].AvailableForReservation":
-        case "DXGI_ADAPTER_DESC3.DedicatedVideoMemory":
-        case "DXGI_ADAPTER_DESC3.DedicatedSystemMemory":
-        case "DXGI_ADAPTER_DESC3.SharedSystemMemory":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize":
-        case "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize":
-        case "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes":
-        case "AGSDeviceInfo.localMemoryInBytes":
-        case "AGSDeviceInfo.sharedMemoryInBytes":
-        case "Intel GPUDetect::GPUData.videoMemory":
-        case "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - rdmaHeapSize":
-            {
-                const prefixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
-                let a = Number(value)
-                let prefixIndex = 0
-                while (a > 1024) {
-                    a /= 1024
-                    ++prefixIndex
-                }
-                a = a.toFixed(2)
-                return a + prefixes[prefixIndex]
-            }
-        case "DirectSR.OptimizationRankings":
-            {
-                return value.split(", ").map(e => {
-                    switch (e) {
-                        case "0": return "DSR_OPTIMIZATION_TYPE_BALANCED"
-                        case "1": return "DSR_OPTIMIZATION_TYPE_HIGH_QUALITY"
-                        case "2": return "DSR_OPTIMIZATION_TYPE_MAX_QUALITY"
-                        case "3": return "DSR_OPTIMIZATION_TYPE_HIGH_PERFORMANCE"
-                        case "4": return "DSR_OPTIMIZATION_TYPE_MAX_PERFORMANCE"
-                        case "5": return "DSR_OPTIMIZATION_TYPE_POWER_SAVING"
-                        case "6": return "DSR_OPTIMIZATION_TYPE_MAX_POWER_SAVING"
-                        default: return `Unknown(${e})`
-                    }
-                }).join(", ")
-            }
-    }
-
-    if (Array.isArray(value))
-        return value.join(", ")
-
-    return value
-}
-
-class ReportContainer {
-    static #renameList = new Map([
-        ["Header.D3D12_PREVIEW_SDK_VERSION", "Header.D3D12_SDK_VERSION"]
-    ])
-
-    #originalReport = {}
-    #fields = []
-    #fieldsMap = {}
-
-    #import(data) {
-        this.#originalReport = data
-        let dest = this.#fields
-        function flatten(obj, prefix) {
-            if (typeof (obj) == "object" && !Array.isArray(obj)) {
-                for (const property in obj) {
-                    let newPrefix = prefix
-                    if (newPrefix != "") newPrefix += "."
-                    newPrefix += property
-                    flatten(obj[property], newPrefix)
-                }
-            }
-            else if (Array.isArray(obj)) {
-                // if all elements of array are strings, then join them
-                if (obj.every(e => typeof e != "object")) {
-                    dest.push({ name: prefix, value: obj.join(", ") })
-                }
-                else {
-                    for (let i = 0; i < obj.length; ++i) {
-                        flatten(obj[i], `${prefix}[${i}]`)
-                    }
-                }
-            }
-            else if (typeof obj == "boolean") {
-                dest.push({ name: prefix, value: +obj })
-            }
-            else {
-                dest.push({ name: prefix, value: obj })
-            }
-        }
-        flatten(data, "")
-    }
-
-    #patchData() {
-        for (const e of this.#fields) {
-            if (ReportContainer.#renameList.has(e.name)) {
-                e.name = ReportContainer.#renameList.get(e.name)
-            }
-        }
-
-        for (const e of this.#fields) {
-            switch (e.name) {
-                case "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
-                    {
-                        for (const e2 of this.#fields) {
-                            if (e2.name == "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id") {
-                                e.value += e2.value
-                                break
-                            }
-                        }
-                    }
-                    break
-            }
-        }
-    }
-
-    #reorderFields() {
-        function getPropertyIndex(a) {
-            let reorderName = GetNameBeforeArrayIndex(a.name)
-            let result = PropertiesOrderMap.get(reorderName) ?? Infinity
-            if (result == Infinity) console.log(`No order for ${a.name}`)
-            return result
-        }
-
-        function getSubPropertyIndex(a) {
-            let reorderName = RemoveArrayIndex(a.name)
-            let result = SubPropertiesOrderMap.get(reorderName) ?? Infinity
-            if (result == Infinity) console.log(`No order for ${a.name}`)
-            return result
-        }
-
-        this.#fields = this.#fields.sort((a, b) => {
-            let aIndex = getPropertyIndex(a)
-            let bIndex = getPropertyIndex(b)
-
-            if (aIndex != bIndex) {
-                return aIndex - bIndex
-            }
-
-            if (aIndex == bIndex) {
-                // Extract the numeric parts (if any)
-                const aNum = parseInt(a.name.match(/\d+/), 10) || 0;
-                const bNum = parseInt(b.name.match(/\d+/), 10) || 0;
-                // Compare the numeric parts
-                if (aNum !== bNum) {
-                    return aNum - bNum;
-                }
-
-                // Compare sub properties
-                aIndex = getSubPropertyIndex(a)
-                bIndex = getSubPropertyIndex(b)
-                if (aIndex != bIndex) {
-                    return aIndex - bIndex
-                }
-
-                // Compare the full strings
-                return a.name.localeCompare(b.name)
-            }
-
-            return aIndex - bIndex
-        })
-    }
-
-    #initializeMap() {
-        for (const e of this.#fields) {
-            this.#fieldsMap[e.name] = e.value
-        }
-    }
-
-    constructor(data) {
-        this.#import(data)
-        this.#patchData()
-        this.#reorderFields()
-        this.#initializeMap()
-    }
-
-    *[Symbol.iterator]() {
-        for (const field of this.#fields) {
-            yield field;
-        }
-    }
-
-    HumanReadable(filterCallback) {
-        class HumanReadableObj {
-            constructor(fields, filterCallback) {
-                this.fields = fields;
-                this.filterCallback = filterCallback;
-            }
-
-            *[Symbol.iterator]() {
-                for (const field of this.fields) {
-                    if (this.filterCallback(field.name, field.value)) {
-                        yield { name: humanReadableName, value: humanReadableValue }
-                    }
-                }
-            }
-        }
-
-        return new HumanReadableObj(this.#fields, filterCallback);
-    }
-
-    GetField(field) {
-        return this.#fieldsMap[field]
-    }
-
-    GetOriginalReport() {
-        return this.#originalReport
-    }
-}
-
-function ClearElement(element) {
-    while (element.lastElementChild) {
-        element.removeChild(element.lastElementChild)
-    }
-}
-
-function FilterField(name, value) {
-    humanReadableName = MakeHumanReadableProperty(name)
-    humanReadableValue = MakeHumanReadable(name, value)
-    let filterString = PropertiesSearchString.toLocaleLowerCase()
-    return filterString == ""
-        || PropertiesFilterWhitelist.has(name)
-        || name.toString().toLowerCase().includes(filterString)
-        || humanReadableName.toString().toLowerCase().includes(filterString)
-        || value.toString().toLowerCase().includes(filterString)
-        || humanReadableValue.toString().toLowerCase().includes(filterString)
-}
-
-// End of shared between GUI and website code
-
-const SubmissionIDs = [[], []]
-
-// 0 - Retail, 1 - Preview
-let RetailIndex = 0
-let ReportIndex = 0
-
-let PreviewAvailable = false
-let Headers = []
-let Adapters = []
-
-let PropertiesSearchString = ""
-
-function HaveUnsubmittedReports() {
-    return SubmissionIDs.some(e => e.some(e => e == -1))
-}
-
-function IsPreviewAvailable() {
-    return Adapters.length > 1
-}
-
-function IterateAdapters(callback) {
-    for (let i = 0; i < Adapters.length; ++i) {
-        for (let j = 0; j < Adapters[i].length; ++j) {
-            callback(i, j, Adapters[i][j])
-        }
-    }
-}
-
-function InitReportData() {
-    Headers = reports.map(e => {
-        return new ReportContainer({ "Header": e.Header, "SystemInfo": e.SystemInfo })
-    })
-    Adapters = reports.map(e => e.Adapters.map(e => new ReportContainer(e)))
-}
-
-function AddTooltip(field, cell)
-{
-    const tooltipText = PropertyTooltips[field]
-    if (tooltipText == null)
-    {
-        return
-    }
-
-    cell.className = "tooltip";
-    const tooltipTextElement = document.createElement("span")
-    tooltipTextElement.className = "tooltiptext";
-    tooltipTextElement.textContent = tooltipText;
-    cell.appendChild(tooltipTextElement)
-}
-
-function AddTooltipIcon(field, cell)
-{
-    if (PropertyTooltips[field] == null)
-    {
-        return
-    }
-
-    const tooltipIcon = document.createElement("img")
-    tooltipIcon.src = "Info.svg"
-    tooltipIcon.alt = "Info"
-    tooltipIcon.className = "tooltipicon"
-    cell.appendChild(tooltipIcon)
-}
-
-function WriteObjectToTable(obj, table) {
-    for (const e of obj.HumanReadable(FilterField)) {
-        const row = document.createElement("tr")
-
-        const cell0 = document.createElement("td")
-        AddTooltip(e.name, cell0)
-        const cell0Text = document.createTextNode(e.name)
-        cell0.appendChild(cell0Text)
-        AddTooltipIcon(e.name, cell0)
-        row.appendChild(cell0)
-
-        const cell1 = document.createElement("td")
-        const cell1Text = document.createTextNode(e.value)
-        cell1.appendChild(cell1Text)
-        row.appendChild(cell1)
-
-        table.appendChild(row)
-    }
-}
-
-function PrepareReportInternal(prefix, obj, filter) {
-    let result = {}
-    for (const property in obj) {
-        if (typeof obj[property] === 'object' && !Array.isArray(obj[property])) {
-            let subResult = PrepareReportInternal(`${prefix}${property}.`, obj[property], filter)
-            if (Object.keys(subResult).length > 0) {
-                result[property] = subResult;
-            }
-        } else {
-            if (filter(`${prefix}${property}`)) {
-                result[property] = obj[property];
-            }
-        }
-    }
-    return result
-}
-
-function PrepareReport(header, report, filter) {
-    const mergedObject = { ...header, ...report };
-    const filteredReport = PrepareReportInternal("", mergedObject, filter)
-    return JSON.stringify(filteredReport)
-}
-
-function PrivacyFilter(property) {
-    let propertyLower = property.toLowerCase()
-    if (propertyLower.includes("uuid") || propertyLower.includes("luid")) {
-        return false
-    }
-    return true
-}
-
-function IsSubmittedFilter(property) {
-    switch (property) {
-        case "Header.Version":
-        case "Header.Using preview Agility SDK":
-        case "SystemInfo.OS Info.Windows version":
-        case "SystemInfo.D3D12EnableExperimentalFeatures":
-        case "DXGI_ADAPTER_DESC3.Description":
-        case "DXGI_ADAPTER_DESC3.VendorId":
-        case "DXGI_ADAPTER_DESC3.DeviceId":
-        case "DXGI_ADAPTER_DESC3.SubSysId":
-        case "DXGI_ADAPTER_DESC3.Revision":
-        case "DXGI_ADAPTER_DESC3.DedicatedVideoMemory":
-        case "CheckInterfaceSupport.UMDVersion":
-            return true
-        default:
-            return false
-    }
-}
-
-function SubmitReport(header, adapter, onSuccess) {
-    let xhr = new XMLHttpRequest()
-    xhr.open("POST", apiAddress + "/post_submission")
-    xhr.setRequestHeader("Content-Type", "application/json")
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState != 4)
-            return;
-
-        if (xhr.status == 200) {
-            if (onSuccess != null)
-                onSuccess(xhr.responseText)
-        }
-        else {
-            console.log(xhr.responseText);
-        }
-    }
-    xhr.send(PrepareReport(header.GetOriginalReport(), adapter.GetOriginalReport(), PrivacyFilter))
-}
-
-function SubmitAllReports() {
-    let adaptersMap = new Set();
-    IterateAdapters((retailIndex, index, adapter) => {
-        if (SubmissionIDs[retailIndex][index] >= 0)
-            return
-
-        let adapterKey = JSON.stringify([
-            retailIndex,
-            adapter.GetField("DXGI_ADAPTER_DESC3.Description"),
-            adapter.GetField("DXGI_ADAPTER_DESC3.VendorId"),
-            adapter.GetField("DXGI_ADAPTER_DESC3.DeviceId"),
-            adapter.GetField("DXGI_ADAPTER_DESC3.SubSysId"),
-            adapter.GetField("DXGI_ADAPTER_DESC3.Revision"),
-            adapter.GetField("DXGI_ADAPTER_DESC3.DedicatedVideoMemory"),
-            adapter.GetField("CheckInterfaceSupport.UMDVersion")
-        ])
-        if (adaptersMap.has(adapterKey)) {
-            console.log(`Skipping ${retailIndex == 0 ? "retail" : "preview"} adapter ${adapter.GetField("DXGI_ADAPTER_DESC3.Description")} with index ${index}, as it is detected as duplicate`)
-            return
-        }
-        adaptersMap.add(adapterKey);
-
-        SubmissionIDs[retailIndex][index] = null
-        SubmitReport(Headers[retailIndex], adapter, (ID) => {
-            SubmissionIDs[retailIndex][index] = ID;
-            UpdateList();
-        })
-    })
-    UpdateList()
-}
-
-function UpdateList() {
-    const listContainer = document.getElementById("ListContainer")
-
-    ClearElement(listContainer)
-
-    const table = document.createElement("table")
-    const tableBody = document.createElement("tbody")
-
-    const header = [
-        "DXGI_ADAPTER_DESC3.Description",
-        "DXGI_ADAPTER_DESC3.VendorId",
-        "DXGI_ADAPTER_DESC3.DedicatedVideoMemory",
-        "CheckInterfaceSupport.UMDVersion"
-    ]
-
-    if (IsPreviewAvailable())
-        header.push("Header.Using preview Agility SDK")
-
-    header.push("Online link")
-
-    const firstRow = document.createElement("tr")
-    const cell = document.createElement("td")
-    cell.colSpan = header.length
-    let submitButton = document.createElement("button")
-    submitButton.disabled = !HaveUnsubmittedReports();
-    submitButton.onclick = () => {
-        SubmitAllReports()
-    }
-    const buttonText = document.createTextNode("Submit all reports")
-    submitButton.appendChild(buttonText)
-    cell.appendChild(submitButton)
-    firstRow.appendChild(cell)
-    tableBody.appendChild(firstRow)
-
-    const secondRow = document.createElement("tr")
-    header.forEach(collumn => {
-        const cell = document.createElement("td")
-        const cellText = document.createTextNode(MakeHumanReadableProperty(collumn))
-        cell.appendChild(cellText)
-        secondRow.appendChild(cell)
-    })
-    tableBody.appendChild(secondRow)
-
-    IterateAdapters((retailIndex, index, adapter) => {
-        const row = document.createElement("tr")
-        header.forEach(collumn => {
-            const cell = document.createElement("td")
-            switch (collumn) {
-                case "Online link":
-                    switch (SubmissionIDs[retailIndex][index]) {
-                        case null:
-                            {
-                                let cellText = document.createTextNode("Please wait...")
-                                cell.appendChild(cellText)
-                                break;
-                            }
-                        case -1:
-                            {
-                                let link = document.createElement("a")
-                                link.href = "#"
-                                link.textContent = "Submit"
-                                link.onclick = () => {
-                                    SubmissionIDs[retailIndex][index] = null;
-                                    UpdateList();
-                                    SubmitReport(Headers[retailIndex], adapter, (ID) => {
-                                        SubmissionIDs[retailIndex][index] = ID;
-                                        UpdateList();
-                                    })
-                                }
-                                cell.appendChild(link)
-                                break;
-                            }
-                        default:
-                            {
-                                let link = document.createElement("a")
-                                link.href = `${siteAddress}/ID.html?ID=${SubmissionIDs[retailIndex][index]}`
-                                link.textContent = "Open Online"
-                                cell.appendChild(link)
-                                break;
-                            }
-                    }
-                    break
-                default:
-                    let value = adapter.GetField(collumn) ?? Headers[retailIndex].GetField(collumn)
-                    let cellText = document.createTextNode(MakeHumanReadable(collumn, value))
-                    cell.appendChild(cellText)
-                    break
-            }
-            row.appendChild(cell)
-        })
-        row.addEventListener('click', function (e) {
-            if (e.target.tagName.toLowerCase() === 'a') return;
-
-            RetailIndex = retailIndex
-            ReportIndex = index
-            UpdateHeader()
-            UpdateReport()
-        })
-        row.classList.add("clickableRow")
-        tableBody.appendChild(row)
-    });
-
-    table.appendChild(tableBody)
-    listContainer.appendChild(table)
-}
-
-function UpdateSearchBar() {
-    const searchBarContainer = document.getElementById("SearchBarPropertiesContainer")
-
-    ClearElement(searchBarContainer)
-
-    const searchBar = document.createElement("input")
-    searchBar.type = "search"
-    searchBar.placeholder = "Search Properties"
-    searchBar.classList.add("searchBar")
-    searchBar.addEventListener('input', function (e) {
-        PropertiesSearchString = searchBar.value
-        UpdateHeader()
-        UpdateReport()
-    })
-    searchBarContainer.appendChild(searchBar)
-}
-
-function UpdateHeader() {
-    const headerContainer = document.getElementById("HeaderContainer")
-
-    ClearElement(headerContainer)
-
-    const table = document.createElement("table")
-    const tableBody = document.createElement("tbody")
-
-    // Empty first row to make automatic table size calculation consistent between tables
-    const firstRow = document.createElement("tr")
-    tableBody.appendChild(firstRow)
-
-    WriteObjectToTable(Headers[RetailIndex], tableBody, "", false)
-
-    table.appendChild(tableBody)
-    headerContainer.appendChild(table)
-}
-
-function UpdateReport() {
-    const report = Adapters[RetailIndex][ReportIndex]
-
-    const reportContainer = document.getElementById("ReportContainer")
-
-    ClearElement(reportContainer)
-
-    const table = document.createElement("table")
-    const tableBody = document.createElement("tbody")
-
-    {
-        const firstRow = document.createElement("tr")
-        tableBody.appendChild(firstRow)
-    }
-
-    WriteObjectToTable(report, tableBody)
-
-    table.appendChild(tableBody)
-    reportContainer.appendChild(table)
-}
-
-function QueryReportIDs() {
-    IterateAdapters((retailIndex, index, adapter) => {
-        SubmissionIDs[retailIndex][index] = null;
-        let xhr = new XMLHttpRequest()
-        xhr.open("POST", apiAddress + "/is_submitted")
-        xhr.setRequestHeader("Content-Type", "application/json")
-        xhr.onloadend = () => {
-            if (xhr.status == 200) {
-                SubmissionIDs[retailIndex][index] = Number(xhr.responseText)
-                UpdateList()
-            }
-            else {
-                SubmissionIDs[retailIndex][index] = -1
-                UpdateList()
-            }
-        }
-        header = Headers[retailIndex]
-
-        xhr.send(PrepareReport(header.GetOriginalReport(), adapter.GetOriginalReport(), IsSubmittedFilter))
-    })
-}
-
-function UpdateOutput() {
-    if (Headers.length == 0) {
-        const errorText = document.createTextNode("No reports generated")
-        document.body.appendChild(errorText)
-        return
-    }
-
-    UpdateList()
-    UpdateSearchBar()
-    UpdateHeader()
-    UpdateReport()
-}
-
-function OnLoad() {
-    InitReportData()
-    QueryReportIDs()
-    UpdateOutput()
-}
+export const PropertiesOrderMap = MakeMap(PropertiesOrder)
+export const SubPropertiesOrderMap = MakeMap(SubPropertiesOrder)

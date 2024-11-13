@@ -1,0 +1,196 @@
+.FeatureTable {
+    font-family: "Roboto", sans-serif;
+}
+
+.Microsoft {
+    background-color: #d0e7f2;
+}
+
+.AMD {
+    background-color: #f2d0d0;
+}
+
+.Nvidia {
+    background-color: #d0f2d0;
+}
+
+.Intel {
+    background-color: #d0d0f2;
+}
+
+.Qualcomm {
+    background-color: #f2e7d0;
+}
+
+td {
+    white-space: pre-wrap;
+}
+
+.FeatureHeader {
+    text-align: center;
+}
+
+th,
+.FeatureHeader {
+    font-weight: 600;
+}
+
+th,
+td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #7f7f7f;
+}
+
+td {
+    text-align: center;
+    padding: 2px;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #00000010;
+}
+td:nth-of-type(even) {
+    background-color: #00000010;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+colgroup {
+    border-inline-end-width: 2px;
+    border-inline-end-style: solid;
+    border-inline-end-color: #7f7f7f;
+}
+
+/* sticky table headers */
+th {
+    position: sticky !important;
+}
+
+/* row of headers with vendor names */
+thead>tr:first-of-type>th {
+    top: -1px;
+    /* first row sticks to the top of the screen */
+    border-bottom: none;
+}
+
+/* row of headers with architecture names */
+thead>tr:nth-of-type(2)>th {
+    top: 1.3em;
+    /* second row sticks right below first row */
+    border-top: none;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    padding-inline: 0.3em;
+    /* separate arch names a little */
+}
+
+#FilterContainer {
+    display: flex;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    background-color: #FFFFFF;
+    text-align: center;
+    border-radius: 0.4em;
+    border-color: #7f7f7f;
+    border-style: solid;
+    border-width: 0.1em;
+    padding: 0.3em;
+    margin: 0 0.2em;
+    position: absolute;
+    z-index: 3;
+}
+
+.tooltiptextbottom {
+    top: 110%;
+    left: 95%;
+    transform: translateX(-100%);   
+}
+
+.tooltiptextbottomcenter {
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);   
+}
+
+.tooltiptexttop {
+    bottom: 110%;
+    left: 0%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.white_space_pre {
+    white-space: pre;
+}
+
+
+@media (prefers-color-scheme: dark) {
+
+    th,
+    td {
+        border-color: #8c8c8c;
+    }
+
+    colgroup {
+        border-inline-end-color: #8c8c8c;
+    }
+
+    table,
+    fieldset {
+        border-color: #8c8c8c;
+        background-color: #2d2d2d;
+    }
+
+
+    tr:nth-of-type(1) {
+        background-color: #262626;
+    }
+
+    td {
+        border-color: #FFFFFF33;
+    }
+
+    tr:nth-of-type(odd) {
+        background-color: #00000020;
+    }
+    td:nth-of-type(even) {
+        background-color: #00000020;
+    }
+
+    .Microsoft {
+        background-color: #1c262b;
+    }
+
+    .AMD {
+        background-color: #220000;
+    }
+
+    .Nvidia {
+        background-color: #002200;
+    }
+
+    .Intel {
+        background-color: #000022;
+    }
+
+    .Qualcomm {
+        background-color: #231e16;
+    }
+    
+    .tooltiptext {
+        background-color: #000000;
+        border-color: #8c8c8c;
+    }
+
+}

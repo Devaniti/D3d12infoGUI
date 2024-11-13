@@ -1,10 +1,11 @@
-body {
+.ReportTable {
     min-width: 70em;
     max-width: 132em;
     margin-left: auto;
     margin-right: auto;
     padding-left: 0.5em;
     padding-right: 0.5em;
+    font-family: "SourceCodePro", "Courier New", Courier, monospace;
 }
 
 table,
@@ -14,7 +15,6 @@ fieldset {
     border-color: #a7a7a7;
     margin: 0.9em 0;
     font-size: 1.0em;
-    font-family: "Courier New", Courier, monospace;
     box-shadow: 0 0 0.9em rgba(0, 0, 0, 0.15);
     table-layout: fixed;
     word-wrap: break-word;
@@ -54,6 +54,7 @@ tr:nth-of-type(1) {
 }
 
 td {
+    padding: 2px;
     border: 1px solid;
     border-color: #a7a7a7;
 }
@@ -113,7 +114,7 @@ button:disabled {
     border-color: #a7a7a7;
     border-radius: 4px;
     font-size: 1.2em;
-    background-image: url('Search.svg');
+    background-image: url('../icons/search.svg');
     background-position: 0.5em 0.5em;
     background-repeat: no-repeat;
     padding-left: 2em;
@@ -150,51 +151,55 @@ button:disabled {
     vertical-align: sub;
 }
 
-a {
-    transition: color .3s ease-in;
-    text-decoration: none;
-    color: #004a94;
-    text-align: center;
-}
+@media (prefers-color-scheme: dark) {
 
-a:hover {
-    color: #3d9efe;
-}
+    table,
+    fieldset {
+        border-color: #8c8c8c;
+        background-color: #2d2d2d;
+    }
 
-.icon {
-    width: 1.5em;
-    height: 1.5em;
-}
+    tr:nth-of-type(odd) {
+        background-color: #262626;
+    }
 
-.headerText,
-.icon {
-    display: inline-block;
-    vertical-align: top;
-}
+    tr:nth-of-type(1) {
+        background-color: #262626;
+    }
 
-.headerText {
-    padding-top: 0.15em;
-}
+    td {
+        border-color: #FFFFFF33;
+    }
 
-.header {
-    height: 1.8em;
-    padding-top: 0.3em;
-    margin-bottom: 0.3em;
-    vertical-align: middle;
-    font-size: 1.2em;
-    display: flex;
-    border-width: 2px;
-    border-style: hidden;
-    border-collapse: collapse;
-    border-radius: 4px;
-    background-color: #e6e5e5;
-}
+    td:nth-of-type(even) {
+        background-color: #00000020;
+    }
 
-.headerLink {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-}
+    button {
+        background-color: #005b00;
+    }
 
-.flexRight {
-    margin-left: auto;
+    button:disabled {
+        background-color: #464646;
+    }
+
+    .clickableRow:hover {
+        background-color: #4d4d4d;
+    }
+
+    .clickableCell:hover {
+        background-color: #4d4d4d;
+    }
+
+    .searchBar {
+        color: #ffffff;
+        border-color: #7f7f7f;
+        background-color: #232323;
+    }
+
+    .tooltip .tooltiptext {
+        background-color: #232323;
+        color: #ffffff;
+        border-color: #7f7f7f;
+    }
 }

@@ -56,7 +56,7 @@ int RunGUI(HINSTANCE hInstance) {
   if (window.IsExitRequested()) return 1;
   window.ReportProgress(L"Opening report");
 
-  std::filesystem::path reportPath = rootPath / L"Report.html";
+  std::filesystem::path reportPath = rootPath / L"index.html";
 
   ::ShellExecuteW(NULL, L"open", reportPath.c_str(), NULL, NULL, SW_SHOW);
   return 0;

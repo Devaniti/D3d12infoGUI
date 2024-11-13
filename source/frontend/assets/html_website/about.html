@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>About D3d12infoDB</title>
+</head>
+
+<script>
+    function OnLoad() {
+        var n = [..."elxusn/ctm`unwAcnnmj`/edw"].map(n => String.fromCharCode(1 ^ n.charCodeAt(0))).join("");
+        document.getElementById("email-address").innerHTML = '<a href="mailto:' + n + '">' + n + "</a>"
+    }
+</script>
+
+<body onload="OnLoad()">
+    <%- include('header.html') %>
+    <main>
+        <div>
+            <h1 id="AboutD3d12infoDB">About D3d12infoDB</h1>
+            <p>D3d12infoDB is a GPU hardware database, main purpose of which is to collect information about d3d12
+                capabilities from wide variety of GPUs.</p>
+            <p>Reports to the database can be submitted by anyone using D3d12infoGUI.</p>
+            <p>In total D3dinfoDB consist of 2 parts:</p>
+            <ul>
+                <li>D3d12info - console tool for collecting GPU information<ul>
+                        <li><a href="https://github.com/sawickiap/D3d12info">Github link</a></li>
+                        <li>Maintained by <a href="https://asawicki.info/">Adam Sawicki</a></li>
+                    </ul>
+                </li>
+                <li>D3d12infoGUI - GUI for D3d12info and the website/database itself<ul>
+                        <li><a href="https://github.com/Devaniti/D3d12infoGUI">Github link</a></li>
+                        <li>Maintained by <a href="https://boolka.dev/">Dmytro Bulatov</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <p>For questions regarding removal of submissions or anything else website/database related, contact Dmytro
+                Bulatov at <span id="email-address">enable Javascript to see email</span></p>
+        </div>
+    </main>
+</html>

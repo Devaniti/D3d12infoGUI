@@ -1,0 +1,94 @@
+@font-face {
+    font-family: SourceCodePro;
+    src: url(../fonts/SourceCodePro-Regular.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Regular.ttf);
+}
+
+body {
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+table,
+fieldset {
+    border: 2px solid;
+    border-collapse: collapse;
+    border-color: #a7a7a7;
+}
+
+a {
+    color: #004a94;
+    text-decoration: none;
+    text-align: center;
+    transition: color .3s ease-in;
+}
+
+a:hover {
+    color: #3d9efe;
+}
+
+.icon {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.headerText,
+.icon {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.headerText {
+    padding-top: 0.15em;
+}
+
+.header {
+    height: 1.8em;
+    padding-top: 0.3em;
+    margin-bottom: 0.3em;
+    vertical-align: middle;
+    font-size: 1.2em;
+    display: flex;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #e6e5e5;
+    border-collapse: collapse;
+    border-radius: 4px;
+    background-color: #e6e5e5;
+}
+
+.headerLink {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.flexRight {
+    margin-left: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #e1e1e1;
+        background-color: #1e1e1e;
+    }   
+    a {
+        color: #64b2ff;
+    }
+    a:hover {
+        color: #b3d9ff;
+    }
+    .header {
+        background-color: #232323;
+        border-style: solid;
+        border-collapse: collapse;
+        border-color: #474747;
+    }
+    .icon {
+        filter: invert(1);
+    }
+
+}

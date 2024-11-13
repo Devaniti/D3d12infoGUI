@@ -8,6 +8,7 @@ Window::Window(HINSTANCE hInstance, const std::wstring_view message)
     : instance(hInstance) {
   progressMessage = message;
   {
+    isDarkMode = QueryDarkMode();
     windowThread = std::jthread(&ThreadEntryPointStatic, this);
     std::unique_lock lock(syncMutex);
     initializedCondition.wait(lock, [this] { return isInitialized; });
@@ -54,6 +55,14 @@ void Window::ThreadEntryPoint() {
   hwnd = CreateWindowW(windowClass, windowTitle, WS_OVERLAPPEDWINDOW,
                        CW_USEDEFAULT, CW_USEDEFAULT, 470, 130, nullptr, nullptr,
                        instance, this);
+
+  if (isDarkMode) {
+    BOOL USE_DARK_MODE = true;
+    ::DwmSetWindowAttribute(hwnd,
+                            DWMWINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE,
+                            &USE_DARK_MODE, sizeof(USE_DARK_MODE));
+  }
+
   assert(hwnd);
   ::ShowWindow(hwnd, SW_SHOWNORMAL);
 
@@ -121,12 +130,18 @@ void Window::PaintWindow(HWND hwnd) {
 
   HFONT font =
       ::CreateFontW(40, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE,
-                    DEFAULT_CHARSET,
-                 OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY,
-                 VARIABLE_PITCH, TEXT("Segoe UI"));
+                    DEFAULT_CHARSET, OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS,
+                    CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Segoe UI"));
   ::SelectObject(hdc, font);
-  ::FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+
+  HBRUSH backgroundBrush = isDarkMode ? ::CreateSolidBrush(RGB(50, 50, 50))
+                                      : (HBRUSH)(COLOR_WINDOW + 1);
+  COLORREF textColor = isDarkMode ? RGB(225, 225, 225) : RGB(0, 0, 0);
+
+  ::FillRect(hdc, &ps.rcPaint, backgroundBrush);
+  ::SetTextColor(hdc, textColor);
   ::SetTextAlign(hdc, TA_CENTER);
+  ::SetBkMode(hdc, TRANSPARENT);
 
   {
     std::scoped_lock lock(syncMutex);
@@ -135,6 +150,32 @@ void Window::PaintWindow(HWND hwnd) {
 
   ::EndPaint(hwnd, &ps);
   ::ReleaseDC(hwnd, hdc);
+  ::DeleteObject(font);
+  if (isDarkMode) {
+    ::DeleteObject(backgroundBrush);
+  }
+}
+
+bool Window::QueryDarkMode() {
+  HKEY hKey;
+  DWORD dwValue = 0;
+  DWORD dwSize = sizeof(dwValue);
+
+  if (::RegOpenKeyExW(
+          HKEY_CURRENT_USER,
+          L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+          0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+    if (::RegQueryValueEx(hKey, L"AppsUseLightTheme", nullptr, nullptr,
+                        reinterpret_cast<LPBYTE>(&dwValue),
+                        &dwSize) == ERROR_SUCCESS) {
+      ::RegCloseKey(hKey);
+
+      return dwValue == 0;
+    }
+    ::RegCloseKey(hKey);
+  } 
+
+  return false;
 }
 
 }  // namespace D3d12infoGUI
