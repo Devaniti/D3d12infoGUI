@@ -29,7 +29,7 @@ set_source_files_properties(${HeaderList} ${HTMLList} ${GeneratedFiles} PROPERTI
 set_source_files_properties(${GeneratedFiles} PROPERTIES GENERATED TRUE)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SourceList} ${HeaderList} ${HTMLList})
 
-target_link_libraries(GUI)
+target_link_libraries(GUI Dwmapi.lib)
 
 set_property(TARGET GUI PROPERTY VS_DEBUGGER_COMMAND_ARGUMENTS "")
 

@@ -22,6 +22,8 @@ class Window {
   
   void PaintWindow(HWND hwnd);
 
+  bool QueryDarkMode();
+
   std::jthread windowThread;
   std::atomic<bool> exitRequested = false;
 
@@ -32,6 +34,8 @@ class Window {
   std::wstring progressMessage;
   const HINSTANCE instance = nullptr;
   HWND hwnd = nullptr;
+
+  bool isDarkMode = false;
 
   static constexpr wchar_t windowClass[] = L"D3d12infoGUI Windows Class";
   static constexpr wchar_t windowTitle[] = L"D3d12infoGUI";

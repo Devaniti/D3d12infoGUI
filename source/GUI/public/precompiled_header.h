@@ -13,3 +13,4 @@
 #include <vector>
 
 #include <Windows.h>
+#include <dwmapi.h>
