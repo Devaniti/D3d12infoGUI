@@ -1,7 +1,7 @@
 import * as HTML from "./html.mjs"
 import * as Constants from "./constants.mjs"
 import * as Properties from "./properties.mjs"
-import * as Globals from './globals.mjs';
+import Globals from './globals.mjs'
 
 let SingleReport = false
 let Reports = []
