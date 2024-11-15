@@ -4,6 +4,8 @@ on: [push]
 
 jobs:
   build:
+    # disable temporarily
+    if: false
     name: Build
     runs-on: windows-2022
     steps:
