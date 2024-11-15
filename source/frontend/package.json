@@ -12,8 +12,8 @@
     "webpack-dev-server": "^5.1.0"
   },
   "scripts": {
-    "build": "webpack --mode production --config .\\gui-webpack.config.js && webpack --mode production --config .\\website-webpack.config.js",
-    "serve-gui": "webpack serve --mode development --devtool source-map --config .\\gui-webpack.config.js",
-    "serve-website": "webpack serve --mode development --devtool source-map --config .\\website-webpack.config.js"
+    "build": "webpack --mode production --config gui-webpack.config.js && webpack --mode production --config website-webpack.config.js",
+    "serve-gui": "webpack serve --mode development --devtool source-map --config gui-webpack.config.js",
+    "serve-website": "webpack serve --mode development --devtool source-map --config website-webpack.config.js"
   }
 }

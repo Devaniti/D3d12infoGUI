@@ -15,7 +15,7 @@ const TableTrueFalseMapping =
 const TableFeaturesShortNames = {
     "TableNumReports": "Number of reports",
     "TableReportUsed": "Report used for feature data",
-    "TableReportDate": "Report date",
+    "TableD3d12InfoVersion": "D3d12info version",
 
     // major features
     "D3D12_FEATURE_DATA_FEATURE_LEVELS.MaxSupportedFeatureLevel": "Feature level",
@@ -632,12 +632,12 @@ function SpliceReportByArchAndVendor(reportContainer)
             0x5900: "Gen9.5", 0x3100: "Gen9.5", 0x3E00: "Gen9.5", 0x9B00: "Gen9.5", 0x5A00: "Gen9.5",
             0x8A00: "Gen11", // Ice Lake
             // Tiger Lake, Elkhart Lake, Jasper Lake, Comet Lake, Rocket Lake, Alder Lake, DG1, Raptor Lake
-            0x9A00: "Gen12 / Xe", 0x4500: "Gen12 / Xe", 0x4E00: "Gen12 / Xe", 0x4C00: "Gen12 / Xe", 0x4600: "Gen12 / Xe", 0x4900: "Gen12 / Xe", 0xA700: "Gen12 / Xe",
-            0x5600: "Gen12.7 / Xe-HPG", // Alchemist
-            0x0B00: "Gen12 / Xe-HPC", // Ponte Vecchio (data center GPU)
-            0x7D00: "Gen12.7 / Xe-LPG", // Meteor Lake, Arrow Lake
-            0x6400: "Gen13 / Xe2-HPG", // Lunar Lake
-            0xE200: "Gen13 / Xe2-HPG", // Battlemage
+            0x9A00: "Xe", 0x4500: "Xe", 0x4E00: "Xe", 0x4C00: "Xe", 0x4600: "Xe", 0x4900: "Xe", 0xA700: "Xe",
+            0x5600: "Xe-HPG", // Alchemist
+            0x0B00: "Xe-HPC", // Ponte Vecchio (data center GPU)
+            0x7D00: "Xe-LPG", // Meteor Lake, Arrow Lake
+            0x6400: "Xe2-HPG", // Lunar Lake
+            0xE200: "Xe2-HPG", // Battlemage
         };
 
         let idhi = report.DXGI_ADAPTER_DESC3.DeviceId & 0xFF00;
@@ -650,11 +650,11 @@ function SpliceReportByArchAndVendor(reportContainer)
             if (arch == "Unkown" &&
                 report["Intel GPUDetect::GPUData"].GPUArchitecture == "Unknown (37)" &&
                 report.DXGI_ADAPTER_DESC3.Description == "Intel(R) Iris(R) Xe Graphics") // integrated Xe-LP, Alder/Rocket Lake
-                arch = "Gen12 / Xe";
+                arch = "Xe";
             else if (arch == "Xe High Performance Graphics")
                 arch = "Gen12.7 / Xe-HPG";
             else if (arch == "Xe High Performance Compute") // data center GPU, probably doesn't even have D3D drivers?
-                arch = "Gen12 / Xe-HPC";
+                arch = "Xe-HPC";
             else if (arch == "Xe Low Power Graphics") // Meteor/Arrow Lake, reported name unconfirmed, not even in GPUDetect as of 2024-11-11
                 arch = "Gen12.7 / Xe-LPG";
             else if (arch == "Xe2 High Performance Graphics") // Lunar Lake, Battlemage, reported name unconfirmed, not even in GPUDetect as of 2024-11-11
@@ -932,10 +932,10 @@ function UpdateTable() {
                         td.appendChild(link);
                         featureRow.appendChild(td);
                     }
-                    else if (featureName == "TableReportDate") {
+                    else if (featureName == "TableD3d12InfoVersion") {
                         let td = document.createElement("td");
-                        let date = newestDriverReport.Header["Generated on"];
-                        td.append(date ? date : "");
+                        let version = newestDriverReport.Header.Version;
+                        td.append(version);
                         featureRow.appendChild(td);
                     }
                     else { // regular feature data

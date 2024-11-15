@@ -1,5 +1,7 @@
 .FeatureTable {
     font-family: "Roboto", sans-serif;
+    overflow-x: scroll;
+    padding: auto;
 }
 
 .Microsoft {
@@ -28,6 +30,7 @@ td {
 
 .FeatureHeader {
     text-align: center;
+    min-width: 14em;
 }
 
 th,
@@ -44,18 +47,21 @@ td {
 
 td {
     text-align: center;
-    padding: 2px;
+    padding: 2px 4px;
+    min-width: 4.5em;
 }
 
 tr:nth-of-type(odd) {
     background-color: #00000010;
 }
+
 td:nth-of-type(even) {
     background-color: #00000010;
 }
 
 table {
     border-collapse: collapse;
+    margin: auto;
 }
 
 colgroup {
@@ -112,13 +118,13 @@ thead>tr:nth-of-type(2)>th {
 .tooltiptextbottom {
     top: 110%;
     left: 95%;
-    transform: translateX(-100%);   
+    transform: translateX(-100%);
 }
 
 .tooltiptextbottomcenter {
     top: 110%;
     left: 50%;
-    transform: translateX(-50%);   
+    transform: translateX(-50%);
 }
 
 .tooltiptexttop {
@@ -164,6 +170,7 @@ thead>tr:nth-of-type(2)>th {
     tr:nth-of-type(odd) {
         background-color: #00000020;
     }
+
     td:nth-of-type(even) {
         background-color: #00000020;
     }
@@ -187,7 +194,7 @@ thead>tr:nth-of-type(2)>th {
     .Qualcomm {
         background-color: #231e16;
     }
-    
+
     .tooltiptext {
         background-color: #000000;
         border-color: #8c8c8c;

@@ -34,29 +34,26 @@ a:hover {
 .icon {
     width: 1.5em;
     height: 1.5em;
+    margin-right: 0.3em;
 }
 
-.headerText,
-.icon {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.headerText {
-    padding-top: 0.15em;
+.headerLink {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .header {
-    height: 1.8em;
-    padding-top: 0.3em;
-    margin-bottom: 0.3em;
-    vertical-align: middle;
+    height: 2.2em;
+    padding-top: 0.1em;
     font-size: 1.2em;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 2100px;
+    margin: 0 auto 0.4em auto;
     border-width: 2px;
-    border-style: solid;
-    border-color: #e6e5e5;
-    border-collapse: collapse;
     border-radius: 4px;
     background-color: #e6e5e5;
 }
@@ -64,6 +61,7 @@ a:hover {
 .headerLink {
     padding-left: 0.5em;
     padding-right: 0.5em;
+    height: 100%;
 }
 
 .flexRight {
@@ -74,19 +72,23 @@ a:hover {
     body {
         color: #e1e1e1;
         background-color: #1e1e1e;
-    }   
+    }
+
     a {
         color: #64b2ff;
     }
+
     a:hover {
         color: #b3d9ff;
     }
+
     .header {
         background-color: #232323;
         border-style: solid;
         border-collapse: collapse;
         border-color: #474747;
     }
+
     .icon {
         filter: invert(1);
     }
