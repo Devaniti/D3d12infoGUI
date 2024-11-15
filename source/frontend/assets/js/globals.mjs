@@ -1,1 +1,2 @@
-export let PropertiesSearchString = ""
+let Globals = {PropertiesSearchString: ""}
+export default Globals

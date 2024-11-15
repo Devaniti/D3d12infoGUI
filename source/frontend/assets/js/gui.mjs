@@ -2,7 +2,7 @@ import ReportContainer from './report_container.mjs';
 import * as Server from './server.mjs';
 import * as HTML from './html.mjs';
 import * as Properties from './properties.mjs';
-import * as Globals from './globals.mjs';
+import Globals from './globals.mjs';
 
 const SubmissionIDs = [[], []]
 

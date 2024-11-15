@@ -1,5 +1,5 @@
 import * as Constants from './constants.mjs'
-import * as Globals from './globals.mjs'
+import Globals from './globals.mjs'
 
 export function RemoveArrayIndex(property) {
     return property.replace(/\[\d+\]/g, "")
@@ -197,7 +197,7 @@ export function FilterField(name, value) {
     let humanReadableValue = MakeHumanReadable(name, value)
     let filterString = Globals.PropertiesSearchString.toLocaleLowerCase()
     return filterString == ""
-        || PropertiesFilterWhitelist.has(name)
+        || Constants.PropertiesFilterWhitelist.has(name)
         || name.toString().toLowerCase().includes(filterString)
         || humanReadableName.toString().toLowerCase().includes(filterString)
         || value.toString().toLowerCase().includes(filterString)
