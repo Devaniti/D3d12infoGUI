@@ -1,10 +1,13 @@
+main {
+    width: 100%;
+    overflow-x: scroll;
+}
+
 .ReportTable {
     min-width: 70em;
-    max-width: 132em;
+    max-width: 2100px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
     font-family: "SourceCodePro", "Courier New", Courier, monospace;
 }
 
