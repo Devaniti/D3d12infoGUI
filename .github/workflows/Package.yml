@@ -27,7 +27,7 @@ jobs:
       with:
         submodules: 'recursive'
       
-    - name: Build Release
+    - name: Build
       shell: pwsh
       run: ./build_scripts/package.ps1
 
@@ -53,7 +53,13 @@ jobs:
         exclude-interactive-browser-credential: true
       
     - name: Archive Package
+      shell: pwsh
+      run: ./build_scripts/archive_package.ps1
+      
+    - name: Upload Package
       uses: actions/upload-artifact@v4
       with:
-        name: D3d12infoGUI - Release
-        path: ${{ github.workspace }}/build/bin/Release/GUI.exe
+        name: D3d12infoGUI - Package
+        path: |
+          ./package/D3d12infoGUI/D3d12infoGUI.exe
+          ./package/D3d12infoGUI.zip

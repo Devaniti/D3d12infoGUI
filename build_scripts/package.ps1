@@ -1,5 +1,7 @@
 param ([string]$PathToD3d12info)
 
+Push-Location $PSScriptRoot
+
 if (-not $PathToD3d12info) {
     Write-Output "Downloading D3d12info"
     $TempFolder = Join-Path -Path $env:TEMP -ChildPath "d3d12infogui_build"
@@ -41,8 +43,6 @@ if (-not $PathToD3d12info) {
         exit 1
     }
 }
-
-Push-Location $PSScriptRoot
 & ./clean.ps1
 cmake -S ../source -B ../build/ -DD3D12INFO_PATH="$PathToD3d12info"
 cmake --build ../build/ --target GUI --config Release
