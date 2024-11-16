@@ -1,6 +1,9 @@
 name: Package
 
-on: [push]
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
   id-token: write
@@ -20,13 +23,13 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Sync
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: 'recursive'
       
     - name: Build Release
       shell: pwsh
-      run: ./build_scripts/build.ps1 Release
+      run: ./build_scripts/package.ps1
 
     - name: Sign with Trusted Signing
       uses: azure/trusted-signing-action@v0.5.0

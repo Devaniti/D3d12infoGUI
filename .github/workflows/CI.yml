@@ -4,13 +4,11 @@ on: [push]
 
 jobs:
   build:
-    # disable temporarily
-    if: false
     name: Build
     runs-on: windows-2022
     steps:
     - name: Sync
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: 'recursive'
         

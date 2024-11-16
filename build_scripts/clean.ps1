@@ -1,3 +1,5 @@
 Push-Location $PSScriptRoot
-Remove-Item -LiteralPath ../build/ -Force -Recurse
+if (Test-Path ../build/) {
+    Remove-Item -LiteralPath ../build/ -Force -Recurse
+}
 Pop-Location
