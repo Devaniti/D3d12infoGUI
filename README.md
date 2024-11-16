@@ -1,3 +1,5 @@
+[![CI](https://github.com/Devaniti/D3d12infoGUI/actions/workflows/CI.yml/badge.svg)](https://github.com/Devaniti/D3d12infoGUI/actions/workflows/CI.yml)
+
 D3d12infoGUI
 ============
 

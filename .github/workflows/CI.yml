@@ -1,0 +1,37 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-2022
+    steps:
+    - name: Sync
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+        
+    - name: Configure
+      shell: pwsh
+      run: ./build_scripts/configure.ps1
+      
+    - name: Build Debug
+      shell: pwsh
+      run: ./build_scripts/build.ps1 Debug
+      
+    - name: Build Release
+      shell: pwsh
+      run: ./build_scripts/build.ps1 Release
+      
+    - name: Archive Debug artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: D3d12infoGUI - Debug
+        path: ./build/bin/Debug/GUI.exe
+      
+    - name: Archive Release artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: D3d12infoGUI - Release
+        path: ./build/bin/Release/GUI.exe

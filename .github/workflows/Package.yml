@@ -1,0 +1,65 @@
+name: Package
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  package:
+    name: Package
+    runs-on: windows-2022
+    environment: production
+    steps:
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Sync
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+      
+    - name: Build
+      shell: pwsh
+      run: ./build_scripts/package.ps1
+
+    - name: Sign with Trusted Signing
+      uses: azure/trusted-signing-action@v0.5.0
+      with:
+        endpoint: https://eus.codesigning.azure.net/
+        trusted-signing-account-name: dmytro-bulatov-sign
+        certificate-profile-name: dmytro-bulatov
+        files: ${{ github.workspace }}/build/bin/Release/GUI.exe
+        file-digest: SHA256
+        timestamp-rfc3161: http://timestamp.acs.microsoft.com
+        timestamp-digest: SHA256
+        exclude-environment-credential: true
+        exclude-workload-identity-credential: true
+        exclude-managed-identity-credential: true
+        exclude-shared-token-cache-credential: true
+        exclude-visual-studio-credential: true
+        exclude-visual-studio-code-credential: true
+        exclude-azure-cli-credential: false
+        exclude-azure-powershell-credential: true
+        exclude-azure-developer-cli-credential: true
+        exclude-interactive-browser-credential: true
+      
+    - name: Archive Package
+      shell: pwsh
+      run: ./build_scripts/archive_package.ps1
+      
+    - name: Upload Package
+      uses: actions/upload-artifact@v4
+      with:
+        name: D3d12infoGUI - Package
+        path: |
+          ./package/D3d12infoGUI/D3d12infoGUI.exe
+          ./package/D3d12infoGUI.zip
