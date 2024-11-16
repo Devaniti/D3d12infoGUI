@@ -12,17 +12,21 @@ jobs:
       with:
         submodules: 'recursive'
         
+    - name: Install Dependencies
+      shell: powershell
+      run: ./scripts/install_build_dependencies.ps1
+        
     - name: Configure
       shell: pwsh
-      run: ./build_scripts/configure.ps1
+      run: ./scripts/configure.ps1
       
     - name: Build Debug
       shell: pwsh
-      run: ./build_scripts/build.ps1 Debug
+      run: ./scripts/build.ps1 Debug
       
     - name: Build Release
       shell: pwsh
-      run: ./build_scripts/build.ps1 Release
+      run: ./scripts/build.ps1 Release
       
     - name: Archive Debug artifacts
       uses: actions/upload-artifact@v4

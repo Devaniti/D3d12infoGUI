@@ -29,7 +29,7 @@ jobs:
       
     - name: Build
       shell: pwsh
-      run: ./build_scripts/package.ps1
+      run: ./scripts/package.ps1
 
     - name: Sign with Trusted Signing
       uses: azure/trusted-signing-action@v0.5.0
@@ -54,7 +54,7 @@ jobs:
       
     - name: Archive Package
       shell: pwsh
-      run: ./build_scripts/archive_package.ps1
+      run: ./scripts/archive_package.ps1
       
     - name: Upload Package
       uses: actions/upload-artifact@v4
