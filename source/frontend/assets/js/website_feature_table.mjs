@@ -879,7 +879,10 @@ function UpdateTable() {
                 headerRowArch.appendChild(thArch);
 
                 let tooltipText = "";
-                for (let adapterName of AdapterNamesPerArch.get(a)) {
+
+                let sortedAdapterNames = Array.from(AdapterNamesPerArch.get(a)).sort();
+
+                for (let adapterName of sortedAdapterNames) {
                     tooltipText += adapterName + "\n";
                 }
 
