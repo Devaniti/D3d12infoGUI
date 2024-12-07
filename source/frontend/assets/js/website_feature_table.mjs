@@ -301,14 +301,14 @@ const TableEnumMappings =
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier":
     {
-        "0": "Tier 0",
+        "0": "❌",
         "1": "Tier 1",
         "2": "Tier 2"
     },
     "D3D12_FEATURE_DATA_SERIALIZATION.HeapSerializationTier":
     {
-        "0": "Tier 0",
-        "10": "Tier 1.0"
+        "0": "❌",
+        "10": "✅"
     },
     "D3D12_FEATURE_DATA_CROSS_NODE.SharingTier":
     {
@@ -339,7 +339,7 @@ const TableEnumMappings =
     },
     "D3D12_FEATURE_DATA_DISPLAYABLE.SharedResourceCompatibilityTier":
     {
-        "0": "Tier 0",
+        "0": "❌",
         "1": "Tier 1",
         "2": "Tier 2"
     },
@@ -352,7 +352,7 @@ const TableEnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier":
     {
         "0": "❌",
-        "10": "Tier 1"
+        "10": "✅"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier":
     {
@@ -363,7 +363,7 @@ const TableEnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier":
     {
         "0": "❌",
-        "10": "Tier 1.0"
+        "10": "✅"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives":
     {
@@ -374,7 +374,7 @@ const TableEnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier":
     {
         "0": "❌",
-        "1": "Tier 1"
+        "1": "✅"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier":
     {
