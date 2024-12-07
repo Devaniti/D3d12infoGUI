@@ -301,7 +301,7 @@ const TableEnumMappings =
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier":
     {
-        "0": "❌",
+        "0": "Tier 0",
         "1": "Tier 1",
         "2": "Tier 2"
     },
@@ -339,7 +339,7 @@ const TableEnumMappings =
     },
     "D3D12_FEATURE_DATA_DISPLAYABLE.SharedResourceCompatibilityTier":
     {
-        "0": "❌",
+        "0": "Tier 0",
         "1": "Tier 1",
         "2": "Tier 2"
     },
