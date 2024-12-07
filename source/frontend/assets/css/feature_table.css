@@ -104,7 +104,7 @@ thead>tr:nth-of-type(2)>th {
 .tooltiptext {
     visibility: hidden;
     background-color: #FFFFFF;
-    text-align: center;
+    text-align: left;
     border-radius: 0.4em;
     border-color: #7f7f7f;
     border-style: solid;
