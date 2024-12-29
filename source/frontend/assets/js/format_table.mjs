@@ -207,18 +207,28 @@ function AddCell(row, text) {
     return cell
 }
 
+function AddIconCell(row, iconName) {
+    let cell = document.createElement("td")
+    let icon = document.createElement("img")
+    icon.className = "cell-icon"
+    icon.src = iconName
+    cell.appendChild(icon)
+    row.appendChild(cell)
+    return cell
+}
+
 function SupportValue(isSupported, isRequired) {
     if (isSupported && isRequired) {
-        return "✔️"
+        return "required.svg"
     }
     else if (isSupported && !isRequired) {
-        return "✅"
+        return "supported.svg"
     }
     else if (!isSupported && !isRequired) {
-        return "❌"
+        return "unsupported.svg"
     }
     else {
-        return "❓"
+        return "error.svg"
     }
 }
 
@@ -255,9 +265,9 @@ export function BuildFormatTable(reportContainer, tableContainer) {
         let format = formats[formatID]
         const row = document.createElement("tr")
         AddCell(row, Constants.DXGI_FORMAT[formatID])
-        AddCell(row, FormatSupportValue(formatID, format.Support1 != null))
+        AddIconCell(row, FormatSupportValue(formatID, format.Support1 != null))
         for (const [bit1, bit2] of BitMapping) {
-            AddCell(row, FeatureSupportValue(formatID, format, bit1, bit2))
+            AddIconCell(row, FeatureSupportValue(formatID, format, bit1, bit2))
         }
         table.appendChild(row)
     }
