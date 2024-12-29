@@ -22,7 +22,7 @@ module.exports = {
           sources: {
             urlFilter: (attribute, value, resourcePath) => {
               console.log(attribute, value, resourcePath);
-              if (attribute === 'src' && value == 'reports.json') {
+              if (attribute === 'src' && value == 'reports.js') {
                 return false;
               }
               return true;

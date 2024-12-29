@@ -581,8 +581,7 @@ function ClearTableReportData() {
     UndefinedReports = [];
 }
 
-function SpliceReportByArchAndVendor(reportContainer)
-{
+function SpliceReportByArchAndVendor(reportContainer) {
     let report = reportContainer.GetOriginalReport();
     let vendorId = MakeHumanReadableForTable("DXGI_ADAPTER_DESC3.VendorId", report.DXGI_ADAPTER_DESC3.VendorId);
     let arch;
@@ -644,8 +643,7 @@ function SpliceReportByArchAndVendor(reportContainer)
         arch = IntelDeviceIdHighBits[idhi];
 
         // if the device ID matching didn't work, try GPUDetect
-        if (!arch && report["Intel GPUDetect::GPUData"])
-        {
+        if (!arch && report["Intel GPUDetect::GPUData"]) {
             arch = report["Intel GPUDetect::GPUData"].GraphicsGeneration;
             if (arch == "Unkown" &&
                 report["Intel GPUDetect::GPUData"].GPUArchitecture == "Unknown (37)" &&
@@ -750,8 +748,7 @@ function PrepareReportsForTable() {
             SpliceReportByArchAndVendor(report);
     }
 
-    for (let [arch, reports] of ReportsPerArch)
-    {
+    for (let [arch, reports] of ReportsPerArch) {
         let newestReport = null;
         for (let r of reports) {
             if (IsReportNewer(r, newestReport))
@@ -819,8 +816,7 @@ const DefaultTooltipOptions = {
 
 // Use alignOutside* and preferTowardsBottom to position the tooltip next to the element on the respective side
 // to prevent issues with tooltips disappearing below other elements with higher effective z-index than the parent.
-function AddTooltipForTable(parent, text, options_param)
-{
+function AddTooltipForTable(parent, text, options_param) {
     // JS is bad at interfaces, so we copy the default options and then individually assign them if the passed in options object has the same property
     let options = Object.assign({}, DefaultTooltipOptions);
     for (let [key, value] of Object.entries(options)) {
@@ -846,151 +842,155 @@ function UpdateTable() {
     HTML.ClearElement(table);
 
     // construct table header with vendor name in the first row and arch name in the second row
-    {
-        let thead = document.createElement("thead");
-        let headerRowVendor = document.createElement("tr");
-        let headerRowArch = document.createElement("tr");
-        headerRowVendor.appendChild(document.createElement("th")); // column for feature name
-        headerRowArch.appendChild(document.createElement("th")); // column for feature name
-
-        let colGroupFeature = document.createElement("colgroup");
-        table.appendChild(colGroupFeature);
-
-        for (let [vendor, archs] of Object.entries(ArchsPerVendor)) {
-            if (archs.size == 0)
-                continue;
-
-            let thVendor = document.createElement("th");
-            thVendor.append(vendor);
-            thVendor.className = vendor;
-            thVendor.scope = "colgroup";
-            thVendor.colSpan = archs.size;
-            headerRowVendor.appendChild(thVendor);
-
-            let colGroupVendor = document.createElement("colgroup");
-            colGroupVendor.span = archs.size;
-            table.appendChild(colGroupVendor);
-
-            for (let a of archs) {
-                let thArch = document.createElement("th");
-                thArch.append(a);
-                thArch.className = vendor;
-                thArch.scope = "col";
-                headerRowArch.appendChild(thArch);
-
-                let tooltipText = "";
-
-                let sortedAdapterNames = Array.from(AdapterNamesPerArch.get(a)).sort();
-
-                for (let adapterName of sortedAdapterNames) {
-                    tooltipText += adapterName + "\n";
-                }
-
-                AddTooltipForTable(thArch, tooltipText,
-                    {
-                        alignOutsideVertical: true,
-                        preferTowardsBottom: true,
-                        tooltipAlignment: "bottom"
-                    });
-            }
-        }
-
-        thead.appendChild(headerRowVendor);
-        thead.appendChild(headerRowArch);
-        table.appendChild(thead);
-    }
+    UpdateTableHeader(table);
 
     // construct table body with all the features
-    {
-        let tbody = document.createElement("tbody");
+    UpdateTableBody(table);
+}
 
-        for (let [featureName, featureShortName] of Object.entries(TableFeaturesShortNames))
-        {
-            let featureRow = document.createElement("tr");
+function UpdateTableHeader(table) {
+    let thead = document.createElement("thead");
+    let headerRowVendor = document.createElement("tr");
+    let headerRowArch = document.createElement("tr");
+    headerRowVendor.appendChild(document.createElement("th")); // column for feature name
+    headerRowArch.appendChild(document.createElement("th")); // column for feature name
 
-            let featureHeader = document.createElement("td");
-            featureHeader.classList.add("FeatureHeader");
-            featureHeader.append(featureShortName);
-            featureHeader.scope = "row";
-            if (!featureName.startsWith("Table"))
-                AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true});
-            featureRow.appendChild(featureHeader);
+    let colGroupFeature = document.createElement("colgroup");
+    table.appendChild(colGroupFeature);
 
-            // TODO: merge columns that are the same across GPUs for the same vendor? maybe a bit too much
-            for (let [vendor, archs] of Object.entries(ArchsPerVendor)) {
-                for (let archName of archs) {
+    for (let [vendor, archs] of Object.entries(ArchsPerVendor)) {
+        if (archs.size == 0)
+            continue;
 
-                    let newestDriverReport = NewestDriverReportPerArch.get(archName);
+        let thVendor = document.createElement("th");
+        thVendor.append(vendor);
+        thVendor.className = vendor;
+        thVendor.scope = "colgroup";
+        thVendor.colSpan = archs.size;
+        headerRowVendor.appendChild(thVendor);
 
-                    if (featureName == "TableNumReports") {
-                        let td = document.createElement("td");
-                        td.append(ReportsPerArch.get(archName).length);
-                        featureRow.appendChild(td);
+        let colGroupVendor = document.createElement("colgroup");
+        colGroupVendor.span = archs.size;
+        table.appendChild(colGroupVendor);
+
+        for (let a of archs) {
+            let thArch = document.createElement("th");
+            thArch.append(a);
+            thArch.className = vendor;
+            thArch.scope = "col";
+            headerRowArch.appendChild(thArch);
+
+            let tooltipText = "";
+
+            let sortedAdapterNames = Array.from(AdapterNamesPerArch.get(a)).sort();
+
+            for (let adapterName of sortedAdapterNames) {
+                tooltipText += adapterName + "\n";
+            }
+
+            AddTooltipForTable(thArch, tooltipText,
+                {
+                    alignOutsideVertical: true,
+                    preferTowardsBottom: true,
+                    tooltipAlignment: "bottom"
+                });
+        }
+    }
+
+    thead.appendChild(headerRowVendor);
+    thead.appendChild(headerRowArch);
+    table.appendChild(thead);
+}
+
+function UpdateTableBody(table) {
+    let tbody = document.createElement("tbody");
+
+    for (let [featureName, featureShortName] of Object.entries(TableFeaturesShortNames)) {
+        let featureRow = document.createElement("tr");
+
+        let featureHeader = document.createElement("td");
+        featureHeader.classList.add("FeatureHeader");
+        featureHeader.append(featureShortName);
+        featureHeader.scope = "row";
+        if (!featureName.startsWith("Table"))
+            AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
+        featureRow.appendChild(featureHeader);
+
+        // TODO: merge columns that are the same across GPUs for the same vendor? maybe a bit too much
+        for (let [vendor, archs] of Object.entries(ArchsPerVendor)) {
+            for (let archName of archs) {
+
+                let newestDriverReport = NewestDriverReportPerArch.get(archName);
+
+                if (featureName == "TableNumReports") {
+                    let td = document.createElement("td");
+                    td.append(ReportsPerArch.get(archName).length);
+                    featureRow.appendChild(td);
+                }
+                else if (featureName == "TableReportUsed") {
+                    let td = document.createElement("td");
+                    let link = document.createElement("a");
+                    link.href = `ID.html?ID=${newestDriverReport.ID}`;
+                    link.append(newestDriverReport.ID);
+                    td.appendChild(link);
+                    featureRow.appendChild(td);
+                }
+                else if (featureName == "TableD3d12InfoVersion") {
+                    let td = document.createElement("td");
+                    let version = newestDriverReport.Header.Version;
+                    td.append(version);
+                    featureRow.appendChild(td);
+                }
+                else { // regular feature data
+                    // TODO: report feature data more reliably, is this good enough?
+                    // - output something like "7/10" for boolean data?
+                    // - enums could display highest value in any report
+                    // - bisect by driver version?
+                    // - filter out reports with experimental features on, take max of every feature? (too many reports with this, would remove archs from the table)
+                    // NOTE: we need to get the matching ReportContainer that has all the fields mapped as strings
+                    // TODO: could also redesign all of the code above to use ReportContainers, it's just slightly less nice to use
+                    let newestReportContainer = Reports.find(r => r.GetField("ID") == newestDriverReport.ID);
+
+                    let featureValue = newestReportContainer.GetField(featureName);
+                    let displayRawFeatureValue = false;
+                    let tooltipText = "";
+
+                    // fix up reports with preview SDK that use the experimental options field instead of OPTIONS12 for work graphs
+                    if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier" && featureValue == undefined) {
+                        featureValue = newestReportContainer.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier");
                     }
-                    else if (featureName == "TableReportUsed") {
-                        let td = document.createElement("td");
-                        let link = document.createElement("a");
-                        link.href = `ID.html?ID=${newestDriverReport.ID}`;
-                        link.append(newestDriverReport.ID);
-                        td.appendChild(link);
-                        featureRow.appendChild(td);
-                    }
-                    else if (featureName == "TableD3d12InfoVersion") {
-                        let td = document.createElement("td");
-                        let version = newestDriverReport.Header.Version;
-                        td.append(version);
-                        featureRow.appendChild(td);
-                    }
-                    else { // regular feature data
-                        // TODO: report feature data more reliably, is this good enough?
-                        // - output something like "7/10" for boolean data?
-                        // - enums could display highest value in any report
-                        // - bisect by driver version?
-                        // - filter out reports with experimental features on, take max of every feature? (too many reports with this, would remove archs from the table)
 
-                        // NOTE: we need to get the matching ReportContainer that has all the fields mapped as strings
-                        // TODO: could also redesign all of the code above to use ReportContainers, it's just slightly less nice to use
-                        let newestReportContainer = Reports.find(r => r.GetField("ID") == newestDriverReport.ID);
-
-                        let featureValue = newestReportContainer.GetField(featureName);
-                        let displayRawFeatureValue = false;
-                        let tooltipText = "";
-
-                        // fix up reports with preview SDK that use the experimental options field instead of OPTIONS12 for work graphs
-                        if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier" && featureValue == undefined) {
-                            featureValue = newestReportContainer.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier");
-                        }
-                        // GPU Upload Heap support depends on BIOS settings / Windows version, so if any report is true we take that one
-                        else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported") {
-                            for (let r of ReportsPerArch.get(archName)) {
-                                if (r.D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported) {
-                                    featureValue = 1;
-                                    break;
-                                }
+                    // GPU Upload Heap support depends on BIOS settings / Windows version, so if any report is true we take that one
+                    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported") {
+                        for (let r of ReportsPerArch.get(archName)) {
+                            if (r.D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported) {
+                                featureValue = 1;
+                                break;
                             }
                         }
-                        // If our tiled resource tier is 3, the SRVOnlyTiledResourceTier3 flag does not apply, but is always true, which is misleading
-                        else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier >= 3) {
-                            featureValue = "N/A";
-                            displayRawFeatureValue = true;
-                        }
-                        else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && (archName == "Pascal" || archName == "Turing 16")) {
-                            featureValue = TableTrueFalseMapping["1"] + "/" + TableTrueFalseMapping["0"];
-                            displayRawFeatureValue = true;
-                            tooltipText = "Pascal and Turing 16 have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB VRAM or more";
-                        }
-                        let td = document.createElement("td");
-                        td.append(displayRawFeatureValue ? featureValue : MakeHumanReadableForTable(featureName, featureValue));
-                        featureRow.appendChild(td);
-                        if (tooltipText !== "")
-                            AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: "bottomcenter" });
                     }
+
+                    // If our tiled resource tier is 3, the SRVOnlyTiledResourceTier3 flag does not apply, but is always true, which is misleading
+                    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier >= 3) {
+                        featureValue = "N/A";
+                        displayRawFeatureValue = true;
+                    }
+                    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && (archName == "Pascal" || archName == "Turing 16")) {
+                        featureValue = TableTrueFalseMapping["1"] + "/" + TableTrueFalseMapping["0"];
+                        displayRawFeatureValue = true;
+                        tooltipText = "Pascal and Turing 16 have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB VRAM or more";
+                    }
+                    let td = document.createElement("td");
+                    td.append(displayRawFeatureValue ? featureValue : MakeHumanReadableForTable(featureName, featureValue));
+                    featureRow.appendChild(td);
+                    if (tooltipText !== "")
+                        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: "bottomcenter" });
                 }
-                tbody.appendChild(featureRow);
             }
+            tbody.appendChild(featureRow);
         }
-        table.appendChild(tbody);
     }
+    table.appendChild(tbody);
 }
 
 function OnLoad() {
