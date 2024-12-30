@@ -13,7 +13,7 @@ void ReportGenerator::GenerateHTML(
     }
   }
 
-  std::filesystem::path jsFilePath = rootPath / L"Reports.json";
+  std::filesystem::path jsFilePath = rootPath / L"reports.js";
   std::ofstream jsonFile;
   jsonFile.open(jsFilePath, std::ios_base::out | std::ios_base::binary);
   if (jsonFile.fail()) {

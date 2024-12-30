@@ -1,6 +1,7 @@
 import * as HTML from "./html.mjs"
 import * as Constants from "./constants.mjs"
 import * as Properties from "./properties.mjs"
+import * as FormatTable from "./format_table.mjs"
 import Globals from './globals.mjs'
 
 let SingleReport = false
@@ -324,6 +325,8 @@ function UpdateReport() {
 
     table.appendChild(tableBody)
     tableContainer.appendChild(table)
+
+    FormatTable.BuildFormatTable(report, tableContainer)
 }
 
 function UpdateOutput() {

@@ -4,13 +4,20 @@ import * as Properties from "./properties.mjs"
 export default class ReportContainer {
     #originalReport = {}
     #fields = []
+    #formats = {}
     #fieldsMap = {}
 
     #import(data) {
         this.#originalReport = data
         let dest = this.#fields
+        this.#formats = data.Formats
         function flatten(obj, prefix) {
-            if (typeof (obj) == "object" && !Array.isArray(obj)) {
+            // Formats are handled separately
+            // Need to filter out Formats from the fields
+            if (prefix == "Formats") {
+                return
+            }
+            else if (typeof (obj) == "object" && !Array.isArray(obj)) {
                 for (const property in obj) {
                     let newPrefix = prefix
                     if (newPrefix != "") newPrefix += "."
@@ -126,6 +133,10 @@ export default class ReportContainer {
         for (const field of this.#fields) {
             yield field;
         }
+    }
+
+    Formats() {
+        return this.#formats
     }
 
     HumanReadable(filterCallback) {

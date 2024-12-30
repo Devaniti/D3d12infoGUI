@@ -1,6 +1,7 @@
 import ReportContainer from './report_container.mjs';
 import * as Server from './server.mjs';
 import * as HTML from './html.mjs';
+import * as FormatTable from './format_table.mjs';
 import * as Properties from './properties.mjs';
 import Globals from './globals.mjs';
 
@@ -60,7 +61,7 @@ function SubmitAllReports() {
         adaptersMap.add(adapterKey);
 
         SubmissionIDs[retailIndex][index] = null
-        SubmitReport(Headers[retailIndex], adapter, (ID) => {
+        Server.SubmitReport(Headers[retailIndex], adapter, (ID) => {
             SubmissionIDs[retailIndex][index] = ID;
             UpdateList();
         })
@@ -132,7 +133,7 @@ function UpdateList() {
                                 link.onclick = () => {
                                     SubmissionIDs[retailIndex][index] = null;
                                     UpdateList();
-                                    SubmitReport(Headers[retailIndex], adapter, (ID) => {
+                                    Server.SubmitReport(Headers[retailIndex], adapter, (ID) => {
                                         SubmissionIDs[retailIndex][index] = ID;
                                         UpdateList();
                                     })
@@ -228,6 +229,8 @@ function UpdateReport() {
 
     table.appendChild(tableBody)
     reportContainer.appendChild(table)
+
+    FormatTable.BuildFormatTable(report, reportContainer)
 }
 
 function QueryReportIDs() {

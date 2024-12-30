@@ -34,7 +34,7 @@ int RunGUI(HINSTANCE hInstance) {
   std::vector<std::vector<char>> validReports;
 
   const Subprocess::ProcessOutput report = Subprocess::GetCommandOutput(
-      d3d12infoPath.string() + " -j --AllAdapters --EnableExperimental=OFF");
+      d3d12infoPath.string() + " --AllAdapters --JSON --Formats --EnableExperimental=OFF");
   if (report.first == 0) {
     validReports.push_back(report.second);
   }
@@ -44,7 +44,7 @@ int RunGUI(HINSTANCE hInstance) {
 
   const Subprocess::ProcessOutput previewReport =
       Subprocess::GetCommandOutput(d3d12infoPreviewPath.string() +
-                                   " -j --AllAdapters --EnableExperimental=ON");
+                                   " --AllAdapters --JSON --Formats --EnableExperimental=ON");
   if (previewReport.first == 0) {
     validReports.push_back(previewReport.second);
   }
