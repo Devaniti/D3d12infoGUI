@@ -21,7 +21,6 @@ function OnLoad() {
     ReportViewer.Initialize(true)
 
     Server.GetSubmission(queryParams.get('ID'), (reports) => {
-        console.log(reports)
         if (reports.length == 0) {
             ShowError("Invalid ID.")
             return
