@@ -26,6 +26,7 @@ $D3d12infoExecutableDestination = Join-Path -Path $FolderToArchive -ChildPath "D
 Copy-Item -Path $D3d12infoExecutable -Destination $D3d12infoExecutableDestination
 
 $ZipFile = Join-Path -Path $PackageFolder -ChildPath "D3d12infoGUI.zip"
-Compress-Archive -Path $FolderToArchive -DestinationPath $ZipFile
+# Disable compression to minimize chances of false positives in antivirus software
+Compress-Archive -CompressionLevel NoCompression -Path $FolderToArchive -DestinationPath $ZipFile
 
 Pop-Location
