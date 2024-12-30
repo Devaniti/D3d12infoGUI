@@ -217,7 +217,7 @@ function AddIconCell(row, iconName) {
     return cell
 }
 
-function SupportValue(isSupported, isRequired) {
+function GetIconName(isSupported, isRequired) {
     if (isSupported && isRequired) {
         return "required.svg"
     }
@@ -236,12 +236,12 @@ function FeatureSupportValue(formatID, format, bit1, bit2) {
     let isSupported = ((format.Support1 & bit1) == bit1) && ((format.Support2 & bit2) == bit2)
     let requiredFormat = RequiredSupport[formatID]
     let isRequired = requiredFormat && ((requiredFormat.Support1 & bit1) == bit1) && ((requiredFormat.Support2 & bit2) == bit2);
-    return SupportValue(isSupported, isRequired)
+    return GetIconName(isSupported, isRequired)
 }
 
 function FormatSupportValue(formatID, isSupported) {
     let isRequired = RequiredSupport[formatID] != undefined
-    return SupportValue(isSupported, isRequired)
+    return GetIconName(isSupported, isRequired)
 }
 
 export function BuildFormatTable(reportContainer, tableContainer) {
