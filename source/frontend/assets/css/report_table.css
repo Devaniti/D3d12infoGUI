@@ -154,9 +154,12 @@ button:disabled {
 }
 
 .FormatTable tr:nth-of-type(1) {
-    writing-mode: vertical-rl;
     position: sticky;
     top: 0;
+}
+
+.FormatTable tr:nth-of-type(1) td {
+    writing-mode: vertical-rl;
 }
 
 .FormatTable tr:nth-of-type(1) td:nth-of-type(1) {
