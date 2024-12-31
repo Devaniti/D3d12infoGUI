@@ -2,6 +2,7 @@
 import * as Properties from './properties.mjs'
 import * as Constants from './constants.mjs'
 import * as HTML from './html.mjs'
+import ArchStats from './arch_stats.mjs'
 
 let Reports = [];
 
@@ -13,6 +14,7 @@ const TableTrueFalseMapping =
 
 // TODO: some things could be consolidated? e.g. D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY, WaveLaneCountMin/Max
 const TableFeaturesShortNames = {
+    "TableMarketShare": "Market Share",
     "TableNumReports": "Number of reports",
     "TableReportUsed": "Report used for feature data",
     "TableD3d12InfoVersion": "D3d12info version",
@@ -914,6 +916,9 @@ function UpdateTableBody(table) {
         featureHeader.scope = "row";
         if (!featureName.startsWith("Table"))
             AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
+        else if (featureName == "TableMarketShare")
+            AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey. This is an underestimate.", { alignOutsideVertical: true });
+
         featureRow.appendChild(featureHeader);
 
         // TODO: merge columns that are the same across GPUs for the same vendor? maybe a bit too much
@@ -926,6 +931,23 @@ function UpdateTableBody(table) {
                     let td = document.createElement("td");
                     td.append(ReportsPerArch.get(archName).length);
                     featureRow.appendChild(td);
+                }
+                else if (featureName == "TableMarketShare") {
+                    let td = document.createElement("td");
+                    let marketShare = ArchStats[archName];
+                    console.log(archName)
+                    console.log(marketShare)
+
+                    if (marketShare == undefined)
+                    {
+                        marketShare = "~0%"
+                    }
+                    else
+                    {
+                        marketShare = Math.round(marketShare * 10000) / 100 + "%"
+                    }
+                    td.append(marketShare)
+                    featureRow.appendChild(td)
                 }
                 else if (featureName == "TableReportUsed") {
                     let td = document.createElement("td");

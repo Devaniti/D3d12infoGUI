@@ -1,3 +1,6 @@
 [submodule "source/external/D3d12info"]
 	path = source/external/D3d12info
 	url = https://github.com/sawickiap/D3d12info.git
+[submodule "source/external/SteamHWSurveyGPUArchStats"]
+	path = source/external/SteamHWSurveyGPUArchStats
+	url = https://github.com/Devaniti/SteamHWSurveyGPUArchStats.git
