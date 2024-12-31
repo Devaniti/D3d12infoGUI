@@ -2,7 +2,6 @@ import * as Properties from "./properties.mjs"
 import * as Constants from "./constants.mjs"
 
 const Headers = [
-    "Format",
     "Supported",
     "Buffer",
     "Vertex Buffer",
@@ -200,6 +199,16 @@ const RequiredSupport = {
     "115": { "Support1": 8655856, "Support2": 512 },
 }
 
+function AddVerticalCell(row, text) {
+    let cell = document.createElement("td")
+    let cellText = document.createElement("div")
+    cellText.textContent = text
+    cellText.className = "vertical-text"
+    cell.appendChild(cellText)
+    row.appendChild(cell)
+    return cell
+}
+
 function AddCell(row, text) {
     let cell = document.createElement("td")
     cell.textContent = text
@@ -255,8 +264,9 @@ export function BuildFormatTable(reportContainer, tableContainer) {
 
     const headerRow = document.createElement("tr")
 
+    AddCell(headerRow, "Format")
     for (const header of Headers) {
-        AddCell(headerRow, header)
+        AddVerticalCell(headerRow, header)
     }
 
     table.appendChild(headerRow)

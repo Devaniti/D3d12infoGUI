@@ -158,12 +158,9 @@ button:disabled {
     top: 0;
 }
 
-.FormatTable tr:nth-of-type(1) td {
+.vertical-text {
     writing-mode: vertical-rl;
-}
-
-.FormatTable tr:nth-of-type(1) td:nth-of-type(1) {
-    writing-mode: horizontal-tb;
+    white-space: pre;
 }
 
 @media (prefers-color-scheme: dark) {
