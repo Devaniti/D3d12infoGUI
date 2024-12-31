@@ -1,0 +1,2 @@
+const ArchStats = {"Unkonwn": 0.172, "RDNA3": 0.0079, "GCN4": 0.0213, "RDNA": 0.0098, "RDNA2": 0.0384, "Vega": 0.0068000000000000005, "Gen7.5": 0.002, "Gen9": 0.0023, "Gen9.5": 0.011800000000000001, "Pascal": 0.0815, "Turing 16": 0.0889, "Maxwell2": 0.0065, "Ampere": 0.25179999999999997, "Turing 20": 0.06860000000000001, "Ada": 0.2306}
+export default ArchStats
