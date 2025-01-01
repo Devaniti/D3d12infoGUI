@@ -789,6 +789,11 @@ function PrepareReportsForTable() {
         let na = Number(ra.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]);
         let rb = ReportsPerArch.get(b)[0];
         let nb = Number(rb.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]);
+        if (na == nb) {
+            let ca = ra.DXGI_ADAPTER_DESC3.Description.includes("GTX 16");
+            let cb = rb.DXGI_ADAPTER_DESC3.Description.includes("GTX 16");
+            return cb - ca;
+        }
         return na - nb;
     }
     function IntelCompare(a, b) {
@@ -935,8 +940,6 @@ function UpdateTableBody(table) {
                 else if (featureName == "TableMarketShare") {
                     let td = document.createElement("td");
                     let marketShare = ArchStats[archName];
-                    console.log(archName)
-                    console.log(marketShare)
 
                     if (marketShare == undefined)
                     {
