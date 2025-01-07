@@ -216,12 +216,16 @@ function AddCell(row, text) {
     return cell
 }
 
-function AddIconCell(row, iconName) {
-    let cell = document.createElement("td")
+function AddIcon(container, iconName) {
     let icon = document.createElement("img")
     icon.className = "cell-icon"
     icon.src = iconName
-    cell.appendChild(icon)
+    container.appendChild(icon)
+}
+
+function AddIconCell(row, iconName) {
+    let cell = document.createElement("td")
+    AddIcon(cell, iconName)
     row.appendChild(cell)
     return cell
 }
@@ -253,11 +257,35 @@ function FormatSupportValue(formatID, isSupported) {
     return GetIconName(isSupported, isRequired)
 }
 
+function AddLegend(tableContainer) {
+    let legend = document.createElement("p")
+    function AddLine(text, iconName)
+    {
+        let line = document.createElement("span")
+        line.appendChild(document.createTextNode(text))
+        if (iconName) AddIcon(line, iconName)
+        legend.appendChild(line)
+        legend.appendChild(document.createElement("br"))
+    }
+
+    AddLine("Legend:", null)
+    AddLine("Feature supported and required for FL 12_0 - ", "required.svg")
+    AddLine("Feature supported and not required for FL 12_0 - ", "supported.svg")
+    AddLine("Feature not supported - ", "unsupported.svg")
+    AddLine("Feature not supported but required for FL 12_0 - ", "error.svg")
+    tableContainer.appendChild(legend)
+}
+
 export function BuildFormatTable(reportContainer, tableContainer) {
     let formats = reportContainer.Formats()
     if (!formats) {
+        let message = document.createElement("p")
+        message.textContent = "This reports contains no format support information. Only reports from D3d12info 3.7.3 and above contain this information."
+        tableContainer.appendChild(message)
         return
     }
+
+    AddLegend(tableContainer)
 
     const table = document.createElement("table")
     table.className = "FormatTable"
