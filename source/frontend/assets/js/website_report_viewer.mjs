@@ -283,11 +283,7 @@ function AddTooltipIcon(field, cell) {
         return
     }
 
-    const tooltipIcon = document.createElement("img")
-    tooltipIcon.src = "info.svg"
-    tooltipIcon.alt = "Info"
-    tooltipIcon.className = "tooltipicon"
-    cell.appendChild(tooltipIcon)
+    HTML.AddIcon(cell, "icons.svg#icon-info", "tooltipicon")
 }
 
 function UpdateReport() {
