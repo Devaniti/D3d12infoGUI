@@ -26,8 +26,9 @@ function GetCurrentTimeAsString() {
     return "" + (new Date()).valueOf()
 }
 
-let startupTime = GetCurrentTimeAsString()
-let databaseModificationTime = startupTime
+const startupTime = GetCurrentTimeAsString()
+let databaseLastDeleteTime = startupTime
+let databaseLastModificationTime = startupTime
 
 function isObjectAllowedInDB(inObj) {
     let isAllowed = true;
@@ -89,7 +90,7 @@ api.get('/get_submission', (req, res) => {
         return
     }
     
-    let etag = req.query.ID > latestReportID ? "0" : startupTime
+    let etag = req.query.ID > latestReportID ? "0" : databaseLastDeleteTime
     if (req.headers['if-none-match'] == etag) {
         res.status(304)
         res.send()
@@ -100,7 +101,12 @@ api.get('/get_submission', (req, res) => {
         let rows = getSubmissionStatement.all([req.query.ID])
         rows = rows.map(database_common.unpackDatabaseObject)
 
-        res.header("Cache-Control", "public, max-age=120")
+        let cacheLifetime = 300
+        if (rows.length != 0) {
+            cacheLifetime = 86400
+        }
+
+        res.header("Cache-Control", "public, max-age=" + cacheLifetime)
         res.header("ETag", etag)
         res.send(JSON.stringify(rows))
     }
@@ -116,7 +122,7 @@ api.get('/get_submission', (req, res) => {
 
 const getAllSubmissionsStatement = db.prepare("SELECT * FROM Submissions")
 api.get('/get_all_submissions', (req, res) => {
-    let etag = databaseModificationTime
+    let etag = databaseLastModificationTime
     if (req.headers['if-none-match'] == etag) {
         res.status(304)
         res.send()
@@ -124,11 +130,10 @@ api.get('/get_all_submissions', (req, res) => {
     }
 
     try {
-
         let rows = getAllSubmissionsStatement.all()
         rows = rows.map(database_common.unpackDatabaseObject)
-        res.header("Cache-Control", "public, max-age=120")
-        res.header("ETag", databaseModificationTime)
+        res.header("Cache-Control", "public, max-age=300")
+        res.header("ETag", databaseLastModificationTime)
         res.send(JSON.stringify(rows))
     }
     catch (e) {
@@ -205,12 +210,12 @@ api.post('/post_submission', (req, res) => {
         let info = postSubmissionStatement.run(parameterList)
 
         res.send("" + info.lastInsertRowid)
-        databaseModificationTime = GetCurrentTimeAsString()
-        latestReportID = info.lastInsertRowid
+        databaseLastModificationTime = GetCurrentTimeAsString()
+        latestReportID = Math.max(info.lastInsertRowid, latestReportID)
 
         console.log(`Inserted submission ID ${info.lastInsertRowid} - ${newSubmission["DXGI_ADAPTER_DESC3.Description"]}`)
 
-        notification_handler.notify({
+        let notification = {
             "embeds": [
                 {
                     "title": newSubmission["DXGI_ADAPTER_DESC3.Description"],
@@ -247,7 +252,17 @@ api.post('/post_submission', (req, res) => {
                     }
                 }
             ]
-        })
+        }
+
+        if (process.env.SubmissionRemovalPassword) {
+            notification.embeds[0].fields.push({
+                "name": "Remove submission",
+                "value": `[x](https://d3d12infodb.boolka.dev/remove_submission?ID=${info.lastInsertRowid}&password=${process.env.SubmissionRemovalPassword})`,
+                "inline": true
+            })
+        }
+
+        notification_handler.notify(notification)
 
         return
     }
@@ -260,6 +275,57 @@ api.post('/post_submission', (req, res) => {
         return
     }
 })
+
+if (process.env.SubmissionRemovalPassword) {
+    const removeSubmissionStatement = db.prepare("DELETE FROM Submissions WHERE ID = ?")
+    api.get('/remove_submission', (req, res) => {
+        const password = req.query.password
+        const ID = Number(req.query.ID)
+
+        if (password !== process.env.SubmissionRemovalPassword) {
+            res.status(401)
+            res.send('Unauthorized')
+            console.log('Unauthorized removal attempt')
+            return
+        }
+
+        if (!ID) {
+            res.status(400)
+            res.send('ID is missing')
+            console.log('Failed removal attempt. ID is missing.')
+            return
+        }
+
+        if (!Number.isInteger(ID) || ID < 1 || ID > latestReportID) {
+            res.status(400)
+            res.send('ID is not a valid number')
+            console.log('Failed removal attempt. ID is not a valid number.')
+            return
+        }
+
+        try {
+            const info = removeSubmissionStatement.run(ID)
+            if (info.changes === 0) {
+                res.status(404)
+                res.send('Submission not found')
+                console.log(`Failed removal attempt. Submission not found ID ${ID}.`)
+                return
+            }
+            res.send('OK')
+            databaseLastDeleteTime = GetCurrentTimeAsString()
+            databaseLastModificationTime = databaseLastDeleteTime
+            console.log(`Removed submission ID ${ID}`)
+        }
+        catch (e) {
+            console.log('DB Error')
+            console.log(e)
+
+            res.status(500)
+            res.send('DB Error')
+            return
+        }
+    })
+}
 
 if (process.env.SSLKey && process.env.SSLCert) {
     console.log('Starting HTTPS Server')
