@@ -257,7 +257,7 @@ api.post('/post_submission', (req, res) => {
         if (process.env.SubmissionRemovalPassword) {
             notification.embeds[0].fields.push({
                 "name": "Remove submission",
-                "value": `[x](https://d3d12infodb.boolka.dev/remove_submission?ID=${info.lastInsertRowid}&password=${process.env.SubmissionRemovalPassword})`,
+                "value": `[x](https://d3d12infodbapi.boolka.dev/remove_submission?ID=${info.lastInsertRowid}&password=${process.env.SubmissionRemovalPassword})`,
                 "inline": true
             })
         }
