@@ -1,13 +1,13 @@
 const reports = [{
     "Header": {
         "Program": "D3d12info",
-        "Version": "3.7.2",
-        "Build Date": "Dec 29 2024, 22:39:03",
+        "Version": "3.7.3",
+        "Build Date": "Feb  1 2025, 04:12:34",
         "Configuration": "Debug",
         "Configuration bits": "64-bit",
-        "Generated on": "2024-12-29",
+        "Generated on": "2025-02-01",
         "Using preview Agility SDK": false,
-        "D3D12_SDK_VERSION": 614,
+        "D3D12_SDK_VERSION": 615,
         "NvAPI compiled version": "R535-developer",
         "NvAPI_GetInterfaceVersionString": "NVidia Complete Version 1.10",
         "AMD_AGS_VERSION": "6.2.0",
@@ -28,12 +28,12 @@ const reports = [{
             "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
         },
         "NvAPI_SYS_GetDriverAndBranchVersion": {
-            "pDriverVersion": 56614,
-            "szBuildBranchString": "r565_00"
+            "pDriverVersion": 56636,
+            "szBuildBranchString": "r566_31"
         },
         "NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO": {
-            "driverVersion": 56614,
-            "szBuildBranch": "r565_00",
+            "driverVersion": 56636,
+            "szBuildBranch": "r566_31",
             "bIsDCHDriver": true,
             "bIsNVIDIAStudioPackage": false,
             "bIsNVIDIAGameReadyPackage": true,
@@ -58,7 +58,7 @@ const reports = [{
                 "DedicatedVideoMemory": 6287261696,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-0001310C",
+                "AdapterLuid": "00000000-00014586",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 3,
                 "ComputePreemptionGranularity": 1
@@ -72,7 +72,7 @@ const reports = [{
                 "AvailableForReservation": 16713455616
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 9007199255730646
+                "UMDVersion": 9007199255730668
             },
             "NvPhysicalGpuHandle": {
                 "NvAPI_GPU_GetSystemType": 1,
@@ -100,11 +100,11 @@ const reports = [{
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 6287261696,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory": 0,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 33963782144,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 3643822080,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 102868774912,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 4936,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 90164830208,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 10213,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 4129660928,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 73338880,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 55,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 159252480,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 652,
                 "NvAPI_GPU_GetShaderSubPipeCount": 15,
                 "NvAPI_GPU_GetGpuCoreCount": 3840,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported": false,
@@ -114,6 +114,24 @@ const reports = [{
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::bIsExternalGpu": false,
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::rayTracingCores": 30,
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores": 120
+            },
+            "VkPhysicalDeviceProperties": {
+                "apiVersion": "1.3.289",
+                "driverVersion": 2374565888,
+                "vendorID": 4318,
+                "deviceID": 9504,
+                "deviceType": 2,
+                "deviceName": "NVIDIA GeForce RTX 3060 Laptop GPU"
+            },
+            "VkPhysicalDeviceIDProperties": {
+                "deviceUUID": "8CDAE969A86789D2D44C52E0F21264C5",
+                "driverUUID": "72AEA4DD915753659C5843C43E7C8345",
+                "deviceLUID": "8645010000000000"
+            },
+            "VkPhysicalDeviceVulkan12Properties": {
+                "driverID": 4,
+                "driverName": "NVIDIA",
+                "driverInfo": "566.36"
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
@@ -294,6 +312,9 @@ const reports = [{
                 "ExecuteIndirectTier": 11,
                 "SampleCmpGradientAndBiasSupported": true,
                 "ExtendedCommandInfoSupported": true
+            },
+            "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED": {
+                "Supported": true
             },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
@@ -2414,7 +2435,7 @@ const reports = [{
                 "DedicatedVideoMemory": 475852800,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00015187",
+                "AdapterLuid": "00000000-00015360",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 1,
                 "ComputePreemptionGranularity": 0
@@ -2428,7 +2449,7 @@ const reports = [{
                 "AvailableForReservation": 0
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 9007200042419204
+                "UMDVersion": 9007200043336710
             },
             "AGSDeviceInfo": {
                 "adapterString": "AMD Radeon(TM) Graphics",
@@ -2447,6 +2468,24 @@ const reports = [{
                 "teraFlops": 0.016896000131964684,
                 "localMemoryInBytes": 536870912,
                 "sharedMemoryInBytes": 33963782144
+            },
+            "VkPhysicalDeviceProperties": {
+                "apiVersion": "1.3.292",
+                "driverVersion": 8388925,
+                "vendorID": 4098,
+                "deviceID": 5761,
+                "deviceType": 1,
+                "deviceName": "AMD Radeon(TM) Graphics"
+            },
+            "VkPhysicalDeviceIDProperties": {
+                "deviceUUID": "00000000060000000000000000000000",
+                "driverUUID": "414D442D57494E2D4452560000000000",
+                "deviceLUID": "6053010000000000"
+            },
+            "VkPhysicalDeviceVulkan12Properties": {
+                "driverID": 1,
+                "driverName": "AMD proprietary driver",
+                "driverInfo": "24.12.1 (AMD proprietary shader compiler)"
             },
             "AGSDX12ReturnedParams::ExtensionsSupported": {
                 "intrinsics16": true,
@@ -2636,6 +2675,9 @@ const reports = [{
                 "ExecuteIndirectTier": 10,
                 "SampleCmpGradientAndBiasSupported": true,
                 "ExtendedCommandInfoSupported": true
+            },
+            "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED": {
+                "Supported": true
             },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
@@ -4698,7 +4740,7 @@ const reports = [{
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00015104",
+                "AdapterLuid": "00000000-000152D5",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
@@ -4887,6 +4929,9 @@ const reports = [{
                 "ExecuteIndirectTier": 11,
                 "SampleCmpGradientAndBiasSupported": true,
                 "ExtendedCommandInfoSupported": true
+            },
+            "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED": {
+                "Supported": true
             },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 64,
@@ -7318,13 +7363,13 @@ const reports = [{
 },{
     "Header": {
         "Program": "D3d12info",
-        "Version": "3.7.2",
-        "Build Date": "Dec 29 2024, 22:39:03",
+        "Version": "3.7.3",
+        "Build Date": "Feb  1 2025, 04:12:34",
         "Configuration": "Debug",
         "Configuration bits": "64-bit",
-        "Generated on": "2024-12-29",
+        "Generated on": "2025-02-01",
         "Using preview Agility SDK": true,
-        "D3D12_PREVIEW_SDK_VERSION": 715,
+        "D3D12_PREVIEW_SDK_VERSION": 716,
         "NvAPI compiled version": "R535-developer",
         "NvAPI_GetInterfaceVersionString": "NVidia Complete Version 1.10",
         "AMD_AGS_VERSION": "6.2.0",
@@ -7345,12 +7390,12 @@ const reports = [{
             "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
         },
         "NvAPI_SYS_GetDriverAndBranchVersion": {
-            "pDriverVersion": 56614,
-            "szBuildBranchString": "r565_00"
+            "pDriverVersion": 56636,
+            "szBuildBranchString": "r566_31"
         },
         "NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO": {
-            "driverVersion": 56614,
-            "szBuildBranch": "r565_00",
+            "driverVersion": 56636,
+            "szBuildBranch": "r566_31",
             "bIsDCHDriver": true,
             "bIsNVIDIAStudioPackage": false,
             "bIsNVIDIAGameReadyPackage": true,
@@ -7380,7 +7425,7 @@ const reports = [{
                 "DedicatedVideoMemory": 6287261696,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-0001310C",
+                "AdapterLuid": "00000000-00014586",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 3,
                 "ComputePreemptionGranularity": 1
@@ -7394,7 +7439,7 @@ const reports = [{
                 "AvailableForReservation": 16713455616
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 9007199255730646
+                "UMDVersion": 9007199255730668
             },
             "NvPhysicalGpuHandle": {
                 "NvAPI_GPU_GetSystemType": 1,
@@ -7422,11 +7467,11 @@ const reports = [{
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 6287261696,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory": 0,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 33963782144,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 3660222464,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 102868774912,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 4936,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 90164961280,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 10214,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 4082253824,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 73338880,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 55,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 159383552,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 653,
                 "NvAPI_GPU_GetShaderSubPipeCount": 15,
                 "NvAPI_GPU_GetGpuCoreCount": 3840,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported": false,
@@ -7436,6 +7481,24 @@ const reports = [{
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::bIsExternalGpu": false,
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::rayTracingCores": 30,
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores": 120
+            },
+            "VkPhysicalDeviceProperties": {
+                "apiVersion": "1.3.289",
+                "driverVersion": 2374565888,
+                "vendorID": 4318,
+                "deviceID": 9504,
+                "deviceType": 2,
+                "deviceName": "NVIDIA GeForce RTX 3060 Laptop GPU"
+            },
+            "VkPhysicalDeviceIDProperties": {
+                "deviceUUID": "8CDAE969A86789D2D44C52E0F21264C5",
+                "driverUUID": "72AEA4DD915753659C5843C43E7C8345",
+                "deviceLUID": "8645010000000000"
+            },
+            "VkPhysicalDeviceVulkan12Properties": {
+                "driverID": 4,
+                "driverName": "NVIDIA",
+                "driverInfo": "566.36"
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
@@ -7615,13 +7678,16 @@ const reports = [{
                 "RecreateAtTier": 1
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS21": {
-                "WorkGraphsTier": 11,
+                "WorkGraphsTier": 10,
                 "ExecuteIndirectTier": 11,
                 "SampleCmpGradientAndBiasSupported": true,
                 "ExtendedCommandInfoSupported": true
             },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS22": {
-                "TightAlignmentSupported": false
+            "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED": {
+                "Supported": true
+            },
+            "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT": {
+                "SupportTier": 0
             },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
@@ -7867,7 +7933,7 @@ const reports = [{
                 },
                 "10": {
                     "Support1": 318559219,
-                    "Support2": 704,
+                    "Support2": 17088,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -7890,7 +7956,7 @@ const reports = [{
                 },
                 "11": {
                     "Support1": 49599475,
-                    "Support2": 704,
+                    "Support2": 17088,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -8165,7 +8231,7 @@ const reports = [{
                 },
                 "24": {
                     "Support1": 872207347,
-                    "Support2": 704,
+                    "Support2": 17088,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -8257,7 +8323,7 @@ const reports = [{
                 },
                 "28": {
                     "Support1": 872207347,
-                    "Support2": 704,
+                    "Support2": 17088,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -9352,7 +9418,7 @@ const reports = [{
                 },
                 "87": {
                     "Support1": 872207347,
-                    "Support2": 704,
+                    "Support2": 17088,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -9375,7 +9441,7 @@ const reports = [{
                 },
                 "88": {
                     "Support1": 821351411,
-                    "Support2": 512,
+                    "Support2": 16896,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -9600,7 +9666,7 @@ const reports = [{
                 },
                 "103": {
                     "Support1": 4202742560,
-                    "Support2": 128,
+                    "Support2": 16512,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -9611,7 +9677,7 @@ const reports = [{
                 },
                 "104": {
                     "Support1": 981517088,
-                    "Support2": 128,
+                    "Support2": 16512,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -9636,7 +9702,7 @@ const reports = [{
                 },
                 "107": {
                     "Support1": 847250208,
-                    "Support2": 128,
+                    "Support2": 16512,
                     "MultisampleQualityLevels": {
                         "1": {
                             "NumQualityLevels": 1,
@@ -9774,7 +9840,7 @@ const reports = [{
                 "DedicatedVideoMemory": 475852800,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00015187",
+                "AdapterLuid": "00000000-00015360",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 1,
                 "ComputePreemptionGranularity": 0
@@ -9788,7 +9854,7 @@ const reports = [{
                 "AvailableForReservation": 0
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 9007200042419204
+                "UMDVersion": 9007200043336710
             },
             "AGSDeviceInfo": {
                 "adapterString": "AMD Radeon(TM) Graphics",
@@ -9807,6 +9873,24 @@ const reports = [{
                 "teraFlops": 0.016896000131964684,
                 "localMemoryInBytes": 536870912,
                 "sharedMemoryInBytes": 33963782144
+            },
+            "VkPhysicalDeviceProperties": {
+                "apiVersion": "1.3.292",
+                "driverVersion": 8388925,
+                "vendorID": 4098,
+                "deviceID": 5761,
+                "deviceType": 1,
+                "deviceName": "AMD Radeon(TM) Graphics"
+            },
+            "VkPhysicalDeviceIDProperties": {
+                "deviceUUID": "00000000060000000000000000000000",
+                "driverUUID": "414D442D57494E2D4452560000000000",
+                "deviceLUID": "6053010000000000"
+            },
+            "VkPhysicalDeviceVulkan12Properties": {
+                "driverID": 1,
+                "driverName": "AMD proprietary driver",
+                "driverInfo": "24.12.1 (AMD proprietary shader compiler)"
             },
             "AGSDX12ReturnedParams::ExtensionsSupported": {
                 "intrinsics16": true,
@@ -10000,8 +10084,11 @@ const reports = [{
                 "SampleCmpGradientAndBiasSupported": true,
                 "ExtendedCommandInfoSupported": true
             },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS22": {
-                "TightAlignmentSupported": false
+            "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED": {
+                "Supported": true
+            },
+            "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT": {
+                "SupportTier": 0
             },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 32,
@@ -12081,7 +12168,7 @@ const reports = [{
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00015104",
+                "AdapterLuid": "00000000-000152D5",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
@@ -12274,8 +12361,11 @@ const reports = [{
                 "SampleCmpGradientAndBiasSupported": true,
                 "ExtendedCommandInfoSupported": true
             },
-            "D3D12_FEATURE_DATA_D3D12_OPTIONS22": {
-                "TightAlignmentSupported": false
+            "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED": {
+                "Supported": true
+            },
+            "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT": {
+                "SupportTier": 0
             },
             "GetDescriptorHandleIncrementSize": {
                 "D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": 64,

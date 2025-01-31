@@ -325,6 +325,11 @@ export const EnumMappings =
         "10": "D3D12_EXECUTE_INDIRECT_TIER_1_0",
         "11": "D3D12_EXECUTE_INDIRECT_TIER_1_1"
     },
+    "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier":
+    {
+        "0": "D3D12_TIGHT_ALIGNMENT_TIER_NOT_SUPPORTED",
+        "1": "D3D12_TIGHT_ALIGNMENT_TIER_1"
+    },
     "DirectSR.VariantId":
     {
         "{8A17AE4B-B5F6-11EE-BAAF-00E1110012F6}": "Intel(R) Xe Super Sampling (XeSS) (8A17AE4B-B5F6-11EE-BAAF-00E1110012F6)",
@@ -641,7 +646,8 @@ export const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported": TrueFalseMapping,
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TrueFalseMapping
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TrueFalseMapping
 }
 
 export const RenameList = {
@@ -1099,6 +1105,8 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported",
+        "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported",
+        "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier",
         "DirectSR",
         "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes",
         "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL",
