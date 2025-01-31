@@ -1,6 +1,5 @@
 import * as Properties from "./properties.mjs"
 import * as Constants from "./constants.mjs"
-import * as HTML from "./html.mjs"
 
 const Headers = [
     "Supported",
@@ -218,7 +217,10 @@ function AddCell(row, text) {
 }
 
 function AddIcon(container, iconName) {
-    HTML.AddIcon(container, "icons.svg#" + iconName, "cell-icon")
+    let icon = document.createElement("img")
+    icon.className = "cell-icon"
+    icon.src = iconName
+    container.appendChild(icon)
 }
 
 function AddIconCell(row, iconName) {
@@ -230,16 +232,16 @@ function AddIconCell(row, iconName) {
 
 function GetIconName(isSupported, isRequired) {
     if (isSupported && isRequired) {
-        return "icon-required"
+        return "required.svg"
     }
     else if (isSupported && !isRequired) {
-        return "icon-supported"
+        return "supported.svg"
     }
     else if (!isSupported && !isRequired) {
-        return "icon-unsupported"
+        return "unsupported.svg"
     }
     else {
-        return "icon-error"
+        return "error.svg"
     }
 }
 
@@ -257,21 +259,20 @@ function FormatSupportValue(formatID, isSupported) {
 
 function AddLegend(tableContainer) {
     let legend = document.createElement("p")
-    function AddLine(text, iconName) {
+    function AddLine(text, iconName)
+    {
         let line = document.createElement("span")
         line.appendChild(document.createTextNode(text))
-        if (iconName) {
-            AddIcon(line, iconName)
-        }
+        if (iconName) AddIcon(line, iconName)
         legend.appendChild(line)
         legend.appendChild(document.createElement("br"))
     }
 
     AddLine("Legend:", null)
-    AddLine("Feature supported and required for FL 12_0 - ", "icon-required")
-    AddLine("Feature supported and not required for FL 12_0 - ", "icon-supported")
-    AddLine("Feature not supported - ", "icon-unsupported")
-    AddLine("Feature not supported but required for FL 12_0 - ", "icon-error")
+    AddLine("Feature supported and required for FL 12_0 - ", "required.svg")
+    AddLine("Feature supported and not required for FL 12_0 - ", "supported.svg")
+    AddLine("Feature not supported - ", "unsupported.svg")
+    AddLine("Feature not supported but required for FL 12_0 - ", "error.svg")
     tableContainer.appendChild(legend)
 }
 
