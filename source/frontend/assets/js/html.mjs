@@ -7,15 +7,6 @@ export function ClearElement(element) {
     }
 }
 
-export function AddIcon(element, iconPath, classToAdd) {
-    let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-    svg.setAttribute('class', classToAdd)
-    let use = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-    use.setAttributeNS("http://www.w3.org/1999/xlink", 'href', iconPath);
-    svg.appendChild(use)
-    element.appendChild(svg)
-}
-
 function AddTooltip(field, cell) {
     const tooltipText = Constants.PropertyTooltips[field]
     if (tooltipText == null) {
@@ -34,7 +25,11 @@ function AddTooltipIcon(field, cell) {
         return
     }
 
-    AddIcon(cell, "icons.svg#icon-info", "cell-icon")
+    const tooltipIcon = document.createElement("img")
+    tooltipIcon.src = "info.svg"
+    tooltipIcon.alt = "Info"
+    tooltipIcon.className = "tooltipicon"
+    cell.appendChild(tooltipIcon)
 }
 
 export function WriteObjectToTable(obj, table) {
