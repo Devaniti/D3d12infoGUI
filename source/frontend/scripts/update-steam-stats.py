@@ -22,6 +22,8 @@ arch_name_mapping = {
 "Generation 8.0" : "Gen8",
 "Generation 9.0" : "Gen9",
 "Generation 9.5" : "Gen9.5",
+"Generation 12.1/Generation 12.2" : "Xe",
+"Generation 12.2" : "Xe",
 "Kepler" : "Kepler",
 "Kepler 2.0" : "Kepler",
 "Maxwell" : "Maxwell1",
@@ -37,6 +39,7 @@ arch_name_mapping = {
 "Tesla 2.0" : "Tesla2",
 "Turing" : "Turing 20",
 "Turing 16" : "Turing 16",
+"X1" : "X1",
 "Unknown" : "Unkonwn",
 }
 
@@ -46,12 +49,14 @@ os.system("git -C ../../external/SteamHWSurveyGPUArchStats pull")
 
 converted_arch_stats = {}
 
-with open('../../external/SteamHWSurveyGPUArchStats/arch_stats_latest.csv', newline='') as csvfile:
+with open('../../external/SteamHWSurveyGPUArchStats/arch_stats_dx12_latest.csv', newline='') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
         if row[0] == "gpu architecture":
             continue
         arch = row[0]
+        if (arch not in arch_name_mapping):
+            print(f"Unknown architecture: {arch}")
         arch = arch_name_mapping.get(arch, arch)
         percentage = float(row[1])
         converted_arch_stats.setdefault(arch, 0.0)

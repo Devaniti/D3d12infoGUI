@@ -922,7 +922,7 @@ function UpdateTableBody(table) {
         if (!featureName.startsWith("Table"))
             AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
         else if (featureName == "TableMarketShare")
-            AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey. This is an underestimate.", { alignOutsideVertical: true });
+            AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 System. This is an underestimate.", { alignOutsideVertical: true });
 
         featureRow.appendChild(featureHeader);
 
