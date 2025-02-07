@@ -679,6 +679,7 @@ function SpliceReportByArchAndVendor(reportContainer) {
             Turing: 0x00000160,
             Ampere: 0x00000170,
             Ada: 0x00000190,
+            Blackwell: 0x000001B0
         };
 
         function GetKeyByValue(object, value) {
