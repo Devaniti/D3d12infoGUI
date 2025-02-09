@@ -1,9 +1,9 @@
+import * as FormatTable from './format_table.mjs';
+import Globals from './globals.mjs';
+import * as HTML from './html.mjs';
+import * as Properties from './properties.mjs';
 import ReportContainer from './report_container.mjs';
 import * as Server from './server.mjs';
-import * as HTML from './html.mjs';
-import * as FormatTable from './format_table.mjs';
-import * as Properties from './properties.mjs';
-import Globals from './globals.mjs';
 
 const SubmissionIDs = [[], []]
 
@@ -69,6 +69,40 @@ function SubmitAllReports() {
     UpdateList()
 }
 
+function AddSubmitAllButton(tableBody, tableWidth) {
+    const lastRow = document.createElement("tr")
+    lastRow.style.textAlign = "center"
+
+    const cell = document.createElement("td")
+    cell.colSpan = tableWidth
+
+    let submitButton = document.createElement("button")
+    submitButton.classList.add("gui-tooltip")
+    submitButton.disabled = !HaveUnsubmittedReports()
+    submitButton.onclick = () => {
+        SubmitAllReports()
+    };
+
+    const buttonText = document.createTextNode("Submit all reports to online database")
+    submitButton.appendChild(buttonText)
+
+    let tooltipIcon = document.createElement("img")
+    tooltipIcon.classList.add("tooltipicon")
+    tooltipIcon.style = "filter: brightness(1.5);"
+    tooltipIcon.src = "info.svg"
+    submitButton.appendChild(tooltipIcon)
+
+    const tooltipText = document.createElement("div")
+    tooltipText.classList.add("gui-tooltiptext")
+    tooltipText.style = "width: 25vw;left: 50%;transform: translateX(-50%)"
+    tooltipText.textContent = "Allows other users to see capabilities of your GPU and sharing of your reports via link to the online database. Those reports don't contain any personal information, you can see full contents of those reports on this page before submitting."
+    submitButton.appendChild(tooltipText)
+
+    cell.appendChild(submitButton)
+    lastRow.appendChild(cell)
+    tableBody.appendChild(lastRow)
+}
+
 function UpdateList() {
     const listContainer = document.getElementById("ListContainer")
 
@@ -87,20 +121,9 @@ function UpdateList() {
     if (IsPreviewAvailable())
         header.push("Header.Using preview Agility SDK")
 
-    header.push("Online link")
+    header.push("Database status")
 
     const firstRow = document.createElement("tr")
-    const cell = document.createElement("td")
-    cell.colSpan = header.length
-    let submitButton = document.createElement("button")
-    submitButton.disabled = !HaveUnsubmittedReports();
-    submitButton.onclick = () => {
-        SubmitAllReports()
-    }
-    const buttonText = document.createTextNode("Submit all reports")
-    submitButton.appendChild(buttonText)
-    cell.appendChild(submitButton)
-    firstRow.appendChild(cell)
     tableBody.appendChild(firstRow)
 
     const secondRow = document.createElement("tr")
@@ -117,7 +140,7 @@ function UpdateList() {
         header.forEach(collumn => {
             const cell = document.createElement("td")
             switch (collumn) {
-                case "Online link":
+                case "Database status":
                     switch (SubmissionIDs[retailIndex][index]) {
                         case null:
                             {
@@ -129,7 +152,7 @@ function UpdateList() {
                             {
                                 let link = document.createElement("a")
                                 link.href = "#"
-                                link.textContent = "Submit"
+                                link.textContent = "Not present, click here to submit"
                                 link.onclick = () => {
                                     SubmissionIDs[retailIndex][index] = null;
                                     UpdateList();
@@ -170,6 +193,8 @@ function UpdateList() {
         row.classList.add("clickableRow")
         tableBody.appendChild(row)
     });
+
+    AddSubmitAllButton(tableBody, header.length)
 
     table.appendChild(tableBody)
     listContainer.appendChild(table)
