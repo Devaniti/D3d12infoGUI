@@ -93,10 +93,11 @@ export default class ReportContainer {
             }
 
             if (aIndex == bIndex) {
-                // Extract the numeric parts (if any)
-                const aNum = parseInt(a.name.match(/\d+/), 10) || 0;
-                const bNum = parseInt(b.name.match(/\d+/), 10) || 0;
-                // Compare the numeric parts
+                // Extract the array indexes (if any)
+                const aNum = parseInt(a.name.match(/\[(\d+)\]/)?.[1], 10) || 0;
+                const bNum = parseInt(b.name.match(/\[(\d+)\]/)?.[1], 10) || 0;
+
+                // Compare the array index
                 if (aNum !== bNum) {
                     return aNum - bNum;
                 }

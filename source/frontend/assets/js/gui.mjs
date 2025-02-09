@@ -152,7 +152,7 @@ function UpdateList() {
                             {
                                 let link = document.createElement("a")
                                 link.href = "#"
-                                link.textContent = "Not present, click here to submit"
+                                link.textContent = "Click here to submit"
                                 link.onclick = () => {
                                     SubmissionIDs[retailIndex][index] = null;
                                     UpdateList();

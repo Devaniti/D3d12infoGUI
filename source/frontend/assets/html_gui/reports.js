@@ -1,17 +1,19 @@
 const reports = [{
     "Header": {
         "Program": "D3d12info",
-        "Version": "3.7.3",
-        "Build Date": "Feb  1 2025, 04:12:34",
+        "Version": "3.9.0",
+        "Build Date": "Feb  9 2025, 19:13:22",
         "Configuration": "Debug",
         "Configuration bits": "64-bit",
-        "Generated on": "2025-02-01",
+        "Generated on": "2025-02-09",
         "Using preview Agility SDK": false,
         "D3D12_SDK_VERSION": 615,
-        "NvAPI compiled version": "R535-developer",
+        "NvAPI compiled version": "R570",
+        "NVAPI_SDK_VERSION": 57218,
         "NvAPI_GetInterfaceVersionString": "NVidia Complete Version 1.10",
         "AMD_AGS_VERSION": "6.2.0",
         "agsGetVersionNumber": 25174016,
+        "AMD device_info compiled version": "2024-09-24",
         "Intel GPU Detect compiled version": "2023-07-18"
     },
     "SystemInfo": {
@@ -28,22 +30,18 @@ const reports = [{
             "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
         },
         "NvAPI_SYS_GetDriverAndBranchVersion": {
-            "pDriverVersion": 56636,
-            "szBuildBranchString": "r566_31"
+            "pDriverVersion": 57216,
+            "szBuildBranchString": "r571_57"
         },
         "NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO": {
-            "driverVersion": 56636,
-            "szBuildBranch": "r566_31",
+            "driverVersion": 57216,
+            "szBuildBranch": "r571_57",
             "bIsDCHDriver": true,
             "bIsNVIDIAStudioPackage": false,
             "bIsNVIDIAGameReadyPackage": true,
             "bIsNVIDIARTXProductionBranchPackage": false,
             "bIsNVIDIARTXNewFeatureBranchPackage": false,
-            "szBuildBaseBranch": "R565"
-        },
-        "AGSGPUInfo": {
-            "driverVersion": "",
-            "radeonSoftwareVersion": ""
+            "szBuildBaseBranch": "R570"
         }
     },
     "Adapters": [
@@ -58,7 +56,7 @@ const reports = [{
                 "DedicatedVideoMemory": 6287261696,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00014586",
+                "AdapterLuid": "00000000-000141CB",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 3,
                 "ComputePreemptionGranularity": 1
@@ -72,9 +70,10 @@ const reports = [{
                 "AvailableForReservation": 16713455616
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 9007199255730668
+                "UMDVersion": 9007199255731248
             },
             "NvPhysicalGpuHandle": {
+                "adapterType": 1,
                 "NvAPI_GPU_GetSystemType": 1,
                 "NvAPI_GPU_GetFullName": "NVIDIA GeForce RTX 3060 Laptop GPU",
                 "NvAPI_GPU_GetPCIIdentifiers - pDeviceID": 622858462,
@@ -100,11 +99,11 @@ const reports = [{
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 6287261696,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory": 0,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 33963782144,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 4129660928,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 73338880,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 55,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 159252480,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 652,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 4514988032,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 882720768,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 615,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 1292816384,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 2481,
                 "NvAPI_GPU_GetShaderSubPipeCount": 15,
                 "NvAPI_GPU_GetGpuCoreCount": 3840,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported": false,
@@ -116,8 +115,8 @@ const reports = [{
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores": 120
             },
             "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.289",
-                "driverVersion": 2374565888,
+                "apiVersion": "1.4.303",
+                "driverVersion": 2399404032,
                 "vendorID": 4318,
                 "deviceID": 9504,
                 "deviceType": 2,
@@ -125,13 +124,13 @@ const reports = [{
             },
             "VkPhysicalDeviceIDProperties": {
                 "deviceUUID": "8CDAE969A86789D2D44C52E0F21264C5",
-                "driverUUID": "72AEA4DD915753659C5843C43E7C8345",
-                "deviceLUID": "8645010000000000"
+                "driverUUID": "58807023C3E95733BE7059CFF8192500",
+                "deviceLUID": "CB41010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
                 "driverID": 4,
                 "driverName": "NVIDIA",
-                "driverInfo": "566.36"
+                "driverInfo": "572.16"
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
@@ -346,7 +345,11 @@ const reports = [{
             "NvAPI_D3D12_GetRaytracingCaps": {
                 "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING": 0,
                 "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_OPACITY_MICROMAP": 1,
-                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP": 1
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP": 0,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_CLUSTER_OPERATIONS": 1,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_PARTITIONED_TLAS": 1,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_SPHERES": 0,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_LINEAR_SWEPT_SPHERES": 0
             },
             "NvAPI_D3D12_QueryWorkstationFeatureProperties": {
                 "NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported": false,
@@ -355,6 +358,152 @@ const reports = [{
             "NvAPI_D3D12_GetNeedsAppFPBlendClamping": {
                 "pAppClampNeeded": false
             },
+            "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties": [
+                {
+                    "version": 65564,
+                    "inputType": 0,
+                    "inputInterpretation": 0,
+                    "matrixInterpretation": 0,
+                    "biasInterpretation": 0,
+                    "resultType": 0,
+                    "transpose": true
+                },
+                {
+                    "version": 65564,
+                    "inputType": 3,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 1,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 11,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 7,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 12,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 7,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 12,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 3,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 11,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 0,
+                    "inputInterpretation": 13,
+                    "matrixInterpretation": 13,
+                    "biasInterpretation": 0,
+                    "resultType": 0,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 0,
+                    "inputInterpretation": 14,
+                    "matrixInterpretation": 14,
+                    "biasInterpretation": 0,
+                    "resultType": 0,
+                    "transpose": false
+                }
+            ],
             "Formats": {
                 "0": {
                     "Support1": 1,
@@ -2227,7 +2376,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "100": {
-                    "Support1": 578868000,
+                    "Support1": 713085728,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -2238,7 +2387,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "101": {
-                    "Support1": 41943840,
+                    "Support1": 713032480,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -2249,7 +2398,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "102": {
-                    "Support1": 41947936,
+                    "Support1": 713036576,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -2307,7 +2456,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "108": {
-                    "Support1": 41943840,
+                    "Support1": 578814752,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -2318,7 +2467,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "109": {
-                    "Support1": 41943840,
+                    "Support1": 578814752,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -2435,7 +2584,7 @@ const reports = [{
                 "DedicatedVideoMemory": 475852800,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00015360",
+                "AdapterLuid": "00000000-00015297",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 1,
                 "ComputePreemptionGranularity": 0
@@ -2469,6 +2618,24 @@ const reports = [{
                 "localMemoryInBytes": 536870912,
                 "sharedMemoryInBytes": 33963782144
             },
+            "AMD GDT_GfxCardInfo": {
+                "asicType": 43,
+                "generation": 8,
+                "APU": true,
+                "CALName": "gfx1035",
+                "MarketingName": "AMD Radeon(TM) Graphics"
+            },
+            "AMD GDT_DeviceInfo": {
+                "NumShaderEngines": 1,
+                "MaxWavePerSIMD": 16,
+                "ClocksPrim": 1,
+                "NumSQMaxCounters": 16,
+                "NumPrimPipes": 1,
+                "WaveSize": 64,
+                "NumSHPerSE": 2,
+                "NumCUPerSH": 6,
+                "NumSIMDPerCU": 2
+            },
             "VkPhysicalDeviceProperties": {
                 "apiVersion": "1.3.292",
                 "driverVersion": 8388925,
@@ -2480,7 +2647,7 @@ const reports = [{
             "VkPhysicalDeviceIDProperties": {
                 "deviceUUID": "00000000060000000000000000000000",
                 "driverUUID": "414D442D57494E2D4452560000000000",
-                "deviceLUID": "6053010000000000"
+                "deviceLUID": "9752010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
                 "driverID": 1,
@@ -4740,7 +4907,7 @@ const reports = [{
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-000152D5",
+                "AdapterLuid": "00000000-0001520A",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
@@ -7363,17 +7530,19 @@ const reports = [{
 },{
     "Header": {
         "Program": "D3d12info",
-        "Version": "3.7.3",
-        "Build Date": "Feb  1 2025, 04:12:34",
+        "Version": "3.9.0",
+        "Build Date": "Feb  9 2025, 19:13:22",
         "Configuration": "Debug",
         "Configuration bits": "64-bit",
-        "Generated on": "2025-02-01",
+        "Generated on": "2025-02-09",
         "Using preview Agility SDK": true,
         "D3D12_PREVIEW_SDK_VERSION": 716,
-        "NvAPI compiled version": "R535-developer",
+        "NvAPI compiled version": "R570",
+        "NVAPI_SDK_VERSION": 57218,
         "NvAPI_GetInterfaceVersionString": "NVidia Complete Version 1.10",
         "AMD_AGS_VERSION": "6.2.0",
         "agsGetVersionNumber": 25174016,
+        "AMD device_info compiled version": "2024-09-24",
         "Intel GPU Detect compiled version": "2023-07-18"
     },
     "SystemInfo": {
@@ -7390,22 +7559,18 @@ const reports = [{
             "DXGI_FEATURE_PRESENT_ALLOW_TEARING": true
         },
         "NvAPI_SYS_GetDriverAndBranchVersion": {
-            "pDriverVersion": 56636,
-            "szBuildBranchString": "r566_31"
+            "pDriverVersion": 57216,
+            "szBuildBranchString": "r571_57"
         },
         "NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO": {
-            "driverVersion": 56636,
-            "szBuildBranch": "r566_31",
+            "driverVersion": 57216,
+            "szBuildBranch": "r571_57",
             "bIsDCHDriver": true,
             "bIsNVIDIAStudioPackage": false,
             "bIsNVIDIAGameReadyPackage": true,
             "bIsNVIDIARTXProductionBranchPackage": false,
             "bIsNVIDIARTXNewFeatureBranchPackage": false,
-            "szBuildBaseBranch": "R565"
-        },
-        "AGSGPUInfo": {
-            "driverVersion": "",
-            "radeonSoftwareVersion": ""
+            "szBuildBaseBranch": "R570"
         },
         "D3D12EnableExperimentalFeatures": [
             "D3D12ExperimentalShaderModels",
@@ -7425,7 +7590,7 @@ const reports = [{
                 "DedicatedVideoMemory": 6287261696,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00014586",
+                "AdapterLuid": "00000000-000141CB",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 3,
                 "ComputePreemptionGranularity": 1
@@ -7439,9 +7604,10 @@ const reports = [{
                 "AvailableForReservation": 16713455616
             },
             "CheckInterfaceSupport": {
-                "UMDVersion": 9007199255730668
+                "UMDVersion": 9007199255731248
             },
             "NvPhysicalGpuHandle": {
+                "adapterType": 1,
                 "NvAPI_GPU_GetSystemType": 1,
                 "NvAPI_GPU_GetFullName": "NVIDIA GeForce RTX 3060 Laptop GPU",
                 "NvAPI_GPU_GetPCIIdentifiers - pDeviceID": 622858462,
@@ -7467,11 +7633,11 @@ const reports = [{
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory": 6287261696,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory": 0,
                 "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory": 33963782144,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 4082253824,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 73338880,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 55,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 159383552,
-                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 653,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory": 4483604480,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize": 882720768,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount": 615,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize": 1292947456,
+                "NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount": 2482,
                 "NvAPI_GPU_GetShaderSubPipeCount": 15,
                 "NvAPI_GPU_GetGpuCoreCount": 3840,
                 "NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported": false,
@@ -7483,8 +7649,8 @@ const reports = [{
                 "NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores": 120
             },
             "VkPhysicalDeviceProperties": {
-                "apiVersion": "1.3.289",
-                "driverVersion": 2374565888,
+                "apiVersion": "1.4.303",
+                "driverVersion": 2399404032,
                 "vendorID": 4318,
                 "deviceID": 9504,
                 "deviceType": 2,
@@ -7492,13 +7658,13 @@ const reports = [{
             },
             "VkPhysicalDeviceIDProperties": {
                 "deviceUUID": "8CDAE969A86789D2D44C52E0F21264C5",
-                "driverUUID": "72AEA4DD915753659C5843C43E7C8345",
-                "deviceLUID": "8645010000000000"
+                "driverUUID": "58807023C3E95733BE7059CFF8192500",
+                "deviceLUID": "CB41010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
                 "driverID": 4,
                 "driverName": "NVIDIA",
-                "driverInfo": "566.36"
+                "driverInfo": "572.16"
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS": {
                 "DoublePrecisionFloatShaderOps": true,
@@ -7675,7 +7841,7 @@ const reports = [{
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS20": {
                 "ComputeOnlyWriteWatchSupported": true,
-                "RecreateAtTier": 1
+                "RecreateAtTier": 0
             },
             "D3D12_FEATURE_DATA_D3D12_OPTIONS21": {
                 "WorkGraphsTier": 10,
@@ -7751,7 +7917,11 @@ const reports = [{
             "NvAPI_D3D12_GetRaytracingCaps": {
                 "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING": 0,
                 "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_OPACITY_MICROMAP": 1,
-                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP": 1
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP": 0,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_CLUSTER_OPERATIONS": 1,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_PARTITIONED_TLAS": 1,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_SPHERES": 0,
+                "NVAPI_D3D12_RAYTRACING_CAPS_TYPE_LINEAR_SWEPT_SPHERES": 0
             },
             "NvAPI_D3D12_QueryWorkstationFeatureProperties": {
                 "NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported": false,
@@ -7760,6 +7930,152 @@ const reports = [{
             "NvAPI_D3D12_GetNeedsAppFPBlendClamping": {
                 "pAppClampNeeded": false
             },
+            "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties": [
+                {
+                    "version": 65564,
+                    "inputType": 0,
+                    "inputInterpretation": 0,
+                    "matrixInterpretation": 0,
+                    "biasInterpretation": 0,
+                    "resultType": 0,
+                    "transpose": true
+                },
+                {
+                    "version": 65564,
+                    "inputType": 3,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 1,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 11,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 7,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 12,
+                    "matrixInterpretation": 3,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 7,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 7,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 12,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 3,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 5,
+                    "inputInterpretation": 3,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 9,
+                    "inputInterpretation": 11,
+                    "matrixInterpretation": 7,
+                    "biasInterpretation": 5,
+                    "resultType": 5,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 0,
+                    "inputInterpretation": 13,
+                    "matrixInterpretation": 13,
+                    "biasInterpretation": 0,
+                    "resultType": 0,
+                    "transpose": false
+                },
+                {
+                    "version": 65564,
+                    "inputType": 0,
+                    "inputInterpretation": 14,
+                    "matrixInterpretation": 14,
+                    "biasInterpretation": 0,
+                    "resultType": 0,
+                    "transpose": false
+                }
+            ],
             "Formats": {
                 "0": {
                     "Support1": 1,
@@ -9632,7 +9948,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "100": {
-                    "Support1": 578868000,
+                    "Support1": 713085728,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -9643,7 +9959,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "101": {
-                    "Support1": 41943840,
+                    "Support1": 713032480,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -9654,7 +9970,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "102": {
-                    "Support1": 41947936,
+                    "Support1": 713036576,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -9712,7 +10028,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "108": {
-                    "Support1": 41943840,
+                    "Support1": 578814752,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -9723,7 +10039,7 @@ const reports = [{
                     "PlaneCount": 1
                 },
                 "109": {
-                    "Support1": 41943840,
+                    "Support1": 578814752,
                     "Support2": 128,
                     "MultisampleQualityLevels": {
                         "1": {
@@ -9840,7 +10156,7 @@ const reports = [{
                 "DedicatedVideoMemory": 475852800,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-00015360",
+                "AdapterLuid": "00000000-00015297",
                 "Flags": 44,
                 "GraphicsPreemptionGranularity": 1,
                 "ComputePreemptionGranularity": 0
@@ -9874,6 +10190,24 @@ const reports = [{
                 "localMemoryInBytes": 536870912,
                 "sharedMemoryInBytes": 33963782144
             },
+            "AMD GDT_GfxCardInfo": {
+                "asicType": 43,
+                "generation": 8,
+                "APU": true,
+                "CALName": "gfx1035",
+                "MarketingName": "AMD Radeon(TM) Graphics"
+            },
+            "AMD GDT_DeviceInfo": {
+                "NumShaderEngines": 1,
+                "MaxWavePerSIMD": 16,
+                "ClocksPrim": 1,
+                "NumSQMaxCounters": 16,
+                "NumPrimPipes": 1,
+                "WaveSize": 64,
+                "NumSHPerSE": 2,
+                "NumCUPerSH": 6,
+                "NumSIMDPerCU": 2
+            },
             "VkPhysicalDeviceProperties": {
                 "apiVersion": "1.3.292",
                 "driverVersion": 8388925,
@@ -9885,7 +10219,7 @@ const reports = [{
             "VkPhysicalDeviceIDProperties": {
                 "deviceUUID": "00000000060000000000000000000000",
                 "driverUUID": "414D442D57494E2D4452560000000000",
-                "deviceLUID": "6053010000000000"
+                "deviceLUID": "9752010000000000"
             },
             "VkPhysicalDeviceVulkan12Properties": {
                 "driverID": 1,
@@ -12168,7 +12502,7 @@ const reports = [{
                 "DedicatedVideoMemory": 0,
                 "DedicatedSystemMemory": 0,
                 "SharedSystemMemory": 33963782144,
-                "AdapterLuid": "00000000-000152D5",
+                "AdapterLuid": "00000000-0001520A",
                 "Flags": 46,
                 "GraphicsPreemptionGranularity": 4,
                 "ComputePreemptionGranularity": 4
