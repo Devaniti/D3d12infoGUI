@@ -67,7 +67,7 @@ td:nth-of-type(even) {
 
 button {
     margin: auto;
-    width: 9.2em;
+    width: 11.5em;
     background-color: #029c07;
     border: none;
     color: white;
@@ -77,7 +77,7 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 
 button:disabled {
