@@ -78,6 +78,7 @@ a:hover {
 
 .gui-tooltip {
     position: relative;
+    cursor: help;
 }
 
 .gui-tooltip .gui-tooltiptext {

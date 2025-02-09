@@ -13,6 +13,26 @@ export const NVAPI_Status =
     "-160": "SETTING_NOT_FOUND",
 }
 
+export const NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE =
+{
+    "0": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_FLOAT16",
+    "1": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_FLOAT32",
+    "2": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_FLOAT64",
+    "3": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_SINT8",
+    "4": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_SINT16",
+    "5": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_SINT32",
+    "6": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_SINT64",
+    "7": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_UINT8",
+    "8": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_UINT16",
+    "9": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_UINT32",
+    "10": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_UINT64",
+    "11": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_SINT8_PACKED",
+    "12": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_UINT8_PACKED",
+    "13": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_FLOAT_E4M3",
+    "14": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_FLOAT_E5M2",
+    "2147483647": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_INVALID"
+}
+
 export const DXGI_FORMAT =
 {
     "0": "DXGI_FORMAT_UNKNOWN",
@@ -390,7 +410,8 @@ export const EnumMappings =
         "336": "GV110",
         "352": "TU100",
         "368": "GA100",
-        "400": "AD100"
+        "400": "AD100",
+        "432": "GB200"
     },
     "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id":
     {
@@ -493,6 +514,8 @@ export const EnumMappings =
         "402": "AD102",
         "403": "AD103",
         "404": "AD104",
+        
+        "434": "GB202",
     },
     "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_NVIDIA_RTX_VR_READY)": NVAPI_Status,
     "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_PROVIZ)": NVAPI_Status,
@@ -502,6 +525,11 @@ export const EnumMappings =
         "1": "DEFERRED",
         "2": "IMMEDIATE"
     },
+    "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.inputType": NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE,
+    "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.inputInterpretation": NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE,
+    "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.matrixInterpretation": NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE,
+    "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.biasInterpretation": NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE,
+    "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.resultType": NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE,
     "AGSDeviceInfo.asicFamily":
     {
         "0": "UNKNONW",
@@ -628,6 +656,7 @@ export const EnumMappings =
     "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported": TrueFalseMapping,
     "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - supported": TrueFalseMapping,
     "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded": TrueFalseMapping,
+    "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.transpose": TrueFalseMapping,
     "AGSDeviceInfo.isAPU": TrueFalseMapping,
     "AGSDeviceInfo.isExternal": TrueFalseMapping,
     "AMD GDT_GfxCardInfo.APU": TrueFalseMapping,
@@ -761,6 +790,13 @@ export const BitFlagsMappings =
         "16": "DXGI_ADAPTER_FLAG3_SUPPORT_NON_MONITORED_FENCES",
         "32": "DXGI_ADAPTER_FLAG3_KEYED_MUTEX_CONFORMANCE"
     },
+    "NvPhysicalGpuHandle.adapterType":
+    {
+        "0": "NV_ADAPTER_TYPE_UNKNOWN",
+        "1": "NV_ADAPTER_TYPE_WDDM",
+        "2": "NV_ADAPTER_TYPE_SLI",
+        "4": "NV_ADAPTER_TYPE_TCC",
+    },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.MinPrecisionSupport":
     {
         "0": "D3D12_SHADER_MIN_PRECISION_SUPPORT_NONE",
@@ -798,6 +834,26 @@ export const BitFlagsMappings =
         "8": "DSR_SUPERRES_VARIANT_FLAG_SUPPORTS_REACTIVE_MASK",
         "16": "DSR_SUPERRES_VARIANT_FLAG_SUPPORTS_SHARPNESS",
         "32": "DSR_SUPERRES_VARIANT_FLAG_DISALLOWS_REGION_OFFSETS",
+    },
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_CLUSTER_OPERATIONS":
+    {
+        "0": "NVAPI_D3D12_RAYTRACING_CLUSTER_OPERATIONS_CAP_NONE",
+        "1": "NVAPI_D3D12_RAYTRACING_CLUSTER_OPERATIONS_CAP_STANDARD"
+    },
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_PARTITIONED_TLAS":
+    {
+        "0": "NVAPI_D3D12_RAYTRACING_PARTITIONED_TLAS_CAP_NONE",
+        "1": "NVAPI_D3D12_RAYTRACING_PARTITIONED_TLAS_CAP_STANDARD"
+    },
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_SPHERES":
+    {
+        "0": "NVAPI_D3D12_RAYTRACING_SPHERES_CAP_NONE",
+        "1": "NVAPI_D3D12_RAYTRACING_SPHERES_CAP_STANDARD"
+    },
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_LINEAR_SWEPT_SPHERES":
+    {
+        "0": "NVAPI_D3D12_RAYTRACING_LINEAR_SWEPT_SPHERES_CAP_NONE",
+        "1": "NVAPI_D3D12_RAYTRACING_LINEAR_SWEPT_SPHERES_CAP_STANDARD"
     }
 }
 
@@ -876,10 +932,12 @@ export const PropertyHumanReadableNames =
     "Header.Generated on": "Report generated on",
     "Header.Using preview Agility SDK": "Using preview Agility SDK",
     "Header.D3D12_SDK_VERSION": "D3D12_SDK_VERSION",
-    "Header.NvAPI compiled version": "NVAPI library version",
+    "Header.NvAPI compiled version": "Compile time NVAPI library version",
+    "Header.NVAPI_SDK_VERSION": "Runtime NVAPI_SDK_VERSION",
     "Header.NvAPI_GetInterfaceVersionString": "NVAPI interface version",
     "Header.AMD_AGS_VERSION": "AMD_AGS_VERSION",
     "Header.agsGetVersionNumber": "AMD AGS agsGetVersionNumber",
+    "Header.AMD device_info compiled version": "AMD device_info library version",
     "Header.Intel GPU Detect compiled version": "Intel GPU Detect library version",
     "SystemInfo.OS Info.Windows version": "Windows version",
     "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory": "Physically installed RAM",
@@ -924,9 +982,11 @@ const PropertiesOrder =
         "Header.Configuration",
         "Header.Configuration bits",
         "Header.NvAPI compiled version",
+        "Header.NVAPI_SDK_VERSION",
         "Header.NvAPI_GetInterfaceVersionString",
         "Header.AMD_AGS_VERSION",
         "Header.agsGetVersionNumber",
+        "Header.AMD device_info compiled version",
         "Header.Intel GPU Detect compiled version",
         "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory",
         "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys",
@@ -966,6 +1026,7 @@ const PropertiesOrder =
         "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER",
         "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_RTV",
         "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_DSV",
+        "NvPhysicalGpuHandle.adapterType",
         "NvPhysicalGpuHandle.NvAPI_GPU_GetSystemType",
         "NvPhysicalGpuHandle.NvAPI_GPU_GetFullName",
         "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID",
@@ -1214,10 +1275,15 @@ const PropertiesOrder =
         "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING",
         "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_OPACITY_MICROMAP",
         "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP",
+        "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_CLUSTER_OPERATIONS",
+        "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_PARTITIONED_TLAS",
+        "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_SPHERES",
+        "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_LINEAR_SWEPT_SPHERES",
         "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported",
         "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - supported",
         "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - rdmaHeapSize",
-        "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded"
+        "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties"
     ]
 
 const SubPropertiesOrder =
@@ -1226,7 +1292,14 @@ const SubPropertiesOrder =
         "DirectSR.VariantName",
         "DirectSR.Flags",
         "DirectSR.OptimizationRankings",
-        "DirectSR.OptimalTargetFormat"
+        "DirectSR.OptimalTargetFormat",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.version",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.inputType",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.inputInterpretation",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.matrixInterpretation",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.biasInterpretation",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.resultType",
+        "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.transpose"
     ]
 
 export const PropertiesFilterWhitelist = new Set([

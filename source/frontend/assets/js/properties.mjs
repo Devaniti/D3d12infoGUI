@@ -112,6 +112,7 @@ export function MakeHumanReadable(property, value) {
         // DWORD sized hex number
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosRevision":
+        case "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.version":
         case "Intel GPUDetect::GPUData.extensionVersion":
             {
                 let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e
