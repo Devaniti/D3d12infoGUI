@@ -933,7 +933,7 @@ export const PropertyHumanReadableNames =
     "Header.Using preview Agility SDK": "Using preview Agility SDK",
     "Header.D3D12_SDK_VERSION": "D3D12_SDK_VERSION",
     "Header.NvAPI compiled version": "Compile time NVAPI library version",
-    "Header.NVAPI_SDK_VERSION": "Runtime NVAPI_SDK_VERSION",
+    "Header.NVAPI_SDK_VERSION": "Compile time NVAPI_SDK_VERSION",
     "Header.NvAPI_GetInterfaceVersionString": "NVAPI interface version",
     "Header.AMD_AGS_VERSION": "AMD_AGS_VERSION",
     "Header.agsGetVersionNumber": "AMD AGS agsGetVersionNumber",
