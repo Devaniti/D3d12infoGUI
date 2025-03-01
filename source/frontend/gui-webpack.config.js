@@ -20,19 +20,26 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.html$/,
-          loader: "html-loader",
-          options: {
-            sources: {
-              urlFilter: (attribute, value, resourcePath) => {
-                if (attribute === 'src' && value == 'reports.js') {
-                  // Do not include reports.js when packing for GUI
-                  // But do include it when running dev server
-                  return isDevServer;
+          use: [
+            {
+              loader: "html-loader",
+              options: {
+                sources: {
+                  urlFilter: (attribute, value, resourcePath) => {
+                    if (attribute === 'src' && value == 'reports.js') {
+                      // Do not include reports.js when packing for GUI
+                      // But do include it when running dev server
+                      return isDevServer;
+                    }
+                    return true;
+                  }
                 }
-                return true;
               }
+            },
+            {
+              loader: "template-ejs-loader"
             }
-          }
+          ]
         },
         {
           test: /\.svg$/,
