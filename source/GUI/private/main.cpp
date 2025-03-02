@@ -12,6 +12,7 @@ int RunGUI(HINSTANCE hInstance)
     Window window(hInstance, L"Extracting files");
 
     std::filesystem::path rootPath = std::filesystem::temp_directory_path() / L"D3d12infoGUI";
+
     if(!std::filesystem::is_directory(rootPath))
     {
         if(!std::filesystem::create_directory(rootPath))
@@ -33,28 +34,44 @@ int RunGUI(HINSTANCE hInstance)
     std::filesystem::path d3d12infoPreviewPath = rootPath / L"D3d12info_preview.exe";
 #endif
 
+    std::filesystem::path d3d12infoReport = rootPath / L"D3d12info_report.json";
+    std::filesystem::path d3d12infoPreviewReport = rootPath / L"D3d12info_preview_report.json";
+
     std::vector<std::vector<char>> validReports;
 
-    const Subprocess::ProcessOutput report = Subprocess::GetCommandOutput(
-        d3d12infoPath.string() + " --AllAdapters --JSON --Formats --EnableExperimental=OFF");
-    if(report.first == 0)
+    std::wstring d3d12infoCmdLine = std::format(
+        L"\"{}\" --OutputFile=\"{}\" --AllAdapters --JSON --MinimizeJson --Formats --EnableExperimental=OFF",
+        d3d12infoPath.wstring(), d3d12infoReport.wstring());
+    std::wstring d3d12infoPreviewCmdLine =
+        std::format(L"\"{}\" --OutputFile=\"{}\" --AllAdapters --JSON --MinimizeJson --Formats --EnableExperimental=ON",
+            d3d12infoPreviewPath.wstring(), d3d12infoPreviewReport.wstring());
+
+    Subprocess d3d12infoProcess(d3d12infoCmdLine.data());
+    Subprocess d3d12infoPreviewProcess(d3d12infoPreviewCmdLine.data());
+
+    if(d3d12infoProcess.Wait() == 0)
     {
-        validReports.push_back(report.second);
+        std::ifstream file(d3d12infoReport, std::ios::binary);
+        if(file.is_open())
+        {
+            std::vector<char> report((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            validReports.push_back(report);
+        }
+    }
+
+    if(d3d12infoPreviewProcess.Wait() == 0)
+    {
+        std::ifstream file(d3d12infoPreviewReport, std::ios::binary);
+        if(file.is_open())
+        {
+            std::vector<char> report((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            validReports.push_back(report);
+        }
     }
 
     if(window.IsExitRequested())
         return 1;
-    window.ReportProgress(L"Running D3d12info_preview");
 
-    const Subprocess::ProcessOutput previewReport = Subprocess::GetCommandOutput(
-        d3d12infoPreviewPath.string() + " --AllAdapters --JSON --Formats --EnableExperimental=ON");
-    if(previewReport.first == 0)
-    {
-        validReports.push_back(previewReport.second);
-    }
-
-    if(window.IsExitRequested())
-        return 1;
     window.ReportProgress(L"Generating report");
 
     ReportGenerator::GenerateHTML(rootPath, validReports);

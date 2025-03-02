@@ -7,16 +7,18 @@ namespace D3d12infoGUI
     class Subprocess
     {
     public:
-        using ProcessOutput = std::pair<int, std::vector<char>>;
+        Subprocess(wchar_t* commandLine);
+        ~Subprocess();
 
-        // first - exit code, second - array of chars of output
-        static ProcessOutput GetCommandOutput(std::string_view commandLine);
+        // Disable copy and move semantics.
+        Subprocess(const Subprocess&) = delete;
+        Subprocess& operator=(const Subprocess&) = delete;
+        Subprocess(Subprocess&&) = delete;
+        Subprocess& operator=(Subprocess&&) = delete;
+
+        int Wait();
 
     private:
-        static void InitializePipe(HANDLE& stdoutRead, HANDLE& stdoutWrite);
-        static void LaunchProcess(
-            HANDLE stdinRead, HANDLE stdoutWrite, HANDLE& processHandle, std::string_view commandLine);
-        static std::vector<char> ReadOutput(HANDLE stdoutRead);
-        static int GetExitCode(HANDLE process);
+        HANDLE m_Process;
     };
 } // namespace D3d12infoGUI
