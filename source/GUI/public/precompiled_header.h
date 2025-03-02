@@ -1,6 +1,8 @@
 #pragma once
 
-#include <cassert>
+#include <Windows.h>
+#include <dwmapi.h>
+
 #include <condition_variable>
 #include <filesystem>
 #include <fstream>
@@ -12,5 +14,4 @@
 #include <utility>
 #include <vector>
 
-#include <Windows.h>
-#include <dwmapi.h>
+#include <cassert>
