@@ -1,7 +1,19 @@
+body {
+    min-width:fit-content;
+}
+
 .FeatureTable {
     font-family: "Roboto", sans-serif;
-    overflow-x: scroll;
-    padding: auto;
+}
+
+.FeatureTable thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.FeatureTable thead tr {
+    background-color: #00000000;
 }
 
 .Microsoft {
@@ -110,12 +122,11 @@ thead>tr:nth-of-type(2)>th {
     border-style: solid;
     border-width: 0.1em;
     padding: 0.3em;
-    margin: 0 0.2em;
     position: absolute;
     z-index: 3;
 }
 
-.tooltiptextbottom {
+.tooltiptextbottomright {
     top: 110%;
     left: 95%;
     transform: translateX(-100%);
@@ -125,6 +136,11 @@ thead>tr:nth-of-type(2)>th {
     top: 110%;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.tooltiptextbottomleft {
+    top: 110%;
+    left: 5%;
 }
 
 .tooltiptexttop {

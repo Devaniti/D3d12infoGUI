@@ -11,6 +11,7 @@
 body {
     color: #000000;
     background-color: #FFFFFF;
+    margin: 8px;
 }
 
 table,
@@ -43,6 +44,19 @@ a:hover {
     align-items: center;
 }
 
+.headerContainer {
+    width: 100%;
+    max-width: 2100px;
+    margin: 0 auto;
+}
+
+.headerContainer2 {
+    position:sticky;
+    left: 8px;
+    width: calc(100vw - 16px);
+    max-width: 2100px;
+}
+
 .header {
     height: 2.2em;
     padding-top: 0.1em;
@@ -51,7 +65,6 @@ a:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 2100px;
     margin: 0 auto 0.4em auto;
     border-width: 2px;
     border-radius: 4px;

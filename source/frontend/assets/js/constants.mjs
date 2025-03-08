@@ -541,7 +541,8 @@ export const EnumMappings =
         "6": "Vega",
         "7": "RDNA",
         "8": "RDNA2",
-        "9": "RDNA3"
+        "9": "RDNA3",
+        "10": "RDNA4"
     },
     "AMD GDT_GfxCardInfo.asicType":
     {

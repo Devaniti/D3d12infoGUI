@@ -604,16 +604,17 @@ function SpliceReportByArchAndVendor(reportContainer) {
             "RDNA",    ///< AMD RDNA architecture
             "RDNA2",   ///< AMD RDNA2 architecture
             "RDNA3",   ///< AMD RDNA3 architecture
+            "RDNA4",   ///< AMD RDNA4 architecture
         ];
         // TODO: unknown asic reports could be assigned by device ID lists
         if (report.AGSDeviceInfo.asicFamily != 0) {
             arch = AMDArchitectures[report.AGSDeviceInfo.asicFamily];
 
-            // filter out RDNA2 iGPUs with 1 WGP because those don't support mesh shaders unlike all the others (TODO: should we handle this differently?)
-            if (arch == "RDNA2" && report.AGSDeviceInfo.numWGPs == 1 && report.D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier == 0)
-                return;
+            if (!arch) {
+                arch = "Arch ID " + report.AGSDeviceInfo.asicFamily;
+            }
 
-            if (arch) ArchsPerVendor.AMD.add(arch);
+            ArchsPerVendor.AMD.add(arch);
         }
     }
     else if (vendorId.startsWith("Intel")) {
@@ -687,22 +688,17 @@ function SpliceReportByArchAndVendor(reportContainer) {
         }
         arch = GetKeyByValue(NvidiaArchitectures, report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]);
 
-        // filter variants except Maxwell, should have same D3D12 features (though not CUDA features)
-        if (arch) {
-            if (arch == "Kepler2" || arch == "Kepler1")
-                arch = "Kepler";
-            else if (arch == "Fermi1")
-                arch = "Fermi"; // unconfirmed
-            else if (arch == "Volta1")
-                arch = "Volta"; // unconfirmed
-            else if (arch == "Turing") { // differentiate between Turing 16 (no RT) and Turing 20 (RTX)
-                let codename = report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id"];
-                if (codename == 360 || codename == 359 || report.DXGI_ADAPTER_DESC3.Description.includes("GTX 16")) // TU116/117 or TU106 with RT disabled
-                    arch = "Turing 16";
-                else
-                    arch = "Turing 20";
-            }
+        if (!arch) {
+            arch = "Arch ID " + report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"];
         }
+
+        // filter variants except Maxwell, should have same D3D12 features (though not CUDA features)
+        if (arch == "Kepler2" || arch == "Kepler1")
+            arch = "Kepler";
+        else if (arch == "Fermi1")
+            arch = "Fermi"; // unconfirmed
+        else if (arch == "Volta1")
+            arch = "Volta"; // unconfirmed
 
         ArchsPerVendor.Nvidia.add(arch ? arch : report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"].toString());
     }
@@ -711,7 +707,10 @@ function SpliceReportByArchAndVendor(reportContainer) {
         if (/Snapdragon\(R\) X (Plus)|(Elite) - X1.*/.test(report.DXGI_ADAPTER_DESC3.Description))
             arch = "X1";
         else if (report.DXGI_ADAPTER_DESC3.Description.includes("8cx"))
+        {
             arch = report.DXGI_ADAPTER_DESC3.Description.slice(report.DXGI_ADAPTER_DESC3.Description.search(/8cx.*/));
+            arch = arch.replace("Gen ", "");
+        }
 
         if (arch) ArchsPerVendor.Qualcomm.add(arch);
     }
@@ -742,12 +741,23 @@ function IsReportNewer(lhs, rhs) {
     return lhs.ID > rhs.ID;
 }
 
+function FeatureTableFilter(report) {
+    if (report.GetField("Header.Using preview Agility SDK"))
+        return true;
+
+    // filter out RDNA2 iGPUs with 1 WGP since they don't have mesh shaders unlike all other RDNA2 GPUs
+    if (report.GetField("AGSDeviceInfo.asicFamily") == 8 && report.GetField("AGSDeviceInfo.numWGPs") == 1 && report.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier") == 0)
+        return true;
+
+    return false;
+}
+
 function PrepareReportsForTable() {
 
     ClearTableReportData();
 
     for (let report of Reports) {
-        if (!report.GetField("Header.Using preview Agility SDK"))
+        if (!FeatureTableFilter(report))
             SpliceReportByArchAndVendor(report);
     }
 
@@ -900,7 +910,7 @@ function UpdateTableHeader(table) {
                 {
                     alignOutsideVertical: true,
                     preferTowardsBottom: true,
-                    tooltipAlignment: "bottom"
+                    tooltipAlignment: "bottomright"
                 });
         }
     }
@@ -941,8 +951,14 @@ function UpdateTableBody(table) {
                 else if (featureName == "TableMarketShare") {
                     let td = document.createElement("td");
                     let marketShare = ArchStats[archName];
+                    let tooltipText;
 
-                    if (marketShare == undefined)
+                    if (archName == "WARP")
+                    {
+                        marketShare = "N/A"
+                        tooltipText = "WARP is a software rasterizer, not a hardware GPU, so it doesn't have a market share and not in Steam Hardware Survey.";
+                    }
+                    else if (marketShare == undefined)
                     {
                         marketShare = "~0%"
                     }
@@ -952,6 +968,8 @@ function UpdateTableBody(table) {
                     }
                     td.append(marketShare)
                     featureRow.appendChild(td)
+                    if (tooltipText)
+                        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: "bottomleft" });
                 }
                 else if (featureName == "TableReportUsed") {
                     let td = document.createElement("td");
@@ -985,7 +1003,6 @@ function UpdateTableBody(table) {
                     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier" && featureValue == undefined) {
                         featureValue = newestReportContainer.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier");
                     }
-
                     // GPU Upload Heap support depends on BIOS settings / Windows version, so if any report is true we take that one
                     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported") {
                         for (let r of ReportsPerArch.get(archName)) {
@@ -995,16 +1012,25 @@ function UpdateTableBody(table) {
                             }
                         }
                     }
-
                     // If our tiled resource tier is 3, the SRVOnlyTiledResourceTier3 flag does not apply, but is always true, which is misleading
                     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier >= 3) {
                         featureValue = "N/A";
                         displayRawFeatureValue = true;
                     }
-                    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && (archName == "Pascal" || archName == "Turing 16")) {
-                        featureValue = TableTrueFalseMapping["1"] + "/" + TableTrueFalseMapping["0"];
+                    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Pascal") {
+                        featureValue = "Tier 1.0 *";
                         displayRawFeatureValue = true;
-                        tooltipText = "Pascal and Turing 16 have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB VRAM or more";
+                        tooltipText = "Pascal have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB of VRAM or more";
+                    }
+                    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Turing") {
+                        featureValue = "Tier 1.1 *";
+                        displayRawFeatureValue = true;
+                        tooltipText = "Within Turing architecture there are:\nRTX 20 series and Quadro RTX cards with hardware Tier 1.1 support\nGTX 16 series cards with >= 6GB of VRAM with software emulated Tier 1.0 support\nGTX 16 series cards with < 6GB of VRAM with no raytracing support at all";
+                    }
+                    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier" && archName == "RDNA2") {
+                        featureValue = TableTrueFalseMapping["1"] + "*";
+                        displayRawFeatureValue = true;
+                        tooltipText = "RDNA2 iGPUs with 1 WGP don't have mesh shader support";
                     }
                     let td = document.createElement("td");
                     td.append(displayRawFeatureValue ? featureValue : MakeHumanReadableForTable(featureName, featureValue));
