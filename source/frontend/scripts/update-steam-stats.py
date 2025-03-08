@@ -37,8 +37,8 @@ arch_name_mapping = {
 "TeraScale 3" : "PreGCN",
 "Tesla" : "Tesla",
 "Tesla 2.0" : "Tesla2",
-"Turing" : "Turing 20",
-"Turing 16" : "Turing 16",
+"Turing" : "Turing",
+"Turing 16" : "Turing",
 "X1" : "X1",
 "Unknown" : "Unkonwn",
 }
