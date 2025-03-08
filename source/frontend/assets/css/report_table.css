@@ -10,8 +10,7 @@ main {
     font-family: "SourceCodePro", "Courier New", Courier, monospace;
 }
 
-table,
-fieldset {
+table {
     border: 2px solid;
     border-collapse: collapse;
     border-color: #a7a7a7;
@@ -25,20 +24,6 @@ fieldset {
 
 table {
     width: 100%;
-}
-
-fieldset {
-    float: left;
-    margin: 0.5em 0.5em 0.5em 0.0em;
-    flex: 0 1;
-    white-space: nowrap;
-}
-
-#AdaptersFilterContainer {
-    width: 100%;
-    display: flex;
-    flex-flow: row;
-    align-items: stretch;
 }
 
 tr {
@@ -106,19 +91,6 @@ button:disabled {
     text-align: center;
 }
 
-.searchBar {
-    width: 100%;
-    padding: 0.5em;
-    border: 2px solid;
-    border-color: #a7a7a7;
-    border-radius: 4px;
-    font-size: 1.2em;
-    background-image: url('../icons/search.svg');
-    background-position: 0.5em 0.5em;
-    background-repeat: no-repeat;
-    padding-left: 2em;
-}
-
 .tooltip {
     position: relative;
 }
@@ -175,8 +147,7 @@ button:disabled {
 
 @media (prefers-color-scheme: dark) {
 
-    table,
-    fieldset {
+    table {
         border-color: #8c8c8c;
         background-color: #2d2d2d;
     }
@@ -212,13 +183,6 @@ button:disabled {
     .clickableCell:hover {
         background-color: #4d4d4d;
     }
-
-    .searchBar {
-        color: #ffffff;
-        border-color: #7f7f7f;
-        background-color: #232323;
-    }
-
     .tooltip .tooltiptext {
         background-color: #232323;
         color: #ffffff;
