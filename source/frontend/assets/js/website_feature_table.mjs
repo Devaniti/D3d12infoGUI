@@ -3,6 +3,7 @@ import * as Properties from './properties.mjs'
 import * as Constants from './constants.mjs'
 import * as HTML from './html.mjs'
 import ArchStats from './arch_stats.mjs'
+import Globals from './globals.mjs'
 
 let Reports = [];
 
@@ -14,6 +15,7 @@ const TableTrueFalseMapping =
 
 // TODO: some things could be consolidated? e.g. D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY, WaveLaneCountMin/Max
 const TableFeaturesShortNames = {
+    "TableReleaseDate": "Release Date",
     "TableMarketShare": "Market Share",
     "TableNumReports": "Number of reports",
     "TableReportUsed": "Report used for feature data",
@@ -468,6 +470,50 @@ const TableEnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TableTrueFalseMapping
 }
 
+const ArchReleaseDates = {
+    // Microsoft
+    "WARP": "2015",
+
+    // AMD
+    "GCN1": "2012",
+    "GCN2": "2013",
+    "GCN3": "2015",
+    "GCN4": "2016",
+    "Vega": "2017",
+    "RDNA": "2019",
+    "RDNA2": "2020",
+    "RDNA3": "2022",
+    "RDNA4": "2025",
+
+    // Nvidia
+    "Fermi": "2010",
+    "Kepler": "2012",
+    "Maxwell": "2014",
+    "Maxwell2": "2015",
+    "Pascal": "2016",
+    "Volta": "2017",
+    "Turing": "2018",
+    "Ampere": "2020",
+    "Ada": "2022",
+    "Blackwell": "2025",
+    
+    // Intel
+    "Gen7.5": "2013",
+    "Gen8": "2014",
+    "Gen9": "2015",
+    "Gen9.5": "2016",
+    "Gen11": "2019",
+    "Xe": "2020",
+    "Xe-HPG": "2022",
+    "Xe-HPC": "2023",
+    "Xe-LPG": "2023",
+    "Xe2-HPG": "2024",
+
+    // Qualcomm
+    "8cx 3": "2021",
+    "X1": "2024",
+}
+
 function MakeHumanReadableForTable(property, value) {
     let effectiveProperty = Properties.RemoveArrayIndex(property)
 
@@ -753,7 +799,6 @@ function FeatureTableFilter(report) {
 }
 
 function PrepareReportsForTable() {
-
     ClearTableReportData();
 
     for (let report of Reports) {
@@ -852,9 +897,123 @@ function AddTooltipForTable(parent, text, options_param) {
     return tooltipTextElement; // in case you want to do something further with it
 }
 
+function NeedOutputVendor(vendor) {
+    if (!Globals.VendorFilter[vendor])
+        return false;
+
+    // Check if any of the architectures for this vendor are newer than the filter
+    for (let arch of ArchsPerVendor[vendor]) {
+        if (Globals.ArchAgeFilter <= ArchReleaseDates[arch])
+            return true;
+    }
+
+    return false;
+}
+
+function VendorArchToOutputCount(vendor) {
+    let res = 0;
+    
+    for (let arch of ArchsPerVendor[vendor]) {
+        if (Globals.ArchAgeFilter <= ArchReleaseDates[arch])
+            res++;
+    }
+
+    return res;
+}
+
+function NeedOutputArch(vendor, arch) {
+    let vendorShows = Globals.VendorFilter[vendor];
+    let archReleaseDate = ArchReleaseDates[arch];
+    if (archReleaseDate == undefined)
+        {
+            archReleaseDate = "9999"
+        };
+    return vendorShows && Globals.ArchAgeFilter <= archReleaseDate;
+}
+
+function AddFilterPanel(container) {
+    let filterPanel = document.createElement("div");
+    filterPanel.className = "FilterPanel";
+    container.appendChild(filterPanel);
+
+    const searchBar = document.createElement("input")
+    searchBar.type = "search"
+    searchBar.placeholder = "Search Properties"
+    searchBar.classList.add("searchBar")
+    Globals.PropertiesSearchString = "";
+    searchBar.addEventListener('input', function (e) {
+        Globals.PropertiesSearchString = e.target.value;
+        UpdateTable();
+    })
+    container.appendChild(searchBar)
+
+    let fieldSetContainer = document.createElement("div");
+    fieldSetContainer.classList.add("FieldSetContainer");
+    container.appendChild(fieldSetContainer);
+
+    let vendorFilterFieldset = document.createElement("fieldset");
+    vendorFilterFieldset.classList.add("VendorFilter");
+    let legend = document.createElement("legend");
+    legend.textContent = "Vendor Filter";
+    vendorFilterFieldset.appendChild(legend);
+
+    for (let vendor of Object.keys(ArchsPerVendor)) {
+        Globals.VendorFilter[vendor] = true;
+
+        const checkboxLabel = document.createElement("label")
+        const filterCheckbox = document.createElement("input")
+        filterCheckbox.type = "checkbox"
+        filterCheckbox.checked = true
+        filterCheckbox.addEventListener('change', (e) => {
+            Globals.VendorFilter[vendor] = e.target.checked;
+            UpdateTable();
+        })
+        checkboxLabel.appendChild(filterCheckbox)
+        checkboxLabel.appendChild(document.createTextNode(vendor))
+        vendorFilterFieldset.appendChild(checkboxLabel)
+        vendorFilterFieldset.appendChild(document.createElement("br"))
+    }
+
+    fieldSetContainer.appendChild(vendorFilterFieldset);
+
+    // Add fieldset for filtering by architecture age
+    let archFilterFieldset = document.createElement("fieldset");
+    let archLegend = document.createElement("legend");
+    archLegend.textContent = "Architecture Age Filter";
+    archFilterFieldset.appendChild(archLegend);
+    // Add slider for filtering by architecture age
+    let archAgeSlider = document.createElement("input");
+    archAgeSlider.type = "range";
+    archAgeSlider.min = 2010;
+    archAgeSlider.max = new Date().getFullYear();
+    archAgeSlider.value = 2017;
+    archAgeSlider.step = 1;
+    let archAgeLabel = document.createElement("label");
+    archAgeLabel.htmlFor = "archAgeSlider";
+    archAgeLabel.textContent = `Released in ${archAgeSlider.value} or after`;
+    Globals.ArchAgeFilter = archAgeSlider.value;
+    archAgeSlider.addEventListener('input', function (e) {
+        archAgeLabel.textContent = `Released in ${e.target.value} or after`;
+        Globals.ArchAgeFilter = e.target.value;
+        UpdateTable();
+    });
+    archFilterFieldset.appendChild(archAgeSlider);
+    archFilterFieldset.appendChild(document.createElement("br"));
+    archFilterFieldset.appendChild(archAgeLabel);
+    fieldSetContainer.appendChild(archFilterFieldset);
+}
+
+function UpdateTableFilter() {
+    const headerContainer = document.getElementById("FeatureTableFilter");
+    HTML.ClearElement(headerContainer);
+
+    AddFilterPanel(headerContainer);
+}
+
 function UpdateTable() {
     const tableContainer = document.getElementById("FeatureTable");
     HTML.ClearElement(tableContainer);
+
     let table = document.createElement("table");
     tableContainer.appendChild(table);
     HTML.ClearElement(table);
@@ -880,18 +1039,24 @@ function UpdateTableHeader(table) {
         if (archs.size == 0)
             continue;
 
+        if (!NeedOutputVendor(vendor))
+            continue;
+
         let thVendor = document.createElement("th");
         thVendor.append(vendor);
         thVendor.className = vendor;
         thVendor.scope = "colgroup";
-        thVendor.colSpan = archs.size;
+        thVendor.colSpan = VendorArchToOutputCount(vendor);
         headerRowVendor.appendChild(thVendor);
 
         let colGroupVendor = document.createElement("colgroup");
-        colGroupVendor.span = archs.size;
+        colGroupVendor.span = thVendor.colSpan;
         table.appendChild(colGroupVendor);
 
         for (let a of archs) {
+            if (!NeedOutputArch(vendor, a))
+                continue;
+
             let thArch = document.createElement("th");
             thArch.append(a);
             thArch.className = vendor;
@@ -926,6 +1091,11 @@ function UpdateTableBody(table) {
     for (let [featureName, featureShortName] of Object.entries(TableFeaturesShortNames)) {
         let featureRow = document.createElement("tr");
 
+        // Filter out features based on Globals.PropertiesSearchString
+        if (Globals.PropertiesSearchString && !featureName.toLowerCase().includes(Globals.PropertiesSearchString.toLowerCase()) && !featureShortName.toLowerCase().includes(Globals.PropertiesSearchString.toLowerCase()) && featureName != "TableReleaseDate") {
+            continue;
+        }
+
         let featureHeader = document.createElement("td");
         featureHeader.classList.add("FeatureHeader");
         featureHeader.append(featureShortName);
@@ -940,10 +1110,22 @@ function UpdateTableBody(table) {
         // TODO: merge columns that are the same across GPUs for the same vendor? maybe a bit too much
         for (let [vendor, archs] of Object.entries(ArchsPerVendor)) {
             for (let archName of archs) {
+                if (!NeedOutputArch(vendor, archName))
+                    continue;
 
                 let newestDriverReport = NewestDriverReportPerArch.get(archName);
 
-                if (featureName == "TableNumReports") {
+                if (featureName == "TableReleaseDate") {
+                    let td = document.createElement("td");
+                    let releaseDate = ArchReleaseDates[archName];
+                    if (releaseDate == undefined)
+                    {
+                        releaseDate = "Unknown"
+                    }
+                    td.append(releaseDate);
+                    featureRow.appendChild(td);
+                }
+                else if (featureName == "TableNumReports") {
                     let td = document.createElement("td");
                     td.append(ReportsPerArch.get(archName).length);
                     featureRow.appendChild(td);
@@ -1055,6 +1237,7 @@ function OnLoad() {
     Server.GetAllSubmissions((data) => {
         Reports = data;
         PrepareReportsForTable();
+        UpdateTableFilter();
         UpdateTable();
     })
 }
