@@ -472,7 +472,7 @@ const TableEnumMappings =
 
 const ArchReleaseDates = {
     // Microsoft
-    "WARP": "2015",
+    "WARP": "9999", // Won't be shown in the table
 
     // AMD
     "GCN1": "2012",
@@ -1122,6 +1122,16 @@ function UpdateTableBody(table) {
                     {
                         releaseDate = "Unknown"
                     }
+
+                    let tooltipText;
+                    if (archName == "WARP")
+                    {
+                        releaseDate = "N/A"
+                        tooltipText = "WARP is a software rasterizer that get updates with time.\nIt is not helpful to compare its release date (2015) with release dates\nof hardware GPUs that can not get additional features after release.";
+                    }
+                    if (tooltipText)
+                        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: "bottomleft" });
+
                     td.append(releaseDate);
                     featureRow.appendChild(td);
                 }
