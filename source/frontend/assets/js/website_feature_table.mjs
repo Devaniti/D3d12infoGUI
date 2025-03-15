@@ -652,6 +652,11 @@ function SpliceReportByArchAndVendor(reportContainer) {
             "RDNA3",   ///< AMD RDNA3 architecture
             "RDNA4",   ///< AMD RDNA4 architecture
         ];
+
+        const DeviceIDMappings = {
+            "30032": "RDNA4", // Radeon RX 9070 / 9070 XT
+        }
+
         // TODO: unknown asic reports could be assigned by device ID lists
         if (report.AGSDeviceInfo.asicFamily != 0) {
             arch = AMDArchitectures[report.AGSDeviceInfo.asicFamily];
@@ -660,6 +665,10 @@ function SpliceReportByArchAndVendor(reportContainer) {
                 arch = "Arch ID " + report.AGSDeviceInfo.asicFamily;
             }
 
+            ArchsPerVendor.AMD.add(arch);
+        } else if (report.DXGI_ADAPTER_DESC3.DeviceId in DeviceIDMappings) {
+            debugger;
+            arch = DeviceIDMappings[report.DXGI_ADAPTER_DESC3.DeviceId];
             ArchsPerVendor.AMD.add(arch);
         }
     }
@@ -826,48 +835,20 @@ function PrepareReportsForTable() {
         }
         return set;
     }
-    function DeviceIdCompare(a, b) {
-        let ra = ReportsPerArch.get(a)[0];
-        let na = Number(ra.DXGI_ADAPTER_DESC3.DeviceId);
-        let rb = ReportsPerArch.get(b)[0];
-        let nb = Number(rb.DXGI_ADAPTER_DESC3.DeviceId);
-        return na - nb;
-    }
-    function AMDAsicFamilyCompare(a, b) {
-        let ra = ReportsPerArch.get(a)[0];
-        let na = Number(ra.AGSDeviceInfo.asicFamily);
-        let rb = ReportsPerArch.get(b)[0];
-        let nb = Number(rb.AGSDeviceInfo.asicFamily);
-        return na - nb;
-    }
-    function NvidiaArchIdCompare(a, b) {
-        let ra = ReportsPerArch.get(a)[0];
-        let na = Number(ra.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]);
-        let rb = ReportsPerArch.get(b)[0];
-        let nb = Number(rb.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]);
-        if (na == nb) {
-            let ca = ra.DXGI_ADAPTER_DESC3.Description.includes("GTX 16");
-            let cb = rb.DXGI_ADAPTER_DESC3.Description.includes("GTX 16");
-            return cb - ca;
-        }
-        return na - nb;
-    }
-    function IntelCompare(a, b) {
-        let na = Infinity, nb = Infinity;
-        if (a.startsWith("Gen"))
-            na = parseFloat(a.substring(3));
-        if (b.startsWith("Gen"))
-            nb = parseFloat(b.substring(3));
 
-        if (na == Infinity && nb == Infinity) {
-            return DeviceIdCompare(a, b);
-        }
-        return na - nb;
+    function ReleaseDateCompare(a, b) {
+        // If the release date is not defined, it's set to 9999
+        let ra = ArchReleaseDates[a] ?? 9999;
+        let rb = ArchReleaseDates[b] ?? 9999; 
+        if (ra == rb)
+            return a.localeCompare(b);
+        return ra - rb;
     }
-    SortSet(ArchsPerVendor.AMD, AMDAsicFamilyCompare);
-    SortSet(ArchsPerVendor.Nvidia, NvidiaArchIdCompare);
-    SortSet(ArchsPerVendor.Intel, IntelCompare);
-    SortSet(ArchsPerVendor.Qualcomm, DeviceIdCompare);
+    
+    SortSet(ArchsPerVendor.AMD, ReleaseDateCompare);
+    SortSet(ArchsPerVendor.Nvidia, ReleaseDateCompare);
+    SortSet(ArchsPerVendor.Intel, ReleaseDateCompare);
+    SortSet(ArchsPerVendor.Qualcomm, ReleaseDateCompare);
 }
 
 const DefaultTooltipOptions = {
@@ -903,7 +884,8 @@ function NeedOutputVendor(vendor) {
 
     // Check if any of the architectures for this vendor are newer than the filter
     for (let arch of ArchsPerVendor[vendor]) {
-        if (Globals.ArchAgeFilter <= ArchReleaseDates[arch])
+        let releaseDate = ArchReleaseDates[arch] ?? 9999;
+        if (Globals.ArchAgeFilter <= releaseDate)
             return true;
     }
 
@@ -914,7 +896,8 @@ function VendorArchToOutputCount(vendor) {
     let res = 0;
     
     for (let arch of ArchsPerVendor[vendor]) {
-        if (Globals.ArchAgeFilter <= ArchReleaseDates[arch])
+        let releaseDate = ArchReleaseDates[arch] ?? 9999;
+        if (Globals.ArchAgeFilter <= releaseDate)
             res++;
     }
 
