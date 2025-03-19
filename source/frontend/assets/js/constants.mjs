@@ -532,7 +532,7 @@ export const EnumMappings =
     "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.resultType": NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE,
     "AGSDeviceInfo.asicFamily":
     {
-        "0": "UNKNONW",
+        "0": "UNKNOWN",
         "1": "Pre GCN",
         "2": "GCN1",
         "3": "GCN2",

@@ -703,7 +703,7 @@ function SpliceReportByArchAndVendor(reportContainer) {
         // if the device ID matching didn't work, try GPUDetect
         if (!arch && report["Intel GPUDetect::GPUData"]) {
             arch = report["Intel GPUDetect::GPUData"].GraphicsGeneration;
-            if (arch == "Unkown" &&
+            if (arch == "Unknown" &&
                 report["Intel GPUDetect::GPUData"].GPUArchitecture == "Unknown (37)" &&
                 report.DXGI_ADAPTER_DESC3.Description == "Intel(R) Iris(R) Xe Graphics") // integrated Xe-LP, Alder/Rocket Lake
                 arch = "Xe";

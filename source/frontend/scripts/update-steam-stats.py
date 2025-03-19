@@ -40,7 +40,7 @@ arch_name_mapping = {
 "Turing" : "Turing",
 "Turing 16" : "Turing",
 "X1" : "X1",
-"Unknown" : "Unkonwn",
+"Unknown" : "Unknown",
 }
 
 # pull latest main in ../../external/SteamHWSurveyGPUArchStats repo
