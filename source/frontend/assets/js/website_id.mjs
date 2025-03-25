@@ -27,6 +27,7 @@ function OnLoad() {
         }
         let queryParams = (new URL(document.location)).searchParams
         ReportViewer.LoadReports(reports, queryParams.get('ID'))
+        document.title = reports[0].GetField("DXGI_ADAPTER_DESC3.Description") + " - D3d12infoDB";
     })
 }
 
