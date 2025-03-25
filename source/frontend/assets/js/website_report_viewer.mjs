@@ -256,6 +256,7 @@ function UpdateList() {
             ReportIndex = index
             UpdateReport()
             window.history.replaceState(null, null, "?ID=" + Reports[ReportIndex].GetField("ID"))
+            document.title = Reports[ReportIndex].GetField("DXGI_ADAPTER_DESC3.Description") + " - D3d12infoDB";
         })
         row.classList.add("clickableRow")
         tableBody.appendChild(row)
