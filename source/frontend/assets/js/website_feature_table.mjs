@@ -583,7 +583,17 @@ function UpdateTableBody(table) {
         let featureRow = document.createElement("tr");
 
         // Filter out features based on Globals.PropertiesSearchString
-        if (Globals.PropertiesSearchString && !featureName.toLowerCase().includes(Globals.PropertiesSearchString.toLowerCase()) && !featureShortName.toLowerCase().includes(Globals.PropertiesSearchString.toLowerCase()) && featureName != "TableReleaseDate") {
+        let featureNameLowercase = featureName.toLowerCase();
+        let featureNameShortLowercase = featureName.toLowerCase();
+        let searchStringLowercase = Globals.PropertiesSearchString.toLowerCase();
+        let propertyAllowList = ["TableReleaseDate", "TableMarketShare"];
+        let searchTest = 
+            searchStringLowercase == "" || 
+            featureNameLowercase.includes(searchStringLowercase) ||
+            featureNameShortLowercase.includes(searchStringLowercase) ||
+            propertyAllowList.includes(featureName);
+
+        if (!searchTest) {
             continue;
         }
 
