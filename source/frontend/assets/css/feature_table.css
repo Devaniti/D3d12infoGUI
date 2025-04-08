@@ -16,6 +16,11 @@ body {
     background-color: #00000000;
 }
 
+.FeatureTableFilterContainer {
+    max-width: 2100px;
+    margin: 0 auto;
+}
+
 .Microsoft {
     background-color: #d0e7f2;
 }
