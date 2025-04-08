@@ -9,7 +9,6 @@ function OnLoad() {
         let reportID = queryParams.get('ID')
         ReportViewer.LoadReports(reports, reportID)
 
-
         if (reportID !== null) {
             var report = reports.find(r => r.GetField("ID") == reportID)
             if (report != null) {    

@@ -1,5 +1,7 @@
 import * as Properties from "./properties.mjs"
 import * as Constants from "./constants.mjs"
+import * as HTML from "./html.mjs"
+import Globals from './globals.mjs'
 
 const Headers = [
     "Supported",
@@ -285,30 +287,65 @@ export function BuildFormatTable(reportContainer, tableContainer) {
         return
     }
 
-    AddLegend(tableContainer)
+    function UpdateFormatTable() {
+        const formatTableContainer = document.getElementById("FormatTableContainer")
+        HTML.ClearElement(formatTableContainer)
 
-    const table = document.createElement("table")
-    table.className = "FormatTable"
+        const table = document.createElement("table")
+        table.className = "FormatTable"
 
-    const headerRow = document.createElement("tr")
+        const headerRow = document.createElement("tr")
 
-    AddCell(headerRow, "Format")
-    for (const header of Headers) {
-        AddVerticalCell(headerRow, header)
-    }
-
-    table.appendChild(headerRow)
-
-    for (const [formatID, format] of Object.entries(formats)) {
-        let format = formats[formatID]
-        const row = document.createElement("tr")
-        AddCell(row, Constants.DXGI_FORMAT[formatID])
-        AddIconCell(row, FormatSupportValue(formatID, format.Support1 != null))
-        for (const [bit1, bit2] of BitMapping) {
-            AddIconCell(row, FeatureSupportValue(formatID, format, bit1, bit2))
+        const firstCell = AddCell(headerRow, "Format")
+        // Set minimum width on first cell to avoid resize when removing formats in search
+        firstCell.style = "min-width: 31em"
+        
+        for (const header of Headers) {
+            AddVerticalCell(headerRow, header)
         }
-        table.appendChild(row)
+
+        table.appendChild(headerRow)
+
+        for (const [formatID, format] of Object.entries(formats)) {
+            let format = formats[formatID]
+
+            // Filter based on Globals.FormatsSearchString
+            let formatNameLowercase = Constants.DXGI_FORMAT[formatID].toLowerCase();
+            let searchStringLowercase = Globals.FormatsSearchString.toLowerCase();
+            let searchTest = searchStringLowercase == "" || formatNameLowercase.includes(searchStringLowercase)
+            if (!searchTest)
+            {
+                continue;
+            }
+
+            const row = document.createElement("tr")
+            AddCell(row, Constants.DXGI_FORMAT[formatID])
+            AddIconCell(row, FormatSupportValue(formatID, format.Support1 != null))
+            for (const [bit1, bit2] of BitMapping) {
+                AddIconCell(row, FeatureSupportValue(formatID, format, bit1, bit2))
+            }
+            table.appendChild(row)
+        }
+
+        formatTableContainer.appendChild(table)
     }
 
-    tableContainer.appendChild(table)
+    function AddFormatsSearchBar() {
+        const searchBar = document.createElement("input")
+        searchBar.type = "search"
+        searchBar.placeholder = "Search Formats"
+        searchBar.classList.add("searchBar")
+        searchBar.addEventListener('input', function (e) {
+            Globals.FormatsSearchString = searchBar.value;
+            UpdateFormatTable();
+        })
+        tableContainer.appendChild(searchBar)
+    }
+
+    AddLegend(tableContainer);
+    AddFormatsSearchBar();
+    const formatTableContainer = document.createElement("div");
+    formatTableContainer.id = "FormatTableContainer";
+    tableContainer.appendChild(formatTableContainer);
+    UpdateFormatTable();
 }
