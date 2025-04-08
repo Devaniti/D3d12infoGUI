@@ -1,2 +1,2 @@
-let Globals = {PropertiesSearchString: "", VendorFilter: {}, ArchAgeFilter: 2010}
+let Globals = {PropertiesSearchString: "", FormatsSearchString: "", VendorFilter: {}, ArchAgeFilter: 2010}
 export default Globals
