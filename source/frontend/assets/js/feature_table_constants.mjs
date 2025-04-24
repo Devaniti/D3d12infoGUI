@@ -130,6 +130,8 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": "Compute-only custom heap",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": "Compute-only write watch",
 
+    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": "Bytecode bypass hash",
+
     // Irrelevant for GPUs, all GPUs support these features
     //"D3D12_FEATURE_DATA_PREDICATION.Supported": "Predication",
     //"D3D12_FEATURE_DATA_HARDWARE_COPY.Supported": "Hardware copy",
@@ -461,7 +463,8 @@ export const TableEnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": TableTrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported": TableTrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported": TableTrueFalseMapping,
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TableTrueFalseMapping
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TableTrueFalseMapping,
+    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TableTrueFalseMapping,
 }
 
 export const ArchReleaseDates = {

@@ -155,6 +155,12 @@ thead>tr:nth-of-type(2)>th {
     left: 0%;
 }
 
+.tooltiptexttopcenter {
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
