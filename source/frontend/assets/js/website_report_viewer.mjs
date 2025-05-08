@@ -26,8 +26,7 @@ function FilterSingleReport(wrappedReport) {
             let value = report.GetField(collumn)
             let humanReadableValue = Properties.MakeHumanReadable(collumn, value).toString().toLowerCase()
             value = value.toString().toLowerCase()
-            return value.includes(adaptersSearchString)
-                || humanReadableValue.includes(adaptersSearchString)
+            return humanReadableValue.includes(adaptersSearchString)
         })
     let filterTest = Constants.FilterMultichoiceFields.every(filter => {
         let value = report.GetField(filter)
