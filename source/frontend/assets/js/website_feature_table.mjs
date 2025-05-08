@@ -728,7 +728,7 @@ function AddRow(tbody, featureName, featureShortName) {
     if (!featureName.startsWith("Table"))
         AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
     else if (featureName == "TableMarketShare")
-        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 System. This is an underestimate and may not be very accurate in genearl.", { alignOutsideVertical: true });
+        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 System. This is an underestimate and may not be very accurate in general.", { alignOutsideVertical: true });
 
     featureRow.appendChild(featureHeader);
 
