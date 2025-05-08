@@ -266,7 +266,13 @@ function SpliceReportByArchAndVendor(reportContainer) {
     else if (vendorId.startsWith("Qualcomm")) {
 
         if (/Snapdragon\(R\) X (Plus)|(Elite) - X1.*/.test(report.DXGI_ADAPTER_DESC3.Description))
+        {
             arch = "X1";
+        }
+        if (/Qualcomm\(R\) Adreno\(TM\) X1.*/.test(report.DXGI_ADAPTER_DESC3.Description))
+        {
+            arch = "X1";
+        }
         else if (report.DXGI_ADAPTER_DESC3.Description.includes("8cx")) {
             arch = report.DXGI_ADAPTER_DESC3.Description.slice(report.DXGI_ADAPTER_DESC3.Description.search(/8cx.*/));
             arch = arch.replace("Gen ", "");
