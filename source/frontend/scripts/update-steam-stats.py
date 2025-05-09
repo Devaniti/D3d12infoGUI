@@ -7,7 +7,7 @@ arch_name_mapping = {
 "Ampere" : "Ampere",
 "Curie" : "Curie",
 "Fermi" : "Fermi",
-"Fermi 2.0" : "Fermi1",
+"Fermi 2.0" : "Fermi2",
 "GCN 1.0" : "GCN1",
 "GCN 2.0" : "GCN2",
 "GCN 3.0" : "GCN3",

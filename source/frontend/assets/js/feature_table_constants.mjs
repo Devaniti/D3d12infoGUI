@@ -484,6 +484,7 @@ export const ArchReleaseDates = {
 
     // Nvidia
     "Fermi": "2010",
+    "Fermi2": "2010",
     "Kepler": "2012",
     "Maxwell1": "2014",
     "Maxwell2": "2015",

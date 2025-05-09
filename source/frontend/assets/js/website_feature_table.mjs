@@ -229,7 +229,7 @@ function SpliceReportByArchAndVendor(reportContainer) {
 
         const NvidiaArchitectures = {
             Fermi: 0x000000C0, // GF10x (most 4xx)
-            Fermi1: 0x000000D0, // GF11x (most 5xx)
+            Fermi2: 0x000000D0, // GF11x (most 5xx)
             Kepler: 0x000000E0, // GK10x (most 6xx)
             Kepler1: 0x000000F0, // GK110 (Titan, 780)
             Kepler2: 0x00000100, // GK2xx (Tegra, Jetson, Tesla K80, 720, etc.)
@@ -256,21 +256,87 @@ function SpliceReportByArchAndVendor(reportContainer) {
         // filter variants except Maxwell, should have same D3D12 features (though not CUDA features)
         if (arch == "Kepler2" || arch == "Kepler1")
             arch = "Kepler";
-        else if (arch == "Fermi1")
+        else if (arch == "Fermi2")
             arch = "Fermi"; // unconfirmed
         else if (arch == "Volta1")
             arch = "Volta"; // unconfirmed
 
         ArchsPerVendor.Nvidia.add(arch ? arch : report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"].toString());
     }
+    else if (vendorId.startsWith("NVIDIA")) {
+        // old GPUs for which nvapi doesn't work, or we don't know whether it works
+        switch (report.DXGI_ADAPTER_DESC3.Description) {
+            case "NVIDIA GeForce 615":
+            case "NVIDIA GeForce GT 415M":
+            case "NVIDIA GeForce GT 420":
+            case "NVIDIA GeForce GT 420M":
+            case "NVIDIA GeForce GT 425M":
+            case "NVIDIA GeForce GT 430":
+            case "NVIDIA GeForce GT 435M":
+            case "NVIDIA GeForce GT 440":
+            case "NVIDIA GeForce GT 445M":
+            case "NVIDIA GeForce GT 525M":
+            case "NVIDIA GeForce GT 530":
+            case "NVIDIA GeForce GT 555M":
+            case "NVIDIA GeForce GTS 450":
+            case "NVIDIA GeForce GTX 460M":
+            case "NVIDIA GeForce GTX 465":
+            case "NVIDIA GeForce GTX 470":
+            case "NVIDIA GeForce GTX 470M":
+            case "NVIDIA GeForce GTX 480":
+            case "NVIDIA GeForce GTX 480M":
+            case "NVIDIA GeForce GTX 485M":
+            case "NVIDIA NVS 5400M":
+            case "NVIDIA Quadro 1000M":
+            case "NVIDIA Quadro 2000":
+            case "NVIDIA Quadro 2000M":
+            case "NVIDIA Quadro 3000M":
+            case "NVIDIA Quadro 4000":
+            case "NVIDIA Quadro 4000M":
+            case "NVIDIA Quadro 5000M":
+            case "NVIDIA Quadro 600":
+            case "NVIDIA Quadro 6000":
+                arch = "Fermi";
+                break;
+            case "NVIDIA GeForce 410M":
+            case "NVIDIA GeForce 510":
+            case "NVIDIA GeForce 605":
+            case "NVIDIA GeForce 705A":
+            case "NVIDIA GeForce GT 520":
+            case "NVIDIA GeForce GT 520MX":
+            case "NVIDIA GeForce GT 545":
+            case "NVIDIA GeForce GT 550M":
+            case "NVIDIA GeForce GT 625":
+            case "NVIDIA GeForce GT 705":
+            case "NVIDIA GeForce GTX 550 Ti":
+            case "NVIDIA GeForce GTX 555":
+            case "NVIDIA GeForce GTX 560":
+            case "NVIDIA GeForce GTX 560 SE":
+            case "NVIDIA GeForce GTX 560 Ti":
+            case "NVIDIA GeForce GTX 560M":
+            case "NVIDIA GeForce GTX 570":
+            case "NVIDIA GeForce GTX 570M":
+            case "NVIDIA GeForce GTX 580":
+            case "NVIDIA GeForce GTX 580M":
+            case "NVIDIA GeForce GTX 590":
+            case "NVIDIA GeForce GTX 670M":
+            case "NVIDIA GeForce GTX 675M":
+            case "NVIDIA NVS 315":
+            case "NVIDIA NVS 4200M":
+            case "NVIDIA Quadro 5010M":
+                arch = "Fermi2";
+                break;
+        }
+        if (arch) {
+            ArchsPerVendor.Nvidia.add(arch);
+        }
+    }
     else if (vendorId.startsWith("Qualcomm")) {
 
-        if (/Snapdragon\(R\) X (Plus)|(Elite) - X1.*/.test(report.DXGI_ADAPTER_DESC3.Description))
-        {
+        if (/Snapdragon\(R\) X (Plus)|(Elite) - X1.*/.test(report.DXGI_ADAPTER_DESC3.Description)) {
             arch = "X1";
         }
-        if (/Qualcomm\(R\) Adreno\(TM\) X1.*/.test(report.DXGI_ADAPTER_DESC3.Description))
-        {
+        if (/Qualcomm\(R\) Adreno\(TM\) X1.*/.test(report.DXGI_ADAPTER_DESC3.Description)) {
             arch = "X1";
         }
         else if (report.DXGI_ADAPTER_DESC3.Description.includes("8cx")) {
@@ -493,7 +559,7 @@ function AddFilterPanel(container) {
     archAgeSlider.type = "range";
     archAgeSlider.min = 2010;
     archAgeSlider.max = new Date().getFullYear();
-    archAgeSlider.value = 2017;
+    archAgeSlider.value = (new Date().getFullYear()) - 9;
     archAgeSlider.step = 1;
     let archAgeLabel = document.createElement("label");
     archAgeLabel.htmlFor = "archAgeSlider";
@@ -663,7 +729,7 @@ function OverrideCell(tableRow, archName, featureName, featureValue, newestDrive
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Pascal") {
         AddCellReal("Tier 1.0 *", tableRow, "Pascal have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB of VRAM or more");
-            return true;
+        return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Turing") {
         AddCellReal("Tier 1.1 *", tableRow, "Within Turing architecture there are:\nRTX 20 series and Quadro RTX cards with hardware Tier 1.1 support\nGTX 16 series cards with >= 6GB of VRAM with software emulated Tier 1.0 support\nGTX 16 series cards with < 6GB of VRAM with no raytracing support at all");
@@ -693,9 +759,8 @@ function AddCell(featureRow, archName, featureName) {
     AddCellReal(MakeHumanReadableForTable(featureName, featureValue), featureRow);
 }
 
-function AddSpecialRow(featureRow, featureName){
-    if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported")
-    {
+function AddSpecialRow(featureRow, featureName) {
+    if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported") {
         AddCellReal("Always supported", featureRow, "Given new enough Agility SDK, you can always use it independenly of GPU or driver.", "bottomcenter", ArchToOutputCount());
         return true;
     }
@@ -732,8 +797,7 @@ function AddRow(tbody, featureName, featureShortName) {
 
     featureRow.appendChild(featureHeader);
 
-    if (AddSpecialRow(featureRow, featureName))
-    {
+    if (AddSpecialRow(featureRow, featureName)) {
         tbody.appendChild(featureRow);
         return;
     }
