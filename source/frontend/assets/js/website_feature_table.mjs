@@ -704,6 +704,40 @@ function AddSpecialRowCell(featureRow, archName, featureName) {
         featureRow.appendChild(td);
         return true;
     }
+    else if (featureName == "R9G9B9E5_RTV_UAV") {
+        let newestDriverReport = NewestDriverReportPerArch.get(archName);
+        if (newestDriverReport.Formats == null) {
+            AddCellReal("❓", featureRow);
+            return true;
+        }
+        let formats = newestDriverReport.Formats;
+        let r9g9b9e5 = formats[67]; // 67 is DXGI_FORMAT_R9G9B9E5_SHAREDEXP
+        if (r9g9b9e5 == null) {
+            AddCellReal("❓", featureRow);
+            return true;
+        }
+        let rtvSupport = r9g9b9e5.Support1 & 16384; // 0x4000 is D3D12_FORMAT_SUPPORT1_RENDER_TARGET
+        // GPUs must either support none or all features listed in Group 1 here https://microsoft.github.io/DirectX-Specs/d3d/D3D12R9G9B9E5Format.html#group-1-rtvuav-use
+        // So checking just for RTV is sufficient
+        AddCellReal(rtvSupport ? FeatureTableConstants.TableTrueFalseMapping["1"] : FeatureTableConstants.TableTrueFalseMapping["0"], featureRow);
+        return true;
+    }
+    else if (featureName == "R9G9B9E5_Display") {
+        let newestDriverReport = NewestDriverReportPerArch.get(archName);
+        if (newestDriverReport.Formats == null) {
+            AddCellReal("❓", featureRow);
+            return true;
+        }
+        let formats = newestDriverReport.Formats;
+        let r9g9b9e5 = formats[67]; // 67 is DXGI_FORMAT_R9G9B9E5_SHAREDEXP
+        if (r9g9b9e5 == null) {
+            AddCellReal("❓", featureRow);
+            return true;
+        }
+        let displaySupport = r9g9b9e5.Support1 & 524288; // 0x80000 is D3D12_FORMAT_SUPPORT1_DISPLAY 
+        AddCellReal(displaySupport ? FeatureTableConstants.TableTrueFalseMapping["1"] : FeatureTableConstants.TableTrueFalseMapping["0"], featureRow);
+        return true;
+    }
     else if (featureName == "TableD3d12InfoVersion") {
         let newestDriverReport = NewestDriverReportPerArch.get(archName);
         let version = newestDriverReport.Header.Version;
@@ -760,8 +794,12 @@ function AddCell(featureRow, archName, featureName) {
 }
 
 function AddSpecialRow(featureRow, featureName) {
-    if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported") {
-        AddCellReal("Always supported", featureRow, "Given new enough Agility SDK, you can always use it independenly of GPU or driver.", "bottomcenter", ArchToOutputCount());
+    if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid") {
+        AddCellReal("Always supported", featureRow, "Given new enough Agility SDK, it is always supproted, independenly of GPU or driver.", "topcenter", ArchToOutputCount());
+        return true;
+    }
+    if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates") {
+        AddCellReal("Always supported", featureRow, "Given new enough OS, it is always supproted, independenly of GPU or driver.", "topcenter", ArchToOutputCount());
         return true;
     }
 
