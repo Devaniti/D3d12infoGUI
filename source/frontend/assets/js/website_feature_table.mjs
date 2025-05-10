@@ -795,11 +795,11 @@ function AddCell(featureRow, archName, featureName) {
 
 function AddSpecialRow(featureRow, featureName) {
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid") {
-        AddCellReal("Always supported", featureRow, "Given new enough Agility SDK, it is always supproted, independenly of GPU or driver.", "topcenter", ArchToOutputCount());
+        AddCellReal("Always supported", featureRow, "Given new enough Agility SDK, it is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
         return true;
     }
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates") {
-        AddCellReal("Always supported", featureRow, "Given new enough OS, it is always supproted, independenly of GPU or driver.", "topcenter", ArchToOutputCount());
+        AddCellReal("Always supported", featureRow, "Given new enough OS, it is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
         return true;
     }
 

@@ -94,7 +94,6 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_SERIALIZATION.HeapSerializationTier": "Heap serialization",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.StandardSwizzle64KBSupported": "64KB standard swizzle textures",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossAdapterRowMajorTextureSupported": "Cross-adapter row-major textures",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": "Compute-only write watch",
 
     // Features that are consistent across all GPUs of last 10 years
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps": "Wave ops",
@@ -108,10 +107,13 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier": "Shared resources compatibility",
 
     "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderPipelineStatsSupported": "Mesh shader pipeline stats",
-    "D3D12_FEATURE_DATA_EXISTING_HEAPS.Supported": "Heaps from existing memory",
     "D3D12_FEATURE_DATA_CROSS_NODE.SharingTier": "Cross-node sharing",
+    
+    // Features that seem to only be used for debugging
+    "D3D12_FEATURE_DATA_EXISTING_HEAPS.Supported": "Heaps from existing memory",
     "D3D12_FEATURE_DATA_CROSS_NODE.AtomicShaderInstructions": "Cross-node atomics",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier": "Recreate resource at pointer",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": "Compute-only write watch",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": "Compute-only custom heap",
 
     // Things that literally can not be unsupported given new enough Agility SDK/OS
