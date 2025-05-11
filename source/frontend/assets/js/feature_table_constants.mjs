@@ -24,14 +24,14 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported": "GPU upload heaps",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS12.EnhancedBarriersSupported": "Enhanced barriers",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier": "Variable-rate shading",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize": "Shading-rate image tile size",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS6.AdditionalShadingRatesSupported": "Additional shading rates",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported": "VRS sum combiner",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize": "Shading-rate image tile size",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing": "Per-primitive shading rate with viewport indexing",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported": "VRS sum combiner",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported": "Mesh shader per-primitive shading rate",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS3.BarycentricsSupported": "Barycentrics",
-    "R9G9B9E5_RTV_UAV": "R9G9B9E5 RTV/UAV support",
-    "R9G9B9E5_Display": "R9G9B9E5 Display support",
+    "Table_R9G9B9E5_RTV_UAV": "R9G9B9E5 RTV/UAV support",
+    "Table_R9G9B9E5_Display": "R9G9B9E5 Display support",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier": "WaveMMA (wave_matrix)",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMin": "Wave lane count min",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMax": "Wave lane count max",
@@ -43,10 +43,10 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier": "Resource heap",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceBindingTier": "Resource binding",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier": "Tiled resources",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS.MinPrecisionSupport": "Min-precision support",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.Native16BitShaderOpsSupported": "Native 16-bit shader ops",
     // This is supposed to mean that tier 3 is only supported for SRVs, but unfortunately is always true when fully-featured tier 3 is reported, we fix that up later
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3": "SRV-only tiled resource tier 3",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.MinPrecisionSupport": "Min-precision support",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.Native16BitShaderOpsSupported": "Native 16-bit shader ops",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps": "64-bit float shader ops",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.Int64ShaderOps": "64-bit int shader ops",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnTypedResourceSupported": "64-bit int atomics on typed resource",
@@ -96,22 +96,19 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossAdapterRowMajorTextureSupported": "Cross-adapter row-major textures",
 
     // Features that are consistent across all GPUs of last 10 years
+    "D3D12_FEATURE_DATA_CROSS_NODE.SharingTier": "Cross-node sharing",
+    "D3D12_FEATURE_DATA_CROSS_NODE.AtomicShaderInstructions": "Cross-node atomics",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps": "Wave ops",
-    "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion": "Root signature version",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp": "Output merger logic ops",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CastingFullyTypedFormatSupported": "Casting fully typed formats",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.TypedUAVLoadAdditionalFormats": "Typed UAV loads for additional formats",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": "VP & RT array index without GS emulation",
-
     "D3D12_FEATURE_DATA_D3D12_OPTIONS4.MSAA64KBAlignedTextureSupported": "64KB-aligned MSAA textures",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier": "Shared resources compatibility",
-
     "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderPipelineStatsSupported": "Mesh shader pipeline stats",
-    "D3D12_FEATURE_DATA_CROSS_NODE.SharingTier": "Cross-node sharing",
     
     // Features that seem to only be used for debugging
     "D3D12_FEATURE_DATA_EXISTING_HEAPS.Supported": "Heaps from existing memory",
-    "D3D12_FEATURE_DATA_CROSS_NODE.AtomicShaderInstructions": "Cross-node atomics",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier": "Recreate resource at pointer",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": "Compute-only write watch",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": "Compute-only custom heap",
@@ -119,6 +116,7 @@ export const TableFeaturesShortNames = {
     // Things that literally can not be unsupported given new enough Agility SDK/OS
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported": "RASTERIZER_DESC2 supported",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid" : "Render passes valid",
+    "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion": "Root signature version",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates" : "Expanded compute resource states",
 
     // Not in retail yet

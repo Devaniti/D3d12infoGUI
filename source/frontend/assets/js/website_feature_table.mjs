@@ -1,10 +1,10 @@
-﻿import * as Server from './server.mjs'
-import * as Properties from './properties.mjs'
+﻿import ArchStats from './arch_stats.mjs'
 import * as Constants from './constants.mjs'
 import * as FeatureTableConstants from './feature_table_constants.mjs'
-import * as HTML from './html.mjs'
-import ArchStats from './arch_stats.mjs'
 import Globals from './globals.mjs'
+import * as HTML from './html.mjs'
+import * as Properties from './properties.mjs'
+import * as Server from './server.mjs'
 
 let Reports = [];
 
@@ -704,7 +704,7 @@ function AddSpecialRowCell(featureRow, archName, featureName) {
         featureRow.appendChild(td);
         return true;
     }
-    else if (featureName == "R9G9B9E5_RTV_UAV") {
+    else if (featureName == "Table_R9G9B9E5_RTV_UAV") {
         let newestDriverReport = NewestDriverReportPerArch.get(archName);
         if (newestDriverReport.Formats == null) {
             AddCellReal("❓", featureRow);
@@ -722,7 +722,7 @@ function AddSpecialRowCell(featureRow, archName, featureName) {
         AddCellReal(rtvSupport ? FeatureTableConstants.TableTrueFalseMapping["1"] : FeatureTableConstants.TableTrueFalseMapping["0"], featureRow);
         return true;
     }
-    else if (featureName == "R9G9B9E5_Display") {
+    else if (featureName == "Table_R9G9B9E5_Display") {
         let newestDriverReport = NewestDriverReportPerArch.get(archName);
         if (newestDriverReport.Formats == null) {
             AddCellReal("❓", featureRow);
@@ -749,12 +749,34 @@ function AddSpecialRowCell(featureRow, archName, featureName) {
 
 function OverrideCell(tableRow, archName, featureName, featureValue, newestDriverReport, newestReportContainer) {
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported") {
+        if (archName == "WARP")
+        {
+            // WARP just supports it without any special conditions
+            AddCellReal(FeatureTableConstants.TableTrueFalseMapping["1"], tableRow);
+            return true;
+        }
         for (let r of ReportsPerArch.get(archName)) {
+            // If at least one report has GPUUploadHeapSupported == 1, this means that architecture supports it
             if (archName != "WARP" && r.D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported) {
-                AddCellReal("✅*", tableRow, "GPU Upload Heap support depends on BIOS settings and Windows version.\nSame GPU may report different values depending on the system.", "bottomright");
+                AddCellReal(FeatureTableConstants.TableTrueFalseMapping["1"] + "*", tableRow, "GPU Upload Heap support depends on BIOS settings and Windows version.\nSame GPU may report different values depending on the system.", "bottomright");
                 return true;
             }
         }
+        // If no report has GPUUploadHeapSupported == 1, we assume that the architecture doesn't support it
+        AddCellReal(FeatureTableConstants.TableTrueFalseMapping["0"], tableRow);
+        return true;
+    }
+    else if ((featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.AdditionalShadingRatesSupported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported") && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier == 0) {
+        AddCellReal("N/A", tableRow, "VRS capabilities are only relevant if VRS is supported.");
+        return true;
+    }
+    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier == 1) {
+        AddCellReal("N/A", tableRow, "VRS Tier 2 is required for shading rate image support.");
+        return true;
+    }
+    else if ((featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported") && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier == 1) {
+        AddCellReal("N/A", tableRow, "VRS Tier 2 is required for this capability.");
+        return true;
     }
     // If our tiled resource tier is 3, the SRVOnlyTiledResourceTier3 flag does not apply, but is always true, which is misleading
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier >= 3) {
@@ -769,8 +791,16 @@ function OverrideCell(tableRow, archName, featureName, featureValue, newestDrive
         AddCellReal("Tier 1.1 *", tableRow, "Within Turing architecture there are:\nRTX 20 series and Quadro RTX cards with hardware Tier 1.1 support\nGTX 16 series cards with >= 6GB of VRAM with software emulated Tier 1.0 support\nGTX 16 series cards with < 6GB of VRAM with no raytracing support at all");
         return true;
     }
+    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "X1") {
+        AddCellReal("❌ *", tableRow, "X1 supports ray query in hardware,\nbut this capability is not exposed in D3D12,\nsince DXR Tier 1.0 requires callable shaders,\nwhich are unsupported on X1.", "bottomright");
+        return true;
+    }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier" && archName == "RDNA2") {
         AddCellReal(FeatureTableConstants.TableTrueFalseMapping["1"] + "*", tableRow, "RDNA2 iGPUs with 1 WGP don't have mesh shader support");
+        return true;
+    }
+    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier == 0) {
+        AddCellReal("N/A", tableRow, "It is only relevant if Mesh Shaders are supported.", "bottomright");
         return true;
     }
     return false;
@@ -795,11 +825,16 @@ function AddCell(featureRow, archName, featureName) {
 
 function AddSpecialRow(featureRow, featureName) {
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid") {
-        AddCellReal("Always supported", featureRow, "Given new enough Agility SDK, it is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
+        // I don't know why, but both D3D12_FEATURE_DATA_D3D12_OPTIONS18 and D3D12_FEATURE_DATA_D3D12_OPTIONS19 were added in the same SDK version
+        AddCellReal("Always supported *", featureRow, "Starting with Agility SDK 1.610.0, it is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
+        return true;
+    }
+    if (featureName == "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion") {
+        AddCellReal("1.2 *", featureRow, "Starting with Agility SDK 1.610.0, root signature 1.2 is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
         return true;
     }
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates") {
-        AddCellReal("Always supported", featureRow, "Given new enough OS, it is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
+        AddCellReal("Always supported *", featureRow, "Starting with Windows 10 version 1607, it is always supported, independently of GPU or driver.\nAll currently supported Windows versions are newer than Windows 10 version 1607.", "topcenter", ArchToOutputCount());
         return true;
     }
 
@@ -831,7 +866,7 @@ function AddRow(tbody, featureName, featureShortName) {
     if (!featureName.startsWith("Table"))
         AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
     else if (featureName == "TableMarketShare")
-        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 System. This is an underestimate and may not be very accurate in general.", { alignOutsideVertical: true });
+        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 Systems.\nThis is an underestimate and may not be very accurate in general.", { alignOutsideVertical: true });
 
     featureRow.appendChild(featureHeader);
 
