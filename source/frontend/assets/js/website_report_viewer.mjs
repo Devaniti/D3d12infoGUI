@@ -249,13 +249,19 @@ let compareToID = -1;
 function HandleCompareClick(adapter, icon) {
     icon.classList.add('ActionIconActivated')
 
+    const thisID = adapter.GetField('ID')
+
+    if (thisID == compareToID)
+    {
+        return
+    }
+
     if (compareToID == -1)
     {
-        compareToID = adapter.GetField('ID');
+        compareToID = thisID;
     }
     else
     {
-        let thisID = adapter.GetField('ID');
         window.location.assign(`compare.html?ID1=${compareToID}&ID2=${thisID}`);
     }
 }
@@ -492,7 +498,8 @@ function FilterFieldComparison(name, values) {
     }
 
     if (!ComparisonShowVendorSpecific) {
-        const isVendorSpecificProperty = Constants.VendorSpecificPropertiesSet.has(name)
+        const lookupName = Properties.GetNameBeforeArrayIndex(name)
+        const isVendorSpecificProperty = Constants.VendorSpecificPropertiesSet.has(lookupName)
         if (isVendorSpecificProperty) {
             return false
         }
