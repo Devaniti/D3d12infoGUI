@@ -14,6 +14,10 @@ module.exports = {
       import:'./website-id-webpack.js',
       dependOn: 'shared'
     },
+    compare: {
+      import:'./website-compare-webpack.js',
+      dependOn: 'shared'
+    },
     feature_table: {
       import:'./website-feature-table-webpack.js',
       dependOn: 'shared'
@@ -60,6 +64,11 @@ module.exports = {
       template: './assets/html_website/ID.html',
       filename: 'ID.html',
       chunks: ['assets', 'shared', 'id']
+    }),
+    new HtmlWebpackPlugin({
+      template: './assets/html_website/compare.html',
+      filename: 'compare.html',
+      chunks: ['assets', 'shared', 'compare']
     }),
     new HtmlWebpackPlugin({
       template: './assets/html_website/about.html',

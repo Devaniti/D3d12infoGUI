@@ -1,7 +1,5 @@
 import ReportContainer from './report_container.mjs';
-
-const apiAddress = "https://d3d12infodbapi.boolka.dev"
-export const siteAddress = "https://d3d12infodb.boolka.dev"
+import * as Constants from "./constants.mjs"
 
 function PrepareReportInternal(prefix, obj, filter) {
     let result = {}
@@ -55,7 +53,7 @@ function IsSubmittedFilter(property) {
 
 export function SubmitReport(header, adapter, onSuccess) {
     let xhr = new XMLHttpRequest()
-    xhr.open("POST", apiAddress + "/post_submission")
+    xhr.open("POST", Constants.APIAddress + "/post_submission")
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.onreadystatechange = () => {
         if (xhr.readyState != 4)
@@ -74,7 +72,7 @@ export function SubmitReport(header, adapter, onSuccess) {
 
 export function IsSubmitted(header, adapter, callback) {
     let xhr = new XMLHttpRequest()
-    xhr.open("POST", apiAddress + "/is_submitted")
+    xhr.open("POST", Constants.APIAddress + "/is_submitted")
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.onloadend = () => {
         if (xhr.status == 200) {
@@ -90,7 +88,7 @@ export function IsSubmitted(header, adapter, callback) {
 
 export function GetAllSubmissions(onSuccess) {
     let xhr = new XMLHttpRequest()
-    xhr.open("GET", apiAddress + "/get_all_submissions")
+    xhr.open("GET", Constants.APIAddress + "/get_all_submissions")
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             let reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
@@ -100,11 +98,28 @@ export function GetAllSubmissions(onSuccess) {
     xhr.send()
 }
 
-export function GetSubmission(id, onSuccess) {
-    let xhr = new XMLHttpRequest()
-    xhr.open("GET", apiAddress + "/get_submission?ID=" + id)
+export function GetTwoSubmissions(ids, onSuccess) {
+    if (ids.length != 2)
+    {
+        return;
+    }
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", Constants.APIAddress + "/get_two_submissions?IDs=" + ids.join(","));
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
+            let reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e));
+            onSuccess(reports);
+        }
+    }
+    xhr.send(JSON.stringify(ids))
+}
+
+export function GetSubmission(id, onSuccess) {
+    let xhr = new XMLHttpRequest()
+    xhr.open("GET", Constants.APIAddress + "/get_submission?ID=" + id)
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            debugger
             let reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
             onSuccess(reports)
         }

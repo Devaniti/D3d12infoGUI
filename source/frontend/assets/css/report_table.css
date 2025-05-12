@@ -30,6 +30,12 @@ tr {
     width: 100%;
 }
 
+.hiddenCell {
+    height: 0;
+    padding: 0;
+    margin: 0;
+}
+
 tr:nth-of-type(odd) {
     background-color: #e6e5e5;
 }
@@ -122,6 +128,60 @@ button:disabled {
     vertical-align: sub;
 }
 
+.ActionIcon {
+    cursor: pointer;
+    height: 1.1em;
+    margin: 0.05em 0.15em;
+    vertical-align: sub;
+    transition: .5s ease-out;
+}
+
+.ActionIcon:hover {
+    filter: saturate(3);
+}
+
+.ActionIconActivated {
+    filter: hue-rotate(180deg) saturate(3);
+}
+
+.ActionIconActivated:hover {
+    filter: hue-rotate(180deg) saturate(5);
+}
+
+.PopupMessage {
+    position: absolute;
+    
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    border-radius: 0.4em;
+    border-color: #7f7f7f;
+    border-style: solid;
+    border-width: 0.1em;
+    padding: 0.3em;
+    margin: 0 0.2em;
+
+    animation: PopupFadeout 4s;
+    animation-iteration-count: 1;
+    opacity: 0;
+}
+
+
+@keyframes PopupFadeout {
+    from {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+
 .FormatTable {
     width: auto;
     top: 0;
@@ -183,7 +243,30 @@ button:disabled {
     .clickableCell:hover {
         background-color: #4d4d4d;
     }
+
     .tooltip .tooltiptext {
+        background-color: #232323;
+        color: #ffffff;
+        border-color: #7f7f7f;
+    }
+
+    .ActionIcon {
+        filter: brightness(1.3);
+    }
+
+    .ActionIcon:hover {
+        filter: brightness(1.5) saturate(3);
+    }
+
+    .ActionIconActivated {
+        filter: brightness(1.3) hue-rotate(180deg) saturate(2);
+    }
+
+    .ActionIconActivated:hover {
+        filter: brightness(1.3) hue-rotate(180deg) saturate(3);
+    }
+
+    .PopupMessage {
         background-color: #232323;
         color: #ffffff;
         border-color: #7f7f7f;
@@ -192,7 +275,7 @@ button:disabled {
     .FormatTable tr:nth-of-type(1) td:nth-of-type(odd) {
         background-color: #262626;
     }
-    
+
     .FormatTable tr:nth-of-type(1) td:nth-of-type(even) {
         background-color: #212121;
     }

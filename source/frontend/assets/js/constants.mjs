@@ -1,3 +1,6 @@
+export const WebsiteAddress = "https://d3d12infodb.boolka.dev"
+export const APIAddress = "https://d3d12infodbapi.boolka.dev"
+
 export const TrueFalseMapping =
 {
     "0": "false",
@@ -514,7 +517,7 @@ export const EnumMappings =
         "402": "AD102",
         "403": "AD103",
         "404": "AD104",
-        
+
         "434": "GB202",
     },
     "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_NVIDIA_RTX_VR_READY)": NVAPI_Status,
@@ -766,6 +769,10 @@ export const ListHeader = [
     "CheckInterfaceSupport.UMDVersion",
     "Header.Version",
     "Header.Using preview Agility SDK"
+]
+
+export const ListHeaderSpecial = [
+    "Action"
 ]
 
 export const FilterMultichoiceFields = [
@@ -1303,6 +1310,156 @@ const SubPropertiesOrder =
         "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.transpose"
     ]
 
+const VendorSpecificProperties = [
+    "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion",
+    "SystemInfo.AGSGPUInfo.driverVersion",
+    "Header.NvAPI compiled version",
+    "Header.NVAPI_SDK_VERSION",
+    "Header.NvAPI_GetInterfaceVersionString",
+    "Header.AMD_AGS_VERSION",
+    "Header.agsGetVersionNumber",
+    "Header.AMD device_info compiled version",
+    "Header.Intel GPU Detect compiled version",
+    "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.szBuildBranchString",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBranch",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsDCHDriver",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAStudioPackage",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAGameReadyPackage",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage",
+    "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch",
+    "SystemInfo.AGSGPUInfo.radeonSoftwareVersion",
+    "NvPhysicalGpuHandle.adapterType",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetSystemType",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetFullName",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pSubSystemId",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pRevisionId",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUType",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetBusType",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosRevision",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosOEMRevision",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosVersionString",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetPhysicalFrameBufferSize",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetVirtualFrameBufferSize",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::revision_id",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady",
+    "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_LOGO_BRIGHTNESS)",
+    "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_SLI_BRIGHTNESS)",
+    "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_NVIDIA_RTX_VR_READY)",
+    "NvPhysicalGpuHandle.NvAPI_GPU_QueryWorkstationFeatureSupport(NV_GPU_WORKSTATION_FEATURE_TYPE_PROVIZ)",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemory",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::availableDedicatedVideoMemory",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::systemVideoMemory",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::sharedSystemMemory",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::curAvailableDedicatedVideoMemory",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionsSize",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryEvictionCount",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionsSize",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetMemoryInfoEx - NV_GPU_MEMORY_INFO_EX::dedicatedVideoMemoryPromotionCount",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetShaderSubPipeCount",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGpuCoreCount",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isSupported",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::configurationOptions",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetECCStatusInfo - NV_GPU_ECC_STATUS_INFO::isEnabled",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetRamBusWidth",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::bIsExternalGpu",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::rayTracingCores",
+    "NvPhysicalGpuHandle.NvAPI_GPU_GetGPUInfo - NV_GPU_INFO::tensorCores",
+    "AGSDeviceInfo.adapterString",
+    "AGSDeviceInfo.asicFamily",
+    "AGSDeviceInfo.isAPU",
+    "AGSDeviceInfo.isExternal",
+    "AGSDeviceInfo.vendorId",
+    "AGSDeviceInfo.deviceId",
+    "AGSDeviceInfo.revisionId",
+    "AGSDeviceInfo.numCUs",
+    "AGSDeviceInfo.numWGPs",
+    "AGSDeviceInfo.numROPs",
+    "AGSDeviceInfo.coreClock",
+    "AGSDeviceInfo.memoryClock",
+    "AGSDeviceInfo.memoryBandwidth",
+    "AGSDeviceInfo.teraFlops",
+    "AGSDeviceInfo.localMemoryInBytes",
+    "AGSDeviceInfo.sharedMemoryInBytes",
+    "AMD GDT_GfxCardInfo.asicType",
+    "AMD GDT_GfxCardInfo.generation",
+    "AMD GDT_GfxCardInfo.APU",
+    "AMD GDT_GfxCardInfo.CALName",
+    "AMD GDT_GfxCardInfo.MarketingName",
+    "AMD GDT_DeviceInfo.NumShaderEngines",
+    "AMD GDT_DeviceInfo.MaxWavePerSIMD",
+    "AMD GDT_DeviceInfo.ClocksPrim",
+    "AMD GDT_DeviceInfo.NumSQMaxCounters",
+    "AMD GDT_DeviceInfo.NumPrimPipes",
+    "AMD GDT_DeviceInfo.WaveSize",
+    "AMD GDT_DeviceInfo.NumSHPerSE",
+    "AMD GDT_DeviceInfo.NumCUPerSH",
+    "AMD GDT_DeviceInfo.NumSIMDPerCU",
+    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics16",
+    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics17",
+    "AGSDX12ReturnedParams::ExtensionsSupported.userMarkers",
+    "AGSDX12ReturnedParams::ExtensionsSupported.appRegistration",
+    "AGSDX12ReturnedParams::ExtensionsSupported.UAVBindSlot",
+    "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics19",
+    "AGSDX12ReturnedParams::ExtensionsSupported.baseVertex",
+    "AGSDX12ReturnedParams::ExtensionsSupported.baseInstance",
+    "AGSDX12ReturnedParams::ExtensionsSupported.getWaveSize",
+    "AGSDX12ReturnedParams::ExtensionsSupported.floatConversion",
+    "AGSDX12ReturnedParams::ExtensionsSupported.readLaneAt",
+    "AGSDX12ReturnedParams::ExtensionsSupported.rayHitToken",
+    "AGSDX12ReturnedParams::ExtensionsSupported.shaderClock",
+    "Intel GPUDetect::GPUData.VendorId",
+    "Intel GPUDetect::GPUData.deviceID",
+    "Intel GPUDetect::GPUData.isUMAArchitecture",
+    "Intel GPUDetect::GPUData.videoMemory",
+    "Intel GPUDetect::GPUData.description",
+    "Intel GPUDetect::GPUData.extensionVersion",
+    "Intel GPUDetect::GPUData.intelExtensionAvailability",
+    "Intel GPUDetect::GPUData.dxDriverVersion",
+    "Intel GPUDetect::GPUData.driverInfo.driverReleaseRevision",
+    "Intel GPUDetect::GPUData.driverInfo.driverBuildNumber",
+    "Intel GPUDetect::GPUData.DefaultFidelityPreset",
+    "Intel GPUDetect::GPUData.GPUArchitecture",
+    "Intel GPUDetect::GPUData.GraphicsGeneration",
+    "Intel GPUDetect::GPUData.euCount",
+    "Intel GPUDetect::GPUData.packageTDP",
+    "Intel GPUDetect::GPUData.maxFillRate",
+    "Intel GPUDetect::GPUData.maxFrequency",
+    "Intel GPUDetect::GPUData.minFrequency",
+    "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_UP",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_DOWN",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_XOR",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_ALL",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_ANY",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VOTE_BALLOT",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_GET_LANE_ID",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_FP16_ATOMIC",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_FP32_ATOMIC",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_UINT64_ATOMIC",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_GET_SHADING_RATE",
+    "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_VPRS_EVAL_ATTRIB_AT_SAMPLE",
+    "NvAPI_D3D12_GetOptimalThreadCountForMesh.pThreadCount",
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_THREAD_REORDERING",
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_OPACITY_MICROMAP",
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_DISPLACEMENT_MICROMAP",
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_CLUSTER_OPERATIONS",
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_PARTITIONED_TLAS",
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_SPHERES",
+    "NvAPI_D3D12_GetRaytracingCaps.NVAPI_D3D12_RAYTRACING_CAPS_TYPE_LINEAR_SWEPT_SPHERES",
+    "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_PRESENT_BARRIER - supported",
+    "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - supported",
+    "NvAPI_D3D12_QueryWorkstationFeatureProperties.NV_D3D12_WORKSTATION_FEATURE_TYPE_RDMA_BAR1_SUPPORT - rdmaHeapSize",
+    "NvAPI_D3D12_GetNeedsAppFPBlendClamping.pAppClampNeeded",
+    "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties"
+]
+
 export const PropertiesFilterWhitelist = new Set([
     "ID",
     "DXGI_ADAPTER_DESC3.Description",
@@ -1317,5 +1474,14 @@ function MakeMap(order) {
     return result;
 }
 
+function MakeSet(arr) {
+    let result = new Set()
+    for (let i = 0; i < arr.length; ++i) {
+        result.add(arr[i]);
+    }
+    return result;
+}
+
 export const PropertiesOrderMap = MakeMap(PropertiesOrder)
 export const SubPropertiesOrderMap = MakeMap(SubPropertiesOrder)
+export const VendorSpecificPropertiesSet = MakeSet(VendorSpecificProperties)

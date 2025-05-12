@@ -2,7 +2,7 @@ import * as Server from './server.mjs'
 import * as ReportViewer from './website_report_viewer.mjs'
 
 function OnLoad() {
-    ReportViewer.Initialize(false)
+    ReportViewer.Initialize(true, false)
 
     Server.GetAllSubmissions((reports) => {
         let queryParams = (new URL(document.location)).searchParams
