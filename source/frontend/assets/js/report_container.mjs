@@ -70,51 +70,7 @@ export default class ReportContainer {
     }
 
     #reorderFields() {
-        function getPropertyIndex(a) {
-            let reorderName = Properties.GetNameBeforeArrayIndex(a.name)
-            let result = Constants.PropertiesOrderMap.get(reorderName) ?? Infinity
-            if (result == Infinity) console.log(`No order for ${a.name}`)
-            return result
-        }
-
-        function getSubPropertyIndex(a) {
-            let reorderName = Properties.RemoveArrayIndex(a.name)
-            let result = Constants.SubPropertiesOrderMap.get(reorderName) ?? Infinity
-            if (result == Infinity) console.log(`No order for ${a.name}`)
-            return result
-        }
-
-        this.#fields = this.#fields.sort((a, b) => {
-            let aIndex = getPropertyIndex(a)
-            let bIndex = getPropertyIndex(b)
-
-            if (aIndex != bIndex) {
-                return aIndex - bIndex
-            }
-
-            if (aIndex == bIndex) {
-                // Extract the array indexes (if any)
-                const aNum = parseInt(a.name.match(/\[(\d+)\]/)?.[1], 10) || 0;
-                const bNum = parseInt(b.name.match(/\[(\d+)\]/)?.[1], 10) || 0;
-
-                // Compare the array index
-                if (aNum !== bNum) {
-                    return aNum - bNum;
-                }
-
-                // Compare sub properties
-                aIndex = getSubPropertyIndex(a)
-                bIndex = getSubPropertyIndex(b)
-                if (aIndex != bIndex) {
-                    return aIndex - bIndex
-                }
-
-                // Compare the full strings
-                return a.name.localeCompare(b.name)
-            }
-
-            return aIndex - bIndex
-        })
+        this.#fields = this.#fields.sort(Properties.PropertyComparison)
     }
 
     #initializeMap() {
@@ -153,6 +109,25 @@ export default class ReportContainer {
                         let humanReadableName = Properties.MakeHumanReadableProperty(field.name)
                         let humanReadableValue = Properties.MakeHumanReadable(field.name, field.value)
                         yield { name: humanReadableName, value: humanReadableValue }
+                    }
+                }
+            }
+        }
+
+        return new HumanReadableObj(this.#fields, filterCallback);
+    }
+
+    FilteredFields(filterCallback) {
+        class HumanReadableObj {
+            constructor(fields, filterCallback) {
+                this.fields = fields;
+                this.filterCallback = filterCallback;
+            }
+
+            *[Symbol.iterator]() {
+                for (const field of this.fields) {
+                    if (this.filterCallback(field.name, field.value)) {
+                        yield field;
                     }
                 }
             }

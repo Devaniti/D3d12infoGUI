@@ -204,3 +204,50 @@ export function FilterField(name, value) {
         || value.toString().toLowerCase().includes(filterString)
         || humanReadableValue.toString().toLowerCase().includes(filterString)
 }
+
+
+function getPropertyIndex(a) {
+    let reorderName = GetNameBeforeArrayIndex(a.name)
+    let result = Constants.PropertiesOrderMap.get(reorderName) ?? Infinity
+    if (result == Infinity) console.log(`No order for ${a.name}`)
+    return result
+}
+
+function getSubPropertyIndex(a) {
+    let reorderName = RemoveArrayIndex(a.name)
+    let result = Constants.SubPropertiesOrderMap.get(reorderName) ?? Infinity
+    if (result == Infinity) console.log(`No order for ${a.name}`)
+    return result
+}
+
+export function PropertyComparison(a, b) {
+    let aIndex = getPropertyIndex(a)
+    let bIndex = getPropertyIndex(b)
+
+    if (aIndex != bIndex) {
+        return aIndex - bIndex
+    }
+
+    if (aIndex == bIndex) {
+        // Extract the array indexes (if any)
+        const aNum = parseInt(a.name.match(/\[(\d+)\]/)?.[1], 10) || 0;
+        const bNum = parseInt(b.name.match(/\[(\d+)\]/)?.[1], 10) || 0;
+
+        // Compare the array index
+        if (aNum !== bNum) {
+            return aNum - bNum;
+        }
+
+        // Compare sub properties
+        aIndex = getSubPropertyIndex(a)
+        bIndex = getSubPropertyIndex(b)
+        if (aIndex != bIndex) {
+            return aIndex - bIndex
+        }
+
+        // Compare the full strings
+        return a.name.localeCompare(b.name)
+    }
+
+    return aIndex - bIndex
+}

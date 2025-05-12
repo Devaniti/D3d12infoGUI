@@ -13,20 +13,24 @@ function ShowError(message) {
 
 function OnLoad() {
     const queryParams = (new URL(document.location)).searchParams
-    if (!queryParams.has('ID')) {
-        ShowError("Missing ID parameter.")
+    if (!queryParams.has('ID1')) {
+        ShowError("Missing ID1 parameter.")
+        return
+    }
+    if (!queryParams.has('ID2')) {
+        ShowError("Missing ID2 parameter.")
         return
     }
 
-    ReportViewer.Initialize(false, false)
+    ReportViewer.Initialize(false, true)
 
-    Server.GetSubmission(queryParams.get('ID'), (reports) => {
+    Server.GetTwoSubmissions([queryParams.get('ID1'), queryParams.get('ID2')], (reports) => {
         if (reports.length == 0) {
             ShowError("Invalid ID.")
             return
         }
         let queryParams = (new URL(document.location)).searchParams
-        ReportViewer.LoadReports(reports, queryParams.get('ID'))
+        ReportViewer.LoadReports(reports)
         document.title = reports[0].GetField("DXGI_ADAPTER_DESC3.Description") + " - D3d12infoDB";
     })
 }

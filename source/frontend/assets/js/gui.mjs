@@ -1,4 +1,5 @@
 import * as FormatTable from './format_table.mjs';
+import * as Constants from "./constants.mjs"
 import Globals from './globals.mjs';
 import * as HTML from './html.mjs';
 import * as Properties from './properties.mjs';
@@ -167,7 +168,7 @@ function UpdateList() {
                         default:
                             {
                                 let link = document.createElement("a")
-                                link.href = `${Server.siteAddress}/ID.html?ID=${SubmissionIDs[retailIndex][index]}`
+                                link.href = `${Constants.WebsiteAddress}/ID.html?ID=${SubmissionIDs[retailIndex][index]}`
                                 link.textContent = "Open Online"
                                 cell.appendChild(link)
                                 break;

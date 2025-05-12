@@ -4,9 +4,14 @@ import * as Properties from "./properties.mjs"
 import * as FormatTable from "./format_table.mjs"
 import Globals from './globals.mjs'
 
-let SingleReport = false
+let ShowAdapterSearch = true
+let IsComparison = false
 let Reports = []
 let ReportIndex = 0
+
+let ComparisonShowEqual = true
+let ComparisonShowOneSided = false
+let ComparisonShowVendorSpecific = false
 
 let SortProperty = "ID"
 let SortInverse = true
@@ -163,12 +168,57 @@ function AddFilterAdapterType(container) {
 }
 
 function UpdateAdaptersFilter() {
-    const adapterFilterContainer = document.getElementById("AdaptersFilterContainer")
+    const filterContainer = document.getElementById("AdaptersFilterContainer")
 
-    HTML.ClearElement(adapterFilterContainer)
+    HTML.ClearElement(filterContainer)
 
-    Constants.FilterMultichoiceFields.forEach(e => AddFilterMultichoice(adapterFilterContainer, e))
-    AddFilterAdapterType(adapterFilterContainer)
+    Constants.FilterMultichoiceFields.forEach(e => AddFilterMultichoice(filterContainer, e))
+    AddFilterAdapterType(filterContainer)
+}
+
+function AddFilterComparison(container) {
+    const filterFieldSet = document.createElement("fieldset")
+    const filterLegend = document.createElement("legend")
+    const property = "Show Properties"
+    filterLegend.appendChild(document.createTextNode(Properties.MakeHumanReadableProperty(property)))
+    AdaptersFilters[property] = []
+
+    let valuesList = [{name:"Equal", default:ComparisonShowEqual}, {name:"Exist only in one of reports", default:false}, {name:"Vendor specific", default:ComparisonShowVendorSpecific}];
+    valuesList.forEach(e => {
+        const checkboxLabel = document.createElement("label")
+        const filterCheckbox = document.createElement("input")
+        filterCheckbox.type = "checkbox"
+        filterCheckbox.checked = e.default
+        filterCheckbox.addEventListener('change', () => {
+            switch (e.name) {
+                case "Equal":
+                    ComparisonShowEqual = filterCheckbox.checked
+                    break;
+                case "Exist only in one of reports":
+                    ComparisonShowOneSided = filterCheckbox.checked
+                    break;
+                case "Vendor specific":
+                    ComparisonShowVendorSpecific = filterCheckbox.checked
+                    break;
+            }
+            UpdateComparison()
+        })
+        checkboxLabel.appendChild(filterCheckbox)
+        checkboxLabel.appendChild(document.createTextNode(e.name))
+        filterFieldSet.appendChild(checkboxLabel)
+        filterFieldSet.appendChild(document.createElement("br"))
+    })
+
+    filterFieldSet.appendChild(filterLegend)
+    container.appendChild(filterFieldSet)
+}
+
+function UpdateComparisonPropertyFilter() {
+    const filterContainer = document.getElementById("ComparisonPropertyFilterContainer")
+
+    HTML.ClearElement(filterContainer)
+    
+    AddFilterComparison(filterContainer)
 }
 
 function UpdateSearchBarProperties() {
@@ -182,9 +232,73 @@ function UpdateSearchBarProperties() {
     searchBar.classList.add("searchBar")
     searchBar.addEventListener('input', function (e) {
         Globals.PropertiesSearchString = searchBar.value
-        UpdateReport()
+        if (IsComparison)
+        {
+            UpdateComparison()
+        }
+        else
+        {
+            UpdateReport()
+        }
     })
     searchBarContainer.appendChild(searchBar)
+}
+
+let compareToID = -1;
+
+function HandleCompareClick(adapter, icon) {
+    icon.classList.add('ActionIconActivated')
+
+    if (compareToID == -1)
+    {
+        compareToID = adapter.GetField('ID');
+    }
+    else
+    {
+        let thisID = adapter.GetField('ID');
+        window.location.assign(`compare.html?ID1=${compareToID}&ID2=${thisID}`);
+    }
+}
+
+let lastShare = null;
+let lastPopup = null;
+let lastPopupTimeout = null;
+
+function HandleShareClick(adapter, icon) {
+    if (lastShare != null)
+    {
+        lastShare.classList.remove("ActionIconActivated");
+    }
+    lastShare = icon;
+
+    icon.classList.add("ActionIconActivated");
+
+    navigator.clipboard.writeText(`${Constants.WebsiteAddress}/ID.html?ID=${adapter.GetField('ID')}`);
+
+    let rect = icon.getBoundingClientRect();
+
+    let popup = document.createElement("div");
+    popup.classList.add("PopupMessage");
+    popup.textContent = "Link copied to clipboard";
+    popup.getClientRects
+    
+    popup.style.left = `${rect.left + window.scrollX - 200}px`;
+    popup.style.top = `${rect.top + window.scrollY - 7}px`;
+
+    document.body.appendChild(popup);
+
+    if (lastPopup != null)
+    {
+        lastPopup.remove();
+        clearTimeout(lastPopupTimeout);
+    }
+    lastPopup = popup;
+
+    lastPopupTimeout = setTimeout(() => {
+        popup.remove();
+        lastPopup = null;
+        lastPopupTimeout = null;
+    }, 4000)
 }
 
 function UpdateList() {
@@ -195,14 +309,31 @@ function UpdateList() {
     const table = document.createElement("table")
     const tableBody = document.createElement("tbody")
 
-    const firstRow = document.createElement("tr")
-    tableBody.appendChild(firstRow)
+    {
+        const firstRow = document.createElement("tr")
+        Constants.ListHeader.forEach(collumn => {
+            const cell = document.createElement("td")
+            cell.classList.add("hiddenCell")
+            firstRow.appendChild(cell)
+        })
+        Constants.ListHeaderSpecial.forEach(collumn => {
+            const cell = document.createElement("td")
+            cell.classList.add("hiddenCell")
+            switch (collumn) {
+                case "Action":
+                    cell.style.width = "3.1em"
+                    break;
+            }
+            firstRow.appendChild(cell)
+        })
+        tableBody.appendChild(firstRow)
+    }
 
 
     {
         const secondRow = document.createElement("tr")
         const secondRowCell = document.createElement("td")
-        secondRowCell.colSpan = Constants.ListHeader.length
+        secondRowCell.colSpan = Constants.ListHeader.length + Constants.ListHeaderSpecial.length
         const prevPageButton = document.createElement("button")
         prevPageButton.appendChild(document.createTextNode("Previous page"))
         prevPageButton.addEventListener('click', function (e) {
@@ -239,6 +370,19 @@ function UpdateList() {
             })
             thirdRow.appendChild(cell)
         })
+        Constants.ListHeaderSpecial.forEach(collumn => {
+            const cell = document.createElement("td")
+            let text = ""
+            switch (collumn) {
+                case "Action":
+                    // Noop
+                    break;
+            }
+            const cellText = document.createTextNode(text)
+            cell.appendChild(cellText)
+            thirdRow.appendChild(cell)
+        })
+
         tableBody.appendChild(thirdRow)
     }
 
@@ -249,6 +393,44 @@ function UpdateList() {
             let value = adapter.GetField(collumn)
             let cellText = document.createTextNode(Properties.MakeHumanReadable(collumn, value))
             cell.appendChild(cellText)
+            row.appendChild(cell)
+        })
+        Constants.ListHeaderSpecial.forEach(collumn => {
+            const cell = document.createElement("td")
+            switch (collumn) {
+                case "Action":
+                    {
+                        {
+                            const compareIcon = document.createElement("img")
+                            compareIcon.src = "compare.svg"
+                            compareIcon.alt = "Share"
+                            compareIcon.title = "Click compare icon on 2 reports to open comparison"
+                            compareIcon.className = "ActionIcon"
+                            if (adapter.GetField('ID') == compareToID)
+                            {
+                                compareIcon.classList.add('ActionIconActivated')
+                            }
+                            compareIcon.addEventListener('click', (e) => {
+                                e.stopPropagation()
+                                HandleCompareClick(adapter, compareIcon)
+                            })
+                            cell.appendChild(compareIcon)
+                        }
+                        {
+                            const shareIcon = document.createElement("img")
+                            shareIcon.src = "share.svg"
+                            shareIcon.alt = "Share"
+                            shareIcon.title = "Click to copy URL to this report"
+                            shareIcon.className = "ActionIcon"
+                            shareIcon.addEventListener('click', (e) => {
+                                e.stopPropagation()
+                                HandleShareClick(adapter, shareIcon)
+                            })
+                            cell.appendChild(shareIcon)
+                        }
+                    }
+                    break;
+            }
             row.appendChild(cell)
         })
         row.addEventListener('click', () => {
@@ -288,6 +470,115 @@ function AddTooltipIcon(field, cell) {
     tooltipIcon.alt = "Info"
     tooltipIcon.className = "tooltipicon"
     cell.appendChild(tooltipIcon)
+}
+
+function FilterFieldComparison(name, values) {
+    if (Constants.PropertiesFilterWhitelist.has(name)) {
+        return true
+    }
+
+    if (!ComparisonShowEqual) {
+        const isAllValuesEqual = values.every((e) => {return e == values[0]})
+        if (isAllValuesEqual) {
+            return false
+        }
+    }
+
+    if (!ComparisonShowOneSided) {
+        const nonEmptyValues = values.filter((e) => {return e != null}).length
+        if (nonEmptyValues <= 1) {
+            return false
+        }
+    }
+
+    if (!ComparisonShowVendorSpecific) {
+        const isVendorSpecificProperty = Constants.VendorSpecificPropertiesSet.has(name)
+        if (isVendorSpecificProperty) {
+            return false
+        }
+    }
+
+    return true;
+}
+
+function UpdateComparison() {
+    const reports = [Reports[0], Reports[1]]
+
+    const tableContainer = document.getElementById("TableContainer")
+
+    HTML.ClearElement(tableContainer)
+
+    const table = document.createElement("table")
+    const tableBody = document.createElement("tbody")
+
+    {
+        const firstRow = document.createElement("tr")
+        tableBody.appendChild(firstRow)
+    }
+
+    let properties = {};
+    for (const report of reports)
+    {
+        for (const e of report.FilteredFields(Properties.FilterField)) {
+            properties[e.name] = e.value;
+        }
+    }
+    
+    let propertyArray = []
+    for (const [inName, inValue] of Object.entries(properties)) {
+        propertyArray.push({name: inName, value: inValue});
+    }
+
+    propertyArray.sort(Properties.PropertyComparison);
+
+    for (const e of propertyArray) {
+        const propertyName = e.name;
+        const propertyNameHumanReadable = Properties.MakeHumanReadableProperty(propertyName);
+        const values = [];
+        const valuesHumanReadable = [];
+        for (const report of reports)
+        {
+            const value = report.GetField(propertyName);
+            const valueHumanReadable = (value != null) ? Properties.MakeHumanReadable(propertyName, value) : "";
+            values.push(value);
+            valuesHumanReadable.push(valueHumanReadable);
+        }
+
+        if (!FilterFieldComparison(propertyName, values)) {
+            continue;
+        }
+
+        const isAllValuesEqual = values.every((e) => {return e == values[0]})
+
+        const row = document.createElement("tr")
+
+        const cell0 = document.createElement("td")
+        AddTooltip(propertyNameHumanReadable, cell0)
+        const cell0Text = document.createTextNode(propertyNameHumanReadable)
+        cell0.appendChild(cell0Text)
+        AddTooltipIcon(propertyNameHumanReadable, cell0)
+        row.appendChild(cell0)
+
+        for (const valueHumanReadable of valuesHumanReadable)
+        {
+            const cell = document.createElement("td")
+            const cellText = document.createTextNode(valueHumanReadable)
+            if (isAllValuesEqual) {
+                debugger;
+                cell.style.fontStyle = "italic";
+                cell.style.color = "#888888";
+            }
+            cell.appendChild(cellText)
+            row.appendChild(cell)
+        }
+
+        tableBody.appendChild(row)
+    }
+
+    table.appendChild(tableBody)
+    tableContainer.appendChild(table)
+
+    //FormatTable.BuildFormatTable(report, tableContainer)
 }
 
 function UpdateReport() {
@@ -336,14 +627,24 @@ function UpdateOutput() {
         return
     }
 
-    if (!SingleReport) {
+    if (ShowAdapterSearch) {
         UpdateSearchBarAdapters()
         UpdateAdaptersFilter()
         PrepareReports()
         UpdateList()
     }
+    else if (IsComparison) {
+        UpdateComparisonPropertyFilter()
+    }
     UpdateSearchBarProperties()
-    UpdateReport()
+    if (IsComparison)
+    {
+        UpdateComparison()
+    }
+    else
+    {
+        UpdateReport()
+    }
 }
 
 function PrepareReports() {
@@ -352,8 +653,9 @@ function PrepareReports() {
     Page = Math.min(Page, PageCount - 1)
 }
 
-export function Initialize(isSingleReport) {
-    SingleReport = isSingleReport
+export function Initialize(inShowAdapterSearch, inIsComparison) {
+    ShowAdapterSearch = inShowAdapterSearch
+    IsComparison = inIsComparison
 
     const tableContainer = document.getElementById("TableContainer")
     const textContainer = document.createElement("div")

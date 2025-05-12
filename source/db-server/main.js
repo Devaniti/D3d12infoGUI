@@ -120,6 +120,56 @@ api.get('/get_submission', (req, res) => {
     }
 })
 
+const getTwoSubmissionsStatement = db.prepare("SELECT * FROM Submissions WHERE ID IN (?,?)")
+api.get('/get_two_submissions', (req, res) => {
+    if (!req.query.IDs) {
+        res.status(400)
+        res.send('IDs is missing')
+        return
+    }
+
+    let ids = req.query.IDs.split(",").map(Number)
+    if (ids.some(isNaN)) {
+        res.status(400)
+        res.send('IDs are not numbers')
+        return
+    }
+    if (ids.length != 2) {
+        res.status(400)
+        res.send('Expected exactly 2 IDs')
+        return
+    }
+    
+    let etag = req.query.ID > latestReportID ? "0" : databaseLastDeleteTime
+    if (req.headers['if-none-match'] == etag) {
+        res.status(304)
+        res.send()
+        return
+    }
+
+    try {
+        let rows = getTwoSubmissionsStatement.all([ids[0], ids[1]])
+        rows = rows.map(database_common.unpackDatabaseObject)
+
+        let cacheLifetime = 300
+        if (rows.length != 0) {
+            cacheLifetime = 86400
+        }
+
+        res.header("Cache-Control", "public, max-age=" + cacheLifetime)
+        res.header("ETag", etag)
+        res.send(JSON.stringify(rows))
+    }
+    catch (e) {
+        console.log('DB Error')
+        console.log(e)
+
+        res.status(500)
+        res.send('DB Error')
+        return
+    }
+})
+
 const getAllSubmissionsStatement = db.prepare("SELECT * FROM Submissions")
 api.get('/get_all_submissions', (req, res) => {
     let etag = databaseLastModificationTime
