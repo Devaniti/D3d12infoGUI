@@ -162,6 +162,22 @@ export const DXGI_FORMAT =
     "191": "DXGI_FORMAT_A4B4G4R4_UNORM",
 }
 
+export const D3D12_LINEAR_ALGEBRA_DATATYPE =
+{
+    "2": "D3D12_LINEAR_ALGEBRA_DATATYPE_SINT16",
+    "3": "D3D12_LINEAR_ALGEBRA_DATATYPE_UINT16",
+    "4": "D3D12_LINEAR_ALGEBRA_DATATYPE_SINT32",
+    "5": "D3D12_LINEAR_ALGEBRA_DATATYPE_UINT32",
+    "7": "D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16",
+    "8": "D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT32",
+    "16": "D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8_T4_PACKED",
+    "17": "D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8_T4_PACKED",
+    "18": "D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8",
+    "19": "D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8",
+    "20": "D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT_E4M3",
+    "21": "D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT_E5M2",
+}
+
 export const EnumMappings =
 {
     "DXGI_ADAPTER_DESC3.GraphicsPreemptionGranularity":
@@ -286,6 +302,12 @@ export const EnumMappings =
         "10": "D3D12_WORK_GRAPHS_TIER_1_0",
         "11": "D3D12_WORK_GRAPHS_TIER_1_1"
     },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.CooperativeVectorTier":
+    {
+        "0": "D3D12_COOPERATIVE_VECTOR_TIER_NOT_SUPPORTED",
+        "16": "D3D12_COOPERATIVE_VECTOR_TIER_1_0",
+        "17": "D3D12_COOPERATIVE_VECTOR_TIER_1_1"
+    },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
     {
         "0": "D3D12_RENDER_PASS_TIER_0",
@@ -296,7 +318,8 @@ export const EnumMappings =
     {
         "0": "D3D12_RAYTRACING_TIER_NOT_SUPPORTED",
         "10": "D3D12_RAYTRACING_TIER_1_0",
-        "11": "D3D12_RAYTRACING_TIER_1_1"
+        "11": "D3D12_RAYTRACING_TIER_1_1",
+        "12": "D3D12_RAYTRACING_TIER_1_2",
     },
     "D3D12_FEATURE_DATA_DISPLAYABLE.SharedResourceCompatibilityTier":
     {
@@ -360,6 +383,16 @@ export const EnumMappings =
         "{8A17AE4B-B5F6-11EE-BAAF-00E1110012F6}": "Intel(R) Xe Super Sampling (XeSS) (8A17AE4B-B5F6-11EE-BAAF-00E1110012F6)",
         "{9C01B751-23ED-4620-B99F-980F2AFE0C97}": "DLSS (9C01B751-23ED-4620-B99F-980F2AFE0C97)"
     },
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.InputType" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.InputInterpretation" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.MatrixInterpretation" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.BiasInterpretation" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.OutputType" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.TransposeSupported" : TrueFalseMapping,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pOuterProductAccumulateProperties.InputType" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pOuterProductAccumulateProperties.AccumulationType" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pVectorAccumulateProperties.InputType" : D3D12_LINEAR_ALGEBRA_DATATYPE,
+    "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pVectorAccumulateProperties.AccumulationType" : D3D12_LINEAR_ALGEBRA_DATATYPE,
     "DirectSR.OptimalTargetFormat": DXGI_FORMAT,
     "VkPhysicalDeviceProperties.deviceType":
     {
@@ -600,7 +633,10 @@ export const EnumMappings =
         "47": "GDT_GFX11_0_3",
         "48": "GDT_GFX11_0_3B",
         "49": "GDT_GFX11_5_0",
-        "50": "GDT_LAST"
+        "50": "GDT_GFX11_5_1",
+        "51": "GDT_GFX11_5_2",
+        "52": "GDT_GFX12_0_1",
+        "53": "GDT_LAST"
     },
     "AMD GDT_GfxCardInfo.generation": {
         "0": "GDT_HW_GENERATION_NONE",
@@ -617,7 +653,8 @@ export const EnumMappings =
         "11": "GDT_HW_GENERATION_CDNA",
         "12": "GDT_HW_GENERATION_CDNA2",
         "13": "GDT_HW_GENERATION_CDNA3",
-        "14": "GDT_HW_GENERATION_LAST"
+        "14": "GDT_HW_GENERATION_GFX12",
+        "15": "GDT_HW_GENERATION_LAST"
     },
     "Intel GPUDetect::GPUData.DefaultFidelityPreset":
     {
@@ -635,6 +672,7 @@ export const EnumMappings =
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIAGameReadyPackage": TrueFalseMapping,
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage": TrueFalseMapping,
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage": TrueFalseMapping,
+    "SystemInfo.vkd3d-proton detection.IVKD3DCoreInterface": TrueFalseMapping,
     "NvPhysicalGpuHandle.NvAPI_GPU_GetVRReadyData - NV_GPU_VR_READY::isVRReady": TrueFalseMapping,
     "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_LOGO_BRIGHTNESS)": TrueFalseMapping,
     "NvPhysicalGpuHandle.NvAPI_GPU_QueryIlluminationSupport(NV_GPU_IA_SLI_BRIGHTNESS)": TrueFalseMapping,
@@ -677,6 +715,19 @@ export const EnumMappings =
     "AGSDX12ReturnedParams::ExtensionsSupported.readLaneAt": TrueFalseMapping,
     "AGSDX12ReturnedParams::ExtensionsSupported.rayHitToken": TrueFalseMapping,
     "AGSDX12ReturnedParams::ExtensionsSupported.shaderClock": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.intrinsics16": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.intrinsics17": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.userMarkers": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.appRegistration": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.UAVBindSlot": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.intrinsics19": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.baseVertex": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.baseInstance": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.getWaveSize": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.floatConversion": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.readLaneAt": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.rayHitToken": TrueFalseMapping,
+    "AGSDX12ExtensionsSupported.shaderClock": TrueFalseMapping,
     "Intel GPUDetect::GPUData.intelExtensionAvailability": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp": TrueFalseMapping,
@@ -964,6 +1015,7 @@ export const PropertyHumanReadableNames =
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage": "NVAPI Display Driver bIsNVIDIARTXNewFeatureBranchPackage",
     "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch": "NVAPI Display Driver szBuildBaseBranch",
     "SystemInfo.D3D12EnableExperimentalFeatures": "Available Experimental Features",
+    "SystemInfo.vkd3d-proton detection.IVKD3DCoreInterface": "Running under vkd3d-proton",
     "AdapterIndex": "Adapter Index",
     "CheckInterfaceSupport.UMDVersion": "Driver Version",
 }
@@ -1012,6 +1064,7 @@ const PropertiesOrder =
         "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch",
         "SystemInfo.AGSGPUInfo.radeonSoftwareVersion",
         "SystemInfo.D3D12EnableExperimentalFeatures",
+        "SystemInfo.vkd3d-proton detection.IVKD3DCoreInterface",
         "AdapterIndex",
         "CheckInterfaceSupport.UMDVersion",
         "VkPhysicalDeviceVulkan12Properties.driverInfo",
@@ -1128,6 +1181,19 @@ const PropertiesOrder =
         "AGSDX12ReturnedParams::ExtensionsSupported.readLaneAt",
         "AGSDX12ReturnedParams::ExtensionsSupported.rayHitToken",
         "AGSDX12ReturnedParams::ExtensionsSupported.shaderClock",
+        "AGSDX12ExtensionsSupported.intrinsics16",
+        "AGSDX12ExtensionsSupported.intrinsics17",
+        "AGSDX12ExtensionsSupported.userMarkers",
+        "AGSDX12ExtensionsSupported.appRegistration",
+        "AGSDX12ExtensionsSupported.UAVBindSlot",
+        "AGSDX12ExtensionsSupported.intrinsics19",
+        "AGSDX12ExtensionsSupported.baseVertex",
+        "AGSDX12ExtensionsSupported.baseInstance",
+        "AGSDX12ExtensionsSupported.getWaveSize",
+        "AGSDX12ExtensionsSupported.floatConversion",
+        "AGSDX12ExtensionsSupported.readLaneAt",
+        "AGSDX12ExtensionsSupported.rayHitToken",
+        "AGSDX12ExtensionsSupported.shaderClock",
         "Intel GPUDetect::GPUData.VendorId",
         "Intel GPUDetect::GPUData.deviceID",
         "Intel GPUDetect::GPUData.isUMAArchitecture",
@@ -1264,7 +1330,12 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported",
         "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported",
         "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier",
+        "D3D12_FEATURE_DATA_HARDWARE_SCHEDULING_QUEUE_GROUPINGS.ComputeQueuesPer3DQueue",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.CooperativeVectorTier",
         "DirectSR",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pOuterProductAccumulateProperties",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pVectorAccumulateProperties",
         "NvAPI_D3D12_QueryCpuVisibleVidmem.pTotalBytes",
         "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL",
         "NvAPI_D3D12_IsNvShaderExtnOpCodeSupported.NV_EXTN_OP_SHFL_UP",
@@ -1301,6 +1372,16 @@ const SubPropertiesOrder =
         "DirectSR.Flags",
         "DirectSR.OptimizationRankings",
         "DirectSR.OptimalTargetFormat",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.InputType",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.InputInterpretation",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.MatrixInterpretation",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.BiasInterpretation",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.OutputType",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pMatrixVectorMulAddProperties.TransposeSupported",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pOuterProductAccumulateProperties.InputType",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pOuterProductAccumulateProperties.AccumulationType",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pVectorAccumulateProperties.InputType",
+        "D3D12_FEATURE_DATA_COOPERATIVE_VECTOR.pVectorAccumulateProperties.AccumulationType",
         "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.version",
         "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.inputType",
         "NvAPI_D3D12_GetPhysicalDeviceCooperativeVectorProperties.inputInterpretation",
@@ -1413,6 +1494,19 @@ const VendorSpecificProperties = [
     "AGSDX12ReturnedParams::ExtensionsSupported.readLaneAt",
     "AGSDX12ReturnedParams::ExtensionsSupported.rayHitToken",
     "AGSDX12ReturnedParams::ExtensionsSupported.shaderClock",
+    "AGSDX12ExtensionsSupported.intrinsics16",
+    "AGSDX12ExtensionsSupported.intrinsics17",
+    "AGSDX12ExtensionsSupported.userMarkers",
+    "AGSDX12ExtensionsSupported.appRegistration",
+    "AGSDX12ExtensionsSupported.UAVBindSlot",
+    "AGSDX12ExtensionsSupported.intrinsics19",
+    "AGSDX12ExtensionsSupported.baseVertex",
+    "AGSDX12ExtensionsSupported.baseInstance",
+    "AGSDX12ExtensionsSupported.getWaveSize",
+    "AGSDX12ExtensionsSupported.floatConversion",
+    "AGSDX12ExtensionsSupported.readLaneAt",
+    "AGSDX12ExtensionsSupported.rayHitToken",
+    "AGSDX12ExtensionsSupported.shaderClock",
     "Intel GPUDetect::GPUData.VendorId",
     "Intel GPUDetect::GPUData.deviceID",
     "Intel GPUDetect::GPUData.isUMAArchitecture",
