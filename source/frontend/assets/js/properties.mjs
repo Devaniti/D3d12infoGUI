@@ -251,3 +251,13 @@ export function PropertyComparison(a, b) {
 
     return aIndex - bIndex
 }
+
+export function GetTranslationLayerName(report) {
+    if (report.GetField("TranslationLayerDetection.ID3D12DXVKInteropDevice") != undefined) {
+        return "vkd3d-proton"
+    }
+    else if (report.GetField("SystemInfo.TranslationLayerDetection.wine_get_version") != undefined) {
+        return "Other"
+    }
+    return "None"
+}

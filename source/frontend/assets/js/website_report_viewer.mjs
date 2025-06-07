@@ -39,7 +39,9 @@ function FilterSingleReport(wrappedReport) {
     })
     let adapterType = report.GetField("DXGI_ADAPTER_DESC3.Flags") & 2 ? "Software" : "Hardware"
     let adapterTypeTest = AdaptersFilters["Adapter Type"][adapterType]
-    return searchTest && filterTest && adapterTypeTest
+    let translationLayer = Properties.GetTranslationLayerName(report)
+    let translationLayerTest = AdaptersFilters["Translation Layer"][translationLayer]
+    return searchTest && filterTest && adapterTypeTest && translationLayerTest
 }
 
 function FilterReports() {
@@ -107,6 +109,10 @@ const DefaultFilterValues = {
     "Adapter Type": {
         "default": false,
         "Hardware": true
+    },
+    "Translation Layer": {
+        "default": false,
+        "None": true
     }
 }
 
@@ -138,33 +144,38 @@ function AddFilterMultichoice(container, property) {
     container.appendChild(filterFieldSet)
 }
 
-function AddFilterAdapterType(container) {
-    const filterFieldSet = document.createElement("fieldset")
-    const filterLegend = document.createElement("legend")
-    const property = "Adapter Type"
-    filterLegend.appendChild(document.createTextNode(Properties.MakeHumanReadableProperty(property)))
-    AdaptersFilters[property] = []
+function AddCustomFilters(container) {
 
-    let valuesList = ["Hardware", "Software"]
-    valuesList.forEach(e => {
-        const checkboxLabel = document.createElement("label")
-        const filterCheckbox = document.createElement("input")
-        filterCheckbox.type = "checkbox"
-        filterCheckbox.checked = DefaultFilterValues[property][e] ?? DefaultFilterValues[property]["default"]
-        AdaptersFilters[property][e] = filterCheckbox.checked
-        filterCheckbox.addEventListener('change', () => {
+    const customFilters = [{ property: "Adapter Type", values: ["Hardware", "Software"] }, { property: "Translation Layer", values: ["None", "vkd3d-proton", "Other"] }]
+
+    customFilters.forEach(filter => {
+        const filterFieldSet = document.createElement("fieldset")
+        const filterLegend = document.createElement("legend")
+        const property = filter.property
+        filterLegend.appendChild(document.createTextNode(Properties.MakeHumanReadableProperty(property)))
+        AdaptersFilters[property] = []
+
+        let valuesList = filter.values
+        valuesList.forEach(e => {
+            const checkboxLabel = document.createElement("label")
+            const filterCheckbox = document.createElement("input")
+            filterCheckbox.type = "checkbox"
+            filterCheckbox.checked = DefaultFilterValues[property][e] ?? DefaultFilterValues[property]["default"]
             AdaptersFilters[property][e] = filterCheckbox.checked
-            PrepareReports()
-            UpdateList()
+            filterCheckbox.addEventListener('change', () => {
+                AdaptersFilters[property][e] = filterCheckbox.checked
+                PrepareReports()
+                UpdateList()
+            })
+            checkboxLabel.appendChild(filterCheckbox)
+            checkboxLabel.appendChild(document.createTextNode(Properties.MakeHumanReadable(property, e)))
+            filterFieldSet.appendChild(checkboxLabel)
+            filterFieldSet.appendChild(document.createElement("br"))
         })
-        checkboxLabel.appendChild(filterCheckbox)
-        checkboxLabel.appendChild(document.createTextNode(Properties.MakeHumanReadable(property, e)))
-        filterFieldSet.appendChild(checkboxLabel)
-        filterFieldSet.appendChild(document.createElement("br"))
-    })
 
-    filterFieldSet.appendChild(filterLegend)
-    container.appendChild(filterFieldSet)
+        filterFieldSet.appendChild(filterLegend)
+        container.appendChild(filterFieldSet)
+    })
 }
 
 function UpdateAdaptersFilter() {
@@ -173,7 +184,7 @@ function UpdateAdaptersFilter() {
     HTML.ClearElement(filterContainer)
 
     Constants.FilterMultichoiceFields.forEach(e => AddFilterMultichoice(filterContainer, e))
-    AddFilterAdapterType(filterContainer)
+    AddCustomFilters(filterContainer)
 }
 
 function AddFilterComparison(container) {
@@ -183,7 +194,7 @@ function AddFilterComparison(container) {
     filterLegend.appendChild(document.createTextNode(Properties.MakeHumanReadableProperty(property)))
     AdaptersFilters[property] = []
 
-    let valuesList = [{name:"Equal", default:ComparisonShowEqual}, {name:"Exist only in one of reports", default:false}, {name:"Vendor specific", default:ComparisonShowVendorSpecific}];
+    let valuesList = [{ name: "Equal", default: ComparisonShowEqual }, { name: "Exist only in one of reports", default: false }, { name: "Vendor specific", default: ComparisonShowVendorSpecific }];
     valuesList.forEach(e => {
         const checkboxLabel = document.createElement("label")
         const filterCheckbox = document.createElement("input")
@@ -217,7 +228,7 @@ function UpdateComparisonPropertyFilter() {
     const filterContainer = document.getElementById("ComparisonPropertyFilterContainer")
 
     HTML.ClearElement(filterContainer)
-    
+
     AddFilterComparison(filterContainer)
 }
 
@@ -232,12 +243,10 @@ function UpdateSearchBarProperties() {
     searchBar.classList.add("searchBar")
     searchBar.addEventListener('input', function (e) {
         Globals.PropertiesSearchString = searchBar.value
-        if (IsComparison)
-        {
+        if (IsComparison) {
             UpdateComparison()
         }
-        else
-        {
+        else {
             UpdateReport()
         }
     })
@@ -251,17 +260,14 @@ function HandleCompareClick(adapter, icon) {
 
     const thisID = adapter.GetField('ID')
 
-    if (thisID == compareToID)
-    {
+    if (thisID == compareToID) {
         return
     }
 
-    if (compareToID == -1)
-    {
+    if (compareToID == -1) {
         compareToID = thisID;
     }
-    else
-    {
+    else {
         window.location.assign(`compare.html?ID1=${compareToID}&ID2=${thisID}`);
     }
 }
@@ -271,8 +277,7 @@ let lastPopup = null;
 let lastPopupTimeout = null;
 
 function HandleShareClick(adapter, icon) {
-    if (lastShare != null)
-    {
+    if (lastShare != null) {
         lastShare.classList.remove("ActionIconActivated");
     }
     lastShare = icon;
@@ -287,14 +292,13 @@ function HandleShareClick(adapter, icon) {
     popup.classList.add("PopupMessage");
     popup.textContent = "Link copied to clipboard";
     popup.getClientRects
-    
+
     popup.style.left = `${rect.left + window.scrollX - 200}px`;
     popup.style.top = `${rect.top + window.scrollY - 7}px`;
 
     document.body.appendChild(popup);
 
-    if (lastPopup != null)
-    {
+    if (lastPopup != null) {
         lastPopup.remove();
         clearTimeout(lastPopupTimeout);
     }
@@ -412,8 +416,7 @@ function UpdateList() {
                             compareIcon.alt = "Share"
                             compareIcon.title = "Click compare icon on 2 reports to open comparison"
                             compareIcon.className = "ActionIcon"
-                            if (adapter.GetField('ID') == compareToID)
-                            {
+                            if (adapter.GetField('ID') == compareToID) {
                                 compareIcon.classList.add('ActionIconActivated')
                             }
                             compareIcon.addEventListener('click', (e) => {
@@ -484,14 +487,14 @@ function FilterFieldComparison(name, values) {
     }
 
     if (!ComparisonShowEqual) {
-        const isAllValuesEqual = values.every((e) => {return e == values[0]})
+        const isAllValuesEqual = values.every((e) => { return e == values[0] })
         if (isAllValuesEqual) {
             return false
         }
     }
 
     if (!ComparisonShowOneSided) {
-        const nonEmptyValues = values.filter((e) => {return e != null}).length
+        const nonEmptyValues = values.filter((e) => { return e != null }).length
         if (nonEmptyValues <= 1) {
             return false
         }
@@ -524,16 +527,15 @@ function UpdateComparison() {
     }
 
     let properties = {};
-    for (const report of reports)
-    {
+    for (const report of reports) {
         for (const e of report.FilteredFields(Properties.FilterField)) {
             properties[e.name] = e.value;
         }
     }
-    
+
     let propertyArray = []
     for (const [inName, inValue] of Object.entries(properties)) {
-        propertyArray.push({name: inName, value: inValue});
+        propertyArray.push({ name: inName, value: inValue });
     }
 
     propertyArray.sort(Properties.PropertyComparison);
@@ -543,8 +545,7 @@ function UpdateComparison() {
         const propertyNameHumanReadable = Properties.MakeHumanReadableProperty(propertyName);
         const values = [];
         const valuesHumanReadable = [];
-        for (const report of reports)
-        {
+        for (const report of reports) {
             const value = report.GetField(propertyName);
             const valueHumanReadable = (value != null) ? Properties.MakeHumanReadable(propertyName, value) : "";
             values.push(value);
@@ -555,7 +556,7 @@ function UpdateComparison() {
             continue;
         }
 
-        const isAllValuesEqual = values.every((e) => {return e == values[0]})
+        const isAllValuesEqual = values.every((e) => { return e == values[0] })
 
         const row = document.createElement("tr")
 
@@ -566,8 +567,7 @@ function UpdateComparison() {
         AddTooltipIcon(propertyNameHumanReadable, cell0)
         row.appendChild(cell0)
 
-        for (const valueHumanReadable of valuesHumanReadable)
-        {
+        for (const valueHumanReadable of valuesHumanReadable) {
             const cell = document.createElement("td")
             const cellText = document.createTextNode(valueHumanReadable)
             if (isAllValuesEqual) {
@@ -644,12 +644,10 @@ function UpdateOutput() {
         UpdateComparisonPropertyFilter()
     }
     UpdateSearchBarProperties()
-    if (IsComparison)
-    {
+    if (IsComparison) {
         UpdateComparison()
     }
-    else
-    {
+    else {
         UpdateReport()
     }
 }
