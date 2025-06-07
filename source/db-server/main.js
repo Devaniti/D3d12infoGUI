@@ -13,6 +13,7 @@ const express = require('express')
 const cors = require('cors')
 const compression = require('compression')
 const Database = require('better-sqlite3')
+const semver = require('semver')
 const upgrade = require('./upgrade.js')
 const database_common = require('./database_common.js')
 const notification_handler = require('./notification_handler.js')
@@ -244,6 +245,12 @@ api.post('/post_submission', (req, res) => {
         if (!isObjectAllowedInDB(newSubmission)) {
             res.status(400)
             res.send('Bad submission format')
+            return
+        }
+
+        if (semver.lt(newSubmission["Header.Version"], "3.12.0")) {
+            res.status(400)
+            res.send('Unsupported D3d12info version. Please use newer D3d12infoGUI version to submit.')
             return
         }
 
