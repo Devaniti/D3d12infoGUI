@@ -377,6 +377,9 @@ function FeatureTableFilter(report) {
     if (report.GetField("Header.Using preview Agility SDK"))
         return true;
 
+    if (Properties.GetTranslationLayerName(report) != "None")
+        return true;
+
     // filter out RDNA2 iGPUs with 1 WGP since they don't have mesh shaders unlike all other RDNA2 GPUs
     if (report.GetField("AGSDeviceInfo.asicFamily") == 8 && report.GetField("AGSDeviceInfo.numWGPs") == 1 && report.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier") == 0)
         return true;
