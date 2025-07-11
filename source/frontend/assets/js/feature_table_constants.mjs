@@ -325,7 +325,8 @@ export const TableEnumMappings =
     {
         "0": "❌",
         "10": "Tier 1.0",
-        "11": "Tier 1.1"
+        "11": "Tier 1.1",
+        "12": "Tier 1.2"
     },
     "D3D12_FEATURE_DATA_DISPLAYABLE.SharedResourceCompatibilityTier":
     {

@@ -101,6 +101,12 @@ a:hover {
     padding-left: 2em;
 }
 
+.searchBar:focus {
+    outline: none;
+    border-color: #3d9efe;
+    background-color: #eff7ff;
+}
+
 fieldset {
     float: left;
     flex: 0 1;    
@@ -180,6 +186,11 @@ fieldset {
         color: #ffffff;
         border-color: #7f7f7f;
         background-color: #232323;
+        }
+
+    .searchBar:focus {
+        border-color: #3d9efe;
+        background-color: #20303e;
     }
 
     fieldset {
