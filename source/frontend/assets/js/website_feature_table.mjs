@@ -7,6 +7,7 @@ import * as Properties from './properties.mjs'
 import * as Server from './server.mjs'
 
 let Reports = [];
+let SearchBar = null;
 
 function MakeHumanReadableForTable(property, value) {
     if (property == null) return value;
@@ -512,16 +513,16 @@ function AddFilterPanel(container) {
     filterPanel.className = "FilterPanel";
     container.appendChild(filterPanel);
 
-    const searchBar = document.createElement("input")
-    searchBar.type = "search"
-    searchBar.placeholder = "Search Properties"
-    searchBar.classList.add("searchBar")
+    SearchBar = document.createElement("input")
+    SearchBar.type = "search"
+    SearchBar.placeholder = "Search Properties"
+    SearchBar.classList.add("searchBar")
     Globals.PropertiesSearchString = "";
-    searchBar.addEventListener('input', function (e) {
+    SearchBar.addEventListener('input', function (e) {
         Globals.PropertiesSearchString = e.target.value;
         UpdateTable();
     })
-    container.appendChild(searchBar)
+    container.appendChild(SearchBar)
 
     let fieldSetContainer = document.createElement("div");
     fieldSetContainer.classList.add("FieldSetContainer");
@@ -913,7 +914,28 @@ function UpdateTable() {
     UpdateTableBody(table);
 }
 
+function OverrideSearch() {
+    window.addEventListener("keydown", function (e) {
+        if (SearchBar == null || document.activeElement == SearchBar)
+        {
+            return;
+        }
+
+        let searchDetected = false;
+        searchDetected = searchDetected || (e.key === "F3");
+        searchDetected = searchDetected || (e.key.toUpperCase() === "F" && e.ctrlKey);
+
+        if (searchDetected)
+        {
+            e.preventDefault();
+            SearchBar.focus();
+        }
+    })
+}
+
 function OnLoad() {
+    OverrideSearch();
+
     const tableContainer = document.getElementById("FeatureTable")
     const textContainer = document.createElement("div")
     const loadingText = document.createTextNode("Loading. Please wait.")
