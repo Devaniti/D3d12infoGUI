@@ -5,6 +5,7 @@ import json
 arch_name_mapping = { 
 "Ada Lovelace" : "Ada",
 "Ampere" : "Ampere",
+"Blackwell" : "Blackwell",
 "Curie" : "Curie",
 "Fermi" : "Fermi",
 "Fermi 2.0" : "Fermi2",
@@ -32,6 +33,7 @@ arch_name_mapping = {
 "RDNA 1.0" : "RDNA",
 "RDNA 2.0" : "RDNA2",
 "RDNA 3.0" : "RDNA3",
+"RDNA 4.0" : "RDNA4",
 "TeraScale" : "PreGCN",
 "TeraScale 2" : "PreGCN",
 "TeraScale 3" : "PreGCN",
