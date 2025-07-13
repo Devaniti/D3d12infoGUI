@@ -51,7 +51,7 @@ function IsSubmittedFilter(property) {
     }
 }
 
-export function SubmitReport(header, adapter, onSuccess) {
+export function SubmitReport(header, adapter, onSuccess, onFailure) {
     let xhr = new XMLHttpRequest()
     xhr.open("POST", Constants.APIAddress + "/post_submission")
     xhr.setRequestHeader("Content-Type", "application/json")
@@ -64,7 +64,8 @@ export function SubmitReport(header, adapter, onSuccess) {
                 onSuccess(xhr.responseText)
         }
         else {
-            console.log(xhr.responseText);
+            if (onFailure != null)
+                onFailure(xhr.responseText)
         }
     }
     xhr.send(PrepareReport(header.GetOriginalReport(), adapter.GetOriginalReport(), PrivacyFilter))

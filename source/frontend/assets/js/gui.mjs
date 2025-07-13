@@ -65,6 +65,10 @@ function SubmitAllReports() {
         Server.SubmitReport(Headers[retailIndex], adapter, (ID) => {
             SubmissionIDs[retailIndex][index] = ID;
             UpdateList();
+        }, (response) => {
+            alert(`Failed to submit report for adapter ${adapter.GetField("DXGI_ADAPTER_DESC3.Description")} Agility SDK ${retailIndex == 0 ? "retail" : "preview"}.\nServer response:\n${response}`);
+            SubmissionIDs[retailIndex][index] = -2; // Mark as failed
+            UpdateList();
         })
     })
     UpdateList()
@@ -160,9 +164,19 @@ function UpdateList() {
                                     Server.SubmitReport(Headers[retailIndex], adapter, (ID) => {
                                         SubmissionIDs[retailIndex][index] = ID;
                                         UpdateList();
+                                    }, (response) => {
+                                        alert(`Failed to submit report for adapter ${adapter.GetField("DXGI_ADAPTER_DESC3.Description")} Agility SDK ${retailIndex == 0 ? "retail" : "preview"}.\nServer response:\n${response}`);
+                                        SubmissionIDs[retailIndex][index] = -2; // Mark as failed
+                                        UpdateList();
                                     })
                                 }
                                 cell.appendChild(link)
+                                break;
+                            }
+                        case -2:
+                            {
+                                let cellText = document.createTextNode("Failed to submit")
+                                cell.appendChild(cellText)
                                 break;
                             }
                         default:
