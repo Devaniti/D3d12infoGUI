@@ -193,6 +193,98 @@ export function MakeHumanReadable(property, value) {
     return value
 }
 
+export function MakeHumanReadableShort(property, value) {
+    if (property == null) return value;
+
+    let effectiveProperty = RemoveArrayIndex(property);
+
+    if (value == null) return "❓";
+
+    if (effectiveProperty in Constants.EnumMappingsShort) {
+        return Constants.EnumMappingsShort[effectiveProperty][value] ?? `❓(${value})`;
+    }
+
+    if (effectiveProperty in Constants.BitFlagsMappingsShort) {
+        let result = '';
+        let bitCount = 0;
+        for (let i = 1; i <= value; i = i << 1) {
+            if (value & i) {
+                bitCount++;
+                result += (Constants.BitFlagsMappingsShort[effectiveProperty][i] ?? `❓(${i})`) + "\n";
+            }
+        }
+        if (result == '') {
+            result = Constants.BitFlagsMappingsShort[effectiveProperty][0] ?? "❓";
+        }
+        else {
+            result = result.substring(0, result.length - 1);
+        }
+        return result;
+    }
+
+    switch (effectiveProperty) {
+        case "SystemInfo.NvAPI_SYS_GetDriverAndBranchVersion.pDriverVersion":
+        case "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.driverVersion":
+            {
+                return (value / 100).toFixed(2);
+            }
+        // WORD sized hex number representing Vendor ID
+        case "DXGI_ADAPTER_DESC3.VendorId":
+        case "AGSDeviceInfo.vendorId":
+        case "VkPhysicalDeviceProperties.vendorID":
+        case "Intel GPUDetect::GPUData.VendorId":
+            {
+                let decodedValue;
+                if (value <= 0xFFFF) {
+                    // PCI ID codepath
+                    let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e;
+                    decodedValue = "0x" + ZeroPad(Number(value).toString(16), 4);
+                } else {
+                    // ACPI ID codepath
+                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24) & 0xFF);
+                    decodedValue = ToTextID(value);
+                }
+                if (Constants.VendorIDs[decodedValue])
+                    return `${Constants.VendorIDs[decodedValue]} (${decodedValue})`;
+                else
+                    return `❓ (${decodedValue})`;
+            }
+        // WORD sized hex number
+        case "DXGI_ADAPTER_DESC3.DeviceId":
+        case "DXGI_ADAPTER_DESC3.Revision":
+        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pRevisionId":
+        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pExtDeviceId":
+        case "AGSDeviceInfo.deviceId":
+        case "AGSDeviceInfo.revisionId":
+        case "Intel GPUDetect::GPUData.deviceID":
+        case "VkPhysicalDeviceProperties.driverVersion":
+        case "VkPhysicalDeviceProperties.deviceID":
+            {
+                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e;
+                return "0x" + ZeroPad(Number(value).toString(16), 4);
+            }
+        // DWORD sized hex number
+        case "NvPhysicalGpuHandle.NvAPI_GPU_GetPCIIdentifiers - pDeviceID":
+        case "NvPhysicalGpuHandle.NvAPI_GPU_GetVbiosRevision":
+        case "Intel GPUDetect::GPUData.extensionVersion":
+            {
+                let ZeroPad = (e, pad) => e.length >= pad ? e : "0".repeat(pad - e.length) + e;
+                return "0x" + ZeroPad(Number(value).toString(16), 8);
+            }
+        // 64 bit encoded version
+        case "CheckInterfaceSupport.UMDVersion":
+            {
+                let a = BigInt(value);
+                return `${(a >> 48n) & 65535n}.${(a >> 32n) & 65535n}.${(a >> 16n) & 65535n}.${a & 65535n}`;
+            }
+    }
+
+    if (Array.isArray(value))
+        return value.join(", ");
+
+    return value;
+}
+
 export function FilterField(name, value) {
     let humanReadableName = MakeHumanReadableProperty(name)
     let humanReadableValue = MakeHumanReadable(name, value)

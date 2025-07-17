@@ -21,26 +21,6 @@ body {
     margin: 0 auto;
 }
 
-.Microsoft {
-    background-color: #d0e7f2;
-}
-
-.AMD {
-    background-color: #f2d0d0;
-}
-
-.Nvidia {
-    background-color: #d0f2d0;
-}
-
-.Intel {
-    background-color: #d0d0f2;
-}
-
-.Qualcomm {
-    background-color: #f2e7d0;
-}
-
 td {
     white-space: pre-wrap;
 }
@@ -204,26 +184,6 @@ thead>tr:nth-of-type(2)>th {
 
     td:nth-of-type(even) {
         background-color: #00000020;
-    }
-
-    .Microsoft {
-        background-color: #1c262b;
-    }
-
-    .AMD {
-        background-color: #220000;
-    }
-
-    .Nvidia {
-        background-color: #002200;
-    }
-
-    .Intel {
-        background-color: #000022;
-    }
-
-    .Qualcomm {
-        background-color: #231e16;
     }
 
     .tooltiptext {

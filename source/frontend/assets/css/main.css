@@ -157,6 +157,26 @@ fieldset {
     visibility: visible;
 }
 
+.Microsoft {
+    background-color: #d0e7f2;
+}
+
+.AMD {
+    background-color: #f2d0d0;
+}
+
+.Nvidia {
+    background-color: #d0f2d0;
+}
+
+.Intel {
+    background-color: #d0d0f2;
+}
+
+.Qualcomm {
+    background-color: #f2e7d0;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         color: #e1e1e1;
@@ -202,6 +222,26 @@ fieldset {
         background-color: #232323;
         color: #ffffff;
         border-color: #7f7f7f;
+    }
+
+    .Microsoft {
+        background-color: #1c262b;
+    }
+
+    .AMD {
+        background-color: #220000;
+    }
+
+    .Nvidia {
+        background-color: #002200;
+    }
+
+    .Intel {
+        background-color: #000022;
+    }
+
+    .Qualcomm {
+        background-color: #231e16;
     }
 
 }
