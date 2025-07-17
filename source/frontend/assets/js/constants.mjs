@@ -7,6 +7,12 @@ export const TrueFalseMapping =
     "1": "true"
 }
 
+export const TrueFalseMappingShort =
+{
+    "0": "❌",
+    "1": "✅"
+}
+
 export const NVAPI_Status =
 {
     "0": "OK",
@@ -808,6 +814,273 @@ export const EnumMappings =
     "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TrueFalseMapping
 }
 
+export const EnumMappingsShort =
+{
+    "DXGI_ADAPTER_DESC3.GraphicsPreemptionGranularity":
+    {
+        "0": "DMA_BUFFER",
+        "1": "PRIMITIVE",
+        "2": "TRIANGLE",
+        "3": "PIXEL",
+        "4": "INSTRUCTION",
+    },
+    "DXGI_ADAPTER_DESC3.ComputePreemptionGranularity":
+    {
+        "0": "DMA_BUFFER",
+        "1": "DISPATCH",
+        "2": "THREAD_GROUP",
+        "3": "THREAD",
+        "4": "INSTRUCTION",
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier":
+    {
+        "0": "❌",
+        "1": "Tier 1",
+        "2": "Tier 2",
+        "3": "Tier 3",
+        "4": "Tier 4",
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceBindingTier":
+    {
+        "1": "Tier 1",
+        "2": "Tier 2",
+        "3": "Tier 3"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ConservativeRasterizationTier":
+    {
+        "0": "❌",
+        "1": "Tier 1",
+        "2": "Tier 2",
+        "3": "Tier 3"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossNodeSharingTier":
+    {
+        "0": "❌",
+        "1": "Tier 1 (emulated)",
+        "2": "Tier 1",
+        "3": "Tier 2",
+        "4": "Tier 3"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier":
+    {
+        "1": "Tier 1",
+        "2": "Tier 2"
+    },
+    "D3D12_FEATURE_DATA_FEATURE_LEVELS.MaxSupportedFeatureLevel":
+    {
+        "37120": "9_1",
+        "37376": "9_2",
+        "37632": "9_3",
+        "40960": "10_0",
+        "41216": "10_1",
+        "45056": "11_0",
+        "45312": "11_1",
+        "49152": "12_0",
+        "49408": "12_1",
+        "49664": "12_2"
+    },
+    "D3D12_FEATURE_DATA_SHADER_MODEL.HighestShaderModel":
+    {
+        "81": "5.1",
+        "96": "6.0",
+        "97": "6.1",
+        "98": "6.2",
+        "99": "6.3",
+        "100": "6.4",
+        "101": "6.5",
+        "102": "6.6",
+        "103": "6.7",
+        "104": "6.8",
+        "105": "6.9"
+    },
+    "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion":
+    {
+        "1": "1.0",
+        "2": "1.1",
+        "3": "1.2"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS2.ProgrammableSamplePositionsTier":
+    {
+        "0": "❌",
+        "1": "Tier 1",
+        "2": "Tier 2"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.ViewInstancingTier":
+    {
+        "0": "❌",
+        "1": "Tier 1",
+        "2": "Tier 2",
+        "3": "Tier 3"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier":
+    {
+        "0": "Tier 0",
+        "1": "Tier 1",
+        "2": "Tier 2"
+    },
+    "D3D12_FEATURE_DATA_SERIALIZATION.HeapSerializationTier":
+    {
+        "0": "❌",
+        "10": "✅"
+    },
+    "D3D12_FEATURE_DATA_CROSS_NODE.SharingTier":
+    {
+        "0": "❌",
+        "1": "Tier 1 (emulated)",
+        "2": "Tier 1",
+        "3": "Tier 2",
+        "4": "Tier 3"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.WorkGraphsTier":
+    {
+        "0": "❌",
+        "1": "Tier 0.1",
+        "10": "Tier 1.0",
+        "11": "Tier 1.1"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
+    {
+        "0": "Tier 0",
+        "1": "Tier 1",
+        "2": "Tier 2"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier":
+    {
+        "0": "❌",
+        "10": "Tier 1.0",
+        "11": "Tier 1.1",
+        "12": "Tier 1.2"
+    },
+    "D3D12_FEATURE_DATA_DISPLAYABLE.SharedResourceCompatibilityTier":
+    {
+        "0": "Tier 0",
+        "1": "Tier 1",
+        "2": "Tier 2"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier":
+    {
+        "0": "❌",
+        "1": "Tier 1",
+        "2": "Tier 2"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier":
+    {
+        "0": "❌",
+        "10": "✅"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier":
+    {
+        "0": "❌",
+        "90": "Tier 0.9",
+        "100": "Tier 1.0"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier":
+    {
+        "0": "❌",
+        "10": "✅"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives":
+    {
+        "-1": "❓",
+        "0": "❌",
+        "1": "✅"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier":
+    {
+        "0": "❌",
+        "1": "✅"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier":
+    {
+        "0": "❌",
+        "10": "Tier 1.0",
+        "11": "Tier 1.1"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier":
+    {
+        "10": "Tier 1.0",
+        "11": "Tier 1.1"
+    },
+
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.PSSpecifiedStencilRefSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.TypedUAVLoadAdditionalFormats": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.ROVsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.StandardSwizzle64KBSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossAdapterRowMajorTextureSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_ARCHITECTURE1.TileBasedRenderer": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_ARCHITECTURE1.UMA": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_ARCHITECTURE1.CacheCoherentUMA": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_ARCHITECTURE1.IsolatedMMU": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_NORMAL.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_HIGH.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_DIRECT.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_NORMAL.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_HIGH.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COMPUTE.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_NORMAL.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_HIGH.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY.TYPE_COPY.PRIORITY_GLOBAL_REALTIME.PriorityForTypeIsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_CROSS_NODE.AtomicShaderInstructions": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_PREDICATION.Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_HARDWARE_COPY.Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_APPLICATION_SPECIFIC_DRIVER_STATE.Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS1.Int64ShaderOps": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS2.DepthBoundsTestSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CopyQueueTimestampQueriesSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CastingFullyTypedFormatSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.BarycentricsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_EXISTING_HEAPS.Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.MSAA64KBAlignedTextureSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS4.Native16BitShaderOpsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.AdditionalShadingRatesSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS6.BackgroundProcessingSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderPipelineStatsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderSupportsFullRangeRenderTargetArrayIndex": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnTypedResourceSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnGroupSharedSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.DerivativesInMeshAndAmplificationShadersSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS11.AtomicInt64OnDescriptorHeapResourceSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS12.EnhancedBarriersSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS12.RelaxedFormatCastingSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedBufferTextureCopyPitchSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedVertexElementAlignmentSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportHeightFlipsYSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportDepthFlipsZSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.TextureCopyBetweenDimensionsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS13.AlphaBlendFactorSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS14.AdvancedTextureOpsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS14.WriteableMSAATexturesSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS14.IndependentFrontAndBackStencilRefMaskSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS15.TriangleFanSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS15.DynamicIndexBufferStripCutSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS16.DynamicDepthBiasSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS17.NonNormalizedCoordinateSamplersSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS17.ManualWriteTrackingResourceSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MismatchingOutputDimensionsSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.PointSamplingAddressesNeverRoundUp": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.NarrowQuadrilateralLinesSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.AnisoFilterWithPointMipSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TrueFalseMappingShort
+}
+
 export const RenameList = {
     "Header.D3D12_PREVIEW_SDK_VERSION": "Header.D3D12_SDK_VERSION"
 }
@@ -913,6 +1186,48 @@ export const BitFlagsMappings =
     {
         "0": "NVAPI_D3D12_RAYTRACING_LINEAR_SWEPT_SPHERES_CAP_NONE",
         "1": "NVAPI_D3D12_RAYTRACING_LINEAR_SWEPT_SPHERES_CAP_STANDARD"
+    }
+}
+
+export const BitFlagsMappingsShort =
+{
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS.MinPrecisionSupport":
+    {
+        "0": "❌",
+        "1": "10-bit",
+        "2": "16-bit"
+    },
+    "D3D12_FEATURE_DATA_SHADER_CACHE.SupportFlags":
+    {
+        "0": "NONE",
+        "1": "SINGLE_PSO",
+        "2": "LIBRARY",
+        "4": "AUTOMATIC_INPROC_CACHE",
+        "8": "AUTOMATIC_DISK_CACHE",
+        "16": "DRIVER_MANAGED_CACHE",
+        "32": "SHADER_CONTROL_CLEAR",
+        "64": "SHADER_SESSION_DELETE"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS3.WriteBufferImmediateSupportFlags":
+    {
+        "0": "❌",
+        "1": "Direct",
+        "2": "Bundle",
+        "4": "Compute",
+        "8": "Copy",
+        "16": "Video Decode",
+        "32": "Video Process",
+        "64": "Video Encode"
+    },
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS19.SupportedSampleCountsWithNoOutputs":
+    {
+        "1": "1",
+        "2": "2",
+        "4": "4",
+        "8": "8",
+        "16": "16",
+        "32": "32",
+        "64": "64"
     }
 }
 
@@ -1313,7 +1628,6 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS17.ManualWriteTrackingResourceSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MismatchingOutputDimensionsSupported",
-        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.IndependentFrontAndBackStencilRefMaskSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS19.SupportedSampleCountsWithNoOutputs",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS19.PointSamplingAddressesNeverRoundUp",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported",
@@ -1561,6 +1875,137 @@ export const PropertiesFilterWhitelist = new Set([
     "DXGI_ADAPTER_DESC3.Description",
     "AdapterIndex"
 ])
+
+export const PureFeatureList = [
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceBindingTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.PSSpecifiedStencilRefSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.TypedUAVLoadAdditionalFormats",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ROVsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ConservativeRasterizationTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.StandardSwizzle64KBSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.CrossAdapterRowMajorTextureSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier",
+        "D3D12_FEATURE_DATA_SHADER_MODEL.HighestShaderModel",
+        "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion",
+        "D3D12_FEATURE_DATA_ARCHITECTURE1.IsolatedMMU",
+        "D3D12_FEATURE_DATA_FEATURE_LEVELS.MaxSupportedFeatureLevel",
+        "D3D12_FEATURE_DATA_SERIALIZATION.HeapSerializationTier",
+        "D3D12_FEATURE_DATA_APPLICATION_SPECIFIC_DRIVER_STATE.Supported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveOps",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS1.Int64ShaderOps",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS2.DepthBoundsTestSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS2.ProgrammableSamplePositionsTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CopyQueueTimestampQueriesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CastingFullyTypedFormatSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.ViewInstancingTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS3.BarycentricsSupported",
+        "D3D12_FEATURE_DATA_EXISTING_HEAPS.Supported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS4.MSAA64KBAlignedTextureSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS4.SharedResourceCompatibilityTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS4.Native16BitShaderOpsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.AdditionalShadingRatesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS6.BackgroundProcessingSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderPipelineStatsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderSupportsFullRangeRenderTargetArrayIndex",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnTypedResourceSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnGroupSharedSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.DerivativesInMeshAndAmplificationShadersSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS11.AtomicInt64OnDescriptorHeapResourceSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS12.EnhancedBarriersSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS12.RelaxedFormatCastingSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedBufferTextureCopyPitchSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.UnrestrictedVertexElementAlignmentSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportHeightFlipsYSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.InvertedViewportDepthFlipsZSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.TextureCopyBetweenDimensionsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS13.AlphaBlendFactorSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS14.AdvancedTextureOpsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS14.WriteableMSAATexturesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS14.IndependentFrontAndBackStencilRefMaskSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS15.TriangleFanSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS15.DynamicIndexBufferStripCutSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS16.DynamicDepthBiasSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS17.NonNormalizedCoordinateSamplersSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS17.ManualWriteTrackingResourceSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MismatchingOutputDimensionsSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.PointSamplingAddressesNeverRoundUp",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.NarrowQuadrilateralLinesSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.AnisoFilterWithPointMipSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS20.ComputeOnlyWriteWatchSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS20.RecreateAtTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported",
+        "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported",
+        "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier"
+]
+
+export const ArchReleaseDates = {
+    // Microsoft
+    "WARP": "9999", // Won't be shown in the table
+
+    // AMD
+    "GCN1": "2012",
+    "GCN2": "2013",
+    "GCN3": "2015",
+    "GCN4": "2016",
+    "Vega": "2017",
+    "RDNA": "2019",
+    "RDNA2": "2020",
+    "RDNA3": "2022",
+    "RDNA4": "2025",
+
+    // Nvidia
+    "Fermi": "2010",
+    "Fermi2": "2010",
+    "Kepler": "2012",
+    "Maxwell1": "2014",
+    "Maxwell2": "2015",
+    "Pascal": "2016",
+    "Volta": "2017",
+    "Turing": "2018",
+    "Ampere": "2020",
+    "Ada": "2022",
+    "Blackwell": "2025",
+    
+    // Intel
+    "Gen7.5": "2013",
+    "Gen8": "2014",
+    "Gen9": "2015",
+    "Gen9.5": "2016",
+    "Gen11": "2019",
+    "Xe": "2020",
+    "Xe-HPG": "2022",
+    "Xe-HPC": "2023",
+    "Xe-LPG": "2023",
+    "Xe2-HPG": "2024",
+
+    // Qualcomm
+    "8cx 3": "2021",
+    "X1": "2024",
+}
 
 function MakeMap(order) {
     let result = new Map()

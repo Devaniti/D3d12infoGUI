@@ -21,6 +21,10 @@ module.exports = {
     feature_table: {
       import:'./website-feature-table-webpack.js',
       dependOn: 'shared'
+    },
+    can_i_use: {
+      import:'./website-can-i-use-webpack.js',
+      dependOn: 'shared'
     }
   },
   output: {
@@ -79,6 +83,11 @@ module.exports = {
       template: './assets/html_website/FeatureTable.html',
       filename: 'FeatureTable.html',
       chunks: ['assets', 'shared', 'feature_table']
+    }),
+    new HtmlWebpackPlugin({
+      template: './assets/html_website/CanIUse.html',
+      filename: 'CanIUse.html',
+      chunks: ['assets', 'shared', 'can_i_use']
     }),
   ]
 }

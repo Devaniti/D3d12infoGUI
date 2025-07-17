@@ -1,0 +1,85 @@
+.CanIUseSearchContainer, .CanIUseData {
+    max-width: 2100px;
+    margin: 0 auto;
+}
+
+.CanIUseFilterResult {
+    margin-top: 12px;
+}
+
+.PropertyItem {
+    font-size: 1.2em;
+    width: calc(100% - 24px);
+    text-align: left;
+    margin: 8px 12px;
+    padding: 3px;
+    border: 2px solid;
+    border-collapse: collapse;
+    border-color: #a7a7a7;
+    border-radius: 4px;
+}
+
+.PropertyItem:hover {
+    color:#206999;
+    border-color: #5489aa;
+    cursor: pointer;
+}
+
+.CanIUseData {
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+}
+
+.TableContainer {
+    display:flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+table {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+td {
+    white-space: pre-wrap;
+}
+
+th,
+td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #7f7f7f;
+}
+
+td {
+    text-align: center;
+    padding: 2px 4px;
+    min-width: 4.5em;
+}
+
+colgroup {
+    border-inline-end-width: 2px;
+    border-inline-end-style: solid;
+    border-inline-end-color: #7f7f7f;
+}
+
+/* row of headers with vendor names */
+thead>tr:first-of-type>th {
+    border-bottom: none;
+}
+/* row of headers with architecture names */
+thead>tr:nth-of-type(2)>th {
+    border-top: none;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    padding-inline: 0.3em;
+    /* separate arch names a little */
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .PropertyItem:hover {
+        color:#a0dbff;
+    }
+}
