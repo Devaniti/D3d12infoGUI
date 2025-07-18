@@ -78,6 +78,35 @@ function GetVendorArray() {
     return result;
 }
 
+function GetVendorsOutOfOrder() {
+    let result = [];
+    
+    for (let [vendor, archs] of Object.entries(ArchClassifier.ArchsPerVendor)) {
+        if (archs.size == 0)
+            continue;
+
+        let prevValue = undefined;
+        for (let arch of archs)
+        {
+            let report = ArchClassifier.NewestDriverReportPerArch.get(arch);
+            let value = GetFeatureValue(report, arch);
+            if (value == undefined) continue;
+            if (prevValue != undefined && value < prevValue)
+            {
+                console.log(prevValue)
+                console.log(value)
+                console.log(vendor)
+                console.log(arch)
+                result.push(vendor);
+                break;
+            }
+            prevValue = value;
+        }
+    }
+
+    return result;
+}
+
 function SetSearchString(str) {
     SearchBar.value = str;
     Globals.PropertiesSearchString = str;
@@ -387,8 +416,16 @@ function CreateNotes(dataContainer) {
             AddNote("Starting with Windows 10 version 1607, it is always supported, independently of GPU or driver.", noteContainer);
             AddNote("All currently supported Windows versions are newer than Windows 10 version 1607.", noteContainer);
             break;
-
     }
+
+    if (NeedShowTable()) {
+        let vendorsOutOfOrder = GetVendorsOutOfOrder();
+        if (vendorsOutOfOrder.length > 0)
+        {
+            AddNote(`${vendorsOutOfOrder.join(", ")} ${vendorsOutOfOrder.length == 1 ? "has" : "have"} feature support that is out of order of architecture release dates. Some newer GPUs may have less support than older ones. Or this may be a false positive warning caused by out of date reports.`, noteContainer);
+        }
+    }
+
     dataContainer.appendChild(noteContainer);
 }
 
