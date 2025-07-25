@@ -7,7 +7,7 @@ import Globals from './globals.mjs'
 let ShowAdapterSearch = true
 let IsComparison = false
 let Reports = []
-let ReportIndex = 0
+let ReportIndex = null
 
 let ComparisonShowEqual = true
 let ComparisonShowOneSided = false
@@ -22,6 +22,37 @@ const ElementsPerPage = 10
 let AdaptersSearchString = ""
 let AdaptersFilters = []
 let FilteredReports = []
+
+let PropertiesSearchBarContainer = null
+
+function ShouldPropertySearchBarBeVisible()
+{
+    return IsComparison || ReportIndex != null
+}
+
+function DeselectReport() {
+    ReportIndex = null
+    PropertiesSearchBarContainer.style.visibility = "hidden"
+    UpdateReport()
+    const url = new URL(window.location.href);
+    url.searchParams.delete('ID');
+    window.history.replaceState({}, '', url.toString());
+    document.title = "D3d12infoDB";
+}
+
+function SelectReport(newReportIndex)
+{
+    ReportIndex = newReportIndex
+    PropertiesSearchBarContainer.style.visibility = "visible"
+    UpdateReport()
+    const url = new URL(window.location.href);
+    url.searchParams.set('ID', Reports[ReportIndex].GetField("ID"));
+    window.history.replaceState({}, '', url.toString());
+    document.title = Reports[ReportIndex].GetField("DXGI_ADAPTER_DESC3.Description") + " - D3d12infoDB";
+
+    // Scroll down to the report
+    PropertiesSearchBarContainer.scrollIntoView();
+}
 
 function FilterSingleReport(wrappedReport) {
     let report = wrappedReport.value
@@ -84,6 +115,10 @@ function UpdateSearchBarAdapters() {
     HTML.ClearElement(searchBarContainer)
 
     const searchBar = document.createElement("input")
+    // Set initial value from URL
+    const queryParams = (new URL(document.location)).searchParams
+    AdaptersSearchString = queryParams.get('q') || ""
+    searchBar.value = AdaptersSearchString
     searchBar.type = "search"
     searchBar.placeholder = "Search Adapters"
     searchBar.classList.add("searchBar")
@@ -91,6 +126,15 @@ function UpdateSearchBarAdapters() {
         AdaptersSearchString = searchBar.value
         PrepareReports()
         UpdateList()
+        DeselectReport()
+        
+        const url = new URL(window.location.href);
+        if (AdaptersSearchString) {
+            url.searchParams.set('q', AdaptersSearchString);
+        } else {
+            url.searchParams.delete('q');
+        }
+        window.history.replaceState({}, '', url.toString());
     })
     searchBarContainer.appendChild(searchBar)
 }
@@ -233,9 +277,10 @@ function UpdateComparisonPropertyFilter() {
 }
 
 function UpdateSearchBarProperties() {
-    const searchBarContainer = document.getElementById("SearchBarPropertiesContainer")
+    PropertiesSearchBarContainer = document.getElementById("SearchBarPropertiesContainer")
+    PropertiesSearchBarContainer.style.visibility = ShouldPropertySearchBarBeVisible() ? "visible" : "hidden"
 
-    HTML.ClearElement(searchBarContainer)
+    HTML.ClearElement(PropertiesSearchBarContainer)
 
     const searchBar = document.createElement("input")
     searchBar.type = "search"
@@ -250,7 +295,7 @@ function UpdateSearchBarProperties() {
             UpdateReport()
         }
     })
-    searchBarContainer.appendChild(searchBar)
+    PropertiesSearchBarContainer.appendChild(searchBar)
 }
 
 let compareToID = -1;
@@ -443,10 +488,7 @@ function UpdateList() {
             row.appendChild(cell)
         })
         row.addEventListener('click', () => {
-            ReportIndex = index
-            UpdateReport()
-            window.history.replaceState(null, null, "?ID=" + Reports[ReportIndex].GetField("ID"))
-            document.title = Reports[ReportIndex].GetField("DXGI_ADAPTER_DESC3.Description") + " - D3d12infoDB";
+            SelectReport(index)
         })
         row.classList.add("clickableRow")
         tableBody.appendChild(row)
@@ -584,8 +626,6 @@ function UpdateComparison() {
 
     table.appendChild(tableBody)
     tableContainer.appendChild(table)
-
-    //FormatTable.BuildFormatTable(report, tableContainer)
 }
 
 function UpdateReport() {
@@ -594,6 +634,11 @@ function UpdateReport() {
     const tableContainer = document.getElementById("TableContainer")
 
     HTML.ClearElement(tableContainer)
+
+    if (ReportIndex == null)
+    {
+        return;
+    }
 
     const table = document.createElement("table")
     const tableBody = document.createElement("tbody")
@@ -671,9 +716,16 @@ export function Initialize(inShowAdapterSearch, inIsComparison) {
 
 export function LoadReports(reports, startingID) {
     Reports = reports
-    ReportIndex = Reports.findIndex(e => e.GetField("ID") == startingID)
-    if (ReportIndex == -1) {
-        ReportIndex = Reports.length - 1
+    if (startingID != null)
+    {
+        ReportIndex = Reports.findIndex(e => e.GetField("ID") == startingID)
+        if (ReportIndex == -1) {
+            ReportIndex = Reports.length - 1
+        }
     }
     UpdateOutput()
+    if (startingID != null)
+    {
+        PropertiesSearchBarContainer.scrollIntoView();
+    }
 }

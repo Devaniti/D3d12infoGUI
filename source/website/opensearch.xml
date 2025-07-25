@@ -1,0 +1,11 @@
+<OpenSearchDescription
+    xmlns="http://a9.com/-/spec/opensearch/1.1/"
+    xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <ShortName>D3d12infoDB</ShortName>
+    <Description>Search D3D12 GPU capabilities</Description>
+    <InputEncoding>UTF-8</InputEncoding>
+    <Image width="48" height="48" type="image/x-icon">https://d3d12infodb.boolka.dev/favicon.ico</Image>
+    <Url type="text/html" template="https://d3d12infodb.boolka.dev/index.html?q={searchTerms}" />
+    <Url type="application/opensearchdescription+xml" rel="self" template="https://d3d12infodb.boolka.dev/opensearch.xml" />
+    <Query role="example" searchTerms="NVIDIA GeForce RTX 3060 Laptop GPU" />
+</OpenSearchDescription>

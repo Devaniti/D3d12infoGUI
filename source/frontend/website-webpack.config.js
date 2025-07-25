@@ -50,12 +50,12 @@ module.exports = {
         }
       },
       {
-        test: /\.json$/,
+        test: /\.(json|ico|xml)$/,
         type: 'asset/resource',
         generator: {
           filename: '[name][ext]'
         }
-      },
+      }
     ],
   },
   plugins: [
