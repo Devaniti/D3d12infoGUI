@@ -8,6 +8,10 @@
     src: url(../fonts/Roboto-Regular.ttf);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     color: #000000;
     background-color: #FFFFFF;
