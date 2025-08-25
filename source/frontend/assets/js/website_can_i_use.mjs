@@ -117,7 +117,16 @@ function SetSearchString(str) {
         SelectedFeature = "";
     }
 
-    window.history.replaceState(null, null, "?q=" + Globals.PropertiesSearchString)
+    const url = new URL(window.location);
+    if (Globals.PropertiesSearchString == "")
+    {
+        url.searchParams.delete('q');
+    }
+    else
+    {
+        url.searchParams.set('q', Globals.PropertiesSearchString)
+    }
+    window.history.replaceState({}, '', url);
 
     UpdateOutput()
 }
@@ -542,8 +551,8 @@ function OnLoad() {
         CreateSearchBar();
 
         let queryParams = (new URL(document.location)).searchParams
-        let reportID = queryParams.get('q')
-        let defaultSearchString = reportID ?? "";
+        let searchQuery = queryParams.get('q')
+        let defaultSearchString = searchQuery ?? "";
         SetSearchString(defaultSearchString)
     })
 }
