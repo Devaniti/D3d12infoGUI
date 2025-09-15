@@ -134,7 +134,10 @@ export function MakeHumanReadable(property, value) {
         case "SystemInfo.System memory.GetPhysicallyInstalledSystemMemory":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetPhysicalFrameBufferSize":
         case "NvPhysicalGpuHandle.NvAPI_GPU_GetVirtualFrameBufferSize":
-            value *= 1024 // Convert to bytes
+            {
+                // Convert to bytes
+                value = Number(value) * 1024;
+            }
         // Then fallthrough to
         // Bytes to human readable
         case "SystemInfo.System memory.MEMORYSTATUSEX::ullTotalPhys":

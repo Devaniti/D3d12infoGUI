@@ -31,7 +31,7 @@ function IsReportNewer(lhs, rhs) {
     if (rhs == null)
         return true;
     if (lhs.CheckInterfaceSupport.UMDVersion != rhs.CheckInterfaceSupport.UMDVersion)
-        return lhs.CheckInterfaceSupport.UMDVersion > rhs.CheckInterfaceSupport.UMDVersion;
+        return BigInt(lhs.CheckInterfaceSupport.UMDVersion) > BigInt(rhs.CheckInterfaceSupport.UMDVersion);
     if (lhs.Header.Version != rhs.Header.Version)
         return lhs.Header.Version > rhs.Header.Version;
     return lhs.ID > rhs.ID;

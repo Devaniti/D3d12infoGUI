@@ -3,6 +3,39 @@
 let SubmitUniqueProperitesInternal = require("./StructureDesc/submit_unique_properties.json")
 let SubmitRequiredProperitesInternal = require("./StructureDesc/submit_required_properties.json")
 
+const MAX_INT64_VALUE = 2n ** 63n - 1n;
+const MAX_UINT64_VALUE = 2n ** 64n - 1n;
+
+function WrapUInt64(inValue) {
+    let integerValue = BigInt(inValue)
+    if (integerValue > MAX_INT64_VALUE)
+    {
+        integerValue -= MAX_UINT64_VALUE + 1n
+    }
+
+    return integerValue
+}
+
+function UnwrapUInt64(inValue) {
+    let integerValue = BigInt(inValue)
+    if (integerValue < 0)
+    {
+        integerValue += MAX_UINT64_VALUE + 1n
+    }
+
+    return integerValue.toString()
+}
+
+function WrapLargeIntegers(input) {
+    input["DXGI_ADAPTER_DESC3.DedicatedVideoMemory"] = WrapUInt64(input["DXGI_ADAPTER_DESC3.DedicatedVideoMemory"])
+    input["CheckInterfaceSupport.UMDVersion"] = WrapUInt64(input["CheckInterfaceSupport.UMDVersion"])
+}
+
+function UnwrapLargeIntegers(input) {
+    input["DXGI_ADAPTER_DESC3.DedicatedVideoMemory"] = UnwrapUInt64(input["DXGI_ADAPTER_DESC3.DedicatedVideoMemory"])
+    input["CheckInterfaceSupport.UMDVersion"] = UnwrapUInt64(input["CheckInterfaceSupport.UMDVersion"])
+}
+
 function ToSqlite3SupportedTypeInternal(inObj) {
     if (inObj instanceof Object) {
         return JSON.stringify(inObj)
@@ -68,6 +101,8 @@ function PackObjectInternal(input, includeData, allowMissing = false) {
         result.Data = JSON.stringify(input)
     }
 
+    WrapLargeIntegers(result)
+
     return result
 }
 
@@ -78,6 +113,15 @@ function DeepMergeInternal(target, source) {
         else
             target[key] = source[key]
     }
+}
+
+function UnpackObjectInternal(input) {
+    UnwrapLargeIntegers(input)
+    
+    input = DeflattenObjectInternal(input)
+    DeepMergeInternal(input, JSON.parse(input.Data))
+    delete input.Data
+    return input
 }
 
 module.exports = {
@@ -115,9 +159,6 @@ module.exports = {
     },
 
     unpackDatabaseObject: function (input) {
-        input = DeflattenObjectInternal(input)
-        DeepMergeInternal(input, JSON.parse(input.Data))
-        delete input.Data
-        return input
+        return UnpackObjectInternal(input)
     }
 }
