@@ -248,7 +248,7 @@ api.post('/post_submission', (req, res) => {
             return
         }
 
-        if (semver.lt(newSubmission["Header.Version"], "3.12.0")) {
+        if (semver.lt(newSubmission["Header.Version"], "3.13.0")) {
             res.status(400)
             res.send('Unsupported D3d12info version. Please use newer D3d12infoGUI version to submit.')
             return
