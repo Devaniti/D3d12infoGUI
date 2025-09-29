@@ -1001,6 +1001,11 @@ export const EnumMappingsShort =
         "10": "Tier 1.0",
         "11": "Tier 1.1"
     },
+    "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier":
+    {
+        "0": "❌",
+        "1": "✅"
+    },
 
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.DoublePrecisionFloatShaderOps": TrueFalseMappingShort,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.OutputMergerLogicOp": TrueFalseMappingShort,
