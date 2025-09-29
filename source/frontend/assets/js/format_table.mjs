@@ -45,7 +45,8 @@ const Headers = [
     "Output Merged Logic Ops",
     "Tiled",
     "MultiPlane Overlay",
-    "Sampler Feedback"
+    "Sampler Feedback",
+    "Displayable"
 ]
 
 const BitMapping = [
@@ -92,7 +93,8 @@ const BitMapping = [
     [0, 512],        // Tiled
     // Skipped bits
     [0, 16384],      // MultiPlane Overlay
-    [0, 32768]       // Sampler Feedback
+    [0, 32768],      // Sampler Feedback
+    [0, 65536]       // Displayable
 ]
 
 const RequiredSupport = {

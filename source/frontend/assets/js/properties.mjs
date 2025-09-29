@@ -126,6 +126,10 @@ export function MakeHumanReadable(property, value) {
             }
         // 64 bit encoded version
         case "CheckInterfaceSupport.UMDVersion":
+        case "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.MinimumABISupportVersion":
+        case "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.MaximumABISupportVersion":
+        case "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.CompilerVersion":
+        case "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.ApplicationProfileVersion":
             {
                 let a = BigInt(value)
                 return `${(a >> 48n) & 65535n}.${(a >> 32n) & 65535n}.${(a >> 16n) & 65535n}.${a & 65535n}`

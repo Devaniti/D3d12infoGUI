@@ -1646,6 +1646,11 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported",
         "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported",
         "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier",
+        "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.szAdapterFamily",
+        "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.MinimumABISupportVersion",
+        "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.MaximumABISupportVersion",
+        "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.CompilerVersion",
+        "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.ApplicationProfileVersion",
         "D3D12_FEATURE_DATA_HARDWARE_SCHEDULING_QUEUE_GROUPINGS.ComputeQueuesPer3DQueue",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS_EXPERIMENTAL.CooperativeVectorTier",
         "DirectSR",
@@ -1957,7 +1962,6 @@ export const PureFeatureList = [
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.SampleCmpGradientAndBiasSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExtendedCommandInfoSupported",
-        "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported",
         "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported",
         "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier"
 ]

@@ -1,12 +1,13 @@
 file(GLOB_RECURSE SourceList CONFIGURE_DEPENDS *.cpp)
 file(GLOB_RECURSE HeaderList CONFIGURE_DEPENDS *.h *.hpp)
 file(GLOB_RECURSE HTMLList CONFIGURE_DEPENDS html/*)
+file(GLOB_RECURSE ResourceList CONFIGURE_DEPENDS assets/*)
 set(GeneratedFiles ${CMAKE_CURRENT_BINARY_DIR}/embed.h)
 
 option(EMBED_D3D12INFO "Whether to embed D3d12info binaries self extract later" ON)
 set(D3D12INFO_PATH "" CACHE STRING "If EMBED_D3D12INFO is ON, overrides default path for D3d12info binaries to embed")
 
-add_executable(GUI WIN32 ${SourceList} ${HeaderList} ${GeneratedFiles} ${HTMLList})
+add_executable(GUI WIN32 ${SourceList} ${HeaderList} ${GeneratedFiles} ${HTMLList} ${ResourceList})
 
 set_property(TARGET GUI PROPERTY
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
