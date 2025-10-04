@@ -1971,6 +1971,11 @@ export const PureFeatureList = [
         "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier"
 ]
 
+const PreviewDriverVersions = [
+    "9007199255733042", // 32.0.15.9010 / GeForce 590.10 SM 6.9 Preview Driver
+    "9007199255733058"  // 32.0.15.9026 / GeForce 590.26 SM 6.9 Preview Driver
+]
+
 export const ArchReleaseDates = {
     // Microsoft
     "WARP": "9999", // Won't be shown in the table
@@ -2035,3 +2040,4 @@ function MakeSet(arr) {
 export const PropertiesOrderMap = MakeMap(PropertiesOrder)
 export const SubPropertiesOrderMap = MakeMap(SubPropertiesOrder)
 export const VendorSpecificPropertiesSet = MakeSet(VendorSpecificProperties)
+export const PreviewDriverVersionsSet = MakeSet(PreviewDriverVersions)
