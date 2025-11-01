@@ -111,34 +111,7 @@ thead>tr:nth-of-type(2)>th {
     z-index: 3;
     opacity: 0;
     transition: opacity 150ms ease-in, visibility 0ms ease-in 150ms;
-}
-
-.tooltiptextbottomright {
-    top: 110%;
-    left: 95%;
-    transform: translateX(-100%);
-}
-
-.tooltiptextbottomcenter {
-    top: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.tooltiptextbottomleft {
-    top: 110%;
-    left: 5%;
-}
-
-.tooltiptexttop {
-    bottom: 110%;
-    left: 0%;
-}
-
-.tooltiptexttopcenter {
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 100%;
 }
 
 .tooltip:hover .tooltiptext {
