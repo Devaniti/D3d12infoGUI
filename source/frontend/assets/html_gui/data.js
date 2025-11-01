@@ -1,3 +1,4 @@
+const openOptions = {autoSubmit: false}
 const reports = [{
     "Header": {
         "Program": "D3d12info",

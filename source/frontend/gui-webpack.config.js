@@ -26,8 +26,8 @@ module.exports = (env, argv) => {
               options: {
                 sources: {
                   urlFilter: (attribute, value, resourcePath) => {
-                    if (attribute === 'src' && value == 'reports.js') {
-                      // Do not include reports.js when packing for GUI
+                    if (attribute === 'src' && value == 'data.js') {
+                      // Do not include data.js when packing for GUI
                       // But do include it when running dev server
                       return isDevServer;
                     }
