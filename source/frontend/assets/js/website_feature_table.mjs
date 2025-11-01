@@ -26,7 +26,7 @@ const DefaultTooltipOptions = {
     alignOutsideHorizontal: false,
     alignOutsideVertical: false,
     preferTowardsBottom: false,
-    tooltipAlignment: "top"
+    tooltipAlignment: 0.5
 };
 
 // Use alignOutside* and preferTowardsBottom to position the tooltip next to the element on the respective side
@@ -42,7 +42,8 @@ function AddTooltipForTable(parent, text, options_param) {
     parent.classList.add("tooltip");
 
     const tooltipTextElement = document.createElement("span");
-    tooltipTextElement.className = "tooltiptext white_space_pre tooltiptext" + options.tooltipAlignment;
+    tooltipTextElement.className = "tooltiptext white_space_pre tooltiptext";
+    tooltipTextElement.style = `left: ${options.tooltipAlignment*100}%;transform: translateX(-${options.tooltipAlignment*100}%);`;
     tooltipTextElement.textContent = text;
     parent.appendChild(tooltipTextElement);
 
@@ -177,7 +178,7 @@ function UpdateTableFilter() {
     AddFilterPanel(headerContainer);
 }
 
-function UpdateTableHeader(table) {
+function UpdateTableHeader(table, archTooltipAlignments) {
     let thead = document.createElement("thead");
     let headerRowVendor = document.createElement("tr");
     let headerRowArch = document.createElement("tr");
@@ -227,7 +228,7 @@ function UpdateTableHeader(table) {
                 {
                     alignOutsideVertical: true,
                     preferTowardsBottom: true,
-                    tooltipAlignment: "bottomright"
+                    tooltipAlignment: archTooltipAlignments.get(a)
                 });
         }
     }
@@ -246,10 +247,10 @@ function AddCellReal(text, featureRow, tooltipText, tooltipAlignment, colspan) {
     }
     featureRow.appendChild(td);
     if (tooltipText)
-        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: tooltipAlignment ?? "bottomcenter" });
+        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: tooltipAlignment});
 }
 
-function AddSpecialRowCell(featureRow, archName, featureName) {
+function AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment) {
     if (featureName == "TableReleaseDate") {
         let releaseDate = Constants.ArchReleaseDates[archName];
         if (releaseDate == undefined) {
@@ -262,7 +263,7 @@ function AddSpecialRowCell(featureRow, archName, featureName) {
             tooltipText = "WARP is a software rasterizer that continues to receive updates over time.\nComparing its initial release date (2015) to the release dates of hardware GPUs,\nwhich cannot gain new features after release, is not meaningful.";
         }
 
-        AddCellReal(releaseDate, featureRow, tooltipText);
+        AddCellReal(releaseDate, featureRow, tooltipText, tooltipAlignment);
         return true;
     }
     else if (featureName == "TableNumReports") {
@@ -284,7 +285,7 @@ function AddSpecialRowCell(featureRow, archName, featureName) {
         else {
             marketShare = Math.round(marketShare * 10000) / 100 + "%"
         }
-        AddCellReal(marketShare, featureRow, tooltipText);
+        AddCellReal(marketShare, featureRow, tooltipText, tooltipAlignment);
         return true;
     }
     else if (featureName == "TableReportUsed") {
@@ -341,7 +342,7 @@ function AddSpecialRowCell(featureRow, archName, featureName) {
     return false;
 }
 
-function OverrideCell(tableRow, archName, featureName, featureValue, newestDriverReport, newestReportContainer) {
+function OverrideCell(tableRow, archName, featureName, featureValue, newestDriverReport, newestReportContainer, tooltipAlignment) {
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported") {
         if (archName == "WARP")
         {
@@ -352,7 +353,7 @@ function OverrideCell(tableRow, archName, featureName, featureValue, newestDrive
         for (let r of ArchClassifier.ReportsPerArch.get(archName)) {
             // If at least one report has GPUUploadHeapSupported == 1, this means that architecture supports it
             if (archName != "WARP" && r.D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported) {
-                AddCellReal(Constants.TrueFalseMappingShort["1"] + "*", tableRow, "GPU Upload Heap support depends on BIOS settings and Windows version.\nSame GPU may report different values depending on the system.", "bottomright");
+                AddCellReal(Constants.TrueFalseMappingShort["1"] + "*", tableRow, "GPU Upload Heap support depends on BIOS settings and Windows version.\nSame GPU may report different values depending on the system.", tooltipAlignment);
                 return true;
             }
         }
@@ -361,47 +362,47 @@ function OverrideCell(tableRow, archName, featureName, featureValue, newestDrive
         return true;
     }
     else if ((featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.AdditionalShadingRatesSupported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported") && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier == 0) {
-        AddCellReal("N/A", tableRow, "VRS capabilities are only relevant if VRS is supported.");
+        AddCellReal("N/A", tableRow, "VRS capabilities are only relevant if VRS is supported.", tooltipAlignment);
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.ShadingRateImageTileSize" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier == 1) {
-        AddCellReal("N/A", tableRow, "VRS Tier 2 is required for shading rate image support.");
+        AddCellReal("N/A", tableRow, "VRS Tier 2 is required for shading rate image support.", tooltipAlignment);
         return true;
     }
     else if ((featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS6.PerPrimitiveShadingRateSupportedWithViewportIndexing" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported") && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier == 1) {
-        AddCellReal("N/A", tableRow, "VRS Tier 2 is required for this capability.");
+        AddCellReal("N/A", tableRow, "VRS Tier 2 is required for this capability.", tooltipAlignment);
         return true;
     }
     // If our tiled resource tier is 3, the SRVOnlyTiledResourceTier3 flag does not apply, but is always true, which is misleading
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.SRVOnlyTiledResourceTier3" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier >= 3) {
-        AddCellReal("N/A", tableRow, "SRVOnlyTiledResourceTier3 is always true\nif TiledResourcesTier >= 3.", "bottomright");
+        AddCellReal("N/A", tableRow, "SRVOnlyTiledResourceTier3 is always true\nif TiledResourcesTier >= 3.", tooltipAlignment);
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Pascal") {
-        AddCellReal("Tier 1.0 *", tableRow, "Pascal have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB of VRAM or more");
+        AddCellReal("Tier 1.0 *", tableRow, "Pascal have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB of VRAM or more", tooltipAlignment);
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Turing") {
-        AddCellReal("Tier 1.1 *", tableRow, "Within Turing architecture there are:\nRTX 20 series and Quadro RTX cards with hardware Tier 1.1 support\nGTX 16 series cards with >= 6GB of VRAM with software emulated Tier 1.0 support\nGTX 16 series cards with < 6GB of VRAM with no raytracing support at all");
+        AddCellReal("Tier 1.1 *", tableRow, "Within Turing architecture there are:\nRTX 20 series and Quadro RTX cards with hardware Tier 1.1 support\nGTX 16 series cards with >= 6GB of VRAM with software emulated Tier 1.0 support\nGTX 16 series cards with < 6GB of VRAM with no raytracing support at all", tooltipAlignment);
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "X1") {
-        AddCellReal("❌ *", tableRow, "X1 supports ray query in hardware,\nbut this capability is not exposed in D3D12,\nsince DXR Tier 1.0 requires callable shaders,\nwhich are unsupported on X1.", "bottomright");
+        AddCellReal("❌ *", tableRow, "X1 supports ray query in hardware,\nbut this capability is not exposed in D3D12,\nsince DXR Tier 1.0 requires callable shaders,\nwhich are unsupported on X1.", tooltipAlignment);
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier" && archName == "RDNA2") {
-        AddCellReal(Constants.TrueFalseMappingShort["1"] + "*", tableRow, "RDNA2 iGPUs with 1 WGP don't have mesh shader support");
+        AddCellReal(Constants.TrueFalseMappingShort["1"] + "*", tableRow, "RDNA2 iGPUs with 1 WGP don't have mesh shader support", tooltipAlignment);
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives" && newestDriverReport.D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier == 0) {
-        AddCellReal("N/A", tableRow, "It is only relevant if Mesh Shaders are supported.", "bottomright");
+        AddCellReal("N/A", tableRow, "It is only relevant if Mesh Shaders are supported.", tooltipAlignment);
         return true;
     }
     return false;
 }
 
-function AddCell(featureRow, archName, featureName) {
-    if (AddSpecialRowCell(featureRow, archName, featureName)) {
+function AddCell(featureRow, archName, featureName, tooltipAlignment) {
+    if (AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment)) {
         return;
     }
 
@@ -410,7 +411,7 @@ function AddCell(featureRow, archName, featureName) {
 
     let featureValue = newestReportContainer.GetField(featureName);
 
-    if (OverrideCell(featureRow, archName, featureName, featureValue, newestDriverReport, newestReportContainer)) {
+    if (OverrideCell(featureRow, archName, featureName, featureValue, newestDriverReport, newestReportContainer, tooltipAlignment)) {
         return
     }
 
@@ -420,22 +421,22 @@ function AddCell(featureRow, archName, featureName) {
 function AddSpecialRow(featureRow, featureName) {
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid") {
         // I don't know why, but both D3D12_FEATURE_DATA_D3D12_OPTIONS18 and D3D12_FEATURE_DATA_D3D12_OPTIONS19 were added in the same SDK version
-        AddCellReal("Always supported *", featureRow, "Starting with Agility SDK 1.610.0, it is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
+        AddCellReal("Always supported *", featureRow, "Starting with Agility SDK 1.610.0, it is always supported, independently of GPU or driver.", 0.5, ArchToOutputCount());
         return true;
     }
     if (featureName == "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion") {
-        AddCellReal("1.2 *", featureRow, "Starting with Agility SDK 1.610.0, Root Signature 1.2 is always supported, independently of GPU or driver.", "topcenter", ArchToOutputCount());
+        AddCellReal("1.2 *", featureRow, "Starting with Agility SDK 1.610.0, Root Signature 1.2 is always supported, independently of GPU or driver.", 0.5, ArchToOutputCount());
         return true;
     }
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates") {
-        AddCellReal("Always supported *", featureRow, "Starting with Windows 10 version 1607, it is always supported, independently of GPU or driver.\nAll currently supported Windows versions are newer than Windows 10 version 1607.", "topcenter", ArchToOutputCount());
+        AddCellReal("Always supported *", featureRow, "Starting with Windows 10 version 1607, it is always supported, independently of GPU or driver.\nAll currently supported Windows versions are newer than Windows 10 version 1607.", 0.5, ArchToOutputCount());
         return true;
     }
 
     return false;
 }
 
-function AddRow(tbody, featureName, featureShortName) {
+function AddRow(tbody, featureName, featureShortName, archTooltipAlignments) {
     let featureRow = document.createElement("tr");
 
     // Filter out features based on Globals.PropertiesSearchString
@@ -458,9 +459,9 @@ function AddRow(tbody, featureName, featureShortName) {
     featureHeader.append(featureShortName);
     featureHeader.scope = "row";
     if (!featureName.startsWith("Table"))
-        AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true });
+        AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true, tooltipAlignment: 0.0 });
     else if (featureName == "TableMarketShare")
-        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 Systems.\nThis is an underestimate and may not be very accurate in general.", { alignOutsideVertical: true });
+        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 Systems.\nThis is an underestimate and may not be very accurate in general.", { alignOutsideVertical: true, tooltipAlignment: 0.0 });
 
     featureRow.appendChild(featureHeader);
 
@@ -474,19 +475,42 @@ function AddRow(tbody, featureName, featureShortName) {
         for (let archName of archs) {
             if (!NeedOutputArch(vendor, archName))
                 continue;
-            AddCell(featureRow, archName, featureName);
+            AddCell(featureRow, archName, featureName, archTooltipAlignments.get(archName));
         }
         tbody.appendChild(featureRow);
     }
 }
 
-function UpdateTableBody(table) {
+function UpdateTableBody(table, archTooltipAlignments) {
     let tbody = document.createElement("tbody");
 
     for (let [featureName, featureShortName] of Object.entries(FeatureTableConstants.TableFeaturesShortNames)) {
-        AddRow(tbody, featureName, featureShortName);
+        AddRow(tbody, featureName, featureShortName, archTooltipAlignments);
     }
     table.appendChild(tbody);
+}
+
+function UpdateTooltipAlignmentMap()
+{
+    let result = new Map();
+    let colCount = 1;
+    for (let [vendor, archs] of Object.entries(ArchClassifier.ArchsPerVendor)) {
+        for (let a of archs) {
+            if (!NeedOutputArch(vendor, a))
+                continue;
+            ++colCount;
+        }
+    }
+    let currentCol = 0;
+    for (let [vendor, archs] of Object.entries(ArchClassifier.ArchsPerVendor)) {
+        for (let a of archs) {
+            if (!NeedOutputArch(vendor, a))
+                continue;
+            ++currentCol;
+            result.set(a, currentCol / (colCount - 1));
+        }
+    }
+    return result;
 }
 
 function UpdateTable() {
@@ -497,11 +521,13 @@ function UpdateTable() {
     tableContainer.appendChild(table);
     HTML.ClearElement(table);
 
+    let archTooltipAlignments = UpdateTooltipAlignmentMap();
+
     // construct table header with vendor name in the first row and arch name in the second row
-    UpdateTableHeader(table);
+    UpdateTableHeader(table, archTooltipAlignments);
 
     // construct table body with all the features
-    UpdateTableBody(table);
+    UpdateTableBody(table, archTooltipAlignments);
 }
 
 function OverrideSearch() {
