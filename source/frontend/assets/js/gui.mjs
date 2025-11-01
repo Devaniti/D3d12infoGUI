@@ -274,11 +274,19 @@ function UpdateReport() {
 }
 
 function QueryReportIDs() {
+    let adapterCount = 0;
+    IterateAdapters(() => {++adapterCount});
+    let responseCount = 0;
     IterateAdapters((retailIndex, index, adapter) => {
         SubmissionIDs[retailIndex][index] = null;
         Server.IsSubmitted(Headers[retailIndex], adapter, (ID) => {
             SubmissionIDs[retailIndex][index] = ID;
             UpdateList();
+            ++responseCount;
+            if (openOptions.autoSubmit && responseCount == adapterCount)
+            {
+                SubmitAllReports();
+            }
         })
     })
 }

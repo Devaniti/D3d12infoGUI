@@ -7,6 +7,13 @@
 
 using namespace D3d12infoGUI;
 
+// Command line flags
+static bool g_OpenLicenses = false;
+static bool g_OpenHelp = false;
+static bool g_AutoSubmit = false;
+static std::wstring g_CustomWarpPath;
+static bool g_CLIArgumentsError = false;
+
 int RunGUI(HINSTANCE hInstance)
 {
     Window window(hInstance, L"Extracting files");
@@ -40,11 +47,22 @@ int RunGUI(HINSTANCE hInstance)
     std::vector<std::vector<char>> validReports;
 
     std::wstring d3d12infoCmdLine = std::format(
-        L"\"{}\" --OutputFile=\"{}\" --AllAdapters --JSON --MinimizeJson --Formats --EnableExperimental=OFF",
+        L"\"{}\" --OutputFile=\"{}\" --JSON --MinimizeJson --Formats --EnableExperimental=OFF",
         d3d12infoPath.wstring(), d3d12infoReport.wstring());
     std::wstring d3d12infoPreviewCmdLine =
-        std::format(L"\"{}\" --OutputFile=\"{}\" --AllAdapters --JSON --MinimizeJson --Formats --EnableExperimental=ON",
+        std::format(L"\"{}\" --OutputFile=\"{}\" --JSON --MinimizeJson --Formats --EnableExperimental=ON",
             d3d12infoPreviewPath.wstring(), d3d12infoPreviewReport.wstring());
+    if(g_CustomWarpPath.empty())
+    {
+        d3d12infoCmdLine += L" --AllAdapters";
+        d3d12infoPreviewCmdLine += L" --AllAdapters";
+    }
+    else
+    {
+        std::filesystem::copy_file(g_CustomWarpPath, rootPath / "d3d10warp.dll", std::filesystem::copy_options::overwrite_existing);
+        d3d12infoCmdLine += L" --WARP";
+        d3d12infoPreviewCmdLine += L" --WARP";
+    }
 
     Subprocess d3d12infoProcess(d3d12infoCmdLine.data());
     Subprocess d3d12infoPreviewProcess(d3d12infoPreviewCmdLine.data());
@@ -74,7 +92,10 @@ int RunGUI(HINSTANCE hInstance)
 
     window.ReportProgress(L"Generating report");
 
-    ReportGenerator::GenerateHTML(rootPath, validReports);
+    OpenOptions options{};
+    options.AutoSubmit = g_AutoSubmit;
+
+    ReportGenerator::GenerateHTML(rootPath, validReports, options);
     if(window.IsExitRequested())
         return 1;
     window.ReportProgress(L"Opening report");
@@ -146,43 +167,107 @@ void OpenLicenses()
 #endif
 }
 
-int ProcessCommandLine(LPWSTR lpCmdLine)
+void ParseCommandLine()
 {
-    if(std::wcscmp(lpCmdLine, L"--licenses") == 0 || std::wcscmp(lpCmdLine, L"-l") == 0)
+    int argc = 0;
+    LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    if(!argv)
+        return;
+
+    for(int i = 1; i < argc; ++i)
     {
-        OpenLicenses();
-        return 0;
+        LPWSTR arg = argv[i];
+        if(std::wcscmp(arg, L"--license") == 0 || std::wcscmp(arg, L"-l") == 0)
+        {
+            g_OpenLicenses = true;
+            continue;
+        }
+
+        if(std::wcscmp(arg, L"--help") == 0 || std::wcscmp(arg, L"-h") == 0)
+        {
+            g_OpenHelp = true;
+            continue;
+        }
+
+        if(std::wcscmp(arg, L"--auto-submit") == 0 || std::wcscmp(arg, L"-a") == 0)
+        {
+            g_AutoSubmit = true;
+            continue;
+        }
+
+        // --custom-warp=PATH
+        constexpr wchar_t warpLongArgPrefix[] = L"--custom-warp=";
+        constexpr size_t warpLongArgLen = sizeof(warpLongArgPrefix) / sizeof(wchar_t) - 1;
+        if(std::wcsncmp(arg, warpLongArgPrefix, warpLongArgLen) == 0)
+        {
+            g_CustomWarpPath = std::wstring(arg + warpLongArgLen);
+            continue;
+        }
+
+        // -w=PATH
+        constexpr wchar_t warpShortArgPrefix[] = L"-w=";
+        constexpr size_t warpShortArgLen = sizeof(warpShortArgPrefix) / sizeof(wchar_t) - 1;
+        if(std::wcsncmp(arg, warpShortArgPrefix, warpShortArgLen) == 0)
+        {
+            g_CustomWarpPath = std::wstring(arg + warpShortArgLen);
+            continue;
+        }
+
+        // --custom-warp PATH / -w PATH
+        if(std::wcscmp(arg, L"--custom-warp") == 0 || std::wcscmp(arg, L"-w") == 0)
+        {
+            if(i + 1 >= argc)
+            {
+                g_CLIArgumentsError = true;
+                break;
+            }
+
+            g_CustomWarpPath = std::wstring(argv[++i]);
+            continue;
+        }
+
+        g_CLIArgumentsError = true;
+        break;
     }
 
-    if(std::wcscmp(lpCmdLine, L"--help") == 0 || std::wcscmp(lpCmdLine, L"-h") == 0)
+    if (g_CustomWarpPath.size() > 2)
     {
-        PrintHelp();
-        return 0;
+        size_t beginPos = 0;
+        size_t endPos = g_CustomWarpPath.size();
+        if (g_CustomWarpPath[beginPos] == L'"')
+        {
+            ++beginPos;
+        }
+        if (g_CustomWarpPath[endPos - 1] == L'"')
+        {
+            --endPos;
+        }
+        g_CustomWarpPath = g_CustomWarpPath.substr(beginPos, endPos - beginPos);
     }
 
-    PrintHelp();
-    return 1;
-}
-
-int RunCommandLine(LPWSTR lpCmdLine)
-{
-    InitializeConsole();
-
-    int result = ProcessCommandLine(lpCmdLine);
-
-    ::FreeConsole();
-
-    return result;
+    LocalFree(argv);
 }
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
     try
     {
-        if(*lpCmdLine != L'\0')
+        ParseCommandLine();
+
+        if(g_CLIArgumentsError || g_OpenHelp)
         {
-            return RunCommandLine(lpCmdLine);
+            InitializeConsole();
+            PrintHelp();
+            ::FreeConsole();
+            return g_CLIArgumentsError ? 1 : 0;
         }
+
+        if(g_OpenLicenses)
+        {
+            OpenLicenses();
+            return 0;
+        }
+
         return RunGUI(hInstance);
     }
     catch(const std::exception& e)

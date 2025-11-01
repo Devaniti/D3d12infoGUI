@@ -5,8 +5,8 @@
 namespace D3d12infoGUI
 {
 
-    void ReportGenerator::GenerateHTML(
-        const std::filesystem::path& rootPath, const std::vector<std::vector<char>>& validReports)
+    void ReportGenerator::GenerateHTML(const std::filesystem::path& rootPath,
+        const std::vector<std::vector<char>>& validReports, const OpenOptions& options)
     {
         if(!std::filesystem::is_directory(rootPath))
         {
@@ -16,15 +16,17 @@ namespace D3d12infoGUI
             }
         }
 
-        std::filesystem::path jsFilePath = rootPath / L"reports.js";
-        std::ofstream jsonFile;
-        jsonFile.open(jsFilePath, std::ios_base::out | std::ios_base::binary);
-        if(jsonFile.fail())
+        std::filesystem::path jsFilePath = rootPath / L"data.js";
+        std::ofstream dataFile;
+        dataFile.open(jsFilePath, std::ios_base::out | std::ios_base::binary);
+        if(dataFile.fail())
         {
             throw std::runtime_error("Failed to open output file");
         }
 
-        jsonFile << "const reports = [";
+        dataFile << std::format("const openOptions = {{autoSubmit: {}}}\n", options.AutoSubmit);
+
+        dataFile << "const reports = [";
         bool isFirst = true;
         for(const auto& report : validReports)
         {
@@ -34,15 +36,15 @@ namespace D3d12infoGUI
             }
             else
             {
-                jsonFile << ",";
+                dataFile << ",";
             }
 
-            jsonFile.write(report.data(), report.size());
+            dataFile.write(report.data(), report.size());
         }
-        jsonFile << "]";
+        dataFile << "]";
 
-        jsonFile.close();
-        if(jsonFile.fail())
+        dataFile.close();
+        if(dataFile.fail())
         {
             throw std::runtime_error("Failed to write output file");
         }
