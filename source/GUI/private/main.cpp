@@ -140,8 +140,10 @@ void PrintHelp()
 {
     std::wcout << std::endl;
     std::wcout << "Usage:" << std::endl;
-    std::wcout << "    -l --licenses - Shows open source licenses" << std::endl;
-    std::wcout << "    -h --help     - Shows this usage info" << std::endl;
+    std::wcout << "    -a --auto-submit      - Automatically submit all report after opening" << std::endl;
+    std::wcout << "    -w --custom-warp=PATH - Generate report for specified version of WARP (and only it)" << std::endl;
+    std::wcout << "    -l --licenses         - Shows open source licenses" << std::endl;
+    std::wcout << "    -h --help             - Shows this usage info" << std::endl;
     std::wcout << std::endl;
     std::ios::sync_with_stdio();
 }
