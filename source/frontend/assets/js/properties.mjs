@@ -70,15 +70,16 @@ export function MakeHumanReadable(property, value) {
                 } else {
                     // ACPI ID codepath
                     let charBytes = [value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF, (value >> 24) & 0xFF];
-                    const validRangeBegin = "A".charCodeAt(0);
-                    const validRangeEnd = "Z".charCodeAt(0);
-                    let isValidACPIID = charBytes.reduce((state, currentByte) => (state && currentByte >= validRangeBegin && currentByte <= validRangeEnd), true);
-                    if (isValidACPIID)
-                    {
+                    const validCharRangeBegin = "A".charCodeAt(0);
+                    const validCharRangeEnd = "Z".charCodeAt(0);
+                    const validDigitRangeBegin = "0".charCodeAt(0);
+                    const validDigitRangeEnd = "9".charCodeAt(0);
+                    let isValidACPIID = charBytes.reduce((state, currentByte) =>
+                        (state && ((currentByte >= validCharRangeBegin && currentByte <= validCharRangeEnd) || (currentByte >= validDigitRangeBegin && currentByte <= validDigitRangeEnd))), true);
+                    if (isValidACPIID) {
                         decodedValue = String.fromCharCode(charBytes[0], charBytes[1], charBytes[2], charBytes[3]);
                     }
-                    else
-                    {
+                    else {
                         return `Invalid (0x${Number(value).toString(16)})`;
                     }
                 }
