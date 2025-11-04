@@ -69,8 +69,18 @@ export function MakeHumanReadable(property, value) {
                     decodedValue = "0x" + ZeroPad(Number(value).toString(16), 4)
                 } else {
                     // ACPI ID codepath
-                    let ToTextID = (e) => String.fromCharCode(e & 0xFF, (e >> 8) & 0xFF, (e >> 16) & 0xFF, (e >> 24) & 0xFF);
-                    decodedValue = ToTextID(value)
+                    let charBytes = [value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF, (value >> 24) & 0xFF];
+                    const validRangeBegin = "A".charCodeAt(0);
+                    const validRangeEnd = "Z".charCodeAt(0);
+                    let isValidACPIID = charBytes.reduce((state, currentByte) => (state && currentByte >= validRangeBegin && currentByte <= validRangeEnd), true);
+                    if (isValidACPIID)
+                    {
+                        decodedValue = String.fromCharCode(charBytes[0], charBytes[1], charBytes[2], charBytes[3]);
+                    }
+                    else
+                    {
+                        return `Invalid (0x${Number(value).toString(16)})`;
+                    }
                 }
                 if (Constants.VendorIDs[decodedValue])
                     return `${Constants.VendorIDs[decodedValue]} (${decodedValue})`

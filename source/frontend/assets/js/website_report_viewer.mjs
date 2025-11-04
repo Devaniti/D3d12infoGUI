@@ -160,13 +160,27 @@ const DefaultFilterValues = {
     }
 }
 
+function GetFilterSortFunc(property)
+{
+    switch (property)
+    {
+        case "DXGI_ADAPTER_DESC3.VendorId":
+            return (a, b) => (Number(a) > Number(b))
+        case "Header.Using preview Agility SDK":
+            return (a, b) => (a < b)
+        default:
+            return (a, b) => (a > b)
+    }
+}
+
 function AddFilterMultichoice(container, property) {
     const filterFieldSet = document.createElement("fieldset")
     const filterLegend = document.createElement("legend")
     filterLegend.appendChild(document.createTextNode(Properties.MakeHumanReadableProperty(property)))
     AdaptersFilters[property] = []
 
-    let valuesList = [...new Set(Reports.map(e => e.GetField(property)))].sort().reverse()
+    let valuesList = [...new Set(Reports.map(e => e.GetField(property)))].sort(GetFilterSortFunc(property))
+    
     valuesList.forEach(e => {
         const checkboxLabel = document.createElement("label")
         const filterCheckbox = document.createElement("input")
