@@ -154,7 +154,7 @@ function AddFilterPanel(container) {
     archAgeSlider.type = "range";
     archAgeSlider.min = 2010;
     archAgeSlider.max = new Date().getFullYear();
-    archAgeSlider.value = (new Date().getFullYear()) - 9;
+    archAgeSlider.value = 2016;
     archAgeSlider.step = 1;
     let archAgeLabel = document.createElement("label");
     archAgeLabel.htmlFor = "archAgeSlider";
@@ -379,11 +379,11 @@ function OverrideCell(tableRow, archName, featureName, featureValue, newestDrive
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Pascal") {
-        AddCellReal("Tier 1.0 *", tableRow, "Pascal have (software emulated) Tier 1.0 raytracing support, but only if the card has 6GB of VRAM or more", tooltipAlignment);
+        AddCellReal("❌ *", tableRow, "Pascal cards with >= 6GB of VRAM have software emulated Tier 1.0. Pascal cards with < 6GB of VRAM have no support at all.", tooltipAlignment);
         return true;
     }
-    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Turing") {
-        AddCellReal("Tier 1.1 *", tableRow, "Within Turing architecture there are:\nRTX 20 series and Quadro RTX cards with hardware Tier 1.1 support\nGTX 16 series cards with >= 6GB of VRAM with software emulated Tier 1.0 support\nGTX 16 series cards with < 6GB of VRAM with no raytracing support at all", tooltipAlignment);
+    else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "Turing 16") {
+        AddCellReal("❌ *", tableRow, "GTX 16xx series cards with >= 6GB of VRAM have software emulated Tier 1.0. GTX 16xx series cards with < 6GB of VRAM have no support at all.", tooltipAlignment);
         return true;
     }
     else if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && archName == "X1") {

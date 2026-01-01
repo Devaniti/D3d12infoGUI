@@ -24,8 +24,8 @@ function IsDarkMode() {
 }
 
 function GetFeatureValue(report, arch) {
-    // Pascal and Turing have different support tiers within same arch
-    if (SelectedFeature == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && (arch == "Pascal" || arch == "Turing")) return undefined;
+    // Pascal and Turing only have emulated raytracing support. We want to show it as unsupported instead.
+    if (SelectedFeature == "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier" && (arch == "Pascal" || arch == "Turing 16")) return 0;
     // RDNA2 iGPUs with 1 WGP don't have mesh shader support. Force Mesh Shaders as Tier 1 to prevent iGPU reports from overriding support.
     if (SelectedFeature == "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier" && arch == "RDNA2") return 10;
 
@@ -93,10 +93,6 @@ function GetVendorsOutOfOrder() {
             if (value == undefined) continue;
             if (prevValue != undefined && value < prevValue)
             {
-                console.log(prevValue)
-                console.log(value)
-                console.log(vendor)
-                console.log(arch)
                 result.push(vendor);
                 break;
             }
@@ -401,8 +397,7 @@ function CreateNotes(dataContainer) {
 
     switch (SelectedFeature) {
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier":
-            AddNote("Nvidia Pascal cards with >=6GiB of VRAM have emulated Tier 1.0 support, while other cards don't have any support. Pascal is marked as Unknown for that reason.", noteContainer);
-            AddNote("Nvidia Turing 20xx cards have hardware Tier 1.1 support, 16xx cards with >=6GiB of VRAM have emulated Tier 1.0 support, while other cards don't have any support. Turing is marked as Unknown for that reason.", noteContainer);
+            AddNote("Nvidia Pascal and Turing 16xx cards may have emulated Tier 1.0 support depending on amount of VRAM. In table those are marked as unsupported, since emulated DXR support is too slow for most practical purpoes.", noteContainer);
             break;
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier":
             AddNote("RDNA2 iGPUs with 1 WGP don't have mesh shader support. Share of such iGPUs is minor though, so RDNA2 is marked as Mesh Shader capable.", noteContainer)

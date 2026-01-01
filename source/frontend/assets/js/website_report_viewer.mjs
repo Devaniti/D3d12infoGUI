@@ -627,7 +627,6 @@ function UpdateComparison() {
             const cell = document.createElement("td")
             const cellText = document.createTextNode(valueHumanReadable)
             if (isAllValuesEqual) {
-                debugger;
                 cell.style.fontStyle = "italic";
                 cell.style.color = "#888888";
             }

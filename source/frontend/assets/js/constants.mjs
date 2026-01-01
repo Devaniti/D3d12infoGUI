@@ -1973,7 +1973,8 @@ export const PureFeatureList = [
 
 const PreviewDriverVersions = [
     "9007199255733042", // 32.0.15.9010 / GeForce 590.10 SM 6.9 Preview Driver
-    "9007199255733058"  // 32.0.15.9026 / GeForce 590.26 SM 6.9 Preview Driver
+    "9007199255733058",  // 32.0.15.9026 / GeForce 590.26 SM 6.9 Preview Driver
+    "9007199255733534", // 	32.0.15.9502 / GeForce 595.02 Windows Insider Preview driver from Windows Update
 ]
 
 export const ArchReleaseDates = {
@@ -1999,7 +2000,8 @@ export const ArchReleaseDates = {
     "Maxwell2": "2015",
     "Pascal": "2016",
     "Volta": "2017",
-    "Turing": "2018",
+    "Turing 16": "2018",
+    "Turing 20": "2018",
     "Ampere": "2020",
     "Ada": "2022",
     "Blackwell": "2025",

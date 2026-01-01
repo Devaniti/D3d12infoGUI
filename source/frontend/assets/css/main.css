@@ -24,6 +24,10 @@ table {
     border-color: #a7a7a7;
 }
 
+thead {
+    white-space: nowrap;
+}
+
 a {
     color: #004a94;
     text-decoration: none;

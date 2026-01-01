@@ -120,7 +120,6 @@ export function GetSubmission(id, onSuccess) {
     xhr.open("GET", Constants.APIAddress + "/get_submission?ID=" + id)
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            debugger
             let reports = JSON.parse(xhr.responseText).map(e => new ReportContainer(e))
             onSuccess(reports)
         }
