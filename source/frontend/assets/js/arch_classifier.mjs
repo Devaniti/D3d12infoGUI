@@ -130,31 +130,40 @@ function ClassifyReport(reportContainer) {
         if (arch) ArchsPerVendor.Intel.add(arch);
     }
     else if (report.NvPhysicalGpuHandle && report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]) {
-
         const NvidiaArchitectures = {
-            Fermi: 0x000000C0, // GF10x (most 4xx)
-            Fermi2: 0x000000D0, // GF11x (most 5xx)
-            Kepler: 0x000000E0, // GK10x (most 6xx)
-            Kepler1: 0x000000F0, // GK110 (Titan, 780)
-            Kepler2: 0x00000100, // GK2xx (Tegra, Jetson, Tesla K80, 720, etc.)
-            Maxwell1: 0x00000110, // GM1xx (750, 850M, 950M, etc.)
-            Maxwell2: 0x00000120, // GM2xx (most 9xx)
-            Pascal: 0x00000130,
-            Volta: 0x00000140, // GV100
-            Volta1: 0x00000150, // GV11x (Jetson Xavier)
-            Turing: 0x00000160,
-            Ampere: 0x00000170,
-            Ada: 0x00000190,
-            Blackwell: 0x000001B0
+            0x000000C0 : "Fermi", // GF10x (most 4xx)
+            0x000000D0 : "Fermi2", // GF11x (most 5xx)
+            0x000000E0 : "Kepler", // GK10x (most 6xx)
+            0x000000F0 : "Kepler1", // GK110 (Titan, 780)
+            0x00000100 : "Kepler2", // GK2xx (Tegra, Jetson, Tesla K80, 720, etc.)
+            0x00000110 : "Maxwell1", // GM1xx (750, 850M, 950M, etc.)
+            0x00000120 : "Maxwell2", // GM2xx (most 9xx)
+            0x00000130 : "Pascal",
+            0x00000140 : "Volta", // GV100
+            0x00000150 : "Volta1", // GV11x (Jetson Xavier)
+            0x00000160 : "Turing",
+            0x00000170 : "Ampere",
+            0x00000190 : "Ada",
+            0x000001B0 : "Blackwell"
         };
 
-        function GetKeyByValue(object, value) {
-            return Object.keys(object).find(key => object[key] === value);
-        }
-        arch = GetKeyByValue(NvidiaArchitectures, report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]);
+        arch = NvidiaArchitectures[report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"]];
 
         if (!arch) {
             arch = "Arch ID " + report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"];
+        }
+
+        if (arch === "Turing")
+        {
+            const GPUID = report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::implementation_id"];
+            if (GPUID == 7 || GPUID == 8) // TU116 or TU117
+            {
+                arch = "Turing 16"
+            }
+            else
+            {
+                arch = "Turing 20"
+            }
         }
 
         // filter variants except Maxwell, should have same D3D12 features (though not CUDA features)
@@ -165,7 +174,7 @@ function ClassifyReport(reportContainer) {
         else if (arch == "Volta1")
             arch = "Volta"; // unconfirmed
 
-        ArchsPerVendor.Nvidia.add(arch ? arch : report.NvPhysicalGpuHandle["NvAPI_GPU_GetArchInfo - NV_GPU_ARCH_INFO::architecture_id"].toString());
+        ArchsPerVendor.Nvidia.add(arch);
     }
     else if (vendorId.startsWith("NVIDIA")) {
         // old GPUs for which nvapi doesn't work, or we don't know whether it works
