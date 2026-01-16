@@ -441,7 +441,7 @@ function AddRow(tbody, featureName, featureShortName, archTooltipAlignments) {
 
     // Filter out features based on Globals.PropertiesSearchString
     let featureNameLowercase = featureName.toLowerCase();
-    let featureNameShortLowercase = featureName.toLowerCase();
+    let featureNameShortLowercase = featureShortName.toLowerCase();
     let searchStringLowercase = Globals.PropertiesSearchString.toLowerCase();
     let propertyAllowList = ["TableReleaseDate", "TableMarketShare"];
     let searchTest =
