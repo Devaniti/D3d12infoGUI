@@ -22,6 +22,10 @@ module.exports = {
       import:'./website-feature-table-webpack.js',
       dependOn: 'shared'
     },
+    arhitecture_table: {
+      import:'./website-architecture-table-webpack.js',
+      dependOn: 'shared'
+    },
     can_i_use: {
       import:'./website-can-i-use-webpack.js',
       dependOn: 'shared'
@@ -83,6 +87,11 @@ module.exports = {
       template: './assets/html_website/FeatureTable.html',
       filename: 'FeatureTable.html',
       chunks: ['assets', 'shared', 'feature_table']
+    }),
+    new HtmlWebpackPlugin({
+      template: './assets/html_website/ArchitectureTable.html',
+      filename: 'ArchitectureTable.html',
+      chunks: ['assets', 'shared', 'arhitecture_table']
     }),
     new HtmlWebpackPlugin({
       template: './assets/html_website/CanIUse.html',

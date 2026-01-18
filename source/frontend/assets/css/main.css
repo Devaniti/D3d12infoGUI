@@ -71,6 +71,7 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: max-content;
     width: 100%;
     margin: 0 auto 0.4em auto;
     border-width: 2px;

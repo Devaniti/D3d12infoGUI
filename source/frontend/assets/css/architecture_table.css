@@ -1,0 +1,80 @@
+.ArchitectureTables {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 2100px;
+    margin: 0 auto;
+}
+
+.ArchitectureTableContainer {
+    padding: 5px;
+    flex-grow: 0.1
+}
+
+
+td {
+    white-space: pre-wrap;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #00000010;
+}
+
+th,
+td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #7f7f7f;
+}
+
+td {
+    text-align: center;
+    padding: 2px 4px;
+    min-width: 4.5em;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+/* row of header with vendor name */
+thead>tr:first-of-type>th {
+    /* first row sticks to the top of the screen */
+    border-bottom: none;
+}
+
+/* row with legend */
+thead>tr:nth-of-type(2)>th {
+    /* second row sticks right below first row */
+    border-top: none;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    padding-inline: 0.3em;
+    /* separate legend a little */
+}
+
+@media (prefers-color-scheme: dark) {
+
+    th,
+    td {
+        border-color: #8c8c8c;
+    }
+
+    table {
+        border-color: #8c8c8c;
+        background-color: #2d2d2d;
+    }
+
+
+    tr:nth-of-type(1) {
+        background-color: #262626;
+    }
+
+    td {
+        border-color: #FFFFFF33;
+    }
+
+    tr:nth-of-type(odd) {
+        background-color: #00000020;
+    }
+}
