@@ -212,7 +212,38 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
             result = AddLine(result, "* Work Graphs " + TierString);
         }
     }
-    
+
+    let newResourceHeapTier = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier
+
+    if (newResourceHeapTier != cumulativeFeatures.ResourceHeapTier)
+    {
+        let TierString = Constants.EnumMappingsShort["D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier"][newResourceHeapTier] ?? "Unknown";
+        if (newResourceHeapTier > cumulativeFeatures.ResourceHeapTier)
+        {
+            result = AddLine(result, "Resource Heap " + TierString);
+            cumulativeFeatures.ResourceHeapTier = newResourceHeapTier;
+        }
+        else
+        {
+            result = AddLine(result, "* Resource Heap " + TierString);
+        }
+    }
+
+    let newTiledResourcesTier = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier
+
+    if (newTiledResourcesTier != cumulativeFeatures.TiledResourcesTier)
+    {
+        let TierString = Constants.EnumMappingsShort["D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier"][newTiledResourcesTier] ?? "Unknown";
+        if (newTiledResourcesTier > cumulativeFeatures.TiledResourcesTier)
+        {
+            result = AddLine(result, "Tiled Resources " + TierString);
+            cumulativeFeatures.TiledResourcesTier = newTiledResourcesTier;
+        }
+        else
+        {
+            result = AddLine(result, "* Tiled Resources " + TierString);
+        }
+    }
 
     return result;
 }
@@ -233,7 +264,9 @@ function RenderTableBody(container, vendorArchitectures) {
         VRSTier: 0,
         SamplerFeedbackTier: 0,
         SupportR9G9B9E5RTVUAV: false,
-        WorkGraphsTier: 0
+        WorkGraphsTier: 0,
+        ResourceHeapTier: 1,
+        TiledResourcesTier: 0,
     }
 
     for (let architectureName of vendorArchitectures) {
@@ -259,7 +292,23 @@ function RenderTable(container, vendorName, vendorArchitectures) {
     let table = document.createElement("table");
     RenderTableHead(table, vendorName);
     RenderTableBody(table, vendorArchitectures);
+    table.className = "ArchitectureTable"
     container.appendChild(table);
+}
+
+function RenderNotes(container) {
+    const notesContainer = document.getElementById("NotesContainer")
+    HTML.ClearElement(notesContainer);
+
+    notesContainer.appendChild(document.createTextNode("Features marked with * appear out of order of increasing capabilities. After such entry, subsequent architectures return to higher capabilities without additional notes. For example Xe-LPG supports Resource Heap Tier 2."));
+    notesContainer.appendChild(document.createElement("br"));
+    notesContainer.appendChild(document.createTextNode("Some Nvidia Pascal and Turing 16 GPUs have software emulated DXR Tier 1.0 Support. Since software emulation is too slow for most practical purposes, they are marked as if they have no DXR support in this table."));
+    notesContainer.appendChild(document.createElement("br"));
+    notesContainer.appendChild(document.createTextNode("Market Share is calculated from the Steam Hardware Survey among DirectX 12 Systems. This is an underestimate and may not be very accurate in general."));
+    notesContainer.appendChild(document.createElement("br"));
+    notesContainer.appendChild(document.createTextNode("Market Share will vary a lot between different games. Steam Hardware Survey may not be a good representation of your target audience."));
+    notesContainer.appendChild(document.createElement("br"));
+    notesContainer.appendChild(document.createTextNode("Some features require new enough version of Agility SDK to be used by app to become available, even if GPU supports them."));
 }
 
 function RenderTables() {
@@ -304,6 +353,7 @@ function OnLoad() {
         let Reports = data;
         ArchClassifier.ClassifyReports(Reports);
         RenderTables();
+        RenderNotes();
     })
 }
 

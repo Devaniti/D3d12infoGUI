@@ -392,7 +392,7 @@ function CreateNotes(dataContainer) {
     if (NeedShowTable()) {
         AddNote("Market Share is calculated from the Steam Hardware Survey among DirectX 12 Systems. This is an underestimate and may not be very accurate in general.", noteContainer);
         AddNote("Market Share will vary a lot between different games. Steam Hardware Survey may not be a good representation of your target audience.", noteContainer);
-        AddNote("Note that this table assumes that app uses latest non-preview Agility SDK.", noteContainer);
+        AddNote("Some features require new enough version of Agility SDK to be used by app to become available, even if GPU supports them.", noteContainer);
     }
 
     switch (SelectedFeature) {
