@@ -405,6 +405,7 @@ function UpdateList() {
         secondRowCell.colSpan = Constants.ListHeader.length + Constants.ListHeaderSpecial.length
         const prevPageButton = document.createElement("button")
         prevPageButton.appendChild(document.createTextNode("Previous page"))
+        prevPageButton.className = "ActionButton"
         prevPageButton.addEventListener('click', function (e) {
             Page = Math.max(Page - 1, 0)
             UpdateList()
@@ -413,6 +414,7 @@ function UpdateList() {
         secondRowCell.appendChild(prevPageButton)
         const nextPageButton = document.createElement("button")
         nextPageButton.appendChild(document.createTextNode("Next page"))
+        nextPageButton.className = "ActionButton"
         nextPageButton.addEventListener('click', function (e) {
             Page = Math.min(Page + 1, PageCount - 1)
             UpdateList()

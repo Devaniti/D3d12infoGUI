@@ -1,4 +1,33 @@
 <noscript>This website requires JavaScript to run</noscript>
+<dialog closedby="any" id="SettingsDialog">
+    <div class="DialogItem">
+        <input type="checkbox" id="AllowPreferenceCookiesCheckbox">
+        <div style="width: 0.2em"></div>
+        <label for="AllowPreferenceCookiesCheckbox">Allow Saving Preferences via Cookies</label>
+    </div>
+    <div class="DialogItem">
+        <fieldset id="ThemeSetting">
+            <legend>Select a theme:</legend>
+            <div>
+                <input type="radio" id="ThemeAuto" name="theme" value="auto" />
+                <label for="huey">Auto</label>
+            </div>
+            <div>
+                <input type="radio" id="ThemeDark" name="theme" value="dark" />
+                <label for="dewey">Dark</label>
+            </div>
+            <div>
+                <input type="radio" id="ThemeLight" name="theme" value="light" />
+                <label for="louie">Light</label>
+            </div>
+        </fieldset>
+    </div>
+    <div class="DialogItem">
+        <form method="dialog">
+            <button>Close</button>
+        </form>
+    </div>
+</dialog>
 <div class="headerContainer">
     <div class="headerContainer2">
         <div class="header">
@@ -10,22 +39,18 @@
                 <div style="width: 1em"></div>
                 <a class="headerLink" href="https://github.com/Devaniti/D3d12infoGUI/releases/latest">
                     <div class="headerText">GUI</div>
+                    <div style="width: 0.2em"></div>
                     <img class="icon" src="../icons/download.svg">
                 </a>
                 <div style="width: 0.3em"></div>
-                <a class="headerLink" href="https://github.com/Devaniti/D3d12infoGUI">
-                    <div class="headerText">Source</div>
-                    <img class="icon" src="../icons/github-mark.svg">
-                </a>
-                <div style="width: 1em"></div>
                 <a class="headerLink" href="https://github.com/sawickiap/D3d12info/releases/latest">
                     <div class="headerText">CLI</div>
+                    <div style="width: 0.2em"></div>
                     <img class="icon" src="../icons/download.svg">
                 </a>
-                <div style="width: 0.3em"></div>
-                <a class="headerLink" href="https://github.com/sawickiap/D3d12info">
-                    <div class="headerText">Source</div>
-                    <img class="icon" src="../icons/github-mark.svg">
+                <div style="width: 1em"></div>
+                <a class="headerLink" id="OpenSettings">
+                    <img class="icon" src="../icons/settings.svg">
                 </a>
             <div style="width: 1em"></div>
             </div>

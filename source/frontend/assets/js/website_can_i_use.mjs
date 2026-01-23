@@ -3,6 +3,7 @@ import * as Constants from "./constants.mjs"
 import * as Properties from "./properties.mjs"
 import * as Server from './server.mjs'
 import * as ArchClassifier from './arch_classifier.mjs'
+import * as ThemeSwitch from './theme_switch.mjs'
 import ArchStats from './arch_stats.mjs'
 import Globals from './globals.mjs'
 
@@ -20,7 +21,7 @@ let ColorGradientDarkMode = [[80, 30, 30], [30, 80, 30]];
 let UnknownColorDarkMode = [40, 40, 40];
 
 function IsDarkMode() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return ThemeSwitch.GetCurrentTheme() == 'dark'
 }
 
 function GetFeatureValue(report, arch) {
@@ -522,11 +523,7 @@ function OverrideSearch() {
 }
 
 function AddDarkModeListener() {
-    if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            UpdateOutput();
-        });
-    }
+    ThemeSwitch.AddChangeCallback(UpdateOutput)
 }
 
 function OnLoad() {

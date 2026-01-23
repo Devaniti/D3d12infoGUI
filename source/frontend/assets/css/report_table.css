@@ -56,7 +56,7 @@ td:nth-of-type(even) {
     background-color: #00000010;
 }
 
-button {
+.ActionButton {
     margin: auto;
     width: 11.5em;
     background-color: #029c07;
@@ -72,7 +72,7 @@ button {
     cursor: pointer !important;
 }
 
-button:disabled {
+.ActionButton:disabled {
     background-color: #7c7c7c;
     cursor: not-allowed !important;
 }
@@ -205,7 +205,7 @@ button:disabled {
     white-space: pre;
 }
 
-@media (prefers-color-scheme: dark) {
+.dark-mode {
 
     table {
         border-color: #8c8c8c;
@@ -228,11 +228,11 @@ button:disabled {
         background-color: #00000020;
     }
 
-    button {
+    .ActionButton {
         background-color: #005b00;
     }
 
-    button:disabled {
+    .ActionButton:disabled {
         background-color: #464646;
     }
 

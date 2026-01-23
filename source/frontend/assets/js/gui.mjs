@@ -5,6 +5,8 @@ import * as HTML from './html.mjs';
 import * as Properties from './properties.mjs';
 import ReportContainer from './report_container.mjs';
 import * as Server from './server.mjs';
+import * as ThemeSwitch from './theme_switch.mjs';
+import './preload_style.mjs';
 
 const SubmissionIDs = [[], []]
 
@@ -82,7 +84,7 @@ function AddSubmitAllButton(tableBody, tableWidth) {
     cell.colSpan = tableWidth
 
     let submitButton = document.createElement("button")
-    submitButton.classList.add("gui-tooltip")
+    submitButton.classList.add("gui-tooltip", "ActionButton")
     submitButton.disabled = !HaveUnsubmittedReports()
     submitButton.onclick = () => {
         SubmitAllReports()
@@ -305,6 +307,7 @@ function UpdateOutput() {
 }
 
 function OnLoad() {
+    ThemeSwitch.Switch('auto')
     InitReportData()
     QueryReportIDs()
     UpdateOutput()

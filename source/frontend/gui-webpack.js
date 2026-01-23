@@ -5,6 +5,7 @@ import './assets/icons/error.svg';
 import './assets/icons/required.svg';
 import './assets/icons/supported.svg';
 import './assets/icons/unsupported.svg';
+import './assets/icons/settings.svg';
 
 // css
 import './assets/css/main.css';
