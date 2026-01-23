@@ -18,6 +18,10 @@ module.exports = {
       import:'./website-compare-webpack.js',
       dependOn: 'shared'
     },
+    about: {
+      import:'./website-about-webpack.js',
+      dependOn: 'shared'
+    },
     feature_table: {
       import:'./website-feature-table-webpack.js',
       dependOn: 'shared'
@@ -81,7 +85,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './assets/html_website/about.html',
       filename: 'about.html',
-      chunks: ['assets']
+      chunks: ['assets', 'shared', 'about']
     }),
     new HtmlWebpackPlugin({
       template: './assets/html_website/FeatureTable.html',

@@ -18,6 +18,12 @@ body {
     margin: 8px;
 }
 
+body.preload *
+{
+    animation-duration: 0s !important;
+    transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+}
+
 table {
     border: 2px solid;
     border-collapse: collapse;
@@ -42,13 +48,13 @@ a:hover {
 .icon {
     width: 1.5em;
     height: 1.5em;
-    margin-left: 0.2em;
 }
 
 .headerLink {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .headerContainer {
@@ -93,6 +99,21 @@ a:hover {
 .headerLink:hover {
     border-color: #c8c8c8;
     background-color: #e6e5e5;
+}
+
+::backdrop {
+  background-color:#0c0c0c63;
+}
+
+dialog {
+    border-width: 0px;
+    border-radius: 10px;
+}
+
+.DialogItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .flexLeft {
@@ -204,11 +225,9 @@ fieldset {
     background-color: #f2e7d0;
 }
 
-@media (prefers-color-scheme: dark) {
-    body {
-        color: #e1e1e1;
-        background-color: #1e1e1e;
-    }
+.dark-mode {
+    color: #e1e1e1;
+    background-color: #1e1e1e;
 
     a {
         color: #64b2ff;
@@ -237,6 +256,15 @@ fieldset {
 
     .icon {
         filter: invert(1);
+    }
+
+    ::backdrop {
+        background-color:#0c0c0c8f;
+    }
+
+    dialog {
+        color: #e1e1e1;
+        background-color: #1e1e1e;
     }
 
     .searchBar {

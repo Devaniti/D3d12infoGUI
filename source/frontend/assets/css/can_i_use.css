@@ -78,7 +78,7 @@ thead>tr:nth-of-type(2)>th {
 }
 
 
-@media (prefers-color-scheme: dark) {
+.dark-mode {
     .PropertyItem:hover {
         color:#a0dbff;
     }
