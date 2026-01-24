@@ -106,8 +106,9 @@ a:hover {
 }
 
 dialog {
-    border-width: 0px;
-    border-radius: 10px;
+    border-width: 3px;
+    border-radius: 16px;
+    border-color: #c8c8c8;
 }
 
 .DialogItem {
@@ -252,6 +253,10 @@ fieldset {
     .headerLink:hover {
         border-color: #4e4e4e;
         background-color: #4e4e4e;
+    }
+
+    dialog {
+        border-color: #4e4e4e;
     }
 
     .icon {
