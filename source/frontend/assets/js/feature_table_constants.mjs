@@ -16,6 +16,8 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier": "Sampler feedback",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.ExecuteIndirectTier": "Execute indirect",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ConservativeRasterizationTier": "Conservative rasterization",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.Max1DDispatchSize": "Max 1D Dispatch Size",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS22.Max1DDispatchMeshSize": "Max 1D Mesh Dispatch Size",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported": "GPU upload heaps",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS12.EnhancedBarriersSupported": "Enhanced barriers",
     "D3D12_FEATURE_DATA_TIGHT_ALIGNMENT.SupportTier": "Tight alignment",
