@@ -1,50 +1,30 @@
 "use strict"
 
-const path = require('path');
 // Get the directory of the current script
-const scriptDirectory = __dirname;
+const scriptDirectory = import.meta.dirname;
 // Change the current working directory to the script's directory
 process.chdir(scriptDirectory);
 
-const fs = require('fs')
-const https = require('https')
-const http = require('http')
-const express = require('express')
-const cors = require('cors')
-const compression = require('compression')
-const Database = require('better-sqlite3')
-const semver = require('semver')
-const upgrade = require('./upgrade.js')
-const database_common = require('./database_common.js')
-const notification_handler = require('./notification_handler.js')
+import fs from 'fs';
+import https from 'https';
+import http from 'http';
+import util from 'util';
+import express from 'express';
+import cors from 'cors';
+import zlib from 'zlib';
+import compression from 'compression';
+import Database from 'better-sqlite3';
+import semver from 'semver';
+
+// Local imports - file extensions are mandatory in ESM
+import upgrade from './upgrade.js';
+import database_common from './database_common.js';
+import notification_handler from './notification_handler.js';
 
 const databaseFolder = 'Database/'
 const databasePath = databaseFolder + 'main.db'
 
 const apiPort = process.env.D3D12INFODB_CUSTOM_PORT ? process.env.D3D12INFODB_CUSTOM_PORT : 50854;
-
-function GetCurrentTimeAsString() {
-    return "" + (new Date()).valueOf()
-}
-
-const startupTime = GetCurrentTimeAsString()
-let databaseLastDeleteTime = startupTime
-let databaseLastModificationTime = startupTime
-
-function isObjectAllowedInDB(inObj) {
-    let isAllowed = true;
-    database_common.submitRequiredProperites.forEach(p => {
-        if (inObj[p] == null) {
-            console.log(`Missing property ${p}`)
-            isAllowed = false
-        }
-    })
-    if (!isAllowed) {
-        console.log("isObjectAllowedInDB - object disallowed")
-        console.log()
-    }
-    return isAllowed
-}
 
 console.log('Initializing')
 
@@ -66,6 +46,101 @@ if (latestReportQuery) {
 }
 
 console.log("Database is ready")
+
+function GetCurrentTimeAsString() {
+    return "" + (new Date()).valueOf()
+}
+
+const startupTime = GetCurrentTimeAsString()
+let databaseLastDeleteTime = startupTime
+let databaseLastModificationTime = startupTime
+let getAllSubmissionsCache = {}
+
+const getAllSubmissionsStatement = db.prepare("SELECT * FROM Submissions")
+
+const brCompress = util.promisify(zlib.brotliCompress)
+const gzipCompress = util.promisify(zlib.gzip)
+const deflateCompress = util.promisify(zlib.deflate)
+
+async function populateGetAllSubmissionsCache() {
+    let result = {}
+    
+    let rows = getAllSubmissionsStatement.all()
+    
+    rows = rows.map(database_common.unpackDatabaseObject)
+    result[""] = JSON.stringify(rows)
+    
+    let brCompression = brCompress(result[""], {
+                    [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
+                    [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+                    [zlib.constants.BROTLI_PARAM_SIZE_HINT]: result[""].length,
+                })
+    let gzipCompression = gzipCompress(result[""], {
+                    "level": 9,
+                    "memLevel": 9
+                });
+    let deflateCompression = deflateCompress(getAllSubmissionsCache[""], {
+                    "level": 9,
+                    "memLevel": 9
+                });
+
+    result["br"] = await brCompression
+    result["gzip"] = await gzipCompression
+    result["deflate"] = await deflateCompression
+
+    getAllSubmissionsCache = result
+}
+
+await populateGetAllSubmissionsCache()
+
+console.log("Cache is ready")
+
+let isCacheRequested = false
+let cacheUpdateInstance = null
+
+function requestCacheUpdate() {
+    if (isCacheRequested)
+    {
+        return;
+    }
+
+    isCacheRequested = true
+
+    setTimeout(async () => {
+        if (cacheUpdateInstance)
+        {
+            await cacheUpdateInstance
+        }
+
+        cacheUpdateInstance = populateGetAllSubmissionsCache()
+
+        isCacheRequested = false
+    }, 5000);
+}
+
+function markDatabaseModified(isDeleted = false) {
+    const currentTime = GetCurrentTimeAsString()
+    if (isDeleted) {
+        databaseLastDeleteTime = currentTime
+    }
+    databaseLastModificationTime = currentTime
+    requestCacheUpdate()
+}
+
+function isObjectAllowedInDB(inObj) {
+    let isAllowed = true;
+    database_common.submitRequiredProperites.forEach(p => {
+        if (inObj[p] == null) {
+            console.log(`Missing property ${p}`)
+            isAllowed = false
+        }
+    })
+    if (!isAllowed) {
+        console.log("isObjectAllowedInDB - object disallowed")
+        console.log()
+    }
+    return isAllowed
+}
 
 api.use(express.json())
 api.use(express.urlencoded({ extended: true }))
@@ -90,7 +165,7 @@ api.get('/get_submission', (req, res) => {
         res.send('ID is not a number')
         return
     }
-    
+
     let etag = req.query.ID > latestReportID ? "0" : databaseLastDeleteTime
     if (req.headers['if-none-match'] == etag) {
         res.status(304)
@@ -140,7 +215,7 @@ api.get('/get_two_submissions', (req, res) => {
         res.send('Expected exactly 2 IDs')
         return
     }
-    
+
     let etag = req.query.ID > latestReportID ? "0" : databaseLastDeleteTime
     if (req.headers['if-none-match'] == etag) {
         res.status(304)
@@ -171,30 +246,31 @@ api.get('/get_two_submissions', (req, res) => {
     }
 })
 
-const getAllSubmissionsStatement = db.prepare("SELECT * FROM Submissions")
 api.get('/get_all_submissions', (req, res) => {
-    let etag = databaseLastModificationTime
+    // Check etag to potentially skip returning real data
+    const etag = databaseLastModificationTime
     if (req.headers['if-none-match'] == etag) {
         res.status(304)
         res.send()
         return
     }
+    
+    res.header("Cache-Control", "public, max-age=300")
+    res.header("ETag", etag)
 
-    try {
-        let rows = getAllSubmissionsStatement.all()
-        rows = rows.map(database_common.unpackDatabaseObject)
-        res.header("Cache-Control", "public, max-age=300")
-        res.header("ETag", databaseLastModificationTime)
-        res.send(JSON.stringify(rows))
+    const acceptEncoding = req.headers["accept-encoding"] || "";
+    let encoding = "";
+    if (acceptEncoding.includes("br")) {
+        encoding = "br";
+    } else if (acceptEncoding.includes("gzip")) {
+        encoding = "gzip";
+    } else if (acceptEncoding.includes("deflate")) {
+        encoding = "deflate";
     }
-    catch (e) {
-        console.log('DB Error')
-        console.log(e)
 
-        res.status(500)
-        res.send('DB Error')
-        return
-    }
+    res.setHeader("Content-Encoding", encoding)
+    res.send(getAllSubmissionsCache[encoding])
+    return
 })
 
 const isSubmittedStatement = db.prepare(database_common.convertToSqlSelectIDQuery("Submissions", database_common.submitUniqueProperites, "LIMIT 1"))
@@ -267,7 +343,7 @@ api.post('/post_submission', (req, res) => {
         let info = postSubmissionStatement.run(parameterList)
 
         res.send("" + info.lastInsertRowid)
-        databaseLastModificationTime = GetCurrentTimeAsString()
+        markDatabaseModified()
         latestReportID = Math.max(info.lastInsertRowid, latestReportID)
 
         console.log(`Inserted submission ID ${info.lastInsertRowid} - ${newSubmission["DXGI_ADAPTER_DESC3.Description"]}`)
@@ -369,8 +445,7 @@ if (process.env.SubmissionRemovalPassword) {
                 return
             }
             res.send('OK')
-            databaseLastDeleteTime = GetCurrentTimeAsString()
-            databaseLastModificationTime = databaseLastDeleteTime
+            markDatabaseModified(true)
             console.log(`Removed submission ID ${ID}`)
         }
         catch (e) {
