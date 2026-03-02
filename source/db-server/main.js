@@ -178,7 +178,7 @@ api.get('/get_submission', (req, res) => {
         rows = rows.map(database_common.unpackDatabaseObject)
 
         let cacheLifetime = 300
-        if (rows.length != 0) {
+        if (rows.length == 1) {
             cacheLifetime = 86400
         }
 
@@ -216,7 +216,9 @@ api.get('/get_two_submissions', (req, res) => {
         return
     }
 
-    let etag = req.query.ID > latestReportID ? "0" : databaseLastDeleteTime
+    let maxID = Math.max(ids[0], ids[1])
+
+    let etag = maxID > latestReportID ? "0" : databaseLastDeleteTime
     if (req.headers['if-none-match'] == etag) {
         res.status(304)
         res.send()
@@ -228,7 +230,7 @@ api.get('/get_two_submissions', (req, res) => {
         rows = rows.map(database_common.unpackDatabaseObject)
 
         let cacheLifetime = 300
-        if (rows.length != 0) {
+        if (rows.length == 2) {
             cacheLifetime = 86400
         }
 
