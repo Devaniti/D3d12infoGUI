@@ -1900,7 +1900,9 @@ const PropertiesOrder =
         "AMD GDT_DeviceInfo.WaveSize",
         "AMD GDT_DeviceInfo.NumSHPerSE",
         "AMD GDT_DeviceInfo.NumCUPerSH",
+        "AMD GDT_DeviceInfo.NumCUs",
         "AMD GDT_DeviceInfo.NumSIMDPerCU",
+        "AMD GDT_DeviceInfo.NumVGPRPerSIMD",
         "VkPhysicalDeviceProperties.apiVersion",
         "VkPhysicalDeviceProperties.driverVersion",
         "VkPhysicalDeviceProperties.vendorID",
@@ -2436,7 +2438,9 @@ const VendorSpecificProperties = [
     "AMD GDT_DeviceInfo.WaveSize",
     "AMD GDT_DeviceInfo.NumSHPerSE",
     "AMD GDT_DeviceInfo.NumCUPerSH",
+    "AMD GDT_DeviceInfo.NumCUs",
     "AMD GDT_DeviceInfo.NumSIMDPerCU",
+    "AMD GDT_DeviceInfo.NumVGPRPerSIMD",
     "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics16",
     "AGSDX12ReturnedParams::ExtensionsSupported.intrinsics17",
     "AGSDX12ReturnedParams::ExtensionsSupported.userMarkers",
@@ -2656,6 +2660,7 @@ export const ArchReleaseDates = {
     "Xe-HPC": "2023",
     "Xe-LPG": "2023",
     "Xe2-HPG": "2024",
+    "Xe3-LPG": "2026",
 
     // Qualcomm
     "8cx 3": "2021",
