@@ -105,27 +105,11 @@ function ClassifyReport(reportContainer) {
             0x7D00: "Xe-LPG", // Meteor Lake, Arrow Lake
             0x6400: "Xe2-HPG", // Lunar Lake
             0xE200: "Xe2-HPG", // Battlemage
+            0xB000: "Xe3-LPG", // Panther Lake
         };
 
         let idhi = report.DXGI_ADAPTER_DESC3.DeviceId & 0xFF00;
         arch = IntelDeviceIdHighBits[idhi];
-
-        // if the device ID matching didn't work, try GPUDetect
-        if (!arch && report["Intel GPUDetect::GPUData"]) {
-            arch = report["Intel GPUDetect::GPUData"].GraphicsGeneration;
-            if (arch == "Unknown" &&
-                report["Intel GPUDetect::GPUData"].GPUArchitecture == "Unknown (37)" &&
-                report.DXGI_ADAPTER_DESC3.Description == "Intel(R) Iris(R) Xe Graphics") // integrated Xe-LP, Alder/Rocket Lake
-                arch = "Xe";
-            else if (arch == "Xe High Performance Graphics")
-                arch = "Gen12.7 / Xe-HPG";
-            else if (arch == "Xe High Performance Compute") // data center GPU, probably doesn't even have D3D drivers?
-                arch = "Xe-HPC";
-            else if (arch == "Xe Low Power Graphics") // Meteor/Arrow Lake, reported name unconfirmed, not even in GPUDetect as of 2024-11-11
-                arch = "Gen12.7 / Xe-LPG";
-            else if (arch == "Xe2 High Performance Graphics") // Lunar Lake, Battlemage, reported name unconfirmed, not even in GPUDetect as of 2024-11-11
-                arch = "Gen13 / Xe2-HPG";
-        }
 
         if (arch) ArchsPerVendor.Intel.add(arch);
     }
@@ -238,6 +222,10 @@ function ClassifyReport(reportContainer) {
             case "NVIDIA NVS 4200M":
             case "NVIDIA Quadro 5010M":
                 arch = "Fermi2";
+                break;
+            // Can be either Kepler1 or Kepler2, but we don't differentiate
+            case "NVIDIA GeForce GT 740M":
+                arch = "Kepler";
                 break;
         }
         if (arch) {
