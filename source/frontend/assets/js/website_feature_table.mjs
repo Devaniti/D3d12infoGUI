@@ -339,6 +339,21 @@ function AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment) 
         AddCellReal(version, featureRow);
         return true;
     }
+    else if (featureName == "Table_Advanced_Shader_Delivery_Supported") {
+        let newestDriverReport = ArchClassifier.NewestDriverReportPerArch.get(archName);
+        if (Properties.CompareD3d12infoVersions(newestDriverReport.Header.Version, "3.14.0") < 0) {
+            AddCellReal("❓", featureRow);
+            return true;
+        }
+        if (newestDriverReport.D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT) {
+            AddCellReal(Constants.TrueFalseMappingShort["1"], featureRow);
+        }
+        else {
+            AddCellReal(Constants.TrueFalseMappingShort["0"], featureRow);
+        }
+            
+        return true;
+    }
     return false;
 }
 
@@ -462,6 +477,8 @@ function AddRow(tbody, featureName, featureShortName, archTooltipAlignments) {
         AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true, tooltipAlignment: 0.0 });
     else if (featureName == "TableMarketShare")
         AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 Systems.\nThis is an underestimate and may not be very accurate in general.", { alignOutsideVertical: true, tooltipAlignment: 0.0 });
+    else if (featureName == "Table_Advanced_Shader_Delivery_Supported")
+        AddTooltipForTable(featureHeader, "You probably don't want to abbreviate this.", { alignOutsideVertical: true, tooltipAlignment: 0.0 });
 
     featureRow.appendChild(featureHeader);
 
