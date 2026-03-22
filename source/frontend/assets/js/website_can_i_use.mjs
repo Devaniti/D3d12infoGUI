@@ -59,6 +59,7 @@ function GetMarketShareText(arch) {
 
 function NeedShowTable() {
     switch (SelectedFeature) {
+        case "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported":
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported":
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid":
         case "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion":
@@ -406,6 +407,10 @@ function CreateNotes(dataContainer) {
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported":
             AddNote("GPU Upload Heap support depends on BIOS settings and Windows version. Same GPU may report different values depending on the system.", noteContainer)
             AddNote("Table shows this capability assuming all users have BIOS setting supported and enabled and that Windows version is new enough.", noteContainer)
+            break;
+        case "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported":
+            AddNote("Yes you can.", noteContainer);
+            AddNote("Starting with Agility SDK 1.615.0, it is always supported, independently of GPU or driver.", noteContainer);
             break;
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported":
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid":

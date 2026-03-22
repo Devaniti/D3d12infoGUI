@@ -54,7 +54,6 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS11.AtomicInt64OnDescriptorHeapResourceSupported": "64-bit int atomics on descriptor heap resources",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS9.DerivativesInMeshAndAmplificationShadersSupported": "Derivatives in mesh and amplification shaders",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS6.BackgroundProcessingSupported": "Background processing",
-    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": "Bytecode bypass hash",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSize": "Max sampler heap size",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSizeWithStaticSamplers": "Max sampler heap size with static samplers",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxViewDescriptorHeapSize": "Max view descriptor heap size",
@@ -114,6 +113,7 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.ComputeOnlyCustomHeapSupported": "Compute-only custom heap",
 
     // Things that literally can not be unsupported given new enough Agility SDK/OS
+    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": "Bytecode bypass hash",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported": "RASTERIZER_DESC2 supported",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid" : "Render passes valid",
     "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion": "Root signature version",
