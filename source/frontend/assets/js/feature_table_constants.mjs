@@ -11,6 +11,7 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_SHADER_MODEL.HighestShaderModel": "Shader model",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier": "Raytracing",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.ShaderExecutionReorderingActuallyReorders": "Shader Execution Reordering Actually Reorders",
+    "Table_Advanced_Shader_Delivery_Supported": "Advanced Shader Delivery Supported",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier": "Mesh shaders",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS21.WorkGraphsTier": "Work graphs",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier": "Sampler feedback",

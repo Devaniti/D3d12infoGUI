@@ -371,3 +371,19 @@ export function GetTranslationLayerName(report) {
     }
     return "None"
 }
+
+export function CompareD3d12infoVersions(a, b) {
+    let aParts = a.split(".").map(e => parseInt(e))
+    let bParts = b.split(".").map(e => parseInt(e))
+
+    if (aParts.length != 3 || bParts.length != 3) {
+        return 0;
+    }
+
+    for (let i = 0; i < 3; i++) {
+        if (aParts[i] != bParts[i]) {
+            return aParts[i] - bParts[i]
+        }
+    }
+    return 0
+}
