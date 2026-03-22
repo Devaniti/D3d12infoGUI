@@ -171,11 +171,22 @@ function AddFilterPanel(container) {
     fieldSetContainer.appendChild(archFilterFieldset);
 }
 
-function UpdateTableFilter() {
-    const headerContainer = document.getElementById("FeatureTableFilter");
-    HTML.ClearElement(headerContainer);
+function AddNote(text, noteContainer) {
+    const noteDiv = document.createElement("div");
+    noteDiv.textContent = text;
+    noteDiv.classList.add("FeatureTableNotes");
+    noteContainer.appendChild(noteDiv);
+}
 
-    AddFilterPanel(headerContainer);
+function UpdateTableFilter() {
+    const tableFilter = document.getElementById("FeatureTableFilter");
+    HTML.ClearElement(tableFilter);
+
+    AddFilterPanel(tableFilter);
+    
+    AddNote("This table shows features as they are available in latest Agility SDK. If you use older Agility SDKs, some features may not be available.", tableFilter);
+    AddNote("This table is built using reports submitted by users. Some data may be outdated or incomplete, if latest report for respective architectures is not generated using latest driver or D3d12infoGUI.", tableFilter);
+    AddNote("Market share is derived from Steam Hardware Survey's DirectX 12 Systems chart. This data is an underestimate and may not be very accurate in general.", tableFilter);
 }
 
 function UpdateTableHeader(table, archTooltipAlignments) {
@@ -419,6 +430,10 @@ function AddCell(featureRow, archName, featureName, tooltipAlignment) {
 }
 
 function AddSpecialRow(featureRow, featureName) {
+    if (featureName == "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported") {
+        AddCellReal("Always supported *", featureRow, "Starting with Agility SDK 1.615.0, it is always supported, independently of GPU or driver.", 0.5, ArchToOutputCount());
+        return true;
+    }
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported" || featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid") {
         // I don't know why, but both D3D12_FEATURE_DATA_D3D12_OPTIONS18 and D3D12_FEATURE_DATA_D3D12_OPTIONS19 were added in the same SDK version
         AddCellReal("Always supported *", featureRow, "Starting with Agility SDK 1.610.0, it is always supported, independently of GPU or driver.", 0.5, ArchToOutputCount());
