@@ -89,6 +89,7 @@ async function populateGetAllSubmissionsCache() {
     result["deflate"] = await deflateCompression
 
     getAllSubmissionsCache = result
+    databaseLastModificationTime = GetCurrentTimeAsString()
 }
 
 await populateGetAllSubmissionsCache()
@@ -119,11 +120,9 @@ function requestCacheUpdate() {
 }
 
 function markDatabaseModified(isDeleted = false) {
-    const currentTime = GetCurrentTimeAsString()
     if (isDeleted) {
-        databaseLastDeleteTime = currentTime
+        databaseLastDeleteTime = GetCurrentTimeAsString()
     }
-    databaseLastModificationTime = currentTime
     requestCacheUpdate()
 }
 
