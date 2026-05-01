@@ -2645,6 +2645,8 @@ const PreviewDriverVersions = [
     "9007199255733042", // 32.0.15.9010 / GeForce 590.10 SM 6.9 Preview Driver
     "9007199255733058",  // 32.0.15.9026 / GeForce 590.26 SM 6.9 Preview Driver
     "9007199255733534", // 	32.0.15.9502 / GeForce 595.02 Windows Insider Preview driver from Windows Update
+    "8444250679088013", // 	30.0.21023.5005 / AMD Software: Adrenalin Edition 22.6.1 for DirectX®12 Agility SDK
+    "8444250677655234", // 	30.0.21001.14018 / AMD Software: Adrenalin Edition 23.10.01.14 for DirectX®12 Agility SDK
 ]
 
 export const ArchReleaseDates = {
