@@ -240,6 +240,9 @@ function ClassifyReport(reportContainer) {
         if (/Qualcomm\(R\) Adreno\(TM\) X1.*/.test(report.DXGI_ADAPTER_DESC3.Description)) {
             arch = "X1";
         }
+        if (/Qualcomm\(R\) Adreno\(TM\) X2.*/.test(report.DXGI_ADAPTER_DESC3.Description)) {
+            arch = "X2";
+        }
         else if (report.DXGI_ADAPTER_DESC3.Description.includes("8cx")) {
             arch = report.DXGI_ADAPTER_DESC3.Description.slice(report.DXGI_ADAPTER_DESC3.Description.search(/8cx.*/));
             arch = arch.replace("Gen ", "");

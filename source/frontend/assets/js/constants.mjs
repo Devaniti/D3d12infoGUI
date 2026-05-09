@@ -2694,6 +2694,7 @@ export const ArchReleaseDates = {
     // Qualcomm
     "8cx 3": "2021",
     "X1": "2024",
+    "X2": "2026",
 }
 
 function MakeMap(order) {
