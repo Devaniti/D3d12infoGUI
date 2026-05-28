@@ -339,6 +339,17 @@ export const EnumMappings =
         "0": "D3D12_LINEAR_ALGEBRA_TIER_NOT_SUPPORTED",
         "16": "D3D12_LINEAR_ALGEBRA_TIER_1_0"
     },
+    "D3D12_FEATURE_DATA_PARTIAL_GRAPHICS_PROGRAMS.PartialGraphicsProgramsTier":
+    {
+        "0":"D3D12_PARTIAL_GRAPHICS_PROGRAMS_TIER_NOT_SUPPORTED",
+        "10":"D3D12_PARTIAL_GRAPHICS_PROGRAMS_TIER_1_0"
+    },
+    "D3D12_FEATURE_DATA_DUMP_FILE.DumpFileDriverTier":
+    {
+        "0":"D3D12_DUMP_FILE_DRIVER_TIER_NOT_SUPPORTED",
+        "1":"D3D12_DUMP_FILE_DRIVER_TIER_1",
+        "2":"D3D12_DUMP_FILE_DRIVER_TIER_2"
+    },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
     {
         "0": "D3D12_RENDER_PASS_TIER_0",
@@ -1042,7 +1053,14 @@ export const EnumMappings =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.ShaderExecutionReorderingActuallyReorders": TrueFalseMapping,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.CreateByteOffsetViewsSupported": TrueFalseMapping,
-    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TrueFalseMapping
+    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.UAVOfDepthStencilSupported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.D32S8Interleaved": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_DUMP_FILE.Supported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_USER_DEFINED_ANNOTATION.Supported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_DEBUG_BREAK.HaltSupported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_DEBUG_BREAK.LiveDebuggingSupported": TrueFalseMapping,
+    "D3D12_FEATURE_DATA_DEBUG_BREAK.CpuSupported": TrueFalseMapping
 }
 
 export const EnumMappingsShort =
@@ -1179,6 +1197,11 @@ export const EnumMappingsShort =
     {
         "0": "❌",
         "16": "Tier 1.0"
+    },
+    "D3D12_FEATURE_DATA_PARTIAL_GRAPHICS_PROGRAMS.PartialGraphicsProgramsTier":
+    {
+        "0":"❌",
+        "10":"✅"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS5.RenderPassesTier":
     {
@@ -1529,7 +1552,14 @@ export const EnumMappingsShort =
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.TightAlignmentSupported": TrueFalseMappingShort,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.ShaderExecutionReorderingActuallyReorders": TrueFalseMappingShort,
     "D3D12_FEATURE_DATA_D3D12_OPTIONS22.CreateByteOffsetViewsSupported": TrueFalseMappingShort,
-    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TrueFalseMappingShort
+    "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.UAVOfDepthStencilSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.D32S8Interleaved": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_DUMP_FILE.Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_USER_DEFINED_ANNOTATION.Supported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_DEBUG_BREAK.HaltSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_DEBUG_BREAK.LiveDebuggingSupported": TrueFalseMappingShort,
+    "D3D12_FEATURE_DATA_DEBUG_BREAK.CpuSupported": TrueFalseMappingShort
 }
 
 export const RenameList = {
@@ -1608,6 +1638,17 @@ export const BitFlagsMappings =
         "32": "D3D12_COMMAND_LIST_SUPPORT_FLAG_VIDEO_PROCESS",
         "64": "D3D12_COMMAND_LIST_SUPPORT_FLAG_VIDEO_ENCODE"
     },
+    "D3D12_FEATURE_DATA_DUMP_FILE.DumpFileDriverOptionsMask":
+    {
+        "0":"N/A",
+        "1":"D3D12_DUMP_FILE_DRIVER_OPTION_NO_OVERHEAD",
+        "2":"D3D12_DUMP_FILE_DRIVER_OPTION_MEDIUM_OVERHEAD",
+        "4":"D3D12_DUMP_FILE_DRIVER_OPTION_HIGH_OVERHEAD",
+        "8":"D3D12_DUMP_FILE_DRIVER_OPTION_NO_DATA",
+        "16":"D3D12_DUMP_FILE_DRIVER_OPTION_SHADER_REGISTERS",
+        "32":"D3D12_DUMP_FILE_DRIVER_OPTION_RESOURCES",
+        "64":"D3D12_DUMP_FILE_DRIVER_OPTION_EVENT_MARKERS"
+    },
     "DirectSR.Flags":
     {
         "0": "DSR_SUPERRES_VARIANT_FLAG_NONE",
@@ -1669,6 +1710,17 @@ export const BitFlagsMappingsShort =
         "16": "Video Decode",
         "32": "Video Process",
         "64": "Video Encode"
+    },
+    "D3D12_FEATURE_DATA_DUMP_FILE.DumpFileDriverOptionsMask":
+    {
+        "0":"❌",
+        "1":"NO_OVERHEAD",
+        "2":"MEDIUM_OVERHEAD",
+        "4":"HIGH_OVERHEAD",
+        "8":"NO_DATA",
+        "16":"SHADER_REGISTERS",
+        "32":"RESOURCES",
+        "64":"EVENT_MARKERS"
     },
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.SupportedSampleCountsWithNoOutputs":
     {
@@ -2035,6 +2087,16 @@ const PropertiesOrder =
         "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.MaxGroupSharedMemoryPerGroupCS",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.MaxGroupSharedMemoryPerGroupAS",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.MaxGroupSharedMemoryPerGroupMS",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.UAVOfDepthStencilSupported",
+        "D3D12_FEATURE_DATA_D3D12_OPTIONS_PREVIEW.D32S8Interleaved",
+        "D3D12_FEATURE_DATA_PARTIAL_GRAPHICS_PROGRAMS.PartialGraphicsProgramsTier",
+        "D3D12_FEATURE_DATA_DUMP_FILE.Supported",
+        "D3D12_FEATURE_DATA_DUMP_FILE.DumpFileDriverTier",
+        "D3D12_FEATURE_DATA_DUMP_FILE.DumpFileDriverOptionsMask",
+        "D3D12_FEATURE_DATA_USER_DEFINED_ANNOTATION.Supported",
+        "D3D12_FEATURE_DATA_DEBUG_BREAK.HaltSupported",
+        "D3D12_FEATURE_DATA_DEBUG_BREAK.LiveDebuggingSupported",
+        "D3D12_FEATURE_DATA_DEBUG_BREAK.CpuSupported",
         "D3D12_FEATURE_DATA_PREDICATION.Supported",
         "D3D12_FEATURE_DATA_HARDWARE_COPY.Supported",
         "D3D12_FEATURE_DATA_ASYNC_COMMANDS.Supported",
