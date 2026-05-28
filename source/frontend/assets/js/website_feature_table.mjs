@@ -43,7 +43,7 @@ function AddTooltipForTable(parent, text, options_param) {
 
     const tooltipTextElement = document.createElement("span");
     tooltipTextElement.className = "tooltiptext white_space_pre tooltiptext";
-    tooltipTextElement.style = `left: ${options.tooltipAlignment*100}%;transform: translateX(-${options.tooltipAlignment*100}%);`;
+    tooltipTextElement.style = `left: ${options.tooltipAlignment * 100}%;transform: translateX(-${options.tooltipAlignment * 100}%);`;
     tooltipTextElement.textContent = text;
     parent.appendChild(tooltipTextElement);
 
@@ -183,7 +183,7 @@ function UpdateTableFilter() {
     HTML.ClearElement(tableFilter);
 
     AddFilterPanel(tableFilter);
-    
+
     AddNote("This table shows features as they are available in latest Agility SDK. If you use older Agility SDKs, some features may not be available.", tableFilter);
     AddNote("This table is built using reports submitted by users. Some data may be outdated or incomplete, if latest report for respective architectures is not generated using latest driver or D3d12infoGUI.", tableFilter);
     AddNote("Market share is derived from Steam Hardware Survey's DirectX 12 Systems chart. This data is an underestimate and may not be very accurate in general.", tableFilter);
@@ -258,7 +258,7 @@ function AddCellReal(text, featureRow, tooltipText, tooltipAlignment, colspan) {
     }
     featureRow.appendChild(td);
     if (tooltipText)
-        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: tooltipAlignment});
+        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: tooltipAlignment });
 }
 
 function AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment) {
@@ -356,13 +356,20 @@ function AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment) 
             AddCellReal("❓", featureRow);
             return true;
         }
-        if (newestDriverReport.D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT) {
-            AddCellReal(Constants.TrueFalseMappingShort["1"], featureRow);
+        if (newestDriverReport.D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT && newestDriverReport.D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.szAdapterFamily) {
+            if (newestDriverReport.D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.szAdapterFamily.includes("unspecified adapter family from")) {
+                AddCellReal(Constants.TrueFalseMappingShort["0"] + "❗", featureRow,
+                    "Driver reports broken value for D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.szAdapterFamily\nDriver does not support Advanced Shader Delivery, but reports capabilities as if it does.",
+                    tooltipAlignment);
+            }
+            else {
+                AddCellReal(Constants.TrueFalseMappingShort["1"], featureRow);
+            }
         }
         else {
             AddCellReal(Constants.TrueFalseMappingShort["0"], featureRow);
         }
-            
+
         return true;
     }
     return false;
@@ -370,8 +377,7 @@ function AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment) 
 
 function OverrideCell(tableRow, archName, featureName, featureValue, newestDriverReport, newestReportContainer, tooltipAlignment) {
     if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS16.GPUUploadHeapSupported") {
-        if (archName == "WARP")
-        {
+        if (archName == "WARP") {
             // WARP just supports it without any special conditions
             AddCellReal(Constants.TrueFalseMappingShort["1"], tableRow);
             return true;
@@ -522,8 +528,7 @@ function UpdateTableBody(table, archTooltipAlignments) {
     table.appendChild(tbody);
 }
 
-function UpdateTooltipAlignmentMap()
-{
+function UpdateTooltipAlignmentMap() {
     let result = new Map();
     let colCount = 1;
     for (let [vendor, archs] of Object.entries(ArchClassifier.ArchsPerVendor)) {
@@ -564,8 +569,7 @@ function UpdateTable() {
 
 function OverrideSearch() {
     window.addEventListener("keydown", function (e) {
-        if (SearchBar == null || document.activeElement == SearchBar)
-        {
+        if (SearchBar == null || document.activeElement == SearchBar) {
             return;
         }
 
@@ -573,8 +577,7 @@ function OverrideSearch() {
         searchDetected = searchDetected || (e.key === "F3");
         searchDetected = searchDetected || (e.key.toUpperCase() === "F" && e.ctrlKey);
 
-        if (searchDetected)
-        {
+        if (searchDetected) {
             e.preventDefault();
             SearchBar.focus();
         }
