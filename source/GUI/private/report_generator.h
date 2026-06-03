@@ -7,6 +7,7 @@ namespace D3d12infoGUI
     struct OpenOptions
     {
         bool AutoSubmit = false;
+        bool DisableSubmit = false;
     };
 
     class ReportGenerator

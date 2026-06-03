@@ -52,14 +52,21 @@ int RunGUI(HINSTANCE hInstance)
     std::wstring d3d12infoPreviewCmdLine =
         std::format(L"\"{}\" --OutputFile=\"{}\" --JSON --MinimizeJson --Formats --EnableExperimental=ON",
             d3d12infoPreviewPath.wstring(), d3d12infoPreviewReport.wstring());
+
+    std::filesystem::path warpDLLDestPath = rootPath / "d3d10warp.dll";
+
     if(g_CustomWarpPath.empty())
     {
         d3d12infoCmdLine += L" --AllAdapters";
         d3d12infoPreviewCmdLine += L" --AllAdapters";
+        std::error_code errorCode;
+        std::filesystem::remove(warpDLLDestPath, errorCode);
+        // Ignoring error code, cause file may not exist
     }
     else
     {
-        std::filesystem::copy_file(g_CustomWarpPath, rootPath / "d3d10warp.dll", std::filesystem::copy_options::overwrite_existing);
+        std::filesystem::copy_file(
+            g_CustomWarpPath, warpDLLDestPath, std::filesystem::copy_options::overwrite_existing);
         d3d12infoCmdLine += L" --WARP";
         d3d12infoPreviewCmdLine += L" --WARP";
     }
@@ -92,8 +99,11 @@ int RunGUI(HINSTANCE hInstance)
 
     window.ReportProgress(L"Generating report");
 
+    const char* disableSubmissionEnv = std::getenv("D3D12INFOGUI_DISABLE_SUBMISSIONS");
+
     OpenOptions options{};
     options.AutoSubmit = g_AutoSubmit;
+    options.DisableSubmit = disableSubmissionEnv != nullptr && disableSubmissionEnv == std::string("1");
 
     ReportGenerator::GenerateHTML(rootPath, validReports, options);
     if(window.IsExitRequested())

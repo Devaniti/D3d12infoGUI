@@ -24,7 +24,8 @@ namespace D3d12infoGUI
             throw std::runtime_error("Failed to open output file");
         }
 
-        dataFile << std::format("const openOptions = {{autoSubmit: {}}}\n", options.AutoSubmit);
+        dataFile << std::format(
+            "const openOptions = {{autoSubmit: {}, disableSubmit: {}}}\n", options.AutoSubmit, options.DisableSubmit);
 
         dataFile << "const reports = [";
         bool isFirst = true;
