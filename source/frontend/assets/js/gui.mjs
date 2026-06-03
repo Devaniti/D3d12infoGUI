@@ -90,7 +90,7 @@ function AddSubmitAllButton(tableBody, tableWidth) {
         SubmitAllReports()
     };
 
-    const buttonText = document.createTextNode("Submit all reports to online database")
+    const buttonText = document.createTextNode(openOptions.disableSubmit ? "Submissions disabled" : "Submit all reports to online database")
     submitButton.appendChild(buttonText)
 
     let tooltipIcon = document.createElement("img")
@@ -102,7 +102,7 @@ function AddSubmitAllButton(tableBody, tableWidth) {
     const tooltipText = document.createElement("div")
     tooltipText.classList.add("gui-tooltiptext")
     tooltipText.style = "width: 25vw;left: 50%;transform: translateX(-50%)"
-    tooltipText.textContent = "Allows other users to see capabilities of your GPU and sharing of your reports via link to the online database. Those reports don't contain any personal information, you can see full contents of those reports on this page before submitting."
+    tooltipText.textContent = openOptions.disableSubmit ? 'Submissions are force disabled via "D3D12INFOGUI_DISABLE_SUBMISSIONS" environment variable\nIf you want to submit re-run D3d12infoGUI with that environment varible unset' : "Allows other users to see capabilities of your GPU and sharing of your reports via link to the online database. Those reports don't contain any personal information, you can see full contents of those reports on this page before submitting."
     submitButton.appendChild(tooltipText)
 
     cell.appendChild(submitButton)
@@ -179,6 +179,25 @@ function UpdateList() {
                             {
                                 let cellText = document.createTextNode("Failed to submit")
                                 cell.appendChild(cellText)
+                                break;
+                            }
+                        case -3:
+                            {
+                                let cellDiv = document.createElement("div")
+                                cellDiv.classList.add("gui-tooltip")
+                                let cellText = document.createTextNode("Submissions disabled")
+                                cellDiv.appendChild(cellText)
+                                let tooltipIcon = document.createElement("img")
+                                tooltipIcon.classList.add("tooltipicon")
+                                tooltipIcon.style = "filter: brightness(1.5);"
+                                tooltipIcon.src = "info.svg"
+                                cellDiv.appendChild(tooltipIcon)
+                                const tooltipText = document.createElement("div")
+                                tooltipText.classList.add("gui-tooltiptext")
+                                tooltipText.style = "width: 20vw;left: 100%;transform: translateX(-100%)"
+                                tooltipText.textContent = 'Submissions are force disabled via "D3D12INFOGUI_DISABLE_SUBMISSIONS" environment variable\nIf you want to submit re-run D3d12infoGUI with that environment varible unset'
+                                cellDiv.appendChild(tooltipText)
+                                cell.appendChild(cellDiv)
                                 break;
                             }
                         default:
@@ -280,6 +299,11 @@ function QueryReportIDs() {
     IterateAdapters(() => {++adapterCount});
     let responseCount = 0;
     IterateAdapters((retailIndex, index, adapter) => {
+        if (openOptions.disableSubmit)
+        {
+            SubmissionIDs[retailIndex][index] = -3; // Mark submissions disabled
+            return;
+        }
         SubmissionIDs[retailIndex][index] = null;
         Server.IsSubmitted(Headers[retailIndex], adapter, (ID) => {
             SubmissionIDs[retailIndex][index] = ID;

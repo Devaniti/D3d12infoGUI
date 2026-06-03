@@ -1,4 +1,4 @@
-const openOptions = { autoSubmit: false }
+const openOptions = { autoSubmit: false, disableSubmit: true }
 const reports = [
   {
     "Header": {
