@@ -2756,7 +2756,7 @@ export const ArchReleaseDates = {
     "X2": "2026",
 
     // Moore Threads
-    "S80": "2026",
+    "S80": "2022",
 }
 
 function MakeMap(order) {
