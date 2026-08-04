@@ -208,7 +208,7 @@ function UpdateTableHeader(table, archTooltipAlignments) {
 
         let thVendor = document.createElement("th");
         thVendor.append(vendor);
-        thVendor.className = vendor;
+        thVendor.className = HTML.SanitizeCSSClassName(vendor);
         thVendor.scope = "colgroup";
         thVendor.colSpan = VendorArchToOutputCount(vendor);
         headerRowVendor.appendChild(thVendor);
@@ -223,7 +223,7 @@ function UpdateTableHeader(table, archTooltipAlignments) {
 
             let thArch = document.createElement("th");
             thArch.append(a);
-            thArch.className = vendor;
+            thArch.className = HTML.SanitizeCSSClassName(vendor);
             thArch.scope = "col";
             headerRowArch.appendChild(thArch);
 
@@ -294,7 +294,7 @@ function AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment) 
             marketShare = "~0%"
         }
         else {
-            marketShare = Math.round(marketShare * 10000) / 100 + "%"
+            marketShare = (marketShare * 100).toFixed(2) + "%"
         }
         AddCellReal(marketShare, featureRow, tooltipText, tooltipAlignment);
         return true;

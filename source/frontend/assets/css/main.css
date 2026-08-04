@@ -226,6 +226,10 @@ fieldset {
     background-color: #f2e7d0;
 }
 
+.Moore_Threads {
+    background-color: #ffd1bb;
+}
+
 .dark-mode {
     color: #e1e1e1;
     background-color: #1e1e1e;
@@ -312,6 +316,10 @@ fieldset {
 
     .Qualcomm {
         background-color: #231e16;
+    }
+
+    .Moore_Threads {
+        background-color: #321a07;
     }
 
 }

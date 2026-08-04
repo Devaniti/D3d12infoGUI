@@ -1580,11 +1580,6 @@ export const ListHeaderSpecial = [
     "Action"
 ]
 
-export const FilterMultichoiceFields = [
-    "DXGI_ADAPTER_DESC3.VendorId",
-    "Header.Using preview Agility SDK"
-]
-
 export const BitFlagsMappings =
 {
     "DXGI_ADAPTER_DESC1.Flags":
@@ -1749,6 +1744,7 @@ export const VendorIDs =
     "0x10de": "NVIDIA",
     "0x1414": "Microsoft",
     "0x1ab8": "Parallels",
+    "0x1ed5": "Moore Threads",
     "0x5143": "Qualcomm",
     "0x8086": "Intel",
     // ACPI IDs
@@ -1795,6 +1791,7 @@ export const SubsystemVendorIDs =
     "0x1a58": "Razer",
     "0x1ab8": "Parallels",
     "0x1da2": "Sapphire",
+    "0x1ed5": "Moore Threads",
     "0x5143": "Qualcomm",
     "0x8086": "Intel",
 }
@@ -2757,6 +2754,9 @@ export const ArchReleaseDates = {
     "8cx 3": "2021",
     "X1": "2024",
     "X2": "2026",
+
+    // Moore Threads
+    "S80": "2026",
 }
 
 function MakeMap(order) {

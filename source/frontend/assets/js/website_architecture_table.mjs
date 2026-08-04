@@ -10,7 +10,7 @@ function AddHeaderCell(container, className, text)
     cell.append(text);
     if (className) 
     {
-        cell.className = className;
+        cell.className = HTML.SanitizeCSSClassName(className);
     }
     container.appendChild(cell);
 }
@@ -21,7 +21,7 @@ function AddBodyCell(container, className, text)
     cell.append(text);
     if (className) 
     {
-        cell.className = className;
+        cell.className = HTML.SanitizeCSSClassName(className);
     }
     container.appendChild(cell);
 }
@@ -32,7 +32,7 @@ function RenderTableHead(container, vendorName) {
     let headerRowVendor = document.createElement("tr");
     let cellVendor = document.createElement("th");
     cellVendor.append(vendorName);
-    cellVendor.className = vendorName;
+    cellVendor.className = HTML.SanitizeCSSClassName(vendorName);
     cellVendor.scope = "colgroup";
     cellVendor.colSpan = 4;
     headerRowVendor.appendChild(cellVendor);
@@ -53,7 +53,7 @@ function RenderTableHead(container, vendorName) {
 function FormatMarketShare(marketShare)
 {
     if (!marketShare) return "~0%"
-    return Math.round(marketShare * 10000) / 100 + "%"
+    return (marketShare * 100).toFixed(2) + "%"
 }
 
 function AddLine(original, newLine)
@@ -315,28 +315,11 @@ function RenderTables() {
     const tableContainer = document.getElementById("ArchitectureTables")
     HTML.ClearElement(tableContainer);
 
-    const vendorList = [
-        {
-            name: "AMD",
-            architectures: ArchClassifier.ArchsPerVendor.AMD
-        },
-        {
-            name: "Nvidia",
-            architectures: ArchClassifier.ArchsPerVendor.Nvidia
-        },
-        {
-            name: "Intel",
-            architectures: ArchClassifier.ArchsPerVendor.Intel
-        },
-        {
-            name: "Qualcomm",
-            architectures: ArchClassifier.ArchsPerVendor.Qualcomm
-        }
-    ]
+    const vendorList = [ "AMD", "Nvidia", "Intel", "Qualcomm", "Moore Threads" ]
 
     for (let vendor of vendorList) {
         let acrhContainer = document.createElement("div");
-        RenderTable(acrhContainer, vendor.name, vendor.architectures);
+        RenderTable(acrhContainer, vendor, ArchClassifier.ArchsPerVendor[vendor]);
         acrhContainer.className = "ArchitectureTableContainer"
         tableContainer.appendChild(acrhContainer);
     }
