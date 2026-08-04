@@ -350,46 +350,39 @@ api.post('/post_submission', (req, res) => {
         console.log(`Inserted submission ID ${info.lastInsertRowid} - ${newSubmission["DXGI_ADAPTER_DESC3.Description"]}`)
 
         let notification = {
-            "embeds": [
+            "title": newSubmission["DXGI_ADAPTER_DESC3.Description"],
+            "url": `https://d3d12infodb.boolka.dev/ID?ID=${info.lastInsertRowid}`,
+            "fields": [
                 {
-                    "title": newSubmission["DXGI_ADAPTER_DESC3.Description"],
-                    "url": `https://d3d12infodb.boolka.dev/ID?ID=${info.lastInsertRowid}`,
-                    "fields": [
-                        {
-                            "name": "Vendor",
-                            "value": notification_handler.formatVendor(newSubmission["DXGI_ADAPTER_DESC3.VendorId"]),
-                            "inline": true
-                        },
-                        {
-                            "name": "Driver Version",
-                            "value": notification_handler.formatDriverVersion(newSubmission["CheckInterfaceSupport.UMDVersion"]),
-                            "inline": true
-                        },
-                        {
-                            "name": "VRAM",
-                            "value": notification_handler.formatVRAM(newSubmission["DXGI_ADAPTER_DESC3.DedicatedVideoMemory"]),
-                            "inline": true
-                        },
-                        {
-                            "name": "D3d12info Version",
-                            "value": newSubmission["Header.Version"],
-                            "inline": true
-                        },
-                        {
-                            "name": "Preview Agility SDK?",
-                            "value": newSubmission["Header.Using preview Agility SDK"] ? "Yes" : "No",
-                            "inline": true
-                        }
-                    ],
-                    "footer": {
-                        "text": "New submission"
-                    }
+                    "name": "Vendor",
+                    "value": notification_handler.formatVendor(newSubmission["DXGI_ADAPTER_DESC3.VendorId"]),
+                    "inline": true
+                },
+                {
+                    "name": "Driver Version",
+                    "value": notification_handler.formatDriverVersion(newSubmission["CheckInterfaceSupport.UMDVersion"]),
+                    "inline": true
+                },
+                {
+                    "name": "VRAM",
+                    "value": notification_handler.formatVRAM(newSubmission["DXGI_ADAPTER_DESC3.DedicatedVideoMemory"]),
+                    "inline": true
+                },
+                {
+                    "name": "D3d12info Version",
+                    "value": newSubmission["Header.Version"],
+                    "inline": true
+                },
+                {
+                    "name": "Preview Agility SDK?",
+                    "value": newSubmission["Header.Using preview Agility SDK"] ? "Yes" : "No",
+                    "inline": true
                 }
             ]
         }
 
         if (process.env.SubmissionRemovalPassword) {
-            notification.embeds[0].fields.push({
+            notification.fields.push({
                 "name": "Remove submission",
                 "value": `[x](https://d3d12infodbapi.boolka.dev/remove_submission?ID=${info.lastInsertRowid}&password=${process.env.SubmissionRemovalPassword})`,
                 "inline": true

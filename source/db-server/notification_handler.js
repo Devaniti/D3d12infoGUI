@@ -6,29 +6,65 @@ function GetWebhookURL() {
     return process.env.WebhookURL
 }
 
+const sendBatchDelaySeconds = 5
+const maxBatchSize = 10
+let queue = []
+let timer = null
+
+function BatchSend() {
+    timer = null
+
+    const webhookUrl = GetWebhookURL()
+    if (!webhookUrl) {
+        console.error("BatchSend was called but no webhook URL is set.")
+        return
+    }
+
+    if (queue.length === 0) {
+        console.error("BatchSend was called but the queue is empty.")
+        return
+    }
+
+    const batch = queue.slice(0, maxBatchSize)
+    queue = queue.slice(maxBatchSize)
+
+    let content = {
+        "embeds": batch
+    }
+
+    const payload = JSON.stringify(content)
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const req = https.request(webhookUrl, options);
+
+    req.on('error', (error) => {
+        console.error(error);
+    });
+
+    req.write(payload);
+    req.end();
+
+    if (queue.length > 0) {
+        timer = setTimeout(BatchSend, sendBatchDelaySeconds * 1000)
+    }
+}
+
 module.exports = {
     notify: function (data) {
         const webhookUrl = GetWebhookURL()
         if (!webhookUrl) {
             return
         }
-        
-        const payload = JSON.stringify(data)
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
 
-        const req = https.request(webhookUrl, options);
-
-        req.on('error', (error) => {
-            console.error(error);
-        });
-
-        req.write(payload);
-        req.end();
+        queue.push(data)
+        if (!timer) {
+            timer = setTimeout(BatchSend, sendBatchDelaySeconds * 1000)
+        }
     },
     formatDriverVersion: function (value) {
         let a = BigInt(value)

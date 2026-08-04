@@ -7,6 +7,7 @@ export let ArchsPerVendor = {
     Nvidia: new Set(),
     Intel: new Set(),
     Qualcomm: new Set(),
+    'Moore Threads': new Set(),
 };
 export let ReportsPerArch = new Map();
 export let AdapterNamesPerArch = new Map();
@@ -233,7 +234,6 @@ function ClassifyReport(reportContainer) {
         }
     }
     else if (vendorId.startsWith("Qualcomm")) {
-
         if (/Snapdragon\(R\) X (Plus)|(Elite) - X1.*/.test(report.DXGI_ADAPTER_DESC3.Description)) {
             arch = "X1";
         }
@@ -249,6 +249,17 @@ function ClassifyReport(reportContainer) {
         }
 
         if (arch) ArchsPerVendor.Qualcomm.add(arch);
+    }
+    else if (vendorId.startsWith("Moore Threads")) {
+        switch (report.DXGI_ADAPTER_DESC3.Description) {
+            // There's no consistent infromation about architectures for Moore Threads GPUs
+            // Apparently it is the only "good" consumer one, so let's just call it S80 for now
+            case "Moore Threads MTT S80":
+                arch = "S80"
+                break
+        }
+
+        if (arch) ArchsPerVendor["Moore Threads"].add(arch);
     }
 
     if (!arch) {

@@ -157,7 +157,7 @@ function CreateTableHead(table) {
 
         const vendorHeader = document.createElement("th");
         vendorHeader.textContent = vendor;
-        vendorHeader.className = vendor;
+        vendorHeader.className = HTML.SanitizeCSSClassName(vendor);
         vendorHeader.scope = "colgroup";
         vendorHeader.colSpan = ColsPerVendor.length;
         vendorNameRow.appendChild(vendorHeader);
@@ -165,7 +165,7 @@ function CreateTableHead(table) {
         for (let vendorColName of ColsPerVendor) {
             const vendorCol = document.createElement("th");
             vendorCol.textContent = vendorColName;
-            vendorCol.className = vendor;
+            vendorCol.className = HTML.SanitizeCSSClassName(vendor);
             vendorCol.scope = "colgroup";
             vendorHeadersRow.appendChild(vendorCol);
         }

@@ -51,3 +51,7 @@ export function WriteObjectToTable(obj, table) {
         table.appendChild(row)
     }
 }
+
+export function SanitizeCSSClassName(name) {
+    return name.replace(/[^a-zA-Z0-9_-]/g, "_")
+}

@@ -54,6 +54,23 @@ function SelectReport(newReportIndex)
     PropertiesSearchBarContainer.scrollIntoView();
 }
 
+function VendorFilter(report) {
+    let vendorID = report.GetField("DXGI_ADAPTER_DESC3.VendorId")
+    switch (vendorID) {
+        case 0x1002:
+            return AdaptersFilters["Vendor"]["AMD (0x1002)"]
+        case 0x10de:
+            return AdaptersFilters["Vendor"]["Nvidia (0x10de)"]
+        case 0x8086:
+            return AdaptersFilters["Vendor"]["Intel (0x8086)"]
+        case 0x4D4F4351:
+            return AdaptersFilters["Vendor"]["Qualcomm (QCOM)"]
+        default:
+            return AdaptersFilters["Vendor"]["Other"]
+    }
+    return true
+}
+
 function FilterSingleReport(wrappedReport) {
     let report = wrappedReport.value
     let adaptersSearchString = AdaptersSearchString.toLowerCase()
@@ -64,15 +81,13 @@ function FilterSingleReport(wrappedReport) {
             value = value.toString().toLowerCase()
             return humanReadableValue.includes(adaptersSearchString)
         })
-    let filterTest = Constants.FilterMultichoiceFields.every(filter => {
-        let value = report.GetField(filter)
-        return AdaptersFilters[filter][value]
-    })
+    let vendorTest = VendorFilter(report)
+    let agilitySDKTest = AdaptersFilters["Agility SDK"][report.GetField("Header.Using preview Agility SDK") ? "Preview" : "Retail"]
     let adapterType = report.GetField("DXGI_ADAPTER_DESC3.Flags") & 2 ? "Software" : "Hardware"
     let adapterTypeTest = AdaptersFilters["Adapter Type"][adapterType]
     let translationLayer = Properties.GetTranslationLayerName(report)
     let translationLayerTest = AdaptersFilters["Translation Layer"][translationLayer]
-    return searchTest && filterTest && adapterTypeTest && translationLayerTest
+    return searchTest && vendorTest && agilitySDKTest && adapterTypeTest && translationLayerTest
 }
 
 function FilterReports() {
@@ -140,15 +155,15 @@ function UpdateSearchBarAdapters() {
 }
 
 const DefaultFilterValues = {
-    "DXGI_ADAPTER_DESC3.VendorId": {
+    "Vendor": {
         "default": true
     },
     "Header.Version": {
         "default": true
     },
-    "Header.Using preview Agility SDK": {
+    "Agility SDK": {
         "default": true,
-        "1": false, // By default hide preview reports
+        "Preview": false
     },
     "Adapter Type": {
         "default": false,
@@ -173,38 +188,8 @@ function GetFilterSortFunc(property)
     }
 }
 
-function AddFilterMultichoice(container, property) {
-    const filterFieldSet = document.createElement("fieldset")
-    const filterLegend = document.createElement("legend")
-    filterLegend.appendChild(document.createTextNode(Properties.MakeHumanReadableProperty(property)))
-    AdaptersFilters[property] = []
-
-    let valuesList = [...new Set(Reports.map(e => e.GetField(property)))].sort(GetFilterSortFunc(property))
-    
-    valuesList.forEach(e => {
-        const checkboxLabel = document.createElement("label")
-        const filterCheckbox = document.createElement("input")
-        filterCheckbox.type = "checkbox"
-        filterCheckbox.checked = DefaultFilterValues[property][e] ?? DefaultFilterValues[property]["default"]
-        AdaptersFilters[property][e] = filterCheckbox.checked
-        filterCheckbox.addEventListener('change', () => {
-            AdaptersFilters[property][e] = filterCheckbox.checked
-            PrepareReports()
-            UpdateList()
-        })
-        checkboxLabel.appendChild(filterCheckbox)
-        checkboxLabel.appendChild(document.createTextNode(Properties.MakeHumanReadable(property, e)))
-        filterFieldSet.appendChild(checkboxLabel)
-        filterFieldSet.appendChild(document.createElement("br"))
-    })
-
-    filterFieldSet.appendChild(filterLegend)
-    container.appendChild(filterFieldSet)
-}
-
 function AddCustomFilters(container) {
-
-    const customFilters = [{ property: "Adapter Type", values: ["Hardware", "Software"] }, { property: "Translation Layer", values: ["None", "vkd3d-proton", "Other"] }]
+    const customFilters = [{ property: "Vendor", values: ["Nvidia (0x10de)", "AMD (0x1002)", "Intel (0x8086)", "Qualcomm (QCOM)", "Other"] }, { property: "Agility SDK", values: ["Retail", "Preview"] }, { property: "Adapter Type", values: ["Hardware", "Software"] }, { property: "Translation Layer", values: ["None", "vkd3d-proton", "Other"] }]
 
     customFilters.forEach(filter => {
         const filterFieldSet = document.createElement("fieldset")
@@ -241,7 +226,6 @@ function UpdateAdaptersFilter() {
 
     HTML.ClearElement(filterContainer)
 
-    Constants.FilterMultichoiceFields.forEach(e => AddFilterMultichoice(filterContainer, e))
     AddCustomFilters(filterContainer)
 }
 
