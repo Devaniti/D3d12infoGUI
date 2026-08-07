@@ -58,16 +58,12 @@ a:hover {
 }
 
 .headerContainer {
-    width: 100%;
-    max-width: 2100px;
-    margin: 0 auto;
+    width: calc(100vw - 16px);
 }
 
 .headerContainer2 {
-    position:sticky;
-    left: 8px;
-    width: calc(100vw - 16px);
     max-width: 2100px;
+    margin: 0 auto;
 }
 
 .header {
@@ -78,7 +74,6 @@ a:hover {
     justify-content: center;
     align-items: center;
     min-width: max-content;
-    width: 100%;
     margin: 0 auto 0.4em auto;
     border-width: 2px;
     border-radius: 4px;

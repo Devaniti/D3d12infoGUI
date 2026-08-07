@@ -1,18 +1,24 @@
 .CanIUseSearchContainer, .CanIUseData {
+    width: calc(100vw - 16px);
+}
+
+.CanIUseFilter {
     max-width: 2100px;
     margin: 0 auto;
+    padding-bottom: 0.5em;
 }
 
 .CanIUseFilterResult {
     margin-top: 12px;
+    max-width: 2100px;
+    margin: 0 auto;
 }
 
 .PropertyItem {
     font-size: 1.2em;
-    width: calc(100% - 24px);
     text-align: left;
-    margin: 8px 12px;
-    padding: 3px;
+    margin: 7px;
+    padding: 5px;
     border: 2px solid;
     border-collapse: collapse;
     border-color: #a7a7a7;
@@ -30,10 +36,20 @@
     width: 100%;
 }
 
+.FeatureNotes {
+    max-width: 2100px;
+    margin: 0 auto;
+}
+
 .TableContainer {
     display:flex;
     flex-wrap: wrap;
     align-items: flex-start;
+}
+
+.TableContainer::before, .TableContainer::after {
+    content: "";
+    flex: auto;
 }
 
 table {

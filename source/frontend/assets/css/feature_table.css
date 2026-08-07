@@ -17,9 +17,13 @@ body {
 }
 
 .FeatureTableFilterContainer {
+    width: calc(100vw - 16px);
+    padding-bottom: 0.3em;
+}
+
+.FeatureTableFilter {
     max-width: 2100px;
     margin: 0 auto;
-    padding-bottom: 0.3em;
 }
 
 td {
