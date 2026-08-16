@@ -47,6 +47,9 @@ export default class ReportContainer {
     }
 
     #patchData() {
+        // We don't support showing NVLINK properties in D3d12infoGUI
+        this.#fields = this.#fields.filter(e => !e.name.startsWith("NvPhysicalGpuHandle.NvAPI_GPU_NVLINK_"))
+
         for (const e of this.#fields) {
             if (e.name in Constants.RenameList) {
                 e.name = Constants.RenameList[e.name]
