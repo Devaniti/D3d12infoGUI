@@ -137,6 +137,7 @@ export function MakeHumanReadable(property, value) {
             }
         // 64 bit encoded version
         case "CheckInterfaceSupport.UMDVersion":
+        case "D3D12_FEATURE_DATA_MLIR_COMPUTE_GRAPH_VERSION.HighestVersion":
         case "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.MinimumABISupportVersion":
         case "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.MaximumABISupportVersion":
         case "D3D12_FEATURE_DATA_SHADERCACHE_ABI_SUPPORT.CompilerVersion":

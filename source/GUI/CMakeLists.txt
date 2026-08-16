@@ -77,3 +77,5 @@ else()
         DEPENDS ${CommonFileEmbedDependencies}
     )
 endif()
+
+set_target_properties(GUI PROPERTIES VS_DEBUGGER_ENVIRONMENT "D3D12INFOGUI_DISABLE_SUBMISSIONS=1")
