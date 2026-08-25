@@ -28,6 +28,22 @@ function ReportFilter(report) {
     if (report.GetField("AGSDeviceInfo.asicFamily") == 8 && report.GetField("AGSDeviceInfo.numWGPs") == 1 && report.GetField("D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier") == 0)
         return true;
 
+    // filter out WARP reports except for retail nuget packages
+    if (report.GetField("DXGI_ADAPTER_DESC3.Description") == "Microsoft Basic Render Driver") {
+        let UMDVersionNumber = BigInt(report.GetField("CheckInterfaceSupport.UMDVersion"));
+        let major = (UMDVersionNumber >> 48n) & 65535n;
+        let minor = (UMDVersionNumber >> 32n) & 65535n;
+        let patch = (UMDVersionNumber >> 16n) & 65535n;
+        let build = UMDVersionNumber & 65535n;
+
+        // OS WARP drivers are 6.x.x.x/10.x.x.x
+        // Preview nuget packages are 1.65535.x.x
+        if (major != 1n || minor == 65535n)
+        {
+            return true;
+        }
+    }
+
     return false;
 }
 
