@@ -32,7 +32,6 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS3.BarycentricsSupported": "Barycentrics",
     "Table_R9G9B9E5_RTV_UAV": "R9G9B9E5 RTV/UAV support",
     "Table_R9G9B9E5_Display": "R9G9B9E5 Display support",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier": "WaveMMA (wave_matrix)",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMin": "Wave lane count min",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.WaveLaneCountMax": "Wave lane count max",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS14.WriteableMSAATexturesSupported": "Writeable MSAA textures",
@@ -57,7 +56,6 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSize": "Max sampler heap size",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxSamplerDescriptorHeapSizeWithStaticSamplers": "Max sampler heap size with static samplers",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.MaxViewDescriptorHeapSize": "Max view descriptor heap size",
-    "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported": "Unaligned block textures",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS12.MSPrimitivesPipelineStatisticIncludesCulledPrimitives": "MSPrimitives pipeline statistic includes culled primitives",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS12.RelaxedFormatCastingSupported": "Relaxed format casting",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.PSSpecifiedStencilRefSupported": "PS-specified StencilRef",
@@ -116,8 +114,12 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED.Supported": "Bytecode bypass hash",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS19.RasterizerDesc2Supported": "RASTERIZER_DESC2 supported",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid" : "Render passes valid",
+    "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported": "Unaligned block textures",
     "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion": "Root signature version",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates" : "Expanded compute resource states",
+
+    // Deprecated, never supported on any device
+    // "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier": "WaveMMA (wave_matrix)",
 
     // Irrelevant for GPUs, all GPUs support these features
     //"D3D12_FEATURE_DATA_PREDICATION.Supported": "Predication",

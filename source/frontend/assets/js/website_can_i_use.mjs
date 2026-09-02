@@ -64,6 +64,7 @@ function NeedShowTable() {
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS18.RenderPassesValid":
         case "D3D12_FEATURE_DATA_ROOT_SIGNATURE.HighestVersion":
         case "D3D12_FEATURE_DATA_D3D12_OPTIONS1.ExpandedComputeResourceStates":
+        case "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported":
             return false;
         default:
             return true;
@@ -425,6 +426,10 @@ function CreateNotes(dataContainer) {
             AddNote("Yes you can.", noteContainer);
             AddNote("Starting with Windows 10 version 1607, it is always supported, independently of GPU or driver.", noteContainer);
             AddNote("All currently supported Windows versions are newer than Windows 10 version 1607.", noteContainer);
+            break;
+        case "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported":
+            AddNote("Yes you can.", noteContainer);
+            AddNote("When using Agility SDK, unaligned block textures are always supported, independently of GPU or driver.", noteContainer);
             break;
     }
 
