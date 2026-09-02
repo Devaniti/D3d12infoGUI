@@ -2821,7 +2821,8 @@ export const PureFeatureList = [
         "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnTypedResourceSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS9.AtomicInt64OnGroupSharedSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS9.DerivativesInMeshAndAmplificationShadersSupported",
-        "D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier",
+        // Deprecated, never supported on any device
+        //"D3D12_FEATURE_DATA_D3D12_OPTIONS9.WaveMMATier",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS10.VariableRateShadingSumCombinerSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS10.MeshShaderPerPrimitiveShadingRateSupported",
         "D3D12_FEATURE_DATA_D3D12_OPTIONS11.AtomicInt64OnDescriptorHeapResourceSupported",

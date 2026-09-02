@@ -468,6 +468,10 @@ function AddSpecialRow(featureRow, featureName) {
         AddCellReal("Always supported *", featureRow, "Starting with Windows 10 version 1607, it is always supported, independently of GPU or driver.\nAll currently supported Windows versions are newer than Windows 10 version 1607.", 0.5, ArchToOutputCount());
         return true;
     }
+    if (featureName == "D3D12_FEATURE_DATA_D3D12_OPTIONS8.UnalignedBlockTexturesSupported") {
+        AddCellReal("Always supported *", featureRow, "When using Agility SDK, unaligned block textures are always supported, independently of GPU or driver.", 0.5, ArchToOutputCount());
+        return true;
+    }
 
     return false;
 }
