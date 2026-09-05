@@ -23,9 +23,7 @@ function MakeTextElementForTable(text) {
 }
 
 const DefaultTooltipOptions = {
-    alignOutsideHorizontal: false,
-    alignOutsideVertical: false,
-    preferTowardsBottom: false,
+    alignToTheRight: false,
     tooltipAlignment: 0.5
 };
 
@@ -42,8 +40,18 @@ function AddTooltipForTable(parent, text, options_param) {
     parent.classList.add("tooltip");
 
     const tooltipTextElement = document.createElement("span");
-    tooltipTextElement.className = "tooltiptext white_space_pre tooltiptext";
-    tooltipTextElement.style = `left: ${options.tooltipAlignment * 100}%;transform: translateX(-${options.tooltipAlignment * 100}%);`;
+    tooltipTextElement.classList.add("tooltiptext");
+    tooltipTextElement.classList.add("white_space_pre");
+    if (options.alignToTheRight)
+    {
+        tooltipTextElement.classList.add("tooltiptextright");
+        tooltipTextElement.style = `top: ${options.tooltipAlignment * 100}%;transform: translateY(-${options.tooltipAlignment * 100}%);`;
+    }
+    else
+    {
+        tooltipTextElement.classList.add("tooltiptexttop");
+        tooltipTextElement.style = `left: ${options.tooltipAlignment * 100}%;transform: translateX(-${options.tooltipAlignment * 100}%);`;
+    }
     tooltipTextElement.textContent = text;
     parent.appendChild(tooltipTextElement);
 
@@ -144,6 +152,10 @@ function AddFilterPanel(container) {
 
     fieldSetContainer.appendChild(vendorFilterFieldset);
 
+    let archAgeMin = 2010;
+    let archAgeDefault = 2016;
+    let archAgeMax = new Date().getFullYear();
+
     // Add fieldset for filtering by architecture age
     let archFilterFieldset = document.createElement("fieldset");
     let archLegend = document.createElement("legend");
@@ -151,17 +163,31 @@ function AddFilterPanel(container) {
     archFilterFieldset.appendChild(archLegend);
     // Add slider for filtering by architecture age
     let archAgeSlider = document.createElement("input");
+    archAgeSlider.id = "archAgeSlider";
     archAgeSlider.type = "range";
-    archAgeSlider.min = 2010;
-    archAgeSlider.max = new Date().getFullYear();
-    archAgeSlider.value = 2016;
+    archAgeSlider.min = archAgeMin;
+    archAgeSlider.max = archAgeMax;
+    archAgeSlider.value = archAgeDefault;
     archAgeSlider.step = 1;
-    let archAgeLabel = document.createElement("label");
-    archAgeLabel.htmlFor = "archAgeSlider";
-    archAgeLabel.textContent = `Released in ${archAgeSlider.value} or after`;
+    let archAgeLabel = document.createElement("span");
+    archAgeLabel.appendChild(document.createTextNode("Released in "));
+    let archAgeInputBox = document.createElement("input");
+    archAgeInputBox.type = "number";
+    archAgeInputBox.min = archAgeMin;
+    archAgeInputBox.max = archAgeMax;
+    archAgeInputBox.value = archAgeDefault;
+    archAgeInputBox.step = 1;
+    archAgeInputBox.addEventListener('change', function (e) {
+        e.target.value = Math.max(archAgeMin, Math.min(archAgeMax, e.target.value));
+        archAgeSlider.value = e.target.value;
+        Globals.ArchAgeFilter = e.target.value;
+        UpdateTable();
+    });
+    archAgeLabel.appendChild(archAgeInputBox);
+    archAgeLabel.appendChild(document.createTextNode(" or later"));
     Globals.ArchAgeFilter = archAgeSlider.value;
     archAgeSlider.addEventListener('input', function (e) {
-        archAgeLabel.textContent = `Released in ${e.target.value} or after`;
+        archAgeInputBox.value = e.target.value;
         Globals.ArchAgeFilter = e.target.value;
         UpdateTable();
     });
@@ -186,7 +212,7 @@ function UpdateTableFilter() {
 
     AddNote("This table shows features as they are available in latest Agility SDK. If you use older Agility SDKs, some features may not be available.", tableFilter);
     AddNote("This table is built using reports submitted by users. Some data may be outdated or incomplete, if latest report for respective architectures is not generated using latest driver or D3d12infoGUI.", tableFilter);
-    AddNote("Market share is derived from Steam Hardware Survey's DirectX 12 Systems chart. This data is an underestimate and may not be very accurate in general.", tableFilter);
+    AddNote("Market share is derived from Steam Hardware Survey's DirectX 12 Systems chart. This is an underestimate and may be inaccurate.", tableFilter);
 }
 
 function UpdateTableHeader(table, archTooltipAlignments) {
@@ -237,8 +263,6 @@ function UpdateTableHeader(table, archTooltipAlignments) {
 
             AddTooltipForTable(thArch, tooltipText,
                 {
-                    alignOutsideVertical: true,
-                    preferTowardsBottom: true,
                     tooltipAlignment: archTooltipAlignments.get(a)
                 });
         }
@@ -258,7 +282,7 @@ function AddCellReal(text, featureRow, tooltipText, tooltipAlignment, colspan) {
     }
     featureRow.appendChild(td);
     if (tooltipText)
-        AddTooltipForTable(td, tooltipText, { alignOutsideVertical: true, tooltipAlignment: tooltipAlignment });
+        AddTooltipForTable(td, tooltipText, { tooltipAlignment: tooltipAlignment });
 }
 
 function AddSpecialRowCell(featureRow, archName, featureName, tooltipAlignment) {
@@ -496,14 +520,21 @@ function AddRow(tbody, featureName, featureShortName, archTooltipAlignments) {
 
     let featureHeader = document.createElement("td");
     featureHeader.classList.add("FeatureHeader");
-    featureHeader.append(featureShortName);
+
+    // if feature name is in Constant.PureFeatureNames, add a link
+    if (Constants.PureFeatureList.includes(featureName)) {
+        featureHeader.appendChild(HTML.CreateLinkElement(`CanIUse.html?q=${featureName}`, featureShortName));
+    }
+    else {
+        featureHeader.appendChild(document.createTextNode(featureShortName));
+    }
     featureHeader.scope = "row";
     if (!featureName.startsWith("Table"))
-        AddTooltipForTable(featureHeader, featureName, { alignOutsideVertical: true, tooltipAlignment: 0.0 });
+        AddTooltipForTable(featureHeader, featureName, { alignToTheRight: true });
     else if (featureName == "TableMarketShare")
-        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 Systems.\nThis is an underestimate and may not be very accurate in general.", { alignOutsideVertical: true, tooltipAlignment: 0.0 });
+        AddTooltipForTable(featureHeader, "Market share in the Steam Hardware Survey among DirectX 12 Systems.\nThis is an underestimate and may be inaccurate.", { alignToTheRight: true });
     else if (featureName == "Table_Advanced_Shader_Delivery_Supported")
-        AddTooltipForTable(featureHeader, "You probably don't want to abbreviate this.", { alignOutsideVertical: true, tooltipAlignment: 0.0 });
+        AddTooltipForTable(featureHeader, "You probably don't want to abbreviate this.", { alignToTheRight: true });
 
     featureRow.appendChild(featureHeader);
 

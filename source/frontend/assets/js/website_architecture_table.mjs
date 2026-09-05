@@ -4,10 +4,10 @@ import * as HTML from './html.mjs'
 import * as Server from './server.mjs'
 import * as ArchClassifier from './arch_classifier.mjs'
 
-function AddHeaderCell(container, className, text)
+function AddHeaderCell(container, className, headerElement)
 {
     let cell = document.createElement("th");
-    cell.append(text);
+    cell.append(headerElement);
     if (className) 
     {
         cell.className = HTML.SanitizeCSSClassName(className);
@@ -34,16 +34,17 @@ function RenderTableHead(container, vendorName) {
     cellVendor.append(vendorName);
     cellVendor.className = HTML.SanitizeCSSClassName(vendorName);
     cellVendor.scope = "colgroup";
-    cellVendor.colSpan = 4;
+    cellVendor.colSpan = 5;
     headerRowVendor.appendChild(cellVendor);
     thead.appendChild(headerRowVendor);
 
     let headerRowLegend = document.createElement("tr");
 
-    AddHeaderCell(headerRowLegend, vendorName, "Architecture");
-    AddHeaderCell(headerRowLegend, vendorName, "Market Share");
-    AddHeaderCell(headerRowLegend, vendorName, "Cumulative Market Share");
-    AddHeaderCell(headerRowLegend, vendorName, "Added Features");
+    AddHeaderCell(headerRowLegend, vendorName, HTML.CreateMultilineText("Arch"));
+    AddHeaderCell(headerRowLegend, vendorName, HTML.CreateMultilineText("Release", "Date"));
+    AddHeaderCell(headerRowLegend, vendorName, HTML.CreateMultilineText("Market", "Share"));
+    AddHeaderCell(headerRowLegend, vendorName, HTML.CreateMultilineText("Cumulative", "Market Share"));
+    AddHeaderCell(headerRowLegend, vendorName, HTML.CreateMultilineText("Added Features"));
 
     thead.appendChild(headerRowLegend);
     
@@ -73,12 +74,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newSMValue > cumulativeFeatures.SM)
         {
             result = AddLine(result, "SM " + SMString);
-            cumulativeFeatures.SM = newSMValue;
         }
         else
         {
             result = AddLine(result, "* SM " + SMString);
         }
+        cumulativeFeatures.SM = newSMValue;
     }
     
     let newSupport16BitShaderOps = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS4.Native16BitShaderOpsSupported == 1;
@@ -87,12 +88,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newSupport16BitShaderOps)
         {
             result = AddLine(result, "16-bit Shader Ops");
-            cumulativeFeatures.Support16BitShaderOps = newSupport16BitShaderOps;
         }
         else
         {
             result = AddLine(result, "* no support for 16-bit Shader Ops");
         }
+        cumulativeFeatures.Support16BitShaderOps = newSupport16BitShaderOps;
     }
 
     let newSupportEnhancedBarriers = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS12.EnhancedBarriersSupported == 1;
@@ -101,12 +102,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newSupportEnhancedBarriers)
         {
             result = AddLine(result, "Enhanced Barriers");
-            cumulativeFeatures.SupportEnhancedBarriers = newSupportEnhancedBarriers;
         }
         else
         {
             result = AddLine(result, "* no support for Enhanced Barriers");
         }
+        cumulativeFeatures.SupportEnhancedBarriers = newSupportEnhancedBarriers;
     }
     
     let newSupportMeshShaders = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS7.MeshShaderTier == 10;
@@ -115,12 +116,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newSupportMeshShaders)
         {
             result = AddLine(result, "Mesh Shaders");
-            cumulativeFeatures.SupportMeshShaders = newSupportMeshShaders;
         }
         else
         {
             result = AddLine(result, "* no support for Mesh Shaders");
         }
+        cumulativeFeatures.SupportMeshShaders = newSupportMeshShaders;
     }
 
     let newDXRTier = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS5.RaytracingTier;
@@ -137,12 +138,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newDXRTier > cumulativeFeatures.DXRTier)
         {
             result = AddLine(result, "DXR " + TierString);
-            cumulativeFeatures.DXRTier = newDXRTier;
         }
         else
         {
             result = AddLine(result, "* DXR " + TierString);
         }
+        cumulativeFeatures.DXRTier = newDXRTier;
     }
 
     let newVRSTier = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS6.VariableShadingRateTier;
@@ -152,12 +153,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newVRSTier > cumulativeFeatures.VRSTier)
         {
             result = AddLine(result, "VRS " + TierString);
-            cumulativeFeatures.VRSTier = newVRSTier;
         }
         else
         {
             result = AddLine(result, "* VRS " + TierString);
         }
+        cumulativeFeatures.VRSTier = newVRSTier;
     }
 
     let newSamplerFeedbackTier = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS7.SamplerFeedbackTier;
@@ -167,12 +168,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newSamplerFeedbackTier > cumulativeFeatures.SamplerFeedbackTier)
         {
             result = AddLine(result, "Sampler Feedback " + TierString);
-            cumulativeFeatures.SamplerFeedbackTier = newSamplerFeedbackTier;
         }
         else
         {
             result = AddLine(result, "* Sampler Feedback " + TierString);
         }
+        cumulativeFeatures.SamplerFeedbackTier = newSamplerFeedbackTier;
     }
 
     let newSupportR9G9B9E5RTVUAV = false;
@@ -185,12 +186,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newSupportR9G9B9E5RTVUAV)
         {
             result = AddLine(result, "R9G9B9E5 RTV/UAV");
-            cumulativeFeatures.SupportR9G9B9E5RTVUAV = newSupportR9G9B9E5RTVUAV;
         }
         else
         {
             result = AddLine(result, "* no support for R9G9B9E5 RTV/UAV");
         }
+        cumulativeFeatures.SupportR9G9B9E5RTVUAV = newSupportR9G9B9E5RTVUAV;
     }
 
     let newWorkGraphsTier = 0
@@ -205,12 +206,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newWorkGraphsTier > cumulativeFeatures.WorkGraphsTier)
         {
             result = AddLine(result, "Work Graphs " + TierString);
-            cumulativeFeatures.WorkGraphsTier = newWorkGraphsTier;
         }
         else
         {
             result = AddLine(result, "* Work Graphs " + TierString);
         }
+        cumulativeFeatures.WorkGraphsTier = newWorkGraphsTier;
     }
 
     let newResourceHeapTier = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.ResourceHeapTier
@@ -221,12 +222,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newResourceHeapTier > cumulativeFeatures.ResourceHeapTier)
         {
             result = AddLine(result, "Resource Heap " + TierString);
-            cumulativeFeatures.ResourceHeapTier = newResourceHeapTier;
         }
         else
         {
             result = AddLine(result, "* Resource Heap " + TierString);
         }
+        cumulativeFeatures.ResourceHeapTier = newResourceHeapTier;
     }
 
     let newTiledResourcesTier = newReport.D3D12_FEATURE_DATA_D3D12_OPTIONS.TiledResourcesTier
@@ -237,12 +238,12 @@ function BuildNewFeatureList(architectureName, newReport, cumulativeFeatures)
         if (newTiledResourcesTier > cumulativeFeatures.TiledResourcesTier)
         {
             result = AddLine(result, "Tiled Resources " + TierString);
-            cumulativeFeatures.TiledResourcesTier = newTiledResourcesTier;
         }
         else
         {
             result = AddLine(result, "* Tiled Resources " + TierString);
         }
+        cumulativeFeatures.TiledResourcesTier = newTiledResourcesTier;
     }
 
     return result;
@@ -278,6 +279,7 @@ function RenderTableBody(container, vendorArchitectures) {
         let report = ArchClassifier.NewestDriverReportPerArch.get(architectureName);
 
         AddBodyCell(row, null, architectureName);
+        AddBodyCell(row, null, Constants.ArchReleaseDates[architectureName] ?? "Unknown");
         AddBodyCell(row, null, FormatMarketShare(marketShare));
         AddBodyCell(row, null, FormatMarketShare(cumulativeMarketShare));
         AddBodyCell(row, null, BuildNewFeatureList(architectureName, report, cumulativeFeatures));
@@ -300,15 +302,13 @@ function RenderNotes(container) {
     const notesContainer = document.getElementById("NotesContainer")
     HTML.ClearElement(notesContainer);
 
-    notesContainer.appendChild(document.createTextNode("Features marked with * appear out of order of increasing capabilities. After such entry, subsequent architectures return to higher capabilities without additional notes. For example Xe-LPG supports Resource Heap Tier 2."));
-    notesContainer.appendChild(document.createElement("br"));
-    notesContainer.appendChild(document.createTextNode("Some Nvidia Pascal and Turing 16 GPUs have software emulated DXR Tier 1.0 Support. Since software emulation is too slow for most practical purposes, they are marked as if they have no DXR support in this table."));
-    notesContainer.appendChild(document.createElement("br"));
-    notesContainer.appendChild(document.createTextNode("Market Share is calculated from the Steam Hardware Survey among DirectX 12 Systems. This is an underestimate and may not be very accurate in general."));
-    notesContainer.appendChild(document.createElement("br"));
-    notesContainer.appendChild(document.createTextNode("Market Share will vary a lot between different games. Steam Hardware Survey may not be a good representation of your target audience."));
-    notesContainer.appendChild(document.createElement("br"));
-    notesContainer.appendChild(document.createTextNode("Some features require new enough version of Agility SDK to be used by app to become available, even if GPU supports them."));
+    notesContainer.appendChild(HTML.CreateMultilineText(
+        "Features marked with * appear out of order of increasing capabilities.",
+        "Some Nvidia Pascal and Turing 16 GPUs have software emulated DXR Tier 1.0 Support. Since software emulation is too slow for most practical purposes, they are marked as if they have no DXR support in this table.",
+        "Market Share is calculated from the Steam Hardware Survey among DirectX 12 Systems. This is supposed to be an underestimate but may be generally inaccurate.",
+        "Market Share will vary a lot between different games. Steam Hardware Survey may not be a good representation of your target audience.",
+        "Some features require new enough version of Agility SDK to be used by app to become available, even if GPU supports them."
+    ))
 }
 
 function RenderTables() {

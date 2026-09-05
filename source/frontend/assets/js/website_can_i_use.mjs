@@ -13,7 +13,6 @@ let SearchBar = null;
 let SelectedFeature = "";
 
 const HeaderCols = ["Support"]
-const ColsPerVendor = ["Architecture", "Market Share"]
 
 let ColorGradientLightMode = [[250, 180, 180], [180, 250, 180]];
 let UnknownColorLightMode = [210, 210, 210];
@@ -130,6 +129,29 @@ function SetSearchString(str) {
     UpdateOutput()
 }
 
+function GetColumnCountForVendor(vendor) {
+    switch (vendor) {
+        case "Microsoft":
+            return 1;
+        default:
+            return 3;
+    }
+}
+
+function CreateColumnNameElement(index) {
+    switch (index) {
+        case 0:
+            return HTML.CreateMultilineText("Arch");
+        case 1:
+            return HTML.CreateMultilineText("Release", "Date");
+        case 2:
+            return HTML.CreateMultilineText("Market", "Share");
+        default:
+            debugger;
+            return document.createTextNode("You should never see this");
+    }
+}
+
 function CreateTableHead(table) {
     const tableHead = document.createElement("thead");
     const vendorNameRow = document.createElement("tr");
@@ -153,21 +175,22 @@ function CreateTableHead(table) {
 
     for (let vendor of VendorArray) {
         let vendorColGroup = document.createElement("colgroup");
-        vendorColGroup.span = ColsPerVendor.length;
+
+        let columnCount = GetColumnCountForVendor(vendor);
+
+        vendorColGroup.span = columnCount;
         table.appendChild(vendorColGroup);
 
         const vendorHeader = document.createElement("th");
         vendorHeader.textContent = vendor;
         vendorHeader.className = HTML.SanitizeCSSClassName(vendor);
         vendorHeader.scope = "colgroup";
-        vendorHeader.colSpan = ColsPerVendor.length;
+        vendorHeader.colSpan = columnCount;
         vendorNameRow.appendChild(vendorHeader);
 
-        for (let vendorColName of ColsPerVendor) {
+        for (let i = 0; i < columnCount; ++i) {
             const vendorCol = document.createElement("th");
-            vendorCol.textContent = vendorColName;
-            vendorCol.className = HTML.SanitizeCSSClassName(vendor);
-            vendorCol.scope = "colgroup";
+            vendorCol.appendChild(CreateColumnNameElement(i));
             vendorHeadersRow.appendChild(vendorCol);
         }
     }
@@ -189,14 +212,22 @@ function UniqueValues() {
     return valuesArray
 }
 
-function CreateArchCells(row, arch) {
-    for (let col of ColsPerVendor) {
+function CreateArchCells(row, vendor, arch) {
+    let columnCount = GetColumnCountForVendor(vendor);
+    
+    for (let i = 0; i < columnCount; ++i) {
         const cell = document.createElement("td");
-        switch (col) {
-            case "Architecture":
+        switch (i) {
+            case 0:
                 cell.textContent = arch;
                 break;
-            case "Market Share":
+            case 1:
+                cell.textContent = Constants.ArchReleaseDates[arch] ?? "Unknown";
+                if (cell.textContent == "9999") {
+                    cell.textContent = "N/A";
+                }
+                break;
+            case 2:
                 cell.textContent = GetMarketShareText(arch);
                 break;
         }
@@ -204,8 +235,9 @@ function CreateArchCells(row, arch) {
     }
 }
 
-function CreateEmptyCells(row) {
-    for (let col of ColsPerVendor) {
+function CreateEmptyCells(row, vendor) {
+    let columnCount = GetColumnCountForVendor(vendor);
+    for (let i = 0; i < columnCount; ++i) {
         const emptyCell = document.createElement("td");
         row.appendChild(emptyCell);
     }
@@ -248,7 +280,6 @@ function CreateTableBodyPart(table, propertyValue, gradientCoord) {
 
     let sectionHeight = archsToOutput.reduce((prev, elem) => { return Math.max(prev, elem.length) }, 0)
 
-
     let grid = [];
     for (let i = 0; i < VendorArray.length; ++i) {
         grid[i] = [];
@@ -281,10 +312,10 @@ function CreateTableBodyPart(table, propertyValue, gradientCoord) {
         for (let j = 0; j < VendorArray.length; ++j) {
             let currentArch = grid[j][i];
             if (currentArch == null) {
-                CreateEmptyCells(tableRow)
+                CreateEmptyCells(tableRow, VendorArray[j])
             }
             else {
-                CreateArchCells(tableRow, currentArch)
+                CreateArchCells(tableRow, VendorArray[j], currentArch)
             }
         }
 
@@ -393,7 +424,7 @@ function CreateNotes(dataContainer) {
     noteContainer.classList.add("FeatureNotes");
 
     if (NeedShowTable()) {
-        AddNote("Market Share is calculated from the Steam Hardware Survey among DirectX 12 Systems. This is an underestimate and may not be very accurate in general.", noteContainer);
+        AddNote("Market Share is calculated from the Steam Hardware Survey among DirectX 12 Systems. This is supposed to be an underestimate but may be generally inaccurate.", noteContainer);
         AddNote("Market Share will vary a lot between different games. Steam Hardware Survey may not be a good representation of your target audience.", noteContainer);
         AddNote("Some features require new enough version of Agility SDK to be used by app to become available, even if GPU supports them.", noteContainer);
     }
