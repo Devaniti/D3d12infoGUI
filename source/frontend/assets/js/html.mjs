@@ -55,3 +55,24 @@ export function WriteObjectToTable(obj, table) {
 export function SanitizeCSSClassName(name) {
     return name.replace(/[^a-zA-Z0-9_-]/g, "_")
 }
+
+export function CreateMultilineText(...lines) {
+    if (lines.length === 1) {
+        return document.createTextNode(lines[0]);
+    }
+    const span = document.createElement("span");
+    for (let i = 0; i < lines.length; i++) {
+        if (i > 0) {
+            span.appendChild(document.createElement("br"));
+        }
+        span.appendChild(document.createTextNode(lines[i]));
+    }
+    return span;
+}
+
+export function CreateLinkElement(url, text) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.textContent = text;
+    return link;
+}
