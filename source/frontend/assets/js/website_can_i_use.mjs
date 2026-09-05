@@ -190,6 +190,7 @@ function CreateTableHead(table) {
 
         for (let i = 0; i < columnCount; ++i) {
             const vendorCol = document.createElement("th");
+            vendorCol.className = HTML.SanitizeCSSClassName(vendor);
             vendorCol.appendChild(CreateColumnNameElement(i));
             vendorHeadersRow.appendChild(vendorCol);
         }
