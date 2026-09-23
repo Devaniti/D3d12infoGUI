@@ -50,8 +50,11 @@ function SelectReport(newReportIndex)
     window.history.replaceState({}, '', url.toString());
     document.title = Reports[ReportIndex].GetField("DXGI_ADAPTER_DESC3.Description") + " - D3d12infoDB";
 
-    // Scroll down to the report
-    PropertiesSearchBarContainer.scrollIntoView();
+    // Scroll down to the report, unless user already searches for some specific property
+    if (Globals.PropertiesSearchString == "")
+    {
+        PropertiesSearchBarContainer.scrollIntoView();
+    }
 }
 
 function VendorFilter(report) {
