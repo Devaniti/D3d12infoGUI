@@ -32,6 +32,14 @@ function AddTooltipIcon(field, cell) {
     cell.appendChild(tooltipIcon)
 }
 
+function AddPropertyClass(row, propertyName) {
+    if (Constants.PropertyClasses[propertyName] == null) {
+        return
+    }
+    
+    row.classList.add(...Constants.PropertyClasses[propertyName])
+}
+
 export function WriteObjectToTable(obj, table) {
     for (const e of obj.HumanReadable(Properties.FilterField)) {
         const row = document.createElement("tr")
@@ -47,6 +55,7 @@ export function WriteObjectToTable(obj, table) {
         const cell1Text = document.createTextNode(e.value)
         cell1.appendChild(cell1Text)
         row.appendChild(cell1)
+        AddPropertyClass(row, e.name)
 
         table.appendChild(row)
     }

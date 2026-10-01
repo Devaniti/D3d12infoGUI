@@ -127,18 +127,42 @@ function markDatabaseModified(isDeleted = false) {
 }
 
 function isObjectAllowedInDB(inObj) {
-    let isAllowed = true;
-    database_common.submitRequiredProperites.forEach(p => {
-        if (inObj[p] == null) {
-            console.log(`Missing property ${p}`)
-            isAllowed = false
+    try
+    {
+        let isAllowed = true;
+        database_common.submitRequiredProperites.forEach(p => {
+            if (inObj[p] == null) {
+                console.log(`Missing property ${p}`)
+                isAllowed = false
+            }
+        })
+        let tailData = JSON.parse(inObj["Data"])
+        database_common.submitDisallowedProperties.forEach(p => {
+            let keys = p.split(".")
+            let current = tailData
+            let depth = 0
+            for (; depth < keys.length; depth++) {
+                if (current[keys[depth]] == null) {
+                    break
+                }
+                current = current[keys[depth]]
+            }
+            if (depth == keys.length)
+            {
+                console.log(`Disallowed property ${p}`)
+                isAllowed = false
+            }
+        })
+        if (!isAllowed) {
+            console.log("isObjectAllowedInDB - object disallowed")
         }
-    })
-    if (!isAllowed) {
-        console.log("isObjectAllowedInDB - object disallowed")
-        console.log()
+        return isAllowed
     }
-    return isAllowed
+    catch (e)
+    {
+        console.log(`isObjectAllowedInDB error ${e}. Disallowing submission.`)
+        return false
+    }
 }
 
 api.use(express.json())

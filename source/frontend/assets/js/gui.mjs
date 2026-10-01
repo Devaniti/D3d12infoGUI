@@ -44,7 +44,7 @@ function InitReportData() {
 function SubmitAllReports() {
     let adaptersMap = new Set();
     IterateAdapters((retailIndex, index, adapter) => {
-        if (SubmissionIDs[retailIndex][index] >= 0)
+        if (SubmissionIDs[retailIndex][index] != -1)
             return
 
         let adapterKey = JSON.stringify([
@@ -95,7 +95,7 @@ function AddSubmitAllButton(tableBody, tableWidth) {
 
     let tooltipIcon = document.createElement("img")
     tooltipIcon.classList.add("tooltipicon")
-    tooltipIcon.style = "filter: brightness(1.5);"
+    tooltipIcon.style = "filter: brightness(1.8);"
     tooltipIcon.src = "info.svg"
     submitButton.appendChild(tooltipIcon)
 
@@ -189,7 +189,6 @@ function UpdateList() {
                                 cellDiv.appendChild(cellText)
                                 let tooltipIcon = document.createElement("img")
                                 tooltipIcon.classList.add("tooltipicon")
-                                tooltipIcon.style = "filter: brightness(1.5);"
                                 tooltipIcon.src = "info.svg"
                                 cellDiv.appendChild(tooltipIcon)
                                 const tooltipText = document.createElement("div")
@@ -198,6 +197,18 @@ function UpdateList() {
                                 tooltipText.textContent = 'Submissions are force disabled via "D3D12INFOGUI_DISABLE_SUBMISSIONS" environment variable\nIf you want to submit re-run D3d12infoGUI with that environment varible unset'
                                 cellDiv.appendChild(tooltipText)
                                 cell.appendChild(cellDiv)
+                                break;
+                            }
+                        case -4:
+                            {
+                                let cellText = document.createTextNode("D3D12CreateDevice Failed")
+                                cell.appendChild(cellText)
+                                break;
+                            }
+                        case -5:
+                            {
+                                let cellText = document.createTextNode("Failed to query database status")
+                                cell.appendChild(cellText)
                                 break;
                             }
                         default:
@@ -227,6 +238,11 @@ function UpdateList() {
             UpdateReport()
         })
         row.classList.add("clickableRow")
+
+        if (adapter.IsD3D12CreateDeviceFailed()) {
+            row.classList.add("D3D12CreateDeviceFailed")
+        }
+
         tableBody.appendChild(row)
     });
 
@@ -299,6 +315,10 @@ function QueryReportIDs() {
     IterateAdapters(() => {++adapterCount});
     let responseCount = 0;
     IterateAdapters((retailIndex, index, adapter) => {
+        if (adapter.IsD3D12CreateDeviceFailed()) {
+            SubmissionIDs[retailIndex][index] = -4; // Mark D3D12CreateDevice failed
+            return;
+        }
         if (openOptions.disableSubmit)
         {
             SubmissionIDs[retailIndex][index] = -3; // Mark submissions disabled

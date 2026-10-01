@@ -526,6 +526,14 @@ function AddTooltipIcon(field, cell) {
     cell.appendChild(tooltipIcon)
 }
 
+function AddPropertyClass(row, propertyName) {
+    if (Constants.PropertyClasses[propertyName] == null) {
+        return
+    }
+    
+    row.classList.add(...Constants.PropertyClasses[propertyName])
+}
+
 function FilterFieldComparison(name, values) {
     if (Constants.PropertiesFilterWhitelist.has(name)) {
         return true
@@ -664,6 +672,7 @@ function UpdateReport() {
         const cell1Text = document.createTextNode(e.value)
         cell1.appendChild(cell1Text)
         row.appendChild(cell1)
+        AddPropertyClass(row, e.name)
 
         tableBody.appendChild(row)
     }

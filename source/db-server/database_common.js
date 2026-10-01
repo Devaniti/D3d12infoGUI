@@ -2,6 +2,7 @@
 
 let SubmitUniqueProperitesInternal = require("./StructureDesc/submit_unique_properties.json")
 let SubmitRequiredProperitesInternal = require("./StructureDesc/submit_required_properties.json")
+let SubmitDisallowedPropertiesInternal = require("./StructureDesc/submit_disallowed_properties.json")
 
 const MAX_INT64_VALUE = 2n ** 63n - 1n;
 const MAX_UINT64_VALUE = 2n ** 64n - 1n;
@@ -128,6 +129,7 @@ module.exports = {
     submitUniqueProperites: SubmitUniqueProperitesInternal,
     submitRequiredProperites: SubmitRequiredProperitesInternal,
     submitAllProperties: ["Data"].concat(SubmitUniqueProperitesInternal),
+    submitDisallowedProperties: SubmitDisallowedPropertiesInternal,
 
     toSqlite3SupportedType: ToSqlite3SupportedTypeInternal,
 

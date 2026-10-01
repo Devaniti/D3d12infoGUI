@@ -143,6 +143,10 @@ export default class ReportContainer {
         return this.#fieldsMap[field]
     }
 
+    IsD3D12CreateDeviceFailed() {
+        return this.#fieldsMap["D3D12CreateDevice.ReturnValue"] != undefined;
+    }
+
     GetOriginalReport() {
         return this.#originalReport
     }
