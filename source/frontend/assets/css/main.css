@@ -225,6 +225,10 @@ fieldset {
     background-color: #ffd1bb;
 }
 
+.D3D12CreateDeviceFailed {
+    color: #dd0000;
+}
+
 .dark-mode {
     color: #e1e1e1;
     background-color: #1e1e1e;
@@ -315,6 +319,10 @@ fieldset {
 
     .Moore_Threads {
         background-color: #321a07;
+    }
+
+    .D3D12CreateDeviceFailed {
+        color: #ff3333;
     }
 
 }

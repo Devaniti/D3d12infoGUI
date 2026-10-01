@@ -281,6 +281,11 @@ function AddLegend(tableContainer) {
 }
 
 export function BuildFormatTable(reportContainer, tableContainer) {
+    if (reportContainer.IsD3D12CreateDeviceFailed())
+    {
+        return;
+    }
+    
     let formats = reportContainer.Formats()
     if (!formats) {
         let message = document.createElement("p")

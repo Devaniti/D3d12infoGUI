@@ -79,8 +79,11 @@ export function IsSubmitted(header, adapter, callback) {
         if (xhr.status == 200) {
             callback(Number(xhr.responseText))
         }
+        else if (xhr.status == 204) {
+            callback(-1) // Mark not yet submitted
+        }
         else {
-            callback(-1)
+            callback(-5) // Mark failed to query database
         }
     }
 

@@ -42,6 +42,54 @@ export const NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE =
     "2147483647": "NVAPI_COOPERATIVE_VECTOR_COMPONENT_TYPE_INVALID"
 }
 
+export const DXGI_STATUS =
+{
+    "142213121": "DXGI_STATUS_OCCLUDED",
+    "142213122": "DXGI_STATUS_CLIPPED",
+    "142213124": "DXGI_STATUS_NO_REDIRECTION",
+    "142213125": "DXGI_STATUS_NO_DESKTOP_ACCESS",
+    "142213126": "DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE",
+    "142213127": "DXGI_STATUS_MODE_CHANGED",
+    "142213128": "DXGI_STATUS_MODE_CHANGE_IN_PROGRESS",
+    "2289696769": "DXGI_ERROR_INVALID_CALL",
+    "2289696770": "DXGI_ERROR_NOT_FOUND",
+    "2289696771": "DXGI_ERROR_MORE_DATA",
+    "2289696772": "DXGI_ERROR_UNSUPPORTED",
+    "2289696773": "DXGI_ERROR_DEVICE_REMOVED",
+    "2289696774": "DXGI_ERROR_DEVICE_HUNG",
+    "2289696775": "DXGI_ERROR_DEVICE_RESET",
+    "2289696778": "DXGI_ERROR_WAS_STILL_DRAWING",
+    "2289696779": "DXGI_ERROR_FRAME_STATISTICS_DISJOINT",
+    "2289696780": "DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE",
+    "2289696800": "DXGI_ERROR_DRIVER_INTERNAL_ERROR",
+    "2289696801": "DXGI_ERROR_NONEXCLUSIVE",
+    "2289696802": "DXGI_ERROR_NOT_CURRENTLY_AVAILABLE",
+    "2289696803": "DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED",
+    "2289696804": "DXGI_ERROR_REMOTE_OUTOFMEMORY",
+    "2289696806": "DXGI_ERROR_ACCESS_LOST",
+    "2289696807": "DXGI_ERROR_WAIT_TIMEOUT",
+    "2289696808": "DXGI_ERROR_SESSION_DISCONNECTED",
+    "2289696809": "DXGI_ERROR_RESTRICT_TO_OUTPUT_STALE",
+    "2289696810": "DXGI_ERROR_CANNOT_PROTECT_CONTENT",
+    "2289696811": "DXGI_ERROR_ACCESS_DENIED",
+    "2289696812": "DXGI_ERROR_NAME_ALREADY_EXISTS",
+    "2289696813": "DXGI_ERROR_SDK_COMPONENT_MISSING",
+    "2289696814": "DXGI_ERROR_NOT_CURRENT",
+    "2289696816": "DXGI_ERROR_HW_PROTECTION_OUTOFMEMORY",
+    "2289696817": "DXGI_ERROR_DYNAMIC_CODE_POLICY_VIOLATION",
+    "2289696818": "DXGI_ERROR_NON_COMPOSITED_UI",
+    "142213129": "DXGI_STATUS_UNOCCLUDED",
+    "142213130": "DXGI_STATUS_DDA_WAS_STILL_DRAWING",
+    "2289696805": "DXGI_ERROR_MODE_CHANGE_IN_PROGRESS",
+    "142213167": "DXGI_STATUS_PRESENT_REQUIRED",
+    "2289696819": "DXGI_ERROR_CACHE_CORRUPT",
+    "2289696820": "DXGI_ERROR_CACHE_FULL",
+    "2289696821": "DXGI_ERROR_CACHE_HASH_COLLISION",
+    "2289696822": "DXGI_ERROR_ALREADY_EXISTS",
+    "2289696868": "DXGI_ERROR_MPO_UNPINNED",
+    "2289696869": "DXGI_ERROR_SETDISPLAYMODE_REQUIRED"
+}
+
 export const DXGI_FORMAT =
 {
     "0": "DXGI_FORMAT_UNKNOWN",
@@ -200,6 +248,7 @@ export const D3D12_FENCE_BARRIERS_TIER_SHORT =
 
 export const EnumMappings =
 {
+    "D3D12CreateDevice.ReturnValue" : DXGI_STATUS,
     "DXGI_ADAPTER_DESC3.GraphicsPreemptionGranularity":
     {
         "0": "DXGI_GRAPHICS_PREEMPTION_DMA_BUFFER_BOUNDARY",
@@ -1947,10 +1996,16 @@ export const PropertyTooltips = {
     "D3D12_SDK_VERSION": "Version of agility SDK used to generate the report",
     "DXGI_FEATURE_PRESENT_ALLOW_TEARING": "Whether OS supports swapchain presentation with tearing. This is not a GPU capability.",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.VPAndRTArrayIndexFromAnyShaderFeedingRasterizerSupportedWithoutGSEmulation": "ViewPort and RenderTarget array index from any shader feeding rasterizer supported without Geometry Shader emulation",
+    "D3D12CreateDevice.ReturnValue": "D3D12CreateDevice failed with this error code."
+}
+
+export const PropertyClasses = {
+    "D3D12CreateDevice.ReturnValue": ["D3D12CreateDeviceFailed"],
 }
 
 const PropertiesOrder =
     [
+        "D3D12CreateDevice.ReturnValue",
         "ID",
         "DXGI_ADAPTER_DESC3.Description",
         "Header.Program",
@@ -1986,8 +2041,8 @@ const PropertiesOrder =
         "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXProductionBranchPackage",
         "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.bIsNVIDIARTXNewFeatureBranchPackage",
         "SystemInfo.NvAPI_SYS_GetDisplayDriverInfo - NV_DISPLAY_DRIVER_INFO.szBuildBaseBranch",
-    "SystemInfo.NvAPI_NGX_GetDriverFeatureSupport.NV_NGX_DRIVER_FEATURE_ID_SET_FLIP_CONFIG_V2",
-    "SystemInfo.NvAPI_NGX_GetDriverFeatureSupport.NV_NGX_DRIVER_FEATURE_ID_FRAME_PRESENT_NOTIFY_HYBRID",
+        "SystemInfo.NvAPI_NGX_GetDriverFeatureSupport.NV_NGX_DRIVER_FEATURE_ID_SET_FLIP_CONFIG_V2",
+        "SystemInfo.NvAPI_NGX_GetDriverFeatureSupport.NV_NGX_DRIVER_FEATURE_ID_FRAME_PRESENT_NOTIFY_HYBRID",
         "SystemInfo.AGSGPUInfo.radeonSoftwareVersion",
         "SystemInfo.D3D12EnableExperimentalFeatures",
         "SystemInfo.TranslationLayerDetection.wine_get_version",
@@ -2764,7 +2819,8 @@ const VendorSpecificProperties = [
 export const PropertiesFilterWhitelist = new Set([
     "ID",
     "DXGI_ADAPTER_DESC3.Description",
-    "AdapterIndex"
+    "AdapterIndex",
+    "D3D12CreateDevice.ReturnValue"
 ])
 
 export const PureFeatureList = [
