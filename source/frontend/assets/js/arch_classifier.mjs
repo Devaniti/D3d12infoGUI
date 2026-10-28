@@ -335,4 +335,5 @@ export function ClassifyReports(inputReports)
     SortSet(ArchsPerVendor.Nvidia, ReleaseDateCompare);
     SortSet(ArchsPerVendor.Intel, ReleaseDateCompare);
     SortSet(ArchsPerVendor.Qualcomm, ReleaseDateCompare);
+    SortSet(ArchsPerVendor["Moore Threads"], ReleaseDateCompare);
 }
