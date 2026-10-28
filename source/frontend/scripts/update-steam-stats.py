@@ -33,6 +33,7 @@ arch_name_mapping = {
 "RDNA 1.0" : "RDNA",
 "RDNA 2.0" : "RDNA2",
 "RDNA 3.0" : "RDNA3",
+"RDNA 3.5" : "RDNA3",
 "RDNA 4.0" : "RDNA4",
 "TeraScale" : "PreGCN",
 "TeraScale 2" : "PreGCN",
