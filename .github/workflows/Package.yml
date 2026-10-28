@@ -23,7 +23,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Sync
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         submodules: 'recursive'
       
@@ -57,7 +57,7 @@ jobs:
       run: ./build_scripts/archive_package.ps1
       
     - name: Upload Package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: D3d12infoGUI - Package
         path: |

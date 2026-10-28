@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-2022
     steps:
     - name: Sync
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         submodules: 'recursive'
         
@@ -25,13 +25,13 @@ jobs:
       run: ./build_scripts/build.ps1 Release
       
     - name: Archive Debug artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: D3d12infoGUI - Debug
         path: ./build/bin/Debug/GUI.exe
       
     - name: Archive Release artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: D3d12infoGUI - Release
         path: ./build/bin/Release/GUI.exe
