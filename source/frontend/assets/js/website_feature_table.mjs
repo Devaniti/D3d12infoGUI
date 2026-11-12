@@ -58,15 +58,26 @@ function AddTooltipForTable(parent, text, options_param) {
     return tooltipTextElement; // in case you want to do something further with it
 }
 
-function NeedOutputVendor(vendor) {
-    if (!Globals.VendorFilter[vendor])
-        return false;
+function NeedOutputArch(vendor, arch) {
+    let vendorShows = Globals.VendorFilter[vendor];
+    let archReleaseDate = Constants.ArchReleaseDates[arch];
+    if (archReleaseDate == undefined) {
+        archReleaseDate = "9999"
+    };
+    let marketShare = ArchStats[arch] ?? 0;
+    return vendorShows && Globals.ArchAgeFilter <= archReleaseDate && marketShare >= Globals.MarketShareFilter;
+}
 
-    // Check if any of the architectures for this vendor are newer than the filter
+function NeedOutputVendor(vendor) {
+    if (!Globals.VendorFilter[vendor]) {
+        return false;
+    }
+
+    // Check if we need to output any of the architectures for this vendor
     for (let arch of ArchClassifier.ArchsPerVendor[vendor]) {
-        let releaseDate = Constants.ArchReleaseDates[arch] ?? 9999;
-        if (Globals.ArchAgeFilter <= releaseDate)
+        if (NeedOutputArch(vendor, arch)) {
             return true;
+        }
     }
 
     return false;
@@ -76,9 +87,9 @@ function VendorArchToOutputCount(vendor) {
     let res = 0;
 
     for (let arch of ArchClassifier.ArchsPerVendor[vendor]) {
-        let releaseDate = Constants.ArchReleaseDates[arch] ?? 9999;
-        if (Globals.ArchAgeFilter <= releaseDate)
+        if (NeedOutputArch(vendor, arch)) {
             res++;
+        }
     }
 
     return res;
@@ -96,15 +107,6 @@ function ArchToOutputCount() {
     }
 
     return res;
-}
-
-function NeedOutputArch(vendor, arch) {
-    let vendorShows = Globals.VendorFilter[vendor];
-    let archReleaseDate = Constants.ArchReleaseDates[arch];
-    if (archReleaseDate == undefined) {
-        archReleaseDate = "9999"
-    };
-    return vendorShows && Globals.ArchAgeFilter <= archReleaseDate;
 }
 
 function AddFilterPanel(container) {
@@ -195,6 +197,57 @@ function AddFilterPanel(container) {
     archFilterFieldset.appendChild(document.createElement("br"));
     archFilterFieldset.appendChild(archAgeLabel);
     fieldSetContainer.appendChild(archFilterFieldset);
+
+    let marketShareMin = 0;
+    let marketShareDefault = 0;
+    let marketShareMax = 0;
+    for (let arch in ArchStats) {
+        let marketShare = ArchStats[arch] ?? 0;
+        if (marketShare > marketShareMax) {
+            marketShareMax = marketShare;
+        }
+    }
+    marketShareMax = Math.floor(marketShareMax * 1000) / 10;
+
+    let marketShareFilterFieldset = document.createElement("fieldset");
+    let marketShareLegend = document.createElement("legend");
+    marketShareLegend.textContent = "Market Share Filter";
+    marketShareFilterFieldset.appendChild(marketShareLegend);
+
+    let marketShareSlider = document.createElement("input");
+    marketShareSlider.id = "marketShareSlider";
+    marketShareSlider.type = "range";
+    marketShareSlider.min = marketShareMin;
+    marketShareSlider.max = marketShareMax;
+    marketShareSlider.value = marketShareDefault;
+    marketShareSlider.step = 0.1;
+
+    let marketShareLabel = document.createElement("span");
+    marketShareLabel.appendChild(document.createTextNode("Market share "));
+    let marketShareInputBox = document.createElement("input");
+    marketShareInputBox.type = "number";
+    marketShareInputBox.min = marketShareMin;
+    marketShareInputBox.max = marketShareMax;
+    marketShareInputBox.value = marketShareDefault;
+    marketShareInputBox.step = 0.1;
+    marketShareInputBox.addEventListener('change', function (e) {
+        e.target.value = Math.max(marketShareMin, Math.min(marketShareMax, e.target.value));
+        marketShareSlider.value = e.target.value;
+        Globals.MarketShareFilter = e.target.value / 100.0;
+        UpdateTable();
+    });
+    marketShareLabel.appendChild(marketShareInputBox);
+    marketShareLabel.appendChild(document.createTextNode("% or higher"));
+    Globals.MarketShareFilter = marketShareSlider.value / 100.0;
+    marketShareSlider.addEventListener('input', function (e) {
+        marketShareInputBox.value = e.target.value;
+        Globals.MarketShareFilter = e.target.value / 100.0;
+        UpdateTable();
+    });
+    marketShareFilterFieldset.appendChild(marketShareSlider);
+    marketShareFilterFieldset.appendChild(document.createElement("br"));
+    marketShareFilterFieldset.appendChild(marketShareLabel);
+    fieldSetContainer.appendChild(marketShareFilterFieldset);
 }
 
 function AddNote(text, noteContainer) {

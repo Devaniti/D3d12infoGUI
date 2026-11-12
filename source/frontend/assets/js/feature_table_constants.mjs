@@ -72,6 +72,10 @@ export const TableFeaturesShortNames = {
     "D3D12_FEATURE_DATA_D3D12_OPTIONS.ROVsSupported": "Rasterizer-ordered views",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS2.DepthBoundsTestSupported": "Depth-bounds test",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS3.CopyQueueTimestampQueriesSupported": "Copy queue timestamp queries",
+    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV": "CBV/SRV/UAV descriptor size",
+    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER": "Sampler descriptor size",
+    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_RTV": "RTV descriptor size",
+    "GetDescriptorHandleIncrementSize.D3D12_DESCRIPTOR_HEAP_TYPE_DSV": "DSV descriptor size",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS3.WriteBufferImmediateSupportFlags": "WriteBufferImmediate command list support",
     "D3D12_FEATURE_DATA_D3D12_OPTIONS9.MeshShaderSupportsFullRangeRenderTargetArrayIndex": "Mesh shader full range RT array index",    
     // VulkanOn12 compatibility stuff, see https://microsoft.github.io/DirectX-Specs/d3d/VulkanOn12.html
